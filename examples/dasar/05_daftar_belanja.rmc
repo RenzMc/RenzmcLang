@@ -1,0 +1,35 @@
+// ============================================
+// Contoh 5: Daftar Belanja
+// ============================================
+
+tampilkan "=== DAFTAR BELANJA ==="
+tampilkan ""
+
+// Inisialisasi daftar belanja dengan contoh data
+belanja itu []
+
+// Tambah beberapa item contoh
+item1 itu {"nama": "Apel", "harga": 15000}
+item2 itu {"nama": "Jeruk", "harga": 20000}
+item3 itu {"nama": "Mangga", "harga": 25000}
+
+tambah(belanja, item1)
+tambah(belanja, item2)
+tambah(belanja, item3)
+
+// Tampilkan daftar belanja
+tampilkan "\n=== DAFTAR BELANJA ==="
+nomor itu 1
+untuk setiap item dari belanja
+    tampilkan f"{nomor}. {item['nama']} - Rp {item['harga']}"
+    nomor itu nomor + 1
+selesai
+
+// Hitung total
+total itu 0
+untuk setiap item dari belanja
+    total itu total + item["harga"]
+selesai
+
+tampilkan f"\n💰 Total Belanja: Rp {total}"
+tampilkan "\n✓ Program selesai!"

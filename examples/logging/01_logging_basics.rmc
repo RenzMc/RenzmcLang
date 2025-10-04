@@ -1,0 +1,308 @@
+// ============================================
+// Logging - Application Logging
+// ============================================
+// Contoh penggunaan logging untuk debugging dan monitoring
+
+tampilkan "=== Logging Basics ==="
+tampilkan ""
+
+impor_python "logging"
+impor_python "datetime"
+
+// ============================================
+// 1. BASIC LOGGING SETUP
+// ============================================
+
+tampilkan "[1] Basic Logging Setup..."
+tampilkan ""
+
+// Konfigurasi logging dasar
+panggil_python logging.basicConfig( level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s" )
+
+// Buat logger
+logger itu panggil_python logging.getLogger("MyApp")
+
+// Log berbagai level
+panggil_python logger.debug("Ini adalah debug message")
+panggil_python logger.info("Ini adalah info message")
+panggil_python logger.warning("Ini adalah warning message")
+panggil_python logger.error("Ini adalah error message")
+panggil_python logger.critical("Ini adalah critical message")
+
+tampilkan "✓ Basic logging selesai"
+tampilkan ""
+
+// ============================================
+// 2. LOGGING TO FILE
+// ============================================
+
+tampilkan "[2] Logging to File..."
+tampilkan ""
+
+// Konfigurasi logging ke file
+panggil_python logging.basicConfig( filename="app.log", level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s", filemode="w" )
+
+file_logger itu panggil_python logging.getLogger("FileLogger")
+
+// Log ke file
+panggil_python file_logger.info("Aplikasi dimulai")
+panggil_python file_logger.info("Memproses data...")
+panggil_python file_logger.warning("Peringatan: Data tidak lengkap")
+panggil_python file_logger.info("Aplikasi selesai")
+
+tampilkan "✓ Log disimpan ke app.log"
+tampilkan ""
+
+// ============================================
+// 3. CUSTOM LOGGER
+// ============================================
+
+tampilkan "[3] Custom Logger dengan Multiple Handlers..."
+tampilkan ""
+
+// Buat custom logger
+custom_logger itu panggil_python logging.getLogger("CustomApp")
+custom_logger.setLevel(logging.DEBUG)
+
+// Console handler
+console_handler itu panggil_python logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_format itu panggil_python logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+console_handler.setFormatter(console_format)
+
+// File handler
+file_handler itu panggil_python logging.FileHandler("custom_app.log")
+file_handler.setLevel(logging.DEBUG)
+file_format itu panggil_python logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+file_handler.setFormatter(file_format)
+
+// Tambahkan handlers
+panggil_python custom_logger.addHandler(console_handler)
+panggil_python custom_logger.addHandler(file_handler)
+
+// Test logging
+panggil_python custom_logger.debug("Debug message (hanya di file)")
+panggil_python custom_logger.info("Info message (console dan file)")
+panggil_python custom_logger.warning("Warning message")
+panggil_python custom_logger.error("Error message")
+
+tampilkan "✓ Custom logger dengan multiple handlers"
+tampilkan ""
+
+// ============================================
+// 4. LOGGING DALAM FUNGSI
+// ============================================
+
+tampilkan "[4] Logging dalam Fungsi..."
+tampilkan ""
+
+fungsi proses_data(data):
+    logger itu panggil_python logging.getLogger("DataProcessor")
+    
+    panggil_python logger.info(f"Memulai proses data: {data}")
+    
+    coba
+        // Simulasi proses
+        jika tidak data
+            panggil_python logger.error("Data kosong!")
+            hasil salah
+        selesai
+        
+        panggil_python logger.debug(f"Memproses {panjang(data)} item")
+        
+        // Proses data
+        hasil_proses itu []
+        untuk setiap item dari data
+            panggil_python logger.debug(f"Memproses item: {item}")
+            tambah(hasil_proses, item * 2)
+        selesai
+        
+        panggil_python logger.info(f"Proses selesai: {panjang(hasil_proses)} item")
+        hasil hasil_proses
+        
+    tangkap Exception sebagai e
+        panggil_python logger.error(f"Error saat proses: {e}")
+        hasil kosong
+    selesai
+selesai
+
+// Test fungsi
+data_test itu [1, 2, 3, 4, 5]
+hasil itu proses_data(data_test)
+tampilkan f"Hasil: {hasil}"
+tampilkan ""
+
+// ============================================
+// 5. LOGGING DENGAN CONTEXT
+// ============================================
+
+tampilkan "[5] Logging dengan Context Information..."
+tampilkan ""
+
+fungsi login_user(username, password):
+    logger itu panggil_python logging.getLogger("AuthSystem")
+    
+    panggil_python logger.info(f"Login attempt: username={username}")
+    
+    // Simulasi validasi
+    jika username == "admin" dan password == "secret"
+        panggil_python logger.info(f"Login successful: {username}")
+        hasil benar
+    kalau_tidak
+        panggil_python logger.warning(f"Login failed: {username} - Invalid credentials")
+        hasil salah
+    selesai
+selesai
+
+// Test login
+tampilkan "Testing login system:"
+login_user("admin", "secret")
+login_user("user", "wrong")
+login_user("admin", "wrong")
+tampilkan ""
+
+// ============================================
+// 6. PERFORMANCE LOGGING
+// ============================================
+
+tampilkan "[6] Performance Logging..."
+tampilkan ""
+
+impor_python "time"
+
+fungsi operasi_lambat():
+    logger itu panggil_python logging.getLogger("Performance")
+    
+    mulai itu panggil_python time.time()
+    panggil_python logger.info("Memulai operasi lambat...")
+    
+    // Simulasi operasi
+    total itu 0
+    untuk setiap i dari range(1000000)
+        total itu total + i
+    selesai
+    
+    selesai itu panggil_python time.time()
+    durasi itu selesai - mulai
+    
+    panggil_python logger.info(f"Operasi selesai dalam {durasi:.4f} detik")
+    hasil total
+selesai
+
+hasil itu operasi_lambat()
+tampilkan f"Hasil operasi: {hasil}"
+tampilkan ""
+
+// ============================================
+// 7. ERROR LOGGING WITH TRACEBACK
+// ============================================
+
+tampilkan "[7] Error Logging with Traceback..."
+tampilkan ""
+
+fungsi operasi_berisiko(x, y):
+    logger itu panggil_python logging.getLogger("ErrorHandler")
+    
+    coba
+        panggil_python logger.debug(f"Operasi: {x} / {y}")
+        hasil itu x / y
+        panggil_python logger.info(f"Hasil: {hasil}")
+        hasil hasil
+    tangkap ZeroDivisionError sebagai e
+        panggil_python logger.error(f"Division by zero: {x} / {y}", exc_info=benar)
+        hasil kosong
+    tangkap Exception sebagai e
+        panggil_python logger.error(f"Unexpected error: {e}", exc_info=benar)
+        hasil kosong
+    selesai
+selesai
+
+// Test error handling
+operasi_berisiko(10, 2)
+operasi_berisiko(10, 0)
+tampilkan ""
+
+// ============================================
+// 8. STRUCTURED LOGGING
+// ============================================
+
+tampilkan "[8] Structured Logging..."
+tampilkan ""
+
+fungsi log_event(event_type, user_id, action, details):
+    logger itu panggil_python logging.getLogger("EventLogger")
+    
+    event_data itu {
+        "timestamp": panggil_python datetime.datetime.now().isoformat(),
+        "event_type": event_type,
+        "user_id": user_id,
+        "action": action,
+        "details": details
+    }
+    
+    panggil_python logger.info(f"Event: {event_data}")
+selesai
+
+// Log berbagai events
+log_event("USER_ACTION", "user123", "LOGIN", {"ip": "192.168.1.1"})
+log_event("USER_ACTION", "user123", "VIEW_PAGE", {"page": "/dashboard"})
+log_event("USER_ACTION", "user123", "LOGOUT", {})
+tampilkan ""
+
+// ============================================
+// 9. LOG ROTATION
+// ============================================
+
+tampilkan "[9] Log Rotation Setup..."
+tampilkan ""
+
+impor_python "logging.handlers"
+
+// Setup rotating file handler
+rotating_logger itu panggil_python logging.getLogger("RotatingApp")
+rotating_logger.setLevel(logging.INFO)
+
+// Rotating handler (max 1MB, keep 5 backups)
+rotating_handler itu panggil_python logging.handlers.RotatingFileHandler( "rotating_app.log", maxBytes=1048576, backupCount=5 )
+
+rotating_format itu panggil_python logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+rotating_handler.setFormatter(rotating_format)
+panggil_python rotating_logger.addHandler(rotating_handler)
+
+// Test rotating logger
+untuk setiap i dari range(10)
+    panggil_python rotating_logger.info(f"Log message {i + 1}")
+selesai
+
+tampilkan "✓ Rotating log setup selesai"
+tampilkan ""
+
+// ============================================
+// 10. BEST PRACTICES
+// ============================================
+
+tampilkan "[10] Logging Best Practices..."
+tampilkan ""
+
+tampilkan "Best Practices:"
+tampilkan "  1. Gunakan level logging yang tepat:"
+tampilkan "     - DEBUG: Informasi detail untuk debugging"
+tampilkan "     - INFO: Informasi umum tentang aplikasi"
+tampilkan "     - WARNING: Peringatan tentang masalah potensial"
+tampilkan "     - ERROR: Error yang tidak menghentikan aplikasi"
+tampilkan "     - CRITICAL: Error serius yang menghentikan aplikasi"
+tampilkan ""
+tampilkan "  2. Jangan log sensitive data (password, token, dll)"
+tampilkan "  3. Gunakan structured logging untuk analisis"
+tampilkan "  4. Setup log rotation untuk production"
+tampilkan "  5. Include context information (user, session, dll)"
+tampilkan "  6. Log exceptions dengan traceback"
+tampilkan "  7. Gunakan different loggers untuk different modules"
+tampilkan ""
+
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "File log yang dibuat:"
+tampilkan "  - app.log"
+tampilkan "  - custom_app.log"
+tampilkan "  - rotating_app.log"

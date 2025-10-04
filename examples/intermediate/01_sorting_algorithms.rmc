@@ -1,0 +1,59 @@
+// ============================================
+// Contoh: Sorting dan Operasi List
+// ============================================
+
+tampilkan "=== DEMO SORTING & LIST OPERATIONS ==="
+tampilkan ""
+
+// Data yang akan diurutkan
+data1 itu [64, 34, 25, 12, 22, 11, 90, 88, 45, 50]
+tampilkan f"Data awal: {data1}"
+tampilkan ""
+
+// ========== ASCENDING SORT ==========
+tampilkan "1. Sorting Ascending (Kecil ke Besar):"
+urutkan(data1, salah)
+tampilkan f"   Hasil: {data1}"
+tampilkan ""
+
+// ========== DESCENDING SORT ==========
+tampilkan "2. Sorting Descending (Besar ke Kecil):"
+urutkan(data1, benar)
+tampilkan f"   Hasil: {data1}"
+tampilkan ""
+
+// ========== SORTING STRING ==========
+tampilkan "3. Sorting String (Alfabetis):"
+nama_list itu ["Zara", "Alice", "Bob", "Charlie", "Diana"]
+tampilkan f"   Sebelum: {nama_list}"
+urutkan(nama_list, salah)
+tampilkan f"   Sesudah: {nama_list}"
+tampilkan ""
+
+// ========== OPERASI LIST ==========
+tampilkan "4. Operasi List:"
+angka itu [1, 2, 3, 4, 5]
+tampilkan f"   List awal: {angka}"
+
+// Tambah elemen
+tambah(angka, 6)
+tampilkan f"   Setelah tambah(6): {angka}"
+
+// Hapus elemen
+hapus(angka, 3)
+tampilkan f"   Setelah hapus(3): {angka}"
+
+// Balikkan
+balikkan(angka)
+tampilkan f"   Setelah balikkan: {angka}"
+
+// Hitung kemunculan
+jumlah_2 itu hitung(angka, 2)
+tampilkan f"   Jumlah angka 2: {jumlah_2}"
+
+// Cari index
+idx itu indeks(angka, 5)
+tampilkan f"   Index angka 5: {idx}"
+
+tampilkan ""
+tampilkan "✓ Demo sorting dan list operations selesai!"

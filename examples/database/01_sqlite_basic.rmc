@@ -1,0 +1,153 @@
+// ============================================
+// SQLite Database - Basic Operations
+// ============================================
+// Contoh penggunaan SQLite untuk operasi CRUD dasar
+
+tampilkan "=== SQLite Basic CRUD Operations ==="
+tampilkan ""
+
+// Import modul Python untuk SQLite
+impor_python "sqlite3"
+
+// 1. Membuat koneksi database
+tampilkan "[1] Membuat koneksi ke database..."
+conn itu sqlite3.connect("contoh.db")
+cursor itu conn.cursor()
+tampilkan "✓ Koneksi berhasil dibuat"
+tampilkan ""
+
+// 2. Membuat tabel
+tampilkan "[2] Membuat tabel 'mahasiswa'..."
+coba
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS mahasiswa (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nim TEXT UNIQUE NOT NULL,
+            nama TEXT NOT NULL,
+            jurusan TEXT NOT NULL,
+            ipk REAL,
+            tanggal_daftar TEXT
+        )
+    """)
+    conn.commit()
+    tampilkan "✓ Tabel berhasil dibuat"
+tangkap Exception sebagai e
+    tampilkan f"✗ Error: {e}"
+selesai
+tampilkan ""
+
+// 3. Insert data (CREATE)
+tampilkan "[3] Menambahkan data mahasiswa..."
+data_mahasiswa itu [
+    ("12345", "Budi Santoso", "Teknik Informatika", 3.75, "2024-01-15"),
+    ("12346", "Ani Wijaya", "Sistem Informasi", 3.85, "2024-01-16"),
+    ("12347", "Citra Dewi", "Teknik Komputer", 3.65, "2024-01-17"),
+    ("12348", "Dedi Pratama", "Teknik Informatika", 3.90, "2024-01-18"),
+    ("12349", "Eka Putri", "Sistem Informasi", 3.55, "2024-01-19")
+]
+
+coba
+    cursor.executemany("""
+        INSERT OR IGNORE INTO mahasiswa (nim, nama, jurusan, ipk, tanggal_daftar)
+        VALUES (?, ?, ?, ?, ?)
+    """, data_mahasiswa)
+    conn.commit()
+    tampilkan f"✓ {cursor.rowcount} data berhasil ditambahkan"
+tangkap Exception sebagai e
+    tampilkan f"✗ Error: {e}"
+selesai
+tampilkan ""
+
+// 4. Read data (SELECT)
+tampilkan "[4] Membaca semua data mahasiswa..."
+cursor.execute("SELECT * FROM mahasiswa")
+hasil itu cursor.fetchall()
+
+tampilkan f"Total mahasiswa: {panjang(hasil)}"
+tampilkan "-" * 80
+tampilkan f"{'ID':<5} {'NIM':<10} {'Nama':<20} {'Jurusan':<25} {'IPK':<6} {'Tanggal':<12}"
+tampilkan "-" * 80
+
+untuk setiap row dari hasil
+    tampilkan f"{row[0]:<5} {row[1]:<10} {row[2]:<20} {row[3]:<25} {row[4]:<6} {row[5]:<12}"
+selesai
+tampilkan ""
+
+// 5. Update data (UPDATE)
+tampilkan "[5] Mengupdate IPK mahasiswa dengan NIM 12345..."
+coba
+    cursor.execute("""
+        UPDATE mahasiswa 
+        SET ipk = ? 
+        WHERE nim = ?
+    """, [3.80, "12345"])
+    conn.commit()
+    tampilkan f"✓ {cursor.rowcount} data berhasil diupdate"
+tangkap Exception sebagai e
+    tampilkan f"✗ Error: {e}"
+selesai
+tampilkan ""
+
+// 6. Query dengan filter
+tampilkan "[6] Mencari mahasiswa dengan IPK >= 3.70..."
+cursor.execute("""
+    SELECT nim, nama, jurusan, ipk 
+    FROM mahasiswa 
+    WHERE ipk >= ? 
+    ORDER BY ipk DESC
+""", [3.70])
+hasil_filter itu cursor.fetchall()
+
+tampilkan f"Ditemukan {panjang(hasil_filter)} mahasiswa:"
+untuk setiap row dari hasil_filter
+    tampilkan f"  • {row[1]} ({row[0]}) - {row[2]} - IPK: {row[3]}"
+selesai
+tampilkan ""
+
+// 7. Aggregate functions
+tampilkan "[7] Statistik mahasiswa per jurusan..."
+cursor.execute("""
+    SELECT 
+        jurusan,
+        COUNT(*) as jumlah,
+        AVG(ipk) as rata_ipk,
+        MAX(ipk) as ipk_tertinggi,
+        MIN(ipk) as ipk_terendah
+    FROM mahasiswa
+    GROUP BY jurusan
+    ORDER BY rata_ipk DESC
+""")
+statistik itu cursor.fetchall()
+
+tampilkan "-" * 80
+tampilkan f"{'Jurusan':<30} {'Jumlah':<10} {'Rata-rata IPK':<15} {'Max':<8} {'Min':<8}"
+tampilkan "-" * 80
+untuk setiap row dari statistik
+    tampilkan f"{row[0]:<30} {row[1]:<10} {row[2]:<15.2f} {row[3]:<8.2f} {row[4]:<8.2f}"
+selesai
+tampilkan ""
+
+// 8. Delete data (DELETE)
+tampilkan "[8] Menghapus mahasiswa dengan IPK < 3.60..."
+coba
+    cursor.execute("DELETE FROM mahasiswa WHERE ipk < ?", [3.60])
+    conn.commit()
+    tampilkan f"✓ {cursor.rowcount} data berhasil dihapus"
+tangkap Exception sebagai e
+    tampilkan f"✗ Error: {e}"
+selesai
+tampilkan ""
+
+// 9. Verifikasi data akhir
+tampilkan "[9] Data mahasiswa setelah operasi..."
+cursor.execute("SELECT COUNT(*) FROM mahasiswa")
+total itu cursor.fetchone()[0]
+tampilkan f"Total mahasiswa tersisa: {total}"
+tampilkan ""
+
+// 10. Tutup koneksi
+cursor.close()
+conn.close()
+tampilkan "✓ Koneksi database ditutup"
+tampilkan ""
+tampilkan "=== Selesai ==="

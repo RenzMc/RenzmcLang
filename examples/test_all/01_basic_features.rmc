@@ -1,0 +1,39 @@
+// Test 1: Basic Features
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 1: Basic Features                                   ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+// Variables
+tampilkan "\n[1.1] Variables"
+nama itu "RenzmcLang"
+versi itu 1.0
+aktif itu benar
+tampilkan f"✓ String: {nama}"
+tampilkan f"✓ Number: {versi}"
+tampilkan f"✓ Boolean: {aktif}"
+
+// Data types
+tampilkan "\n[1.2] Data Types"
+angka_bulat itu 42
+angka_desimal itu 3.14
+teks itu "Hello"
+daftar itu [1, 2, 3, 4, 5]
+kamus itu {"key": "value", "angka": 123}
+tampilkan f"✓ Integer: {angka_bulat}"
+tampilkan f"✓ Float: {angka_desimal}"
+tampilkan f"✓ String: {teks}"
+tampilkan f"✓ List: {daftar}"
+tampilkan f"✓ Dict: {kamus}"
+
+// Operators
+tampilkan "\n[1.3] Operators"
+a itu 10
+b itu 3
+tampilkan f"✓ Addition: {a + b}"
+tampilkan f"✓ Subtraction: {a - b}"
+tampilkan f"✓ Multiplication: {a * b}"
+tampilkan f"✓ Division: {a / b}"
+tampilkan f"✓ Modulo: {a % b}"
+tampilkan f"✓ Power: {a ** b}"
+
+tampilkan "\n✅ Test 1 PASSED: All basic features working!"

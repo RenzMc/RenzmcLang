@@ -1,0 +1,227 @@
+# ===================================
+# String Operations Advanced
+# ===================================
+# Operasi string lanjutan untuk manipulasi teks
+
+tampilkan "=== String Operations Advanced Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. String Methods Dasar
+# ===================================
+tampilkan "1. String Methods Dasar:"
+
+teks itu "Hello World"
+tampilkan "Teks: '" + teks + "'"
+
+tampilkan "Upper: " + teks.upper()
+tampilkan "Lower: " + teks.lower()
+tampilkan "Capitalize: " + teks.capitalize()
+tampilkan "Title: " + teks.title()
+
+tampilkan ""
+
+# ===================================
+# 2. String Trimming
+# ===================================
+tampilkan "2. String Trimming:"
+
+teks_spasi itu "  Hello World  "
+tampilkan "Teks dengan spasi: '" + teks_spasi + "'"
+tampilkan "Strip: '" + teks_spasi.strip() + "'"
+tampilkan "Lstrip: '" + teks_spasi.lstrip() + "'"
+tampilkan "Rstrip: '" + teks_spasi.rstrip() + "'"
+
+tampilkan ""
+
+# ===================================
+# 3. String Split & Join
+# ===================================
+tampilkan "3. String Split & Join:"
+
+kalimat itu "Saya belajar pemrograman"
+tampilkan "Kalimat: " + kalimat
+
+kata_list itu kalimat.split()
+tampilkan "Split: " + ke_teks(kata_list)
+
+gabung itu " ".join(kata_list)
+tampilkan "Join: " + gabung
+
+tampilkan ""
+
+# ===================================
+# 4. String Replace
+# ===================================
+tampilkan "4. String Replace:"
+
+teks_replace itu "Hello World Hello"
+tampilkan "Teks: " + teks_replace
+
+teks_baru itu teks_replace.replace("Hello", "Hi")
+tampilkan "Replace 'Hello' -> 'Hi': " + teks_baru
+
+teks_baru2 itu teks_replace.replace("World", "Python")
+tampilkan "Replace 'World' -> 'Python': " + teks_baru2
+
+tampilkan ""
+
+# ===================================
+# 5. String Find & Index
+# ===================================
+tampilkan "5. String Find & Index:"
+
+teks_find itu "Hello World Programming"
+tampilkan "Teks: " + teks_find
+
+pos_world itu teks_find.find("World")
+tampilkan "Posisi 'World': " + ke_teks(pos_world)
+
+pos_prog itu teks_find.find("Programming")
+tampilkan "Posisi 'Programming': " + ke_teks(pos_prog)
+
+pos_notfound itu teks_find.find("Python")
+tampilkan "Posisi 'Python': " + ke_teks(pos_notfound) + " (not found)"
+
+tampilkan ""
+
+# ===================================
+# 6. String Startswith & Endswith
+# ===================================
+tampilkan "6. String Startswith & Endswith:"
+
+filename itu "document.txt"
+tampilkan "Filename: " + filename
+
+tampilkan "Starts with 'doc': " + ke_teks(filename.startswith("doc"))
+tampilkan "Ends with '.txt': " + ke_teks(filename.endswith(".txt"))
+tampilkan "Ends with '.pdf': " + ke_teks(filename.endswith(".pdf"))
+
+tampilkan ""
+
+# ===================================
+# 7. String Count
+# ===================================
+tampilkan "7. String Count:"
+
+teks_count itu "hello hello world hello"
+tampilkan "Teks: " + teks_count
+
+count_hello itu teks_count.count("hello")
+tampilkan "Count 'hello': " + ke_teks(count_hello)
+
+count_world itu teks_count.count("world")
+tampilkan "Count 'world': " + ke_teks(count_world)
+
+tampilkan ""
+
+# ===================================
+# 8. String Formatting
+# ===================================
+tampilkan "8. String Formatting:"
+
+nama itu "Budi"
+umur itu 25
+kota itu "Jakarta"
+
+# String concatenation
+info1 itu "Nama: " + nama + ", Umur: " + ke_teks(umur) + ", Kota: " + kota
+tampilkan info1
+
+# Format dengan template
+template itu "Nama: {}, Umur: {}, Kota: {}"
+# Note: format() mungkin tidak tersedia, gunakan concatenation
+
+tampilkan ""
+
+# ===================================
+# 9. String Validation
+# ===================================
+tampilkan "9. String Validation:"
+
+teks_alpha itu "Hello"
+teks_digit itu "12345"
+teks_alnum itu "Hello123"
+
+tampilkan "'" + teks_alpha + "' isalpha: " + ke_teks(teks_alpha.isalpha())
+tampilkan "'" + teks_digit + "' isdigit: " + ke_teks(teks_digit.isdigit())
+tampilkan "'" + teks_alnum + "' isalnum: " + ke_teks(teks_alnum.isalnum())
+
+tampilkan ""
+
+# ===================================
+# 10. String Praktis: Email Validation
+# ===================================
+tampilkan "10. String Praktis: Email Validation:"
+
+fungsi validasi_email_lengkap(email):
+    # Check @ dan .
+    jika tidak ("@" dalam email)
+        hasil salah
+    selesai
+    
+    jika tidak ("." dalam email)
+        hasil salah
+    selesai
+    
+    # Check panjang
+    jika panjang(email) < 5
+        hasil salah
+    selesai
+    
+    hasil benar
+selesai
+
+emails itu ["user@example.com", "invalid", "test@test.co", "a@b"]
+
+untuk setiap email dari emails
+    valid itu validasi_email_lengkap(email)
+    status itu "VALID" jika valid kalau tidak "INVALID"
+    tampilkan email + ": " + status
+selesai
+
+tampilkan ""
+
+# ===================================
+# 11. String Praktis: Password Strength
+# ===================================
+tampilkan "11. String Praktis: Password Strength:"
+
+fungsi cek_password_strength(password):
+    panjang_pwd itu panjang(password)
+    
+    jika panjang_pwd < 6
+        hasil "Weak"
+    selesai
+    
+    jika panjang_pwd < 10
+        hasil "Medium"
+    selesai
+    
+    hasil "Strong"
+selesai
+
+passwords itu ["abc", "abc123", "mypassword123"]
+
+untuk setiap pwd dari passwords
+    strength itu cek_password_strength(pwd)
+    tampilkan "'" + pwd + "' -> " + strength
+selesai
+
+tampilkan ""
+
+# ===================================
+# 12. String Best Practices
+# ===================================
+tampilkan "12. String Best Practices:"
+tampilkan "✓ Gunakan method bawaan untuk manipulasi"
+tampilkan "✓ upper(), lower() untuk case conversion"
+tampilkan "✓ strip() untuk remove whitespace"
+tampilkan "✓ split() dan join() untuk parsing"
+tampilkan "✓ replace() untuk substitusi"
+tampilkan "✓ find() untuk searching"
+tampilkan "✓ startswith(), endswith() untuk checking"
+tampilkan "✓ String immutable - method return new string"
+
+tampilkan ""
+tampilkan "=== String Operations Advanced Examples Complete ==="

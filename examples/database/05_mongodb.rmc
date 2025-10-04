@@ -1,0 +1,368 @@
+// ============================================
+// MongoDB Database Operations
+// ============================================
+// Contoh operasi dengan MongoDB (NoSQL Database)
+
+tampilkan "=== MongoDB Database Operations ==="
+tampilkan ""
+
+// Note: Install pymongo terlebih dahulu: pip install pymongo
+
+tampilkan "Contoh ini menunjukkan cara bekerja dengan MongoDB"
+tampilkan "Pastikan MongoDB server sudah berjalan"
+tampilkan ""
+
+coba
+    impor_python "pymongo"
+    impor_python "pymongo.MongoClient"
+    impor_python "datetime"
+    
+    tampilkan "[1] Koneksi ke MongoDB..."
+    
+    coba
+        // Koneksi ke MongoDB
+        client itu MongoClient("mongodb://localhost:27017/")
+        
+        // Pilih database
+        db itu client["toko_online"]
+        
+        // Test koneksi
+        client.server_info()
+        tampilkan "✓ Berhasil terhubung ke MongoDB"
+        tampilkan ""
+        
+        // ============================================
+        // COLLECTION: PRODUK
+        // ============================================
+        
+        tampilkan "[2] Bekerja dengan Collection 'produk'..."
+        produk_collection itu db["produk"]
+        
+        // Hapus data lama (untuk testing)
+        produk_collection.delete_many({})
+        
+        // Insert single document
+        tampilkan "[3] Insert Single Document..."
+        produk1 itu {
+            "kode": "PRD001",
+            "nama": "Laptop Gaming ASUS ROG",
+            "kategori": "Elektronik",
+            "harga": 25000000,
+            "stok": 5,
+            "spesifikasi": {
+                "processor": "Intel Core i7",
+                "ram": "16GB",
+                "storage": "512GB SSD",
+                "vga": "RTX 3060"
+            },
+            "tags": ["gaming", "laptop", "asus", "high-end"],
+            "rating": 4.8,
+            "created_at": datetime.datetime.now()
+        }
+        
+        result itu produk_collection.insert_one(produk1)
+        tampilkan f"✓ Produk ditambahkan dengan ID: {result.inserted_id}"
+        tampilkan ""
+        
+        // Insert multiple documents
+        tampilkan "[4] Insert Multiple Documents..."
+        produk_list itu [
+            {
+                "kode": "PRD002",
+                "nama": "Mouse Logitech G502",
+                "kategori": "Aksesoris",
+                "harga": 650000,
+                "stok": 50,
+                "spesifikasi": {
+                    "sensor": "HERO 25K",
+                    "dpi": "25600",
+                    "buttons": 11
+                },
+                "tags": ["gaming", "mouse", "logitech"],
+                "rating": 4.7,
+                "created_at": datetime.datetime.now()
+            },
+            {
+                "kode": "PRD003",
+                "nama": "Keyboard Mechanical Keychron K2",
+                "kategori": "Aksesoris",
+                "harga": 1200000,
+                "stok": 30,
+                "spesifikasi": {
+                    "switch": "Gateron Brown",
+                    "layout": "75%",
+                    "wireless": benar
+                },
+                "tags": ["mechanical", "keyboard", "wireless"],
+                "rating": 4.9,
+                "created_at": datetime.datetime.now()
+            },
+            {
+                "kode": "PRD004",
+                "nama": "Monitor LG UltraGear 27&quot;",
+                "kategori": "Elektronik",
+                "harga": 4500000,
+                "stok": 15,
+                "spesifikasi": {
+                    "size": "27 inch",
+                    "resolution": "2560x1440",
+                    "refresh_rate": "144Hz",
+                    "panel": "IPS"
+                },
+                "tags": ["monitor", "gaming", "144hz"],
+                "rating": 4.6,
+                "created_at": datetime.datetime.now()
+            },
+            {
+                "kode": "PRD005",
+                "nama": "Headset HyperX Cloud II",
+                "kategori": "Aksesoris",
+                "harga": 1100000,
+                "stok": 40,
+                "spesifikasi": {
+                    "driver": "53mm",
+                    "surround": "7.1 Virtual",
+                    "mic": "Detachable"
+                },
+                "tags": ["headset", "gaming", "hyperx"],
+                "rating": 4.8,
+                "created_at": datetime.datetime.now()
+            }
+        ]
+        
+        result itu produk_collection.insert_many(produk_list)
+        tampilkan f"✓ {panjang(result.inserted_ids)} produk berhasil ditambahkan"
+        tampilkan ""
+        
+        // Find all documents
+        tampilkan "[5] Menampilkan Semua Produk..."
+        semua_produk itu produk_collection.find()
+        tampilkan "-" * 100
+        tampilkan f"{'Kode':<10} {'Nama':<35} {'Kategori':<15} {'Harga':<15} {'Stok':<8} {'Rating':<8}"
+        tampilkan "-" * 100
+        
+        untuk setiap p dari semua_produk
+            tampilkan f"{p['kode']:<10} {p['nama']:<35} {p['kategori']:<15} Rp {p['harga']:>10,.0f} {p['stok']:<8} {p['rating']:<8}"
+        selesai
+        tampilkan ""
+        
+        // Find with filter
+        tampilkan "[6] Query dengan Filter..."
+        tampilkan "Produk kategori Elektronik dengan harga > 5 juta:"
+        filter_query itu {
+            "kategori": "Elektronik",
+            "harga": {"$gt": 5000000}
+        }
+        hasil_filter itu produk_collection.find(filter_query)
+        
+        untuk setiap p dari hasil_filter
+            tampilkan f"  • {p['nama']} - Rp {p['harga']:,.0f}"
+        selesai
+        tampilkan ""
+        
+        // Query dengan projection
+        tampilkan "[7] Query dengan Projection..."
+        projection itu {"nama": 1, "harga": 1, "rating": 1, "_id": 0}
+        hasil_proj itu produk_collection.find({}, projection).sort("rating", -1)
+        
+        tampilkan "Produk diurutkan berdasarkan rating:"
+        untuk setiap p dari hasil_proj
+            tampilkan f"  {p['rating']} ⭐ - {p['nama']} (Rp {p['harga']:,.0f})"
+        selesai
+        tampilkan ""
+        
+        // Update document
+        tampilkan "[8] Update Document..."
+update_result itu panggil_python produk_collection.update_one( {"kode": "PRD001"}, {"$set": {"harga": 24000000, "stok": 8}} )
+        tampilkan f"✓ {update_result.modified_count} dokumen berhasil diupdate"
+        
+        // Update dengan $inc (increment)
+panggil_python produk_collection.update_one( {"kode": "PRD002"}, {"$inc": {"stok": -5}} )
+        tampilkan "✓ Stok produk PRD002 dikurangi 5"
+        tampilkan ""
+        
+        // Array operations
+        tampilkan "[9] Array Operations..."
+        // Tambah tag baru
+panggil_python produk_collection.update_one( {"kode": "PRD001"}, {"$push": {"tags": "premium"}} )
+        tampilkan "✓ Tag 'premium' ditambahkan ke PRD001"
+        
+        // Hapus tag
+panggil_python produk_collection.update_one( {"kode": "PRD001"}, {"$pull": {"tags": "high-end"}} )
+        tampilkan "✓ Tag 'high-end' dihapus dari PRD001"
+        tampilkan ""
+        
+        // Aggregation pipeline
+        tampilkan "[10] Aggregation Pipeline..."
+        pipeline itu [
+            {
+                "$group": {
+                    "_id": "$kategori",
+                    "jumlah_produk": {"$sum": 1},
+                    "total_stok": {"$sum": "$stok"},
+                    "rata_harga": {"$avg": "$harga"},
+                    "rata_rating": {"$avg": "$rating"}
+                }
+            },
+            {
+                "$sort": {"rata_rating": -1}
+            }
+        ]
+        
+        hasil_agg itu produk_collection.aggregate(pipeline)
+        tampilkan "Statistik per Kategori:"
+        tampilkan "-" * 90
+        tampilkan f"{'Kategori':<15} {'Jumlah':<10} {'Total Stok':<15} {'Rata Harga':<20} {'Rata Rating':<15}"
+        tampilkan "-" * 90
+        
+        untuk setiap stat dari hasil_agg
+            tampilkan f"{stat['_id']:<15} {stat['jumlah_produk']:<10} {stat['total_stok']:<15} Rp {stat['rata_harga']:>15,.0f} {stat['rata_rating']:<15.2f}"
+        selesai
+        tampilkan ""
+        
+        // Text search
+        tampilkan "[11] Text Search..."
+        // Buat text index
+        produk_collection.create_index([("nama", "text"), ("tags", "text")])
+        
+        // Search
+        hasil_search itu produk_collection.find(
+            {"$text": {"$search": "gaming"}},
+            {"score": {"$meta": "textScore"}}
+        ).sort([("score", {"$meta": "textScore"})])
+        
+        tampilkan "Hasil pencarian 'gaming':"
+        untuk setiap p dari hasil_search
+            tampilkan f"  • {p['nama']} - {p['kategori']}"
+        selesai
+        tampilkan ""
+        
+        // ============================================
+        // COLLECTION: TRANSAKSI
+        // ============================================
+        
+        tampilkan "[12] Bekerja dengan Collection 'transaksi'..."
+        transaksi_collection itu db["transaksi"]
+        transaksi_collection.delete_many({})
+        
+        // Insert transaksi
+        transaksi_list itu [
+            {
+                "nomor_transaksi": "TRX001",
+                "tanggal": datetime.datetime.now(),
+                "customer": {
+                    "nama": "Budi Santoso",
+                    "email": "budi@email.com",
+                    "telepon": "081234567890"
+                },
+                "items": [
+                    {"kode": "PRD001", "nama": "Laptop Gaming ASUS ROG", "qty": 1, "harga": 24000000},
+                    {"kode": "PRD002", "nama": "Mouse Logitech G502", "qty": 2, "harga": 650000}
+                ],
+                "total": 25300000,
+                "status": "selesai"
+            },
+            {
+                "nomor_transaksi": "TRX002",
+                "tanggal": datetime.datetime.now(),
+                "customer": {
+                    "nama": "Ani Wijaya",
+                    "email": "ani@email.com",
+                    "telepon": "081234567891"
+                },
+                "items": [
+                    {"kode": "PRD003", "nama": "Keyboard Mechanical Keychron K2", "qty": 1, "harga": 1200000},
+                    {"kode": "PRD005", "nama": "Headset HyperX Cloud II", "qty": 1, "harga": 1100000}
+                ],
+                "total": 2300000,
+                "status": "proses"
+            }
+        ]
+        
+        transaksi_collection.insert_many(transaksi_list)
+        tampilkan f"✓ {panjang(transaksi_list)} transaksi berhasil ditambahkan"
+        tampilkan ""
+        
+        // Query nested documents
+        tampilkan "[13] Query Nested Documents..."
+        hasil_nested itu transaksi_collection.find(
+            {"customer.nama": "Budi Santoso"}
+        )
+        
+        tampilkan "Transaksi atas nama Budi Santoso:"
+        untuk setiap t dari hasil_nested
+            tampilkan f"  No: {t['nomor_transaksi']}"
+            tampilkan f"  Total: Rp {t['total']:,.0f}"
+            tampilkan f"  Status: {t['status']}"
+            tampilkan f"  Items:"
+            untuk setiap item dari t['items']
+                tampilkan f"    - {item['nama']} x{item['qty']} = Rp {item['harga'] * item['qty']:,.0f}"
+            selesai
+        selesai
+        tampilkan ""
+        
+        // Aggregation dengan lookup (join)
+        tampilkan "[14] Aggregation dengan $lookup..."
+        pipeline_lookup itu [
+            {
+                "$unwind": "$items"
+            },
+            {
+                "$group": {
+                    "_id": "$items.kode",
+                    "nama_produk": {"$first": "$items.nama"},
+                    "total_terjual": {"$sum": "$items.qty"},
+                    "total_pendapatan": {"$sum": {"$multiply": ["$items.qty", "$items.harga"]}}
+                }
+            },
+            {
+                "$sort": {"total_pendapatan": -1}
+            }
+        ]
+        
+        hasil_lookup itu transaksi_collection.aggregate(pipeline_lookup)
+        tampilkan "Produk Terlaris:"
+        tampilkan "-" * 80
+        tampilkan f"{'Kode':<10} {'Nama Produk':<35} {'Terjual':<10} {'Pendapatan':<20}"
+        tampilkan "-" * 80
+        
+        untuk setiap item dari hasil_lookup
+            tampilkan f"{item['_id']:<10} {item['nama_produk']:<35} {item['total_terjual']:<10} Rp {item['total_pendapatan']:>15,.0f}"
+        selesai
+        tampilkan ""
+        
+        // Delete documents
+        tampilkan "[15] Delete Documents..."
+        delete_result itu produk_collection.delete_many({"stok": {"$lt": 10}})
+        tampilkan f"✓ {delete_result.deleted_count} produk dengan stok < 10 dihapus"
+        tampilkan ""
+        
+        // Count documents
+        tampilkan "[16] Count Documents..."
+        total_produk itu produk_collection.count_documents({})
+        total_transaksi itu transaksi_collection.count_documents({})
+        tampilkan f"Total Produk: {total_produk}"
+        tampilkan f"Total Transaksi: {total_transaksi}"
+        tampilkan ""
+        
+        // Tutup koneksi
+        client.close()
+        tampilkan "✓ Koneksi MongoDB ditutup"
+        
+    tangkap pymongo.errors.ServerSelectionTimeoutError
+        tampilkan "✗ Tidak dapat terhubung ke MongoDB server"
+        tampilkan "  Pastikan MongoDB server sudah berjalan di localhost:27017"
+    tangkap Exception sebagai e
+        tampilkan f"✗ Error: {e}"
+    selesai
+    
+tangkap ImportError
+    tampilkan "⚠ Module pymongo tidak terinstall"
+    tampilkan "  Install dengan: pip install pymongo"
+selesai
+
+tampilkan ""
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Note: Contoh ini memerlukan MongoDB server yang berjalan"
+tampilkan "      di localhost:27017 untuk dapat dijalankan."

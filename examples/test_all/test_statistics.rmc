@@ -1,0 +1,47 @@
+# Test Statistics Functions (Phase 6)
+
+tampilkan "=== Testing Statistics Functions ==="
+
+# Test data
+data itu [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+# Test median
+tampilkan ""
+tampilkan "Test median():"
+tampilkan "Data: [1, 2, 3, 4, 5, 6, 7, 8, 9]"
+med itu median(data)
+tampilkan "Median: " + ke_teks(med)
+
+# Test mode
+tampilkan ""
+tampilkan "Test mode():"
+data_mode itu [1, 2, 2, 3, 3, 3, 4, 4, 5]
+tampilkan "Data: [1, 2, 2, 3, 3, 3, 4, 4, 5]"
+mod itu mode(data_mode)
+tampilkan "Mode: " + ke_teks(mod)
+
+# Test stdev
+tampilkan ""
+tampilkan "Test stdev():"
+data_stdev itu [2, 4, 4, 4, 5, 5, 7, 9]
+tampilkan "Data: [2, 4, 4, 4, 5, 5, 7, 9]"
+sd itu stdev(data_stdev)
+tampilkan "Standard Deviation: " + ke_teks(sd)
+
+# Test variance
+tampilkan ""
+tampilkan "Test variance():"
+tampilkan "Data: [2, 4, 4, 4, 5, 5, 7, 9]"
+var itu variance(data_stdev)
+tampilkan "Variance: " + ke_teks(var)
+
+# Test quantiles
+tampilkan ""
+tampilkan "Test quantiles():"
+data_q itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+tampilkan "Data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+q itu quantiles(data_q)
+tampilkan "Quartiles: " + ke_teks(q)
+
+tampilkan ""
+tampilkan "=== All Statistics Tests Complete ==="

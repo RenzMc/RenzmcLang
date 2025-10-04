@@ -1,0 +1,37 @@
+// Test 3: Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 3: Functions                                        ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+// Basic function
+tampilkan "\n[3.1] Basic Function"
+buat fungsi salam
+    tampilkan "✓ Function called successfully"
+selesai
+panggil salam
+
+// Function with parameters
+tampilkan "\n[3.2] Function with Parameters"
+buat fungsi tambah_angka dengan a, b
+    hasil a + b
+selesai
+hasil_tambah itu panggil tambah_angka dengan 5, 3
+tampilkan f"✓ 5 + 3 = {hasil_tambah}"
+
+// Function with return
+tampilkan "\n[3.3] Function with Return"
+buat fungsi kali_dua dengan x
+    hasil x * 2
+selesai
+hasil_kali itu panggil kali_dua dengan 7
+tampilkan f"✓ 7 * 2 = {hasil_kali}"
+
+// Nested function calls
+tampilkan "\n[3.4] Nested Function Calls"
+buat fungsi kuadrat dengan n
+    hasil n * n
+selesai
+hasil_nested itu panggil kuadrat dengan panggil tambah_angka dengan 2, 3
+tampilkan f"✓ (2+3)^2 = {hasil_nested}"
+
+tampilkan "\n✅ Test 3 PASSED: All functions working!"

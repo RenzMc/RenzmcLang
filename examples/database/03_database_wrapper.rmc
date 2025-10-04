@@ -1,0 +1,238 @@
+// ============================================
+// Database Wrapper - ORM-Style Interface
+// ============================================
+// Membuat wrapper database dengan interface yang mudah digunakan
+
+tampilkan "=== Database Wrapper (ORM-Style) ==="
+tampilkan ""
+
+tampilkan "Contoh kode Python untuk Database Wrapper:"
+tampilkan ""
+
+kode_wrapper itu """
+import sqlite3
+import json
+
+class DatabaseWrapper:
+    def __init__(self, db_path):
+        self.db_path = db_path
+        self.conn = None
+        self.cursor = None
+    
+    def connect(self):
+        try:
+            self.conn = sqlite3.connect(self.db_path)
+            self.cursor = self.conn.cursor()
+            print(f"✓ Connected to database: {self.db_path}")
+            return True
+        except Exception as e:
+            print(f"✗ Connection error: {e}")
+            return False
+    
+    def close(self):
+        if self.conn:
+            self.cursor.close()
+            self.conn.close()
+            print("✓ Database connection closed")
+    
+    def execute(self, query, params=None):
+        try:
+            if params:
+                self.cursor.execute(query, params)
+            else:
+                self.cursor.execute(query)
+            self.conn.commit()
+            return True
+        except Exception as e:
+            print(f"✗ Query error: {e}")
+            self.conn.rollback()
+            return False
+    
+    def fetch_all(self, query, params=None):
+        try:
+            if params:
+                self.cursor.execute(query, params)
+            else:
+                self.cursor.execute(query)
+            return self.cursor.fetchall()
+        except Exception as e:
+            print(f"✗ Fetch error: {e}")
+            return []
+    
+    def fetch_one(self, query, params=None):
+        try:
+            if params:
+                self.cursor.execute(query, params)
+            else:
+                self.cursor.execute(query)
+            return self.cursor.fetchone()
+        except Exception as e:
+            print(f"✗ Fetch error: {e}")
+            return None
+    
+    def create_table(self, table_name, columns):
+        columns_str = ", ".join(columns)
+        query = f"CREATE TABLE IF NOT EXISTS {table_name} ({columns_str})"
+        return self.execute(query)
+    
+    def insert(self, table_name, data):
+        columns = ", ".join(data.keys())
+        placeholders = ", ".join(["?" for _ in data.keys()])
+        query = f"INSERT INTO {table_name} ({columns}) VALUES ({placeholders})"
+        return self.execute(query, tuple(data.values()))
+    
+    def update(self, table_name, data, where_clause, where_params):
+        set_clause = ", ".join([f"{k} = ?" for k in data.keys()])
+        query = f"UPDATE {table_name} SET {set_clause} WHERE {where_clause}"
+        params = tuple(data.values()) + tuple(where_params)
+        return self.execute(query, params)
+    
+    def delete(self, table_name, where_clause, where_params):
+        query = f"DELETE FROM {table_name} WHERE {where_clause}"
+        return self.execute(query, where_params)
+    
+    def select(self, table_name, columns="*", where_clause=None, where_params=None):
+        query = f"SELECT {columns} FROM {table_name}"
+        if where_clause:
+            query = query + f" WHERE {where_clause}"
+        return self.fetch_all(query, where_params if where_params else None)
+    
+    def count(self, table_name, where_clause=None, where_params=None):
+        query = f"SELECT COUNT(*) FROM {table_name}"
+        if where_clause:
+            query = query + f" WHERE {where_clause}"
+        result = self.fetch_one(query, where_params if where_params else None)
+        return result[0] if result else 0
+
+
+class ProdukModel:
+    def __init__(self, db):
+        self.db = db
+        self.table_name = "produk"
+        self._create_table()
+    
+    def _create_table(self):
+        columns = [
+            "id INTEGER PRIMARY KEY AUTOINCREMENT",
+            "kode TEXT UNIQUE NOT NULL",
+            "nama TEXT NOT NULL",
+            "kategori TEXT",
+            "harga REAL NOT NULL",
+            "stok INTEGER DEFAULT 0",
+            "deskripsi TEXT",
+            "dibuat_pada TEXT DEFAULT CURRENT_TIMESTAMP"
+        ]
+        self.db.create_table(self.table_name, columns)
+    
+    def tambah(self, kode, nama, kategori, harga, stok, deskripsi=""):
+        data = {
+            "kode": kode,
+            "nama": nama,
+            "kategori": kategori,
+            "harga": harga,
+            "stok": stok,
+            "deskripsi": deskripsi
+        }
+        return self.db.insert(self.table_name, data)
+    
+    def cari_semua(self):
+        return self.db.select(self.table_name)
+    
+    def cari_by_kode(self, kode):
+        return self.db.fetch_one(
+            f"SELECT * FROM {self.table_name} WHERE kode = ?",
+            (kode,)
+        )
+    
+    def cari_by_kategori(self, kategori):
+        return self.db.select(
+            self.table_name,
+            where_clause="kategori = ?",
+            where_params=(kategori,)
+        )
+    
+    def update_harga(self, kode, harga_baru):
+        return self.db.update(
+            self.table_name,
+            {"harga": harga_baru},
+            "kode = ?",
+            (kode,)
+        )
+    
+    def update_stok(self, kode, stok_baru):
+        return self.db.update(
+            self.table_name,
+            {"stok": stok_baru},
+            "kode = ?",
+            (kode,)
+        )
+    
+    def hapus(self, kode):
+        return self.db.delete(self.table_name, "kode = ?", (kode,))
+    
+    def total_produk(self):
+        return self.db.count(self.table_name)
+    
+    def total_nilai_stok(self):
+        result = self.db.fetch_one(
+            f"SELECT SUM(harga * stok) FROM {self.table_name}"
+        )
+        return result[0] if result and result[0] else 0
+
+
+# Demonstrasi Penggunaan
+if __name__ == "__main__":
+    print("[1] Initialize Database...")
+    db = DatabaseWrapper("toko.db")
+    db.connect()
+    print()
+    
+    print("[2] Initialize Product Model...")
+    produk_model = ProdukModel(db)
+    print("✓ Product model ready")
+    print()
+    
+    # Add products
+    print("[3] Adding products...")
+    produk_list = [
+        ("P001", "Laptop ASUS", "Elektronik", 8500000, 10, "Gaming laptop"),
+        ("P002", "Mouse Logitech", "Elektronik", 250000, 50, "Wireless mouse"),
+        ("P003", "Keyboard Mechanical", "Elektronik", 750000, 30, "RGB keyboard"),
+    ]
+    
+    for p in produk_list:
+        produk_model.tambah(p[0], p[1], p[2], p[3], p[4], p[5])
+    
+    print(f"✓ {len(produk_list)} products added")
+    print()
+    
+    # Display all products
+    print("[4] All Products...")
+    semua_produk = produk_model.cari_semua()
+    print("-" * 100)
+    print(f"{'Code':<8} {'Name':<25} {'Category':<15} {'Price':<15} {'Stock':<8}")
+    print("-" * 100)
+    
+    for p in semua_produk:
+        print(f"{p[1]:<8} {p[2]:<25} {p[3]:<15} Rp {p[4]:>10,.0f} {p[5]:<8}")
+    print()
+    
+    # Statistics
+    print("[5] Statistics...")
+    total_produk = produk_model.total_produk()
+    total_nilai = produk_model.total_nilai_stok()
+    print(f"Total Products: {total_produk}")
+    print(f"Total Stock Value: Rp {total_nilai:,.0f}")
+    print()
+    
+    db.close()
+    print("=== Done ===")
+"""
+
+tampilkan kode_wrapper
+tampilkan ""
+tampilkan "Untuk menjalankan:"
+tampilkan "1. Simpan kode di atas ke file database_wrapper.py"
+tampilkan "2. Jalankan: python database_wrapper.py"
+tampilkan ""
+tampilkan "=== Selesai ==="

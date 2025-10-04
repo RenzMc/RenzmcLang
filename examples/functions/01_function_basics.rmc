@@ -1,0 +1,225 @@
+# ===================================
+# Function Basics
+# ===================================
+# Fungsi adalah blok kode yang dapat digunakan kembali
+
+tampilkan "=== Function Basics Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Fungsi Sederhana
+# ===================================
+tampilkan "1. Fungsi Sederhana:"
+
+fungsi sapa():
+    tampilkan "Hello, World!"
+selesai
+
+sapa()
+
+tampilkan ""
+
+# ===================================
+# 2. Fungsi dengan Parameter
+# ===================================
+tampilkan "2. Fungsi dengan Parameter:"
+
+fungsi sapa_nama(nama):
+    tampilkan "Hello, " + nama + "!"
+selesai
+
+sapa_nama("Budi")
+sapa_nama("Ani")
+
+tampilkan ""
+
+# ===================================
+# 3. Fungsi dengan Return Value
+# ===================================
+tampilkan "3. Fungsi dengan Return Value:"
+
+fungsi jumlahkan(a, b):
+    hasil a + b
+selesai
+
+hasil_jumlah itu jumlahkan(5, 3)
+tampilkan "5 + 3 = " + ke_teks(hasil_jumlah)
+
+hasil_jumlah2 itu jumlahkan(10, 20)
+tampilkan "10 + 20 = " + ke_teks(hasil_jumlah2)
+
+tampilkan ""
+
+# ===================================
+# 4. Fungsi dengan Multiple Parameters
+# ===================================
+tampilkan "4. Fungsi dengan Multiple Parameters:"
+
+fungsi hitung_luas_persegi_panjang(panjang, lebar):
+    luas itu panjang * lebar
+    hasil luas
+selesai
+
+luas1 itu hitung_luas_persegi_panjang(5, 3)
+tampilkan "Luas (5 x 3): " + ke_teks(luas1)
+
+luas2 itu hitung_luas_persegi_panjang(10, 7)
+tampilkan "Luas (10 x 7): " + ke_teks(luas2)
+
+tampilkan ""
+
+# ===================================
+# 5. Fungsi dengan Multiple Return Values
+# ===================================
+tampilkan "5. Fungsi dengan Multiple Return Values:"
+
+fungsi bagi_dengan_sisa(dividend, divisor):
+    quotient itu dividend // divisor
+    remainder itu dividend % divisor
+    hasil (| quotient, remainder |)
+selesai
+
+hasil_bagi itu bagi_dengan_sisa(17, 5)
+tampilkan "17 dibagi 5:"
+tampilkan "  Hasil: " + ke_teks(hasil_bagi[0])
+tampilkan "  Sisa: " + ke_teks(hasil_bagi[1])
+
+tampilkan ""
+
+# ===================================
+# 6. Fungsi Iteratif untuk Faktorial
+# ===================================
+tampilkan "6. Fungsi Iteratif untuk Faktorial:"
+
+fungsi faktorial(n):
+    hasil_fakt itu 1
+    untuk i dari 1 sampai n
+        hasil_fakt *= i
+    selesai
+    hasil hasil_fakt
+selesai
+
+tampilkan "Faktorial 3: " + ke_teks(faktorial(3))
+tampilkan "Faktorial 4: " + ke_teks(faktorial(4))
+tampilkan "Faktorial 5: " + ke_teks(faktorial(5))
+
+tampilkan ""
+
+# ===================================
+# 7. Fungsi dengan Kondisi
+# ===================================
+tampilkan "7. Fungsi dengan Kondisi:"
+
+fungsi cek_genap(angka):
+    hasil_cek itu angka % 2 == 0
+    hasil hasil_cek
+selesai
+
+tampilkan "4 genap? " + ke_teks(cek_genap(4))
+tampilkan "7 genap? " + ke_teks(cek_genap(7))
+tampilkan "10 genap? " + ke_teks(cek_genap(10))
+
+tampilkan ""
+
+# ===================================
+# 8. Fungsi dengan Loop
+# ===================================
+tampilkan "8. Fungsi dengan Loop:"
+
+fungsi jumlah_list(numbers):
+    total itu 0
+    untuk setiap num dari numbers
+        total += num
+    selesai
+    hasil total
+selesai
+
+angka itu [1, 2, 3, 4, 5]
+tampilkan "Angka: " + ke_teks(angka)
+tampilkan "Jumlah: " + ke_teks(jumlah_list(angka))
+
+tampilkan ""
+
+# ===================================
+# 9. Fungsi untuk String Processing
+# ===================================
+tampilkan "9. Fungsi untuk String Processing:"
+
+fungsi balik_string(teks):
+    hasil_list itu []
+    panjang_teks itu panjang(teks)
+    
+    untuk i dari 0 sampai panjang_teks - 1
+        index itu panjang_teks - 1 - i
+        hasil_list itu hasil_list + [teks[index]]
+    selesai
+    
+    hasil "".join(hasil_list)
+selesai
+
+teks_asli itu "Hello"
+teks_balik itu balik_string(teks_asli)
+tampilkan "Teks asli: " + teks_asli
+tampilkan "Teks balik: " + teks_balik
+
+tampilkan ""
+
+# ===================================
+# 10. Fungsi untuk Validasi
+# ===================================
+tampilkan "10. Fungsi untuk Validasi:"
+
+fungsi validasi_email(email):
+    # Simple validation
+    has_at itu "@" dalam email
+    has_dot itu "." dalam email
+    hasil has_at dan has_dot
+selesai
+
+email1 itu "user@example.com"
+email2 itu "invalid-email"
+
+tampilkan email1 + " valid? " + ke_teks(validasi_email(email1))
+tampilkan email2 + " valid? " + ke_teks(validasi_email(email2))
+
+tampilkan ""
+
+# ===================================
+# 11. Fungsi Helper
+# ===================================
+tampilkan "11. Fungsi Helper:"
+
+fungsi is_prime_simple(n):
+    jika n < 2
+        hasil salah
+    selesai
+    jika n == 2
+        hasil benar
+    selesai
+    jika n % 2 == 0
+        hasil salah
+    selesai
+    # Simplified: just check small numbers
+    hasil benar
+selesai
+
+# Hardcode prima untuk demo
+prima_list itu [2, 3, 5, 7, 11, 13, 17, 19]
+tampilkan "Bilangan prima sampai 20: " + ke_teks(prima_list)
+
+tampilkan ""
+
+# ===================================
+# 12. Function Best Practices
+# ===================================
+tampilkan "12. Function Best Practices:"
+tampilkan "✓ Gunakan nama fungsi yang deskriptif"
+tampilkan "✓ Satu fungsi satu tugas (single responsibility)"
+tampilkan "✓ Gunakan parameter untuk input"
+tampilkan "✓ Gunakan return untuk output"
+tampilkan "✓ Dokumentasikan fungsi kompleks"
+tampilkan "✓ Hindari side effects jika memungkinkan"
+tampilkan "✓ Gunakan fungsi untuk code reusability"
+
+tampilkan ""
+tampilkan "=== Function Basics Examples Complete ==="

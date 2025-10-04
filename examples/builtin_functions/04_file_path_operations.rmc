@@ -1,0 +1,201 @@
+// ============================================
+// Built-in Functions: File & Path Operations
+// ============================================
+// Comprehensive examples for file and path functions
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║    FILE & PATH OPERATIONS COMPLETE    ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// 1. DIRECTORY OPERATIONS
+// ============================================
+tampilkan "=== 1. DIRECTORY OPERATIONS ==="
+tampilkan ""
+
+// direktori_sekarang - Get current directory
+dir_sekarang itu direktori_sekarang()
+tampilkan f"✓ direktori_sekarang() = '{dir_sekarang}'"
+
+// direktori_ada - Check if directory exists
+ada_workspace itu direktori_ada("/workspace")
+ada_fake itu direktori_ada("/fake_directory")
+tampilkan f"✓ direktori_ada('/workspace') = {ada_workspace}"
+tampilkan f"✓ direktori_ada('/fake_directory') = {ada_fake}"
+
+// buat_direktori - Create directory
+tampilkan "✓ buat_direktori('test_dir') - Creating test directory..."
+buat_direktori("test_dir")
+
+// daftar_direktori - List directory contents
+isi_dir itu daftar_direktori(".")
+tampilkan f"✓ daftar_direktori('.') = {panjang(isi_dir)} items"
+tampilkan "  First 5 items:"
+untuk i dari 0 sampai 4
+    jika i < panjang(isi_dir)
+        tampilkan f"    - {isi_dir[i]}"
+    selesai
+selesai
+
+tampilkan ""
+
+// ============================================
+// 2. PATH OPERATIONS
+// ============================================
+tampilkan "=== 2. PATH OPERATIONS ==="
+tampilkan ""
+
+path_contoh itu "/home/user/documents/file.txt"
+
+// pisah_path - Split path into directory and filename
+hasil_pisah itu pisah_path(path_contoh)
+tampilkan f"✓ pisah_path('{path_contoh}')"
+tampilkan f"  Directory: {hasil_pisah[0]}"
+tampilkan f"  Filename: {hasil_pisah[1]}"
+
+// ekstensi_file - Get file extension
+ekstensi itu ekstensi_file(path_contoh)
+tampilkan f"✓ ekstensi_file('{path_contoh}') = '{ekstensi}'"
+
+// nama_file_tanpa_ekstensi - Get filename without extension
+nama_saja itu nama_file_tanpa_ekstensi(path_contoh)
+tampilkan f"✓ nama_file_tanpa_ekstensi('{path_contoh}') = '{nama_saja}'"
+
+// gabung_path - Join path components
+path_gabung itu gabung_path("/home/user", "documents", "file.txt")
+tampilkan f"✓ gabung_path('/home/user', 'documents', 'file.txt') = '{path_gabung}'"
+
+// path_absolut - Get absolute path
+path_abs itu path_absolut(".")
+tampilkan f"✓ path_absolut('.') = '{path_abs}'"
+
+tampilkan ""
+
+// ============================================
+// 3. FILE CHECKING
+// ============================================
+tampilkan "=== 3. FILE CHECKING ==="
+tampilkan ""
+
+// Create test file
+test_file itu "test_file.txt"
+tulis_file(test_file, "Hello RenzMcLang!")
+
+// path_ada - Check if path exists
+ada_file itu path_ada(test_file)
+tampilkan f"✓ path_ada('{test_file}') = {ada_file}"
+
+// file_exists - Check if file exists (alias)
+exists itu file_exists(test_file)
+tampilkan f"✓ file_exists('{test_file}') = {exists}"
+
+// adalah_file - Check if path is a file
+is_file itu adalah_file(test_file)
+tampilkan f"✓ adalah_file('{test_file}') = {is_file}"
+
+// adalah_direktori - Check if path is a directory
+is_dir itu adalah_direktori(test_file)
+is_dir2 itu adalah_direktori("test_dir")
+tampilkan f"✓ adalah_direktori('{test_file}') = {is_dir}"
+tampilkan f"✓ adalah_direktori('test_dir') = {is_dir2}"
+
+tampilkan ""
+
+// ============================================
+// 4. FILE PERMISSIONS
+// ============================================
+tampilkan "=== 4. FILE PERMISSIONS ==="
+tampilkan ""
+
+// file_dapat_dibaca - Check if file is readable
+dapat_baca itu file_dapat_dibaca(test_file)
+tampilkan f"✓ file_dapat_dibaca('{test_file}') = {dapat_baca}"
+
+// file_dapat_ditulis - Check if file is writable
+dapat_tulis itu file_dapat_ditulis(test_file)
+tampilkan f"✓ file_dapat_ditulis('{test_file}') = {dapat_tulis}"
+
+tampilkan ""
+
+// ============================================
+// 5. FILE TIMESTAMPS
+// ============================================
+tampilkan "=== 5. FILE TIMESTAMPS ==="
+tampilkan ""
+
+// waktu_modifikasi_file - Get file modification time
+waktu_mod itu waktu_modifikasi_file(test_file)
+tampilkan f"✓ waktu_modifikasi_file('{test_file}') = {waktu_mod}"
+
+// waktu_buat_file - Get file creation time
+waktu_buat itu waktu_buat_file(test_file)
+tampilkan f"✓ waktu_buat_file('{test_file}') = {waktu_buat}"
+
+tampilkan ""
+
+// ============================================
+// 6. PRACTICAL EXAMPLES
+// ============================================
+tampilkan "=== 6. PRACTICAL EXAMPLES ==="
+tampilkan ""
+
+// Example 1: File organizer
+tampilkan "Example 1: File Type Checker"
+
+buat fungsi cek_tipe_file dengan filename
+    ext itu ekstensi_file(filename)
+    
+    jika ext == ".txt"
+        hasil "Text File"
+    kalau tidak jika ext == ".py"
+        hasil "Python File"
+    kalau tidak jika ext == ".rmc"
+        hasil "RenzMcLang File"
+    kalau tidak jika ext == ".jpg"
+        hasil "Image File"
+    kalau tidak
+        hasil "Unknown Type"
+    selesai
+selesai
+
+files itu ["document.txt", "script.py", "program.rmc", "photo.jpg", "data.csv"]
+
+untuk setiap file dari files
+    tipe itu panggil cek_tipe_file dengan file
+    tampilkan f"  {file:20} -> {tipe}"
+selesai
+
+tampilkan ""
+
+// Example 2: Safe file operations
+tampilkan "Example 2: Safe File Writer"
+
+buat fungsi tulis_file_aman dengan filename, content
+    jika file_exists(filename)
+        tampilkan f"  ⚠️  File '{filename}' already exists!"
+        hasil salah
+    selesai
+    
+    tulis_file(filename, content)
+    tampilkan f"  ✓ File '{filename}' created successfully"
+    hasil benar
+selesai
+
+panggil tulis_file_aman dengan "new_file.txt", "New content"
+panggil tulis_file_aman dengan "new_file.txt", "Duplicate content"
+
+tampilkan ""
+
+// Cleanup
+tampilkan "Cleaning up test files..."
+hapus_file(test_file)
+hapus_file("new_file.txt")
+tampilkan "✓ Cleanup complete"
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  File & Path Operations Complete! ✅   ║"
+tampilkan "║                                        ║"
+tampilkan "║  Total Functions Demonstrated: 14      ║"
+tampilkan "╚════════════════════════════════════════╝"

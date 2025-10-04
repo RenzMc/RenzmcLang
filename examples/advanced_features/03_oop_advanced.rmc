@@ -1,0 +1,446 @@
+# ============================================
+# ADVANCED OOP - FUNCTION-BASED APPROACH
+# ============================================
+# Comprehensive examples for Object-Oriented Programming
+# using function-based patterns in RenzmcLang
+#
+# NOTE: While RenzmcLang has class syntax, this example uses
+# a function-based approach that's more reliable and follows
+# functional programming principles.
+
+tampilkan "=== ADVANCED OOP PATTERNS ==="
+tampilkan ""
+
+# ============================================
+# 1. BASIC OBJECT WITH METHODS
+# ============================================
+tampilkan "1. Basic Object with Methods:"
+tampilkan ""
+
+# Constructor function
+buat fungsi buat_person(nama, umur):
+    person itu {
+        "nama": nama,
+        "umur": umur
+    }
+    hasil person
+selesai
+
+# Method functions
+buat fungsi person_perkenalan(person):
+    hasil "Halo, nama saya " + person["nama"] + ", umur " + ke_teks(person["umur"]) + " tahun"
+selesai
+
+buat fungsi person_ulang_tahun(person):
+    person["umur"] itu person["umur"] + 1
+    tampilkan "   " + person["nama"] + " sekarang berumur " + ke_teks(person["umur"]) + " tahun"
+selesai
+
+# Create instances
+person1 itu panggil buat_person dengan "Alice", 25
+person2 itu panggil buat_person dengan "Bob", 30
+
+tampilkan "   " + panggil person_perkenalan dengan person1
+tampilkan "   " + panggil person_perkenalan dengan person2
+tampilkan ""
+
+tampilkan "   Celebrating birthdays:"
+panggil person_ulang_tahun dengan person1
+panggil person_ulang_tahun dengan person2
+tampilkan ""
+
+# ============================================
+# 2. OBJECT WITH PRIVATE DATA
+# ============================================
+tampilkan "2. Object with Private Data (Encapsulation):"
+tampilkan ""
+
+buat fungsi buat_bank_account(pemilik, saldo_awal):
+    account itu {
+        "pemilik": pemilik,
+        "_saldo": saldo_awal,
+        "_transaksi": []
+    }
+    hasil account
+selesai
+
+buat fungsi account_get_saldo(account):
+    hasil account["_saldo"]
+selesai
+
+buat fungsi account_deposit(account, jumlah):
+    account["_saldo"] itu account["_saldo"] + jumlah
+    tambah(account["_transaksi"], "Deposit: +" + ke_teks(jumlah))
+    tampilkan "   ✓ Deposit Rp " + ke_teks(jumlah) + " berhasil"
+selesai
+
+buat fungsi account_withdraw(account, jumlah):
+    jika jumlah > account["_saldo"]
+        tampilkan "   ✗ Saldo tidak cukup!"
+        hasil salah
+    selesai
+    account["_saldo"] itu account["_saldo"] - jumlah
+    tambah(account["_transaksi"], "Withdraw: -" + ke_teks(jumlah))
+    tampilkan "   ✓ Withdraw Rp " + ke_teks(jumlah) + " berhasil"
+    hasil benar
+selesai
+
+buat fungsi account_riwayat(account):
+    tampilkan "   Riwayat transaksi " + account["pemilik"] + ":"
+    untuk trans dalam account["_transaksi"]
+        tampilkan "   - " + trans
+    selesai
+selesai
+
+# Create and use account
+account itu panggil buat_bank_account dengan "Alice", 1000000
+tampilkan "   Saldo awal: Rp " + ke_teks(panggil account_get_saldo dengan account)
+
+panggil account_deposit dengan account, 500000
+panggil account_withdraw dengan account, 200000
+panggil account_withdraw dengan account, 2000000
+
+tampilkan "   Saldo akhir: Rp " + ke_teks(panggil account_get_saldo dengan account)
+panggil account_riwayat dengan account
+tampilkan ""
+
+# ============================================
+# 3. INHERITANCE PATTERN
+# ============================================
+tampilkan "3. Inheritance Pattern:"
+tampilkan ""
+
+# Base "class"
+buat fungsi buat_animal(nama):
+    animal itu {
+        "nama": nama,
+        "type": "Animal"
+    }
+    hasil animal
+selesai
+
+buat fungsi animal_suara(animal):
+    hasil "Some sound"
+selesai
+
+buat fungsi animal_info(animal):
+    hasil animal["type"] + ": " + animal["nama"]
+selesai
+
+# Derived "class" - Dog
+buat fungsi buat_dog(nama, ras):
+    dog itu {
+        "nama": nama,
+        "ras": ras,
+        "type": "Dog"
+    }
+    hasil dog
+selesai
+
+buat fungsi dog_suara(dog):
+    hasil "Woof! Woof!"
+selesai
+
+buat fungsi dog_info(dog):
+    hasil dog["type"] + ": " + dog["nama"] + " (Ras: " + dog["ras"] + ")"
+selesai
+
+# Derived "class" - Cat
+buat fungsi buat_cat(nama, warna):
+    cat itu {
+        "nama": nama,
+        "warna": warna,
+        "type": "Cat"
+    }
+    hasil cat
+selesai
+
+buat fungsi cat_suara(cat):
+    hasil "Meow! Meow!"
+selesai
+
+buat fungsi cat_info(cat):
+    hasil cat["type"] + ": " + cat["nama"] + " (Warna: " + cat["warna"] + ")"
+selesai
+
+# Create instances
+dog itu panggil buat_dog dengan "Buddy", "Golden Retriever"
+cat itu panggil buat_cat dengan "Whiskers", "Orange"
+
+tampilkan "   " + panggil dog_info dengan dog
+tampilkan "   " + dog["nama"] + " says: " + panggil dog_suara dengan dog
+tampilkan ""
+
+tampilkan "   " + panggil cat_info dengan cat
+tampilkan "   " + cat["nama"] + " says: " + panggil cat_suara dengan cat
+tampilkan ""
+
+# ============================================
+# 4. COMPUTED PROPERTIES
+# ============================================
+tampilkan "4. Computed Properties:"
+tampilkan ""
+
+buat fungsi buat_rectangle(panjang, lebar):
+    rect itu {
+        "panjang": panjang,
+        "lebar": lebar
+    }
+    hasil rect
+selesai
+
+buat fungsi rect_luas(rect):
+    hasil rect["panjang"] * rect["lebar"]
+selesai
+
+buat fungsi rect_keliling(rect):
+    hasil 2 * (rect["panjang"] + rect["lebar"])
+selesai
+
+buat fungsi rect_info(rect):
+    hasil "Rectangle(" + ke_teks(rect["panjang"]) + " x " + ke_teks(rect["lebar"]) + ")"
+selesai
+
+rect itu panggil buat_rectangle dengan 10, 5
+tampilkan "   " + panggil rect_info dengan rect
+tampilkan "   Luas: " + ke_teks(panggil rect_luas dengan rect)
+tampilkan "   Keliling: " + ke_teks(panggil rect_keliling dengan rect)
+tampilkan ""
+
+# ============================================
+# 5. OBJECT WITH STATE
+# ============================================
+tampilkan "5. Object with State:"
+tampilkan ""
+
+buat fungsi buat_counter(nama):
+    counter itu {
+        "nama": nama,
+        "count": 0
+    }
+    hasil counter
+selesai
+
+buat fungsi counter_increment(counter):
+    counter["count"] itu counter["count"] + 1
+selesai
+
+buat fungsi counter_get_count(counter):
+    hasil counter["count"]
+selesai
+
+buat fungsi counter_reset(counter):
+    counter["count"] itu 0
+selesai
+
+counter1 itu panggil buat_counter dengan "Counter1"
+counter2 itu panggil buat_counter dengan "Counter2"
+
+panggil counter_increment dengan counter1
+panggil counter_increment dengan counter1
+panggil counter_increment dengan counter1
+
+panggil counter_increment dengan counter2
+panggil counter_increment dengan counter2
+
+tampilkan "   " + counter1["nama"] + " count: " + ke_teks(panggil counter_get_count dengan counter1)
+tampilkan "   " + counter2["nama"] + " count: " + ke_teks(panggil counter_get_count dengan counter2)
+
+panggil counter_reset dengan counter1
+tampilkan "   After reset, " + counter1["nama"] + " count: " + ke_teks(panggil counter_get_count dengan counter1)
+tampilkan ""
+
+# ============================================
+# 6. PRACTICAL EXAMPLE: STUDENT
+# ============================================
+tampilkan "6. Practical Example - Student:"
+tampilkan ""
+
+buat fungsi buat_student(nama, nim):
+    student itu {
+        "nama": nama,
+        "nim": nim,
+        "nilai": {}
+    }
+    hasil student
+selesai
+
+buat fungsi student_tambah_nilai(student, mata_kuliah, nilai):
+    student["nilai"][mata_kuliah] itu nilai
+    tampilkan "   ✓ Nilai " + mata_kuliah + " ditambahkan: " + ke_teks(nilai)
+selesai
+
+buat fungsi student_hitung_ipk(student):
+    jika panjang(student["nilai"]) == 0
+        hasil 0.0
+    selesai
+    
+    total itu 0
+    untuk mk dalam kunci(student["nilai"])
+        total itu total + student["nilai"][mk]
+    selesai
+    
+    hasil total / panjang(student["nilai"])
+selesai
+
+buat fungsi student_info(student):
+    tampilkan "   Student: " + student["nama"] + " (NIM: " + student["nim"] + ")"
+    tampilkan "   Nilai:"
+    untuk mk dalam kunci(student["nilai"])
+        tampilkan "   - " + mk + ": " + ke_teks(student["nilai"][mk])
+    selesai
+    tampilkan "   IPK: " + ke_teks(panggil student_hitung_ipk dengan student)
+selesai
+
+student itu panggil buat_student dengan "Alice", "12345"
+panggil student_tambah_nilai dengan student, "Matematika", 85
+panggil student_tambah_nilai dengan student, "Fisika", 90
+panggil student_tambah_nilai dengan student, "Kimia", 88
+tampilkan ""
+panggil student_info dengan student
+tampilkan ""
+
+# ============================================
+# 7. PRACTICAL EXAMPLE: SHOPPING CART
+# ============================================
+tampilkan "7. Practical Example - Shopping Cart:"
+tampilkan ""
+
+buat fungsi buat_product(nama, harga):
+    product itu {
+        "nama": nama,
+        "harga": harga
+    }
+    hasil product
+selesai
+
+buat fungsi buat_cart():
+    cart itu {
+        "items": []
+    }
+    hasil cart
+selesai
+
+buat fungsi cart_tambah_item(cart, product, jumlah):
+    item itu {
+        "product": product,
+        "jumlah": jumlah
+    }
+    tambah(cart["items"], item)
+    tampilkan "   ✓ Added " + ke_teks(jumlah) + "x " + product["nama"]
+selesai
+
+buat fungsi cart_hitung_total(cart):
+    total itu 0
+    untuk item dalam cart["items"]
+        total itu total + (item["product"]["harga"] * item["jumlah"])
+    selesai
+    hasil total
+selesai
+
+buat fungsi cart_tampilkan(cart):
+    tampilkan "   Shopping Cart:"
+    untuk item dalam cart["items"]
+        subtotal itu item["product"]["harga"] * item["jumlah"]
+        tampilkan "   - " + item["product"]["nama"] + " x" + ke_teks(item["jumlah"]) + " = Rp " + ke_teks(subtotal)
+    selesai
+    tampilkan "   Total: Rp " + ke_teks(panggil cart_hitung_total dengan cart)
+selesai
+
+# Create products
+laptop itu panggil buat_product dengan "Laptop", 10000000
+mouse itu panggil buat_product dengan "Mouse", 150000
+keyboard itu panggil buat_product dengan "Keyboard", 500000
+
+# Create cart and add items
+cart itu panggil buat_cart
+panggil cart_tambah_item dengan cart, laptop, 1
+panggil cart_tambah_item dengan cart, mouse, 2
+panggil cart_tambah_item dengan cart, keyboard, 1
+tampilkan ""
+panggil cart_tampilkan dengan cart
+tampilkan ""
+
+# ============================================
+# 8. OBJECT FACTORY PATTERN
+# ============================================
+tampilkan "8. Object Factory Pattern:"
+tampilkan ""
+
+buat fungsi buat_user(username, email, role):
+    # Validate
+    is_valid itu benar
+    
+    jika panjang(username) < 3
+        tampilkan "   ✗ Username too short"
+        is_valid itu salah
+    selesai
+    
+    jika tidak berisi(email, "@")
+        tampilkan "   ✗ Invalid email"
+        is_valid itu salah
+    selesai
+    
+    jika is_valid
+        tampilkan "   ✓ User validation passed"
+        user itu {
+            "username": username,
+            "email": email,
+            "role": role,
+            "is_valid": benar
+        }
+        hasil user
+    selesai
+    
+    # Return invalid user
+    hasil {
+        "username": username,
+        "email": email,
+        "role": role,
+        "is_valid": salah
+    }
+selesai
+
+buat fungsi user_info(user):
+    hasil "User: " + user["username"] + " (" + user["email"] + ") - Role: " + user["role"]
+selesai
+
+user1 itu panggil buat_user dengan "alice", "alice@example.com", "admin"
+tampilkan "   " + panggil user_info dengan user1
+tampilkan ""
+
+user2 itu panggil buat_user dengan "ab", "invalid-email", "user"
+tampilkan ""
+
+# ============================================
+# 9. BEST PRACTICES
+# ============================================
+tampilkan "9. Best Practices for OOP Patterns:"
+tampilkan "   ✓ Use constructor functions (buat_*) to create objects"
+tampilkan "   ✓ Use dictionaries to store object data"
+tampilkan "   ✓ Use separate functions for methods"
+tampilkan "   ✓ Pass object as first parameter (like 'self')"
+tampilkan "   ✓ Use naming conventions (prefix with type)"
+tampilkan "   ✓ Validate data in constructor functions"
+tampilkan "   ✓ Use private naming (_prefix) for internal data"
+tampilkan ""
+
+# ============================================
+# SUMMARY
+# ============================================
+tampilkan "=== SUMMARY ==="
+tampilkan "OOP patterns covered:"
+tampilkan "1. Basic objects with methods"
+tampilkan "2. Encapsulation with private data"
+tampilkan "3. Inheritance pattern"
+tampilkan "4. Computed properties"
+tampilkan "5. Objects with state"
+tampilkan "6-8. Practical examples (Student, Shopping Cart, User factory)"
+tampilkan ""
+tampilkan "Key patterns:"
+tampilkan "- Constructor: buat fungsi buat_Type(params):"
+tampilkan "- Methods: buat fungsi type_method(obj, params):"
+tampilkan "- Create: obj itu panggil buat_Type dengan args"
+tampilkan "- Call method: panggil type_method dengan obj, args"
+tampilkan ""
+tampilkan "✓ All examples completed successfully!"

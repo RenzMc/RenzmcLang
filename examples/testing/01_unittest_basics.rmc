@@ -1,0 +1,429 @@
+// ============================================
+// Unit Testing - Testing Framework
+// ============================================
+// Contoh penggunaan unittest untuk testing
+
+tampilkan "=== Unit Testing Examples ==="
+tampilkan ""
+
+impor_python "unittest"
+
+// ============================================
+// 1. BASIC UNIT TEST
+// ============================================
+
+tampilkan "[1] Basic Unit Test Example..."
+tampilkan ""
+
+// Fungsi yang akan ditest
+fungsi tambah(a, b):
+    hasil a + b
+selesai
+
+fungsi kalikan(a, b):
+    hasil a * b
+selesai
+
+fungsi bagi(a, b):
+    jika b == 0
+        lempar ValueError("Tidak bisa dibagi dengan nol")
+    selesai
+    hasil a / b
+selesai
+
+// Contoh kode unittest
+kode_unittest itu """
+import unittest
+
+# Fungsi yang akan ditest
+def tambah(a, b):
+    return a + b
+
+def kalikan(a, b):
+    return a * b
+
+def bagi(a, b):
+    if b == 0:
+        raise ValueError("Tidak bisa dibagi dengan nol")
+    return a / b
+
+# Test class
+class TestMathOperations(unittest.TestCase):
+    
+    def test_tambah(self):
+        self.assertEqual(tambah(2, 3), 5)
+        self.assertEqual(tambah(-1, 1), 0)
+        self.assertEqual(tambah(0, 0), 0)
+    
+    def test_kalikan(self):
+        self.assertEqual(kalikan(2, 3), 6)
+        self.assertEqual(kalikan(-2, 3), -6)
+        self.assertEqual(kalikan(0, 5), 0)
+    
+    def test_bagi(self):
+        self.assertEqual(bagi(10, 2), 5)
+        self.assertEqual(bagi(9, 3), 3)
+        
+        # Test exception
+        with self.assertRaises(ValueError):
+            bagi(10, 0)
+
+if __name__ == '__main__':
+    unittest.main()
+"""
+
+tampilkan kode_unittest
+tampilkan ""
+
+// ============================================
+// 2. TEST DENGAN SETUP DAN TEARDOWN
+// ============================================
+
+tampilkan "[2] Test dengan Setup dan Teardown..."
+tampilkan ""
+
+kode_setup itu """
+import unittest
+
+class Calculator:
+    def __init__(self):
+        self.result = 0
+    
+    def add(self, x):
+        self.result += x
+        return self.result
+    
+    def subtract(self, x):
+        self.result -= x
+        return self.result
+    
+    def reset(self):
+        self.result = 0
+
+class TestCalculator(unittest.TestCase):
+    
+    def setUp(self):
+        # Dijalankan sebelum setiap test
+        self.calc = Calculator()
+        print("Setup: Calculator created")
+    
+    def tearDown(self):
+        # Dijalankan setelah setiap test
+        print("Teardown: Test completed")
+    
+    def test_add(self):
+        self.assertEqual(self.calc.add(5), 5)
+        self.assertEqual(self.calc.add(3), 8)
+    
+    def test_subtract(self):
+        self.calc.result = 10
+        self.assertEqual(self.calc.subtract(3), 7)
+        self.assertEqual(self.calc.subtract(2), 5)
+    
+    def test_reset(self):
+        self.calc.add(10)
+        self.calc.reset()
+        self.assertEqual(self.calc.result, 0)
+
+if __name__ == '__main__':
+    unittest.main()
+"""
+
+tampilkan kode_setup
+tampilkan ""
+
+// ============================================
+// 3. ASSERTION METHODS
+// ============================================
+
+tampilkan "[3] Assertion Methods..."
+tampilkan ""
+
+kode_assertions itu """
+import unittest
+
+class TestAssertions(unittest.TestCase):
+    
+    def test_equality(self):
+        # Test kesamaan
+        self.assertEqual(1 + 1, 2)
+        self.assertNotEqual(1 + 1, 3)
+    
+    def test_boolean(self):
+        # Test boolean
+        self.assertTrue(True)
+        self.assertFalse(False)
+    
+    def test_none(self):
+        # Test None
+        self.assertIsNone(None)
+        self.assertIsNotNone("value")
+    
+    def test_membership(self):
+        # Test membership
+        self.assertIn(1, [1, 2, 3])
+        self.assertNotIn(4, [1, 2, 3])
+    
+    def test_comparison(self):
+        # Test comparison
+        self.assertGreater(5, 3)
+        self.assertLess(3, 5)
+        self.assertGreaterEqual(5, 5)
+        self.assertLessEqual(3, 5)
+    
+    def test_type(self):
+        # Test type
+        self.assertIsInstance("hello", str)
+        self.assertIsInstance(123, int)
+    
+    def test_exception(self):
+        # Test exception
+        with self.assertRaises(ZeroDivisionError):
+            1 / 0
+        
+        with self.assertRaises(ValueError):
+            int("abc")
+
+if __name__ == '__main__':
+    unittest.main()
+"""
+
+tampilkan kode_assertions
+tampilkan ""
+
+// ============================================
+// 4. TEST SUITE
+// ============================================
+
+tampilkan "[4] Test Suite Example..."
+tampilkan ""
+
+kode_suite itu """
+import unittest
+
+# Test classes
+class TestMath(unittest.TestCase):
+    def test_add(self):
+        self.assertEqual(2 + 2, 4)
+    
+    def test_multiply(self):
+        self.assertEqual(3 * 3, 9)
+
+class TestString(unittest.TestCase):
+    def test_upper(self):
+        self.assertEqual("hello".upper(), "HELLO")
+    
+    def test_split(self):
+        self.assertEqual("a b c".split(), ["a", "b", "c"])
+
+# Buat test suite
+def suite():
+    suite = unittest.TestSuite()
+    
+    # Tambah test dari TestMath
+    suite.addTest(TestMath('test_add'))
+    suite.addTest(TestMath('test_multiply'))
+    
+    # Tambah test dari TestString
+    suite.addTest(TestString('test_upper'))
+    suite.addTest(TestString('test_split'))
+    
+    return suite
+
+if __name__ == '__main__':
+    runner = unittest.TextTestRunner(verbosity=2)
+    runner.run(suite())
+"""
+
+tampilkan kode_suite
+tampilkan ""
+
+// ============================================
+// 5. MOCK TESTING
+// ============================================
+
+tampilkan "[5] Mock Testing Example..."
+tampilkan ""
+
+kode_mock itu """
+import unittest
+from unittest.mock import Mock, patch
+
+class EmailService:
+    def send_email(self, to, subject, body):
+        # Simulasi kirim email
+        print(f"Sending email to {to}")
+        return True
+
+class UserService:
+    def __init__(self, email_service):
+        self.email_service = email_service
+    
+    def register_user(self, email, name):
+        # Registrasi user
+        user = {"email": email, "name": name}
+        
+        # Kirim welcome email
+        self.email_service.send_email(
+            email, 
+            "Welcome!", 
+            f"Hello {name}"
+        )
+        
+        return user
+
+class TestUserService(unittest.TestCase):
+    
+    def test_register_user(self):
+        # Buat mock email service
+        mock_email = Mock()
+        mock_email.send_email.return_value = True
+        
+        # Buat user service dengan mock
+        user_service = UserService(mock_email)
+        
+        # Test registrasi
+        user = user_service.register_user("test@example.com", "Test User")
+        
+        # Verify
+        self.assertEqual(user["email"], "test@example.com")
+        self.assertEqual(user["name"], "Test User")
+        
+        # Verify email service dipanggil
+        mock_email.send_email.assert_called_once()
+        mock_email.send_email.assert_called_with(
+            "test@example.com",
+            "Welcome!",
+            "Hello Test User"
+        )
+
+if __name__ == '__main__':
+    unittest.main()
+"""
+
+tampilkan kode_mock
+tampilkan ""
+
+// ============================================
+// 6. PARAMETRIZED TESTS
+// ============================================
+
+tampilkan "[6] Parametrized Tests..."
+tampilkan ""
+
+kode_parametrized itu """
+import unittest
+
+def is_palindrome(text):
+    text = text.lower().replace(" ", "")
+    return text == text[::-1]
+
+class TestPalindrome(unittest.TestCase):
+    
+    def test_palindromes(self):
+        # Test cases
+        test_cases = [
+            ("radar", True),
+            ("level", True),
+            ("hello", False),
+            ("A man a plan a canal Panama", True),
+            ("race car", True),
+            ("python", False)
+        ]
+        
+        for text, expected in test_cases:
+            with self.subTest(text=text):
+                result = is_palindrome(text)
+                self.assertEqual(result, expected, 
+                               f"Failed for: {text}")
+
+if __name__ == '__main__':
+    unittest.main()
+"""
+
+tampilkan kode_parametrized
+tampilkan ""
+
+// ============================================
+// 7. SKIP TESTS
+// ============================================
+
+tampilkan "[7] Skip Tests Example..."
+tampilkan ""
+
+kode_skip itu """
+import unittest
+import sys
+
+class TestFeatures(unittest.TestCase):
+    
+    def test_basic(self):
+        self.assertEqual(1 + 1, 2)
+    
+    @unittest.skip("Temporarily disabled")
+    def test_disabled(self):
+        self.fail("This should not run")
+    
+    @unittest.skipIf(sys.version_info < (3, 8), 
+                     "Requires Python 3.8+")
+    def test_python38_feature(self):
+        # Test fitur Python 3.8+
+        pass
+    
+    @unittest.skipUnless(sys.platform.startswith("linux"), 
+                        "Linux only")
+    def test_linux_feature(self):
+        # Test fitur Linux
+        pass
+    
+    @unittest.expectedFailure
+    def test_known_bug(self):
+        # Test yang diketahui akan fail
+        self.assertEqual(1, 2)
+
+if __name__ == '__main__':
+    unittest.main()
+"""
+
+tampilkan kode_skip
+tampilkan ""
+
+// ============================================
+// 8. RUNNING TESTS
+// ============================================
+
+tampilkan "[8] Cara Menjalankan Tests..."
+tampilkan ""
+
+tampilkan "1. Jalankan single test file:"
+tampilkan "   python test_file.py"
+tampilkan ""
+
+tampilkan "2. Jalankan dengan verbose:"
+tampilkan "   python test_file.py -v"
+tampilkan ""
+
+tampilkan "3. Jalankan specific test:"
+tampilkan "   python -m unittest test_file.TestClass.test_method"
+tampilkan ""
+
+tampilkan "4. Discover dan jalankan semua tests:"
+tampilkan "   python -m unittest discover"
+tampilkan ""
+
+tampilkan "5. Dengan coverage:"
+tampilkan "   pip install coverage"
+tampilkan "   coverage run -m unittest discover"
+tampilkan "   coverage report"
+tampilkan ""
+
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Testing Best Practices:"
+tampilkan "  1. Test satu hal per test method"
+tampilkan "  2. Gunakan descriptive test names"
+tampilkan "  3. Arrange-Act-Assert pattern"
+tampilkan "  4. Mock external dependencies"
+tampilkan "  5. Keep tests independent"
+tampilkan "  6. Test edge cases"
+tampilkan "  7. Maintain test coverage"

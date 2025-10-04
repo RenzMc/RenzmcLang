@@ -1,0 +1,282 @@
+// ============================================
+// DateTime Operations - Tanggal dan Waktu
+// ============================================
+// Operasi tanggal dan waktu dengan Python datetime
+
+tampilkan "=== DateTime Operations ==="
+tampilkan ""
+
+impor_python "datetime"
+impor_python "time"
+
+// ============================================
+// 1. DATETIME BASICS
+// ============================================
+
+tampilkan "[1] DateTime Basics..."
+tampilkan ""
+
+// Waktu sekarang
+sekarang itu panggil_python datetime.datetime.now()
+tampilkan f"Waktu sekarang: {sekarang}"
+tampilkan f"Tanggal: {sekarang.year}-{sekarang.month}-{sekarang.day}"
+tampilkan f"Waktu: {sekarang.hour}:{sekarang.minute}:{sekarang.second}"
+tampilkan ""
+
+// Tanggal hari ini
+hari_ini itu panggil_python datetime.date.today()
+tampilkan f"Hari ini: {hari_ini}"
+tampilkan ""
+
+// Buat datetime spesifik
+tanggal_lahir itu panggil_python datetime.datetime(1995, 8, 17, 10, 30, 0)
+tampilkan f"Tanggal lahir: {tanggal_lahir}"
+tampilkan ""
+
+// ============================================
+// 2. FORMATTING DATETIME
+// ============================================
+
+tampilkan "[2] Formatting DateTime..."
+tampilkan ""
+
+// Format berbagai cara
+tampilkan "Format tanggal:"
+tampilkan f"  ISO format: {panggil_python sekarang.isoformat()}"
+tampilkan f"  Custom 1: {panggil_python sekarang.strftime('%d-%m-%Y')}"
+tampilkan f"  Custom 2: {panggil_python sekarang.strftime('%d %B %Y')}"
+tampilkan f"  Custom 3: {panggil_python sekarang.strftime('%A, %d %B %Y')}"
+tampilkan f"  Waktu: {panggil_python sekarang.strftime('%H:%M:%S')}"
+tampilkan f"  Lengkap: {panggil_python sekarang.strftime('%d/%m/%Y %H:%M:%S')}"
+tampilkan ""
+
+// ============================================
+// 3. PARSING STRING TO DATETIME
+// ============================================
+
+tampilkan "[3] Parsing String ke DateTime..."
+tampilkan ""
+
+// Parse berbagai format
+tanggal_str itu "2024-10-03"
+tanggal_parsed itu panggil_python datetime.datetime.strptime(tanggal_str, "%Y-%m-%d")
+tampilkan f"String: '{tanggal_str}' -> DateTime: {tanggal_parsed}"
+
+waktu_str itu "03/10/2024 14:30:00"
+waktu_parsed itu panggil_python datetime.datetime.strptime(waktu_str, "%d/%m/%Y %H:%M:%S")
+tampilkan f"String: '{waktu_str}' -> DateTime: {waktu_parsed}"
+tampilkan ""
+
+// ============================================
+// 4. DATETIME ARITHMETIC
+// ============================================
+
+tampilkan "[4] DateTime Arithmetic..."
+tampilkan ""
+
+// Tambah/kurang hari
+besok itu sekarang + panggil_python datetime.timedelta(**{"days": 1})
+kemarin itu sekarang - panggil_python datetime.timedelta(**{"days": 1})
+minggu_depan itu sekarang + panggil_python datetime.timedelta(**{"weeks": 1})
+
+tampilkan f"Sekarang: {panggil_python sekarang.strftime('%d/%m/%Y')}"
+tampilkan f"Besok: {panggil_python besok.strftime('%d/%m/%Y')}"
+tampilkan f"Kemarin: {panggil_python kemarin.strftime('%d/%m/%Y')}"
+tampilkan f"Minggu depan: {panggil_python minggu_depan.strftime('%d/%m/%Y')}"
+tampilkan ""
+
+// Tambah jam, menit, detik
+nanti itu sekarang + panggil_python datetime.timedelta(**{"hours": 2, "minutes": 30})
+tampilkan f"2 jam 30 menit dari sekarang: {panggil_python nanti.strftime('%H:%M:%S')}"
+tampilkan ""
+
+// ============================================
+// 5. DATETIME COMPARISON
+// ============================================
+
+tampilkan "[5] DateTime Comparison..."
+tampilkan ""
+
+tanggal1 itu panggil_python datetime.datetime(2024, 10, 1)
+tanggal2 itu panggil_python datetime.datetime(2024, 10, 15)
+
+tampilkan f"Tanggal 1: {tanggal1}"
+tampilkan f"Tanggal 2: {tanggal2}"
+tampilkan ""
+
+jika tanggal1 < tanggal2
+    tampilkan "✓ Tanggal 1 lebih awal dari Tanggal 2"
+selesai
+
+jika tanggal2 > tanggal1
+    tampilkan "✓ Tanggal 2 lebih akhir dari Tanggal 1"
+selesai
+
+// Hitung selisih
+selisih itu tanggal2 - tanggal1
+tampilkan f"Selisih: {selisih.days} hari"
+tampilkan ""
+
+// ============================================
+// 6. MENGHITUNG UMUR
+// ============================================
+
+tampilkan "[6] Menghitung Umur..."
+tampilkan ""
+
+fungsi hitung_umur(tanggal_lahir):
+    hari_ini itu panggil_python datetime.date.today()
+    umur itu hari_ini.year - tanggal_lahir.year
+    
+    // Cek apakah sudah ulang tahun tahun ini
+    jika hari_ini.month < tanggal_lahir.month atau (hari_ini.month == tanggal_lahir.month dan hari_ini.day < tanggal_lahir.day)
+        umur itu umur - 1
+    selesai
+    
+    hasil umur
+selesai
+
+tanggal_lahir itu panggil_python datetime.date(1995, 8, 17)
+umur itu hitung_umur(tanggal_lahir)
+tampilkan f"Tanggal lahir: {tanggal_lahir}"
+tampilkan f"Umur: {umur} tahun"
+tampilkan ""
+
+// ============================================
+// 7. HARI DALAM MINGGU
+// ============================================
+
+tampilkan "[7] Informasi Hari..."
+tampilkan ""
+
+hari_names itu ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]
+hari_index itu sekarang.weekday()
+nama_hari itu hari_names[hari_index]
+
+tampilkan f"Hari ini: {nama_hari}"
+tampilkan f"Hari ke-{hari_index + 1} dalam minggu"
+tampilkan ""
+
+// Cek akhir pekan
+jika hari_index >= 5
+    tampilkan "✓ Hari ini adalah akhir pekan!"
+kalau_tidak
+    tampilkan "✓ Hari ini adalah hari kerja"
+selesai
+tampilkan ""
+
+// ============================================
+// 8. RANGE TANGGAL
+// ============================================
+
+tampilkan "[8] Generate Range Tanggal..."
+tampilkan ""
+
+mulai itu panggil_python datetime.date(2024, 10, 1)
+akhir itu panggil_python datetime.date(2024, 10, 7)
+
+tampilkan f"Tanggal dari {mulai} sampai {akhir}:"
+tanggal_current itu mulai
+selama tanggal_current <= akhir
+    hari_idx itu tanggal_current.weekday()
+    hari_nama itu hari_names[hari_idx]
+    tampilkan f"  {tanggal_current} - {hari_nama}"
+    tanggal_current itu tanggal_current + panggil_python datetime.timedelta(**{"days": 1})
+selesai
+tampilkan ""
+
+// ============================================
+// 9. TIMESTAMP
+// ============================================
+
+tampilkan "[9] Unix Timestamp..."
+tampilkan ""
+
+// Datetime ke timestamp
+timestamp itu panggil_python sekarang.timestamp()
+tampilkan f"Timestamp sekarang: {timestamp}"
+
+// Timestamp ke datetime
+dari_timestamp itu panggil_python datetime.datetime.fromtimestamp(timestamp)
+tampilkan f"Dari timestamp: {dari_timestamp}"
+tampilkan ""
+
+// ============================================
+// 10. TIMEZONE AWARE
+// ============================================
+
+tampilkan "[10] Timezone Operations..."
+tampilkan ""
+
+// UTC time
+utc_now itu panggil_python datetime.datetime.utcnow()
+tampilkan f"UTC sekarang: {utc_now}"
+
+// Local time
+local_now itu panggil_python datetime.datetime.now()
+tampilkan f"Local sekarang: {local_now}"
+tampilkan ""
+
+// ============================================
+// 11. APLIKASI PRAKTIS
+// ============================================
+
+tampilkan "[11] Aplikasi Praktis..."
+tampilkan ""
+
+// Hitung deadline
+tampilkan "Sistem Deadline:"
+deadline itu sekarang + panggil_python datetime.timedelta(**{"days": 7})
+tampilkan f"Deadline: {panggil_python deadline.strftime('%d %B %Y, %H:%M')}"
+
+sisa_waktu itu deadline - sekarang
+sisa_hari itu sisa_waktu.days
+sisa_jam itu sisa_waktu.seconds // 3600
+
+tampilkan f"Sisa waktu: {sisa_hari} hari, {sisa_jam} jam"
+
+jika sisa_hari <= 1
+    tampilkan "⚠ URGENT: Deadline kurang dari 2 hari!"
+kalau_tidak_jika sisa_hari <= 3
+    tampilkan "⚠ WARNING: Deadline kurang dari 4 hari"
+kalau_tidak
+    tampilkan "✓ Masih ada waktu"
+selesai
+tampilkan ""
+
+// Jadwal meeting
+tampilkan "Jadwal Meeting Minggu Ini:"
+meetings itu [
+    {"hari": "Senin", "waktu": "09:00", "topik": "Planning"},
+    {"hari": "Rabu", "waktu": "14:00", "topik": "Review"},
+    {"hari": "Jumat", "waktu": "16:00", "topik": "Demo"}
+]
+
+untuk setiap meeting dari meetings
+    tampilkan f"  • {meeting['hari']}, {meeting['waktu']} - {meeting['topik']}"
+selesai
+tampilkan ""
+
+// ============================================
+// 12. DURASI DAN PERFORMANCE
+// ============================================
+
+tampilkan "[12] Mengukur Durasi..."
+tampilkan ""
+
+mulai_waktu itu panggil_python time.time()
+
+// Simulasi operasi
+total itu 0
+untuk setiap i dari range(1000000)
+    total itu total + i
+selesai
+
+akhir_waktu itu panggil_python time.time()
+durasi itu akhir_waktu - mulai_waktu
+
+tampilkan f"Operasi selesai dalam {durasi:.4f} detik"
+tampilkan f"Hasil: {total}"
+tampilkan ""
+
+tampilkan "=== Selesai ==="

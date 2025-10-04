@@ -1,0 +1,52 @@
+// Test 6: Built-in List Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 6: Built-in List Functions                          ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[6.1] List Functions"
+
+// Create list
+daftar itu [1, 2, 3, 4, 5]
+tampilkan f"✓ Initial list: {daftar}"
+
+// tambah
+tambah(daftar, 6)
+tampilkan f"✓ tambah(6): {daftar}"
+
+// hapus
+hapus(daftar, 6)
+tampilkan f"✓ hapus(6): {daftar}"
+
+// masukkan
+masukkan(daftar, 0, 0)
+tampilkan f"✓ masukkan(0, 0): {daftar}"
+
+// hapus_pada
+hapus_pada(daftar, 0)
+tampilkan f"✓ hapus_pada(0): {daftar}"
+
+// panjang
+panjang_list itu panjang(daftar)
+tampilkan f"✓ panjang: {panjang_list}"
+
+// urutkan
+daftar2 itu [5, 2, 8, 1, 9]
+urutkan(daftar2)
+tampilkan f"✓ urutkan: {daftar2}"
+
+// balikkan
+daftar3 itu [1, 2, 3]
+balikkan(daftar3)
+tampilkan f"✓ balikkan: {daftar3}"
+
+// hitung
+daftar4 itu [1, 2, 2, 3, 2]
+jumlah itu hitung(daftar4, 2)
+tampilkan f"✓ hitung(2): {jumlah}"
+
+// indeks
+daftar5 itu [10, 20, 30]
+idx itu indeks(daftar5, 20)
+tampilkan f"✓ indeks(20): {idx}"
+
+tampilkan "\n✅ Test 6 PASSED: All list functions working!"

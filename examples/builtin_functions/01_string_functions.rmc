@@ -1,0 +1,216 @@
+// ============================================
+// Built-in Functions: String Operations
+// ============================================
+// Comprehensive examples for all string functions
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║      STRING FUNCTIONS COMPLETE        ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// Sample text
+teks itu "  Hello RenzMcLang World!  "
+tampilkan f"Original text: '{teks}'"
+tampilkan ""
+
+// ============================================
+// 1. BASIC STRING FUNCTIONS
+// ============================================
+tampilkan "=== 1. BASIC STRING FUNCTIONS ==="
+tampilkan ""
+
+// panjang - Get length
+panjang_teks itu panjang(teks)
+tampilkan f"✓ panjang('{teks}') = {panjang_teks}"
+
+// ke_teks - Convert to string
+angka itu 12345
+teks_angka itu ke_teks(angka)
+tampilkan f"✓ ke_teks({angka}) = '{teks_angka}' (type: {jenis(teks_angka)})"
+
+tampilkan ""
+
+// ============================================
+// 2. CASE CONVERSION
+// ============================================
+tampilkan "=== 2. CASE CONVERSION ==="
+tampilkan ""
+
+kata itu "RenzMcLang"
+
+// huruf_besar - To uppercase
+besar itu huruf_besar(kata)
+tampilkan f"✓ huruf_besar('{kata}') = '{besar}'"
+
+// huruf_kecil - To lowercase
+kecil itu huruf_kecil(kata)
+tampilkan f"✓ huruf_kecil('{kata}') = '{kecil}'"
+
+tampilkan ""
+
+// ============================================
+// 3. STRING MANIPULATION
+// ============================================
+tampilkan "=== 3. STRING MANIPULATION ==="
+tampilkan ""
+
+kalimat itu "Belajar RenzMcLang itu mudah dan menyenangkan"
+
+// potong - Substring/slice
+potongan itu potong(kalimat, 8, 18)
+tampilkan f"✓ potong('{kalimat}', 8, 18) = '{potongan}'"
+
+// ganti - Replace
+diganti itu ganti(kalimat, "mudah", "sangat mudah")
+tampilkan f"✓ ganti(..., 'mudah', 'sangat mudah') = '{diganti}'"
+
+// hapus_spasi - Strip whitespace
+teks_spasi itu "   spasi di kiri dan kanan   "
+bersih itu hapus_spasi(teks_spasi)
+tampilkan f"✓ hapus_spasi('{teks_spasi}') = '{bersih}'"
+
+tampilkan ""
+
+// ============================================
+// 4. STRING SPLITTING & JOINING
+// ============================================
+tampilkan "=== 4. STRING SPLITTING & JOINING ==="
+tampilkan ""
+
+// pisah - Split string
+csv_data itu "apel,jeruk,mangga,pisang"
+buah_list itu pisah(csv_data, ",")
+tampilkan f"✓ pisah('{csv_data}', ',') = {buah_list}"
+
+// gabung - Join list to string
+kata_list itu ["Saya", "belajar", "RenzMcLang"]
+kalimat_gabung itu gabung(" ", kata_list)
+tampilkan f"✓ gabung(' ', {kata_list}) = '{kalimat_gabung}'"
+
+tampilkan ""
+
+// ============================================
+// 5. STRING CHECKING
+// ============================================
+tampilkan "=== 5. STRING CHECKING ==="
+tampilkan ""
+
+url itu "https://renzmclang.com/docs"
+
+// mulai_dengan - Starts with
+mulai_https itu mulai_dengan(url, "https://")
+tampilkan f"✓ mulai_dengan('{url}', 'https://') = {mulai_https}"
+
+// akhir_dengan - Ends with
+akhir_docs itu akhir_dengan(url, "/docs")
+tampilkan f"✓ akhir_dengan('{url}', '/docs') = {akhir_docs}"
+
+// berisi - Contains
+ada_lang itu berisi(url, "lang")
+tampilkan f"✓ berisi('{url}', 'lang') = {ada_lang}"
+
+tampilkan ""
+
+// ============================================
+// 6. STRING VALIDATION
+// ============================================
+tampilkan "=== 6. STRING VALIDATION ==="
+tampilkan ""
+
+// Test strings
+huruf_saja itu "AbcDef"
+angka_saja itu "123456"
+alfanum itu "Abc123"
+huruf_besar_saja itu "HELLO"
+huruf_kecil_saja itu "hello"
+spasi_saja itu "   "
+
+// is_alpha / adalah_huruf - Check if alphabetic
+tampilkan f"✓ adalah_huruf('{huruf_saja}') = {adalah_huruf(huruf_saja)}"
+tampilkan f"✓ adalah_huruf('{angka_saja}') = {adalah_huruf(angka_saja)}"
+
+// is_digit / adalah_angka - Check if digit
+tampilkan f"✓ adalah_angka('{angka_saja}') = {adalah_angka(angka_saja)}"
+tampilkan f"✓ adalah_angka('{huruf_saja}') = {adalah_angka(huruf_saja)}"
+
+// is_alnum / adalah_alfanumerik - Check if alphanumeric
+tampilkan f"✓ adalah_alfanumerik('{alfanum}') = {adalah_alfanumerik(alfanum)}"
+
+// is_upper / adalah_huruf_besar - Check if uppercase
+tampilkan f"✓ adalah_huruf_besar('{huruf_besar_saja}') = {adalah_huruf_besar(huruf_besar_saja)}"
+
+// is_lower / adalah_huruf_kecil - Check if lowercase
+tampilkan f"✓ adalah_huruf_kecil('{huruf_kecil_saja}') = {adalah_huruf_kecil(huruf_kecil_saja)}"
+
+// is_space / adalah_spasi - Check if whitespace
+tampilkan f"✓ adalah_spasi('{spasi_saja}') = {adalah_spasi(spasi_saja)}"
+
+tampilkan ""
+
+// ============================================
+// 7. PRACTICAL EXAMPLES
+// ============================================
+tampilkan "=== 7. PRACTICAL EXAMPLES ==="
+tampilkan ""
+
+// Example 1: Email validation
+buat fungsi validasi_email dengan email
+    ada_at itu berisi(email, "@")
+    jika ada_at == salah
+        hasil salah
+    selesai
+    
+    ada_dot itu berisi(email, ".")
+    jika ada_dot == salah
+        hasil salah
+    selesai
+    
+    hasil benar
+selesai
+
+email1 itu "user@example.com"
+email2 itu "invalid-email"
+
+valid1 itu panggil validasi_email dengan email1
+valid2 itu panggil validasi_email dengan email2
+
+tampilkan f"Email '{email1}' valid? {valid1}"
+tampilkan f"Email '{email2}' valid? {valid2}"
+tampilkan ""
+
+// Example 2: Username sanitization
+buat fungsi sanitasi_username dengan username
+    // Remove whitespace
+    bersih itu hapus_spasi(username)
+    
+    // Convert to lowercase
+    kecil itu huruf_kecil(bersih)
+    
+    // Replace spaces with underscore
+    hasil ganti(kecil, " ", "_")
+selesai
+
+username_kotor itu "  John Doe  "
+username_bersih itu panggil sanitasi_username dengan username_kotor
+tampilkan f"Username sanitized: '{username_kotor}' -> '{username_bersih}'"
+tampilkan ""
+
+// Example 3: Parse CSV
+buat fungsi parse_csv dengan csv_line
+    hasil pisah(csv_line, ",")
+selesai
+
+csv itu "Alice,25,Engineer,Jakarta"
+data itu panggil parse_csv dengan csv
+tampilkan f"CSV parsed: {data}"
+tampilkan f"  Name: {data[0]}"
+tampilkan f"  Age: {data[1]}"
+tampilkan f"  Job: {data[2]}"
+tampilkan f"  City: {data[3]}"
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  String Functions Complete! ✅         ║"
+tampilkan "║                                        ║"
+tampilkan "║  Total Functions Demonstrated: 22      ║"
+tampilkan "╚════════════════════════════════════════╝"

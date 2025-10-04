@@ -1,0 +1,59 @@
+// Test 12: Python Integration
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 12: Python Integration                              ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[12.1] Basic Python Import"
+
+// Import math
+impor_python "math" sebagai math
+tampilkan "✓ impor_python: math imported"
+
+// Use math functions
+hasil1 itu math.sqrt(16)
+tampilkan f"✓ math.sqrt(16): {hasil1}"
+
+hasil2 itu math.pow(2, 3)
+tampilkan f"✓ math.pow(2, 3): {hasil2}"
+
+pi_val itu math.pi
+tampilkan f"✓ math.pi: {pi_val}"
+
+tampilkan "\n[12.2] Check Module Availability"
+tersedia1 itu cek_modul_python("os")
+tampilkan f"✓ cek_modul_python('os'): {tersedia1}"
+
+tersedia2 itu cek_modul_python("sys")
+tampilkan f"✓ cek_modul_python('sys'): {tersedia2}"
+
+tampilkan "\n[12.3] Module Information"
+path_math itu path_modul_python("math")
+tampilkan f"✓ path_modul_python('math'): {path_math}"
+
+versi_math itu versi_modul_python("math")
+tampilkan f"✓ versi_modul_python('math'): {versi_math}"
+
+tampilkan "\n[12.4] Python Expression Evaluation"
+hasil_eval1 itu evaluasi_python("10 + 20")
+tampilkan f"✓ evaluasi_python('10 + 20'): {hasil_eval1}"
+
+hasil_eval2 itu evaluasi_python("[x**2 for x in range(5)]")
+tampilkan f"✓ evaluasi_python list comprehension: {hasil_eval2}"
+
+hasil_eval3 itu evaluasi_python("'hello'.upper()")
+tampilkan f"✓ evaluasi_python string method: {hasil_eval3}"
+
+tampilkan "\n[12.5] Import Other Modules"
+impor_python "os" sebagai os
+cwd itu os.getcwd()
+tampilkan f"✓ os.getcwd(): {cwd}"
+
+impor_python "sys" sebagai sys
+platform itu sys.platform
+tampilkan f"✓ sys.platform: {platform}"
+
+impor_python "json" sebagai json
+json_test itu json.dumps({"test": "value"})
+tampilkan f"✓ json.dumps: {json_test}"
+
+tampilkan "\n✅ Test 12 PASSED: Python integration working!"

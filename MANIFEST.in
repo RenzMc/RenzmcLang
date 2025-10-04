@@ -1,0 +1,23 @@
+# Include documentation files
+include README.md
+include DOCS.md
+include PYPI_RELEASE.md
+include LICENSE
+include requirements.txt
+
+# Include icon
+include icon.png
+
+# Include documentation
+recursive-include docs *.md
+
+# Include example files
+recursive-include examples *.rmc
+
+# Exclude unnecessary files
+global-exclude __pycache__
+global-exclude *.py[co]
+global-exclude .DS_Store
+global-exclude *.swp
+global-exclude *.swo
+global-exclude *.backup

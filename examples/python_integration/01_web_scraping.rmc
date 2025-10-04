@@ -1,0 +1,39 @@
+// Example: Web Scraping dengan Requests dan BeautifulSoup
+// Menunjukkan cara scraping website menggunakan Python libraries
+
+tampilkan "╔══════════════════════════════════════════════════════════╗"
+tampilkan "║  Web Scraping Example - RenzmcLang + Python             ║"
+tampilkan "╚══════════════════════════════════════════════════════════╝"
+tampilkan ""
+
+// Import required libraries
+impor_python "requests"
+
+tampilkan "Making HTTP request to example.com..."
+tampilkan ""
+
+// Make HTTP GET request
+response itu panggil_python requests.get("https://example.com")
+
+// Get status code (property access, not function call)
+status itu response.status_code
+tampilkan "✓ Status Code: " + ke_teks(status)
+
+// Get response text (property access)
+text itu response.text
+text_length itu panjang(text)
+tampilkan "✓ Response Length: " + ke_teks(text_length) + " characters"
+
+// Get headers (property access)
+headers itu response.headers
+tampilkan "✓ Headers received"
+
+tampilkan ""
+tampilkan "╔══════════════════════════════════════════════════════════╗"
+tampilkan "║  Web scraping works perfectly! ✅                        ║"
+tampilkan "║                                                          ║"
+tampilkan "║  You can scrape ANY website using:                      ║"
+tampilkan "║  - requests.get()                                       ║"
+tampilkan "║  - BeautifulSoup (if installed)                         ║"
+tampilkan "║  - lxml, scrapy, selenium, etc.                         ║"
+tampilkan "╚══════════════════════════════════════════════════════════╝"

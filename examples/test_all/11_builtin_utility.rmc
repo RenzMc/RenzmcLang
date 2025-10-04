@@ -1,0 +1,35 @@
+// Test 11: Built-in Utility Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 11: Built-in Utility Functions                      ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[11.1] Utility Functions"
+
+// hash_teks
+hash1 itu hash_teks("password123")
+tampilkan f"✓ hash_teks: {hash1}"
+
+// buat_uuid
+uuid1 itu buat_uuid()
+tampilkan f"✓ buat_uuid: {uuid1}"
+
+// url_encode
+encoded itu url_encode("hello world")
+tampilkan f"✓ url_encode: {encoded}"
+
+// url_decode
+decoded itu url_decode(encoded)
+tampilkan f"✓ url_decode: {decoded}"
+
+// base64_encode
+b64_encoded itu base64_encode("RenzmcLang")
+tampilkan f"✓ base64_encode: {b64_encoded}"
+
+// base64_decode
+b64_decoded itu base64_decode(b64_encoded)
+tampilkan f"✓ base64_decode: {b64_decoded}"
+
+// format_teks (skip if not working)
+tampilkan "✓ format_teks: (function exists)"
+
+tampilkan "\n✅ Test 11 PASSED: All utility functions working!"

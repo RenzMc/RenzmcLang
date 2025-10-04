@@ -1,0 +1,30 @@
+# Test iteration enhancements
+tampilkan "=== Testing zip() ==="
+daftar1 itu [1, 2, 3]
+daftar2 itu ["a", "b", "c"]
+ziphasil itu zip(daftar1, daftar2)
+tampilkan ziphasil
+
+tampilkan ""
+tampilkan "=== Testing enumerate() ==="
+daftar itu ["apel", "jeruk", "mangga"]
+enumhasil itu enumerate(daftar)
+tampilkan enumhasil
+
+tampilkan ""
+tampilkan "=== Testing all() ==="
+semua_benar itu [benar, benar, benar]
+allhasil itu all(semua_benar)
+tampilkan allhasil
+
+tampilkan ""
+tampilkan "=== Testing any() ==="
+ada_benar itu [salah, benar, salah]
+anyhasil itu any(ada_benar)
+tampilkan anyhasil
+
+tampilkan ""
+tampilkan "=== Testing sorted() ==="
+angka itu [3, 1, 4, 1, 5, 9, 2, 6]
+sortedhasil itu sorted(angka)
+tampilkan sortedhasil

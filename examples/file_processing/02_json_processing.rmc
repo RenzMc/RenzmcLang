@@ -1,0 +1,333 @@
+// ============================================
+// JSON File Processing
+// ============================================
+// Membaca, menulis, dan memproses file JSON
+
+tampilkan "=== JSON File Processing ==="
+tampilkan ""
+
+// ============================================
+// 1. MEMBUAT DAN MENULIS JSON
+// ============================================
+
+tampilkan "[1] Membuat dan Menulis JSON..."
+
+// Data produk
+data_produk itu {
+    "toko": "Toko Elektronik ABC",
+    "alamat": "Jl. Sudirman No. 123, Jakarta",
+    "produk": [
+        {
+            "id": 1,
+            "kode": "LAPTOP001",
+            "nama": "Laptop ASUS ROG",
+            "kategori": "Elektronik",
+            "harga": 25000000,
+            "stok": 5,
+            "spesifikasi": {
+                "processor": "Intel Core i7",
+                "ram": "16GB",
+                "storage": "512GB SSD"
+            },
+            "tags": ["gaming", "laptop", "high-end"]
+        },
+        {
+            "id": 2,
+            "kode": "MOUSE001",
+            "nama": "Mouse Logitech G502",
+            "kategori": "Aksesoris",
+            "harga": 650000,
+            "stok": 50,
+            "spesifikasi": {
+                "sensor": "HERO 25K",
+                "dpi": 25600,
+                "buttons": 11
+            },
+            "tags": ["gaming", "mouse"]
+        },
+        {
+            "id": 3,
+            "kode": "KEYBOARD001",
+            "nama": "Keyboard Mechanical",
+            "kategori": "Aksesoris",
+            "harga": 1200000,
+            "stok": 30,
+            "spesifikasi": {
+                "switch": "Cherry MX Brown",
+                "layout": "TKL",
+                "backlight": benar
+            },
+            "tags": ["mechanical", "keyboard", "rgb"]
+        }
+    ],
+    "metadata": {
+        "created_at": "2024-10-03",
+        "version": "1.0",
+        "total_produk": 3
+    }
+}
+
+// Tulis ke file JSON dengan format indented
+tulis_json("toko_produk.json", data_produk)
+tampilkan "✓ File toko_produk.json berhasil dibuat"
+tampilkan ""
+
+// ============================================
+// 2. MEMBACA JSON
+// ============================================
+
+tampilkan "[2] Membaca File JSON..."
+
+data itu baca_json("toko_produk.json")
+
+tampilkan f"Nama Toko: {data['toko']}"
+tampilkan f"Alamat: {data['alamat']}"
+tampilkan f"Total Produk: {panjang(data['produk'])}"
+tampilkan ""
+
+// ============================================
+// 3. MENAMPILKAN DATA JSON
+// ============================================
+
+tampilkan "[3] Daftar Produk..."
+tampilkan "-" * 100
+tampilkan f"{'ID':<5} {'Kode':<15} {'Nama':<30} {'Kategori':<15} {'Harga':<15} {'Stok':<8}"
+tampilkan "-" * 100
+
+untuk setiap produk dari data['produk']
+    tampilkan f"{produk['id']:<5} {produk['kode']:<15} {produk['nama']:<30} {produk['kategori']:<15} Rp {produk['harga']:>10,.0f} {produk['stok']:<8}"
+selesai
+tampilkan ""
+
+// ============================================
+// 4. FILTER DAN QUERY DATA
+// ============================================
+
+tampilkan "[4] Filter Data..."
+
+// Filter produk dengan harga > 1 juta
+tampilkan "Produk dengan harga > Rp 1.000.000:"
+untuk setiap produk dari data['produk']
+    jika produk['harga'] > 1000000
+        tampilkan f"  • {produk['nama']} - Rp {produk['harga']:,.0f}"
+        tampilkan f"    Spesifikasi: {produk['spesifikasi']}"
+    selesai
+selesai
+tampilkan ""
+
+// Filter berdasarkan kategori
+tampilkan "Produk Kategori Aksesoris:"
+untuk setiap produk dari data['produk']
+    jika produk['kategori'] == "Aksesoris"
+        tampilkan f"  • {produk['nama']} (Stok: {produk['stok']})"
+    selesai
+selesai
+tampilkan ""
+
+// ============================================
+// 5. UPDATE DATA JSON
+// ============================================
+
+tampilkan "[5] Update Data..."
+
+// Update stok produk
+untuk setiap produk dari data['produk']
+    jika produk['kode'] == "LAPTOP001"
+        produk['stok'] itu produk['stok'] - 1
+        tampilkan f"✓ Stok {produk['nama']} dikurangi 1"
+        tampilkan f"  Stok sekarang: {produk['stok']}"
+    selesai
+selesai
+tampilkan ""
+
+// Tambah produk baru
+produk_baru itu {
+    "id": 4,
+    "kode": "MONITOR001",
+    "nama": "Monitor LG 27 inch",
+    "kategori": "Elektronik",
+    "harga": 3500000,
+    "stok": 15,
+    "spesifikasi": {
+        "size": "27 inch",
+        "resolution": "2560x1440",
+        "refresh_rate": "144Hz"
+    },
+    "tags": ["monitor", "gaming"]
+}
+
+tambah(data['produk'], produk_baru)
+data['metadata']['total_produk'] itu panjang(data['produk'])
+tampilkan f"✓ Produk baru ditambahkan: {produk_baru['nama']}"
+tampilkan ""
+
+// Simpan perubahan
+tulis_json("toko_produk.json", data)
+tampilkan "✓ Perubahan disimpan ke file"
+tampilkan ""
+
+// ============================================
+// 6. NESTED JSON PROCESSING
+// ============================================
+
+tampilkan "[6] Memproses Nested JSON..."
+
+// Akses nested data
+tampilkan "Spesifikasi Detail Produk:"
+untuk setiap produk dari data['produk']
+    tampilkan f"\n{produk['nama']}:"
+    untuk setiap (key, value) dari produk['spesifikasi'].items()
+        tampilkan f"  - {key}: {value}"
+    selesai
+selesai
+tampilkan ""
+
+// ============================================
+// 7. JSON ARRAY OPERATIONS
+// ============================================
+
+tampilkan "[7] Operasi Array JSON..."
+
+// Hitung total nilai stok
+total_nilai itu 0
+untuk setiap produk dari data['produk']
+    nilai itu produk['harga'] * produk['stok']
+    total_nilai itu total_nilai + nilai
+selesai
+
+tampilkan f"Total Nilai Stok: Rp {total_nilai:,.0f}"
+tampilkan ""
+
+// Produk dengan stok terbanyak
+produk_terbanyak itu data['produk'][0]
+untuk setiap produk dari data['produk']
+    jika produk['stok'] > produk_terbanyak['stok']
+        produk_terbanyak itu produk
+    selesai
+selesai
+
+tampilkan f"Produk dengan Stok Terbanyak:"
+tampilkan f"  {produk_terbanyak['nama']} - {produk_terbanyak['stok']} unit"
+tampilkan ""
+
+// ============================================
+// 8. EXPORT KE FORMAT LAIN
+// ============================================
+
+tampilkan "[8] Export ke Format Lain..."
+
+// Export ke JSON compact (tanpa indentasi)
+data_compact itu ke_json(data)
+dengan buka("toko_produk_compact.json", "w") sebagai f
+    tulis(f, data_compact)
+selesai
+tampilkan "✓ Export ke toko_produk_compact.json (compact)"
+
+// Export summary ke JSON
+summary itu {
+    "toko": data['toko'],
+    "total_produk": panjang(data['produk']),
+    "total_nilai_stok": total_nilai,
+    "kategori": []
+}
+
+// Hitung produk per kategori
+kategori_count itu {}
+untuk setiap produk dari data['produk']
+    kategori itu produk['kategori']
+    jika kategori tidak dalam kategori_count
+        kategori_count[kategori] itu 0
+    selesai
+    kategori_count[kategori] itu kategori_count[kategori] + 1
+selesai
+
+untuk setiap (kategori, count) dari kategori_count.items()
+    tambah(summary['kategori'], {
+        "nama": kategori,
+        "jumlah": count
+    })
+selesai
+
+tulis_json("toko_summary.json", summary)
+tampilkan "✓ Export summary ke toko_summary.json"
+tampilkan ""
+
+// ============================================
+// 9. MERGE MULTIPLE JSON FILES
+// ============================================
+
+tampilkan "[9] Merge Multiple JSON Files..."
+
+// Buat file JSON kedua
+data_tambahan itu {
+    "produk": [
+        {
+            "id": 5,
+            "kode": "HEADSET001",
+            "nama": "Headset Gaming",
+            "kategori": "Aksesoris",
+            "harga": 850000,
+            "stok": 40
+        }
+    ]
+}
+
+tulis_json("produk_tambahan.json", data_tambahan)
+
+// Merge data
+data_merge itu baca_json("toko_produk.json")
+data_tambahan_read itu baca_json("produk_tambahan.json")
+
+untuk setiap produk dari data_tambahan_read['produk']
+    tambah(data_merge['produk'], produk)
+selesai
+
+data_merge['metadata']['total_produk'] itu panjang(data_merge['produk'])
+
+tulis_json("toko_produk_merged.json", data_merge)
+tampilkan "✓ File berhasil di-merge ke toko_produk_merged.json"
+tampilkan f"  Total produk setelah merge: {panjang(data_merge['produk'])}"
+tampilkan ""
+
+// ============================================
+// 10. VALIDASI DAN ERROR HANDLING
+// ============================================
+
+tampilkan "[10] Validasi Data JSON..."
+
+fungsi validasi_produk(produk):
+    required_fields itu ["id", "kode", "nama", "kategori", "harga", "stok"]
+    
+    untuk setiap field dari required_fields
+        jika field tidak dalam produk
+            hasil salah, f"Field '{field}' tidak ditemukan"
+        selesai
+    selesai
+    
+    jika produk['harga'] <= 0
+        hasil salah, "Harga harus lebih dari 0"
+    selesai
+    
+    jika produk['stok'] < 0
+        hasil salah, "Stok tidak boleh negatif"
+    selesai
+    
+    hasil benar, "Valid"
+selesai
+
+tampilkan "Validasi Produk:"
+untuk setiap produk dari data_merge['produk']
+    valid, pesan itu validasi_produk(produk)
+    status itu "✓" jika valid lainnya "✗"
+    tampilkan f"  {status} {produk['nama']}: {pesan}"
+selesai
+tampilkan ""
+
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "File yang dibuat:"
+tampilkan "  - toko_produk.json"
+tampilkan "  - toko_produk_compact.json"
+tampilkan "  - toko_summary.json"
+tampilkan "  - produk_tambahan.json"
+tampilkan "  - toko_produk_merged.json"

@@ -1,0 +1,263 @@
+// ============================================
+// Threading - Concurrent Programming
+// ============================================
+// Contoh penggunaan threading untuk concurrent execution
+
+tampilkan "=== Threading Example ==="
+tampilkan ""
+
+impor_python "threading"
+impor_python "time"
+impor_python "random"
+
+// ============================================
+// 1. BASIC THREADING
+// ============================================
+
+tampilkan "[1] Basic Threading..."
+tampilkan ""
+
+fungsi worker(nama, durasi):
+    tampilkan f"[{nama}] Mulai bekerja..."
+    panggil_python time.sleep(durasi)
+    tampilkan f"[{nama}] Selesai setelah {durasi} detik"
+selesai
+
+// Buat dan jalankan threads
+tampilkan "Menjalankan 3 threads secara concurrent:"
+threads itu []
+
+untuk setiap i dari range(1, 4)
+    nama itu f"Thread-{i}"
+    durasi itu i
+    t itu panggil_python threading.Thread(target=worker, args=[nama, durasi])
+    tambah(threads, t)
+    panggil_python t.start()
+selesai
+
+// Tunggu semua threads selesai
+untuk setiap t dari threads
+    panggil_python t.join()
+selesai
+
+tampilkan "✓ Semua threads selesai"
+tampilkan ""
+
+// ============================================
+// 2. THREAD DENGAN RETURN VALUE
+// ============================================
+
+tampilkan "[2] Thread dengan Return Value..."
+tampilkan ""
+
+hasil_list itu []
+lock itu panggil_python threading.Lock()
+
+fungsi hitung_kuadrat(angka):
+    panggil_python time.sleep(0.5)
+    hasil itu angka * angka
+    
+    // Gunakan lock untuk thread-safe append
+    panggil_python lock.acquire()
+    coba
+        tambah(hasil_list, {"angka": angka, "kuadrat": hasil})
+        tampilkan f"  Thread menghitung: {angka}² = {hasil}"
+    akhirnya
+        panggil_python lock.release()
+    selesai
+selesai
+
+// Jalankan multiple threads
+angka_list itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+threads itu []
+
+tampilkan "Menghitung kuadrat secara concurrent:"
+untuk setiap angka dari angka_list
+    t itu panggil_python threading.Thread(target=hitung_kuadrat, args=[angka])
+    tambah(threads, t)
+    panggil_python t.start()
+selesai
+
+// Tunggu semua selesai
+untuk setiap t dari threads
+    panggil_python t.join()
+selesai
+
+tampilkan f"\n✓ Total hasil: {panjang(hasil_list)}"
+tampilkan ""
+
+// ============================================
+// 3. PRODUCER-CONSUMER PATTERN
+// ============================================
+
+tampilkan "[3] Producer-Consumer Pattern..."
+tampilkan ""
+
+impor_python "queue"
+
+// Buat queue untuk komunikasi antar thread
+task_queue itu panggil_python queue.Queue()
+
+fungsi producer(nama, jumlah):
+    untuk setiap i dari range(1, jumlah + 1)
+        task itu f"Task-{i}"
+        panggil_python task_queue.put(task)
+        tampilkan f"[{nama}] Menghasilkan: {task}"
+        panggil_python time.sleep(0.3)
+    selesai
+    tampilkan f"[{nama}] Selesai memproduksi"
+selesai
+
+fungsi consumer(nama):
+    selama benar
+        coba
+            // Ambil task dari queue dengan timeout
+            task itu panggil_python task_queue.get(timeout=2)
+            tampilkan f"  [{nama}] Memproses: {task}"
+            panggil_python time.sleep(0.5)
+            panggil_python task_queue.task_done()
+        tangkap Exception
+            // Timeout, keluar dari loop
+            keluar
+        selesai
+    selesai
+    tampilkan f"  [{nama}] Selesai mengkonsumsi"
+selesai
+
+// Jalankan producer dan consumer
+producer_thread itu panggil_python threading.Thread(target=producer, args=["Producer", 5])
+consumer_threads itu []
+
+untuk setiap i dari range(1, 3)
+    t itu panggil_python threading.Thread(target=consumer, args=[f"Consumer-{i}"])
+    tambah(consumer_threads, t)
+selesai
+
+// Start semua threads
+panggil_python producer_thread.start()
+untuk setiap t dari consumer_threads
+    panggil_python t.start()
+selesai
+
+// Tunggu selesai
+panggil_python producer_thread.join()
+untuk setiap t dari consumer_threads
+    panggil_python t.join()
+selesai
+
+tampilkan "\n✓ Producer-Consumer selesai"
+tampilkan ""
+
+// ============================================
+// 4. THREAD POOL
+// ============================================
+
+tampilkan "[4] Thread Pool..."
+tampilkan ""
+
+impor_python "concurrent.futures"
+
+fungsi download_simulasi(url):
+    waktu itu panggil_python random.uniform(0.5, 2.0)
+    tampilkan f"  Downloading {url}..."
+    panggil_python time.sleep(waktu)
+    tampilkan f"  ✓ {url} selesai ({waktu:.2f}s)"
+    hasil {"url": url, "waktu": waktu, "status": "success"}
+selesai
+
+// Daftar URL untuk di-download
+urls itu [
+    "https://example.com/file1.zip",
+    "https://example.com/file2.zip",
+    "https://example.com/file3.zip",
+    "https://example.com/file4.zip",
+    "https://example.com/file5.zip"
+]
+
+tampilkan "Menggunakan ThreadPoolExecutor:"
+dengan panggil_python concurrent.futures.ThreadPoolExecutor(max_workers=3) sebagai executor
+    // Submit semua tasks
+    futures itu [panggil_python executor.submit(download_simulasi, url) untuk setiap url dari urls]
+    
+    // Tunggu semua selesai dan ambil hasil
+    hasil_downloads itu []
+    untuk setiap future dari futures
+        hasil itu panggil_python future.result()
+        tambah(hasil_downloads, hasil)
+    selesai
+selesai
+
+tampilkan f"\n✓ Semua download selesai: {panjang(hasil_downloads)} file"
+tampilkan ""
+
+// ============================================
+// 5. THREAD SYNCHRONIZATION
+// ============================================
+
+tampilkan "[5] Thread Synchronization dengan Lock..."
+tampilkan ""
+
+counter itu 0
+counter_lock itu panggil_python threading.Lock()
+
+fungsi increment_counter(nama, jumlah):
+    global counter
+    untuk setiap i dari range(jumlah)
+        panggil_python counter_lock.acquire()
+        coba
+            counter itu counter + 1
+        akhirnya
+            panggil_python counter_lock.release()
+        selesai
+    selesai
+    tampilkan f"[{nama}] Selesai increment {jumlah} kali"
+selesai
+
+// Jalankan multiple threads yang increment counter
+threads itu []
+untuk setiap i dari range(1, 6)
+    t itu panggil_python threading.Thread(target=increment_counter, args=[f"Thread-{i}", 1000])
+    tambah(threads, t)
+    panggil_python t.start()
+selesai
+
+// Tunggu semua selesai
+untuk setiap t dari threads
+    panggil_python t.join()
+selesai
+
+tampilkan f"\n✓ Counter final: {counter} (expected: 5000)"
+tampilkan ""
+
+// ============================================
+// 6. DAEMON THREADS
+// ============================================
+
+tampilkan "[6] Daemon Threads..."
+tampilkan ""
+
+fungsi daemon_worker():
+    counter itu 0
+    selama benar
+        counter itu counter + 1
+        tampilkan f"  [Daemon] Running... {counter}"
+        panggil_python time.sleep(0.5)
+    selesai
+selesai
+
+// Buat daemon thread
+daemon_thread itu panggil_python threading.Thread(target=daemon_worker)
+daemon_thread.daemon itu benar
+panggil_python daemon_thread.start()
+
+tampilkan "Daemon thread berjalan di background..."
+panggil_python time.sleep(2)
+tampilkan "Main thread selesai (daemon akan otomatis berhenti)"
+tampilkan ""
+
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Catatan:"
+tampilkan "  - Threading cocok untuk I/O-bound tasks"
+tampilkan "  - Untuk CPU-bound tasks, gunakan multiprocessing"
+tampilkan "  - Selalu gunakan lock untuk shared resources"

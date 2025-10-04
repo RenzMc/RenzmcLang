@@ -1,0 +1,155 @@
+// ============================================
+// Flask REST API - Web Framework
+// ============================================
+// Membuat REST API sederhana dengan Flask
+
+tampilkan "=== Flask REST API Example ==="
+tampilkan ""
+
+// Note: Install Flask terlebih dahulu: pip install flask
+
+coba
+    impor_python "flask"
+    
+    tampilkan "[1] Inisialisasi Flask App..."
+    
+    // Data storage sederhana (in-memory)
+    data_mahasiswa itu [
+        {"id": 1, "nim": "12345", "nama": "Budi Santoso", "jurusan": "Teknik Informatika"},
+        {"id": 2, "nim": "12346", "nama": "Ani Wijaya", "jurusan": "Sistem Informasi"},
+        {"id": 3, "nim": "12347", "nama": "Citra Dewi", "jurusan": "Teknik Komputer"}
+    ]
+    
+    tampilkan "✓ Data mahasiswa siap"
+    tampilkan ""
+    
+    tampilkan "[2] Contoh Endpoint API..."
+    tampilkan ""
+    tampilkan "GET /api/mahasiswa"
+    tampilkan "  - Mendapatkan semua data mahasiswa"
+    tampilkan ""
+    tampilkan "GET /api/mahasiswa/<id>"
+    tampilkan "  - Mendapatkan data mahasiswa berdasarkan ID"
+    tampilkan ""
+    tampilkan "POST /api/mahasiswa"
+    tampilkan "  - Menambah mahasiswa baru"
+    tampilkan "  Body: {&quot;nim&quot;: &quot;...&quot;, &quot;nama&quot;: &quot;...&quot;, &quot;jurusan&quot;: &quot;...&quot;}"
+    tampilkan ""
+    tampilkan "PUT /api/mahasiswa/<id>"
+    tampilkan "  - Update data mahasiswa"
+    tampilkan "  Body: {&quot;nim&quot;: &quot;...&quot;, &quot;nama&quot;: &quot;...&quot;, &quot;jurusan&quot;: &quot;...&quot;}"
+    tampilkan ""
+    tampilkan "DELETE /api/mahasiswa/<id>"
+    tampilkan "  - Hapus data mahasiswa"
+    tampilkan ""
+    
+    tampilkan "[3] Kode Flask App..."
+    tampilkan ""
+    
+    // Tampilkan contoh kode Flask
+    kode_flask itu """
+from flask import Flask, jsonify, request
+
+app = Flask(__name__)
+
+# Data storage
+mahasiswa = [
+    {"id": 1, "nim": "12345", "nama": "Budi Santoso", "jurusan": "Teknik Informatika"},
+    {"id": 2, "nim": "12346", "nama": "Ani Wijaya", "jurusan": "Sistem Informasi"},
+    {"id": 3, "nim": "12347", "nama": "Citra Dewi", "jurusan": "Teknik Komputer"}
+]
+
+# GET all mahasiswa
+@app.route('/api/mahasiswa', methods=['GET'])
+def get_all_mahasiswa():
+    return jsonify({"success": True, "data": mahasiswa})
+
+# GET mahasiswa by ID
+@app.route('/api/mahasiswa/<int:id>', methods=['GET'])
+def get_mahasiswa(id):
+    mhs = next((m for m in mahasiswa if m['id'] == id), None)
+    if mhs:
+        return jsonify({"success": True, "data": mhs})
+    return jsonify({"success": False, "message": "Mahasiswa tidak ditemukan"}), 404
+
+# POST new mahasiswa
+@app.route('/api/mahasiswa', methods=['POST'])
+def create_mahasiswa():
+    data = request.get_json()
+    new_id = max([m['id'] for m in mahasiswa]) + 1 if mahasiswa else 1
+    new_mhs = {
+        "id": new_id,
+        "nim": data.get('nim'),
+        "nama": data.get('nama'),
+        "jurusan": data.get('jurusan')
+    }
+    mahasiswa.append(new_mhs)
+    return jsonify({"success": True, "data": new_mhs}), 201
+
+# PUT update mahasiswa
+@app.route('/api/mahasiswa/<int:id>', methods=['PUT'])
+def update_mahasiswa(id):
+    mhs = next((m for m in mahasiswa if m['id'] == id), None)
+    if not mhs:
+        return jsonify({"success": False, "message": "Mahasiswa tidak ditemukan"}), 404
+    
+    data = request.get_json()
+    mhs['nim'] = data.get('nim', mhs['nim'])
+    mhs['nama'] = data.get('nama', mhs['nama'])
+    mhs['jurusan'] = data.get('jurusan', mhs['jurusan'])
+    
+    return jsonify({"success": True, "data": mhs})
+
+# DELETE mahasiswa
+@app.route('/api/mahasiswa/<int:id>', methods=['DELETE'])
+def delete_mahasiswa(id):
+    global mahasiswa
+    mhs = next((m for m in mahasiswa if m['id'] == id), None)
+    if not mhs:
+        return jsonify({"success": False, "message": "Mahasiswa tidak ditemukan"}), 404
+    
+    mahasiswa = [m for m in mahasiswa if m['id'] != id]
+    return jsonify({"success": True, "message": "Mahasiswa berhasil dihapus"})
+
+if __name__ == '__main__':
+    print("Flask API Server running on http://localhost:5000")
+    app.run(debug=True, host='0.0.0.0', port=5000)
+"""
+    
+    tampilkan kode_flask
+    tampilkan ""
+    
+    tampilkan "[4] Cara Menjalankan..."
+    tampilkan "1. Simpan kode di atas ke file 'app.py'"
+    tampilkan "2. Jalankan: python app.py"
+    tampilkan "3. Akses API di: http://localhost:5000/api/mahasiswa"
+    tampilkan ""
+    
+    tampilkan "[5] Contoh Request dengan curl..."
+    tampilkan ""
+    tampilkan "# GET all mahasiswa"
+    tampilkan "curl http://localhost:5000/api/mahasiswa"
+    tampilkan ""
+    tampilkan "# GET mahasiswa by ID"
+    tampilkan "curl http://localhost:5000/api/mahasiswa/1"
+    tampilkan ""
+    tampilkan "# POST new mahasiswa"
+    tampilkan "curl -X POST http://localhost:5000/api/mahasiswa \&quot;
+    tampilkan "  -H &quot;Content-Type: application/json&quot; \&quot;
+    tampilkan "  -d '{&quot;nim&quot;:&quot;12348&quot;,&quot;nama&quot;:&quot;Dedi Pratama&quot;,&quot;jurusan&quot;:&quot;Teknik Elektro&quot;}'"
+    tampilkan ""
+    tampilkan "# PUT update mahasiswa"
+    tampilkan "curl -X PUT http://localhost:5000/api/mahasiswa/1 \&quot;
+    tampilkan "  -H &quot;Content-Type: application/json&quot; \&quot;
+    tampilkan "  -d '{&quot;nama&quot;:&quot;Budi Santoso Updated&quot;}'"
+    tampilkan ""
+    tampilkan "# DELETE mahasiswa"
+    tampilkan "curl -X DELETE http://localhost:5000/api/mahasiswa/1"
+    tampilkan ""
+    
+tangkap ImportError
+    tampilkan "⚠ Module flask tidak terinstall"
+    tampilkan "  Install dengan: pip install flask"
+selesai
+
+tampilkan "=== Selesai ==="

@@ -1,0 +1,349 @@
+// ============================================
+// MySQL/PostgreSQL Database Operations
+// ============================================
+// Contoh koneksi dan operasi dengan MySQL/PostgreSQL
+
+tampilkan "=== MySQL/PostgreSQL Database Operations ==="
+tampilkan ""
+
+// Note: Untuk menjalankan contoh ini, install terlebih dahulu:
+// pip install mysql-connector-python  (untuk MySQL)
+// pip install psycopg2-binary  (untuk PostgreSQL)
+
+tampilkan "Contoh ini menunjukkan cara koneksi ke MySQL dan PostgreSQL"
+tampilkan "Pastikan database server sudah berjalan dan kredensial sudah benar"
+tampilkan ""
+
+// ============================================
+// MYSQL OPERATIONS
+// ============================================
+
+tampilkan "=== [A] MySQL Operations ==="
+tampilkan ""
+
+coba
+    impor_python "mysql.connector"
+    
+    tampilkan "[1] Koneksi ke MySQL..."
+    
+    // Konfigurasi koneksi MySQL
+    config_mysql itu {
+        "host": "localhost",
+        "user": "root",
+        "password": "password",
+        "database": "test_db"
+    }
+    
+    // Membuat koneksi
+    coba
+conn_mysql itu panggil_python mysql.connector.connect( host=config_mysql["host"], user=config_mysql["user"], password=config_mysql["password"], database=config_mysql["database"] )
+        cursor_mysql itu conn_mysql.cursor()
+        tampilkan "✓ Berhasil terhubung ke MySQL"
+        tampilkan ""
+        
+        // Membuat database jika belum ada
+        tampilkan "[2] Membuat database..."
+        cursor_mysql.execute("CREATE DATABASE IF NOT EXISTS test_db")
+        cursor_mysql.execute("USE test_db")
+        tampilkan "✓ Database test_db siap digunakan"
+        tampilkan ""
+        
+        // Membuat tabel
+        tampilkan "[3] Membuat tabel karyawan..."
+        cursor_mysql.execute("""
+            CREATE TABLE IF NOT EXISTS karyawan (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                nik VARCHAR(20) UNIQUE NOT NULL,
+                nama VARCHAR(100) NOT NULL,
+                jabatan VARCHAR(50),
+                departemen VARCHAR(50),
+                gaji DECIMAL(15,2),
+                tanggal_masuk DATE,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        conn_mysql.commit()
+        tampilkan "✓ Tabel karyawan berhasil dibuat"
+        tampilkan ""
+        
+        // Insert data
+        tampilkan "[4] Menambahkan data karyawan..."
+        data_karyawan itu [
+            ("NIK001", "Ahmad Wijaya", "Manager", "IT", 15000000, "2020-01-15"),
+            ("NIK002", "Siti Nurhaliza", "Staff", "HR", 8000000, "2021-03-20"),
+            ("NIK003", "Budi Santoso", "Supervisor", "Finance", 12000000, "2019-06-10"),
+            ("NIK004", "Dewi Lestari", "Staff", "IT", 9000000, "2022-02-01"),
+            ("NIK005", "Eko Prasetyo", "Manager", "Marketing", 14000000, "2020-08-15")
+        ]
+        
+        query_insert itu """
+            INSERT INTO karyawan (nik, nama, jabatan, departemen, gaji, tanggal_masuk)
+            VALUES (%s, %s, %s, %s, %s, %s)
+            ON DUPLICATE KEY UPDATE nama=VALUES(nama)
+        """
+        
+        cursor_mysql.executemany(query_insert, data_karyawan)
+        conn_mysql.commit()
+        tampilkan f"✓ {cursor_mysql.rowcount} karyawan berhasil ditambahkan"
+        tampilkan ""
+        
+        // Select data
+        tampilkan "[5] Daftar Karyawan..."
+        cursor_mysql.execute("SELECT * FROM karyawan ORDER BY gaji DESC")
+        hasil_mysql itu cursor_mysql.fetchall()
+        
+        tampilkan "-" * 110
+        tampilkan f"{'NIK':<10} {'Nama':<25} {'Jabatan':<15} {'Departemen':<15} {'Gaji':<20} {'Tgl Masuk':<15}"
+        tampilkan "-" * 110
+        
+        untuk setiap row dari hasil_mysql
+            tampilkan f"{row[1]:<10} {row[2]:<25} {row[3]:<15} {row[4]:<15} Rp {row[5]:>15,.0f} {row[6]}"
+        selesai
+        tampilkan ""
+        
+        // Aggregate query
+        tampilkan "[6] Statistik Gaji per Departemen..."
+        cursor_mysql.execute("""
+            SELECT 
+                departemen,
+                COUNT(*) as jumlah_karyawan,
+                AVG(gaji) as rata_gaji,
+                MAX(gaji) as gaji_tertinggi,
+                MIN(gaji) as gaji_terendah,
+                SUM(gaji) as total_gaji
+            FROM karyawan
+            GROUP BY departemen
+            ORDER BY total_gaji DESC
+        """)
+        
+        statistik_mysql itu cursor_mysql.fetchall()
+        tampilkan "-" * 120
+        tampilkan f"{'Departemen':<15} {'Jumlah':<10} {'Rata-rata':<20} {'Tertinggi':<20} {'Terendah':<20} {'Total':<20}"
+        tampilkan "-" * 120
+        
+        untuk setiap row dari statistik_mysql
+            tampilkan f"{row[0]:<15} {row[1]:<10} Rp {row[2]:>15,.0f} Rp {row[3]:>15,.0f} Rp {row[4]:>15,.0f} Rp {row[5]:>15,.0f}"
+        selesai
+        tampilkan ""
+        
+        // Stored Procedure (contoh)
+        tampilkan "[7] Membuat Stored Procedure..."
+        cursor_mysql.execute("DROP PROCEDURE IF EXISTS get_karyawan_by_dept")
+        cursor_mysql.execute("""
+            CREATE PROCEDURE get_karyawan_by_dept(IN dept_name VARCHAR(50))
+            BEGIN
+                SELECT * FROM karyawan WHERE departemen = dept_name;
+            END
+        """)
+        conn_mysql.commit()
+        tampilkan "✓ Stored procedure berhasil dibuat"
+        tampilkan ""
+        
+        // Panggil stored procedure
+        tampilkan "[8] Memanggil Stored Procedure..."
+        cursor_mysql.callproc("get_karyawan_by_dept", ["IT"])
+        untuk setiap result dari cursor_mysql.stored_results()
+            rows itu result.fetchall()
+            tampilkan f"Karyawan di departemen IT: {panjang(rows)} orang"
+            untuk setiap row dari rows
+                tampilkan f"  • {row[2]} - {row[3]}"
+            selesai
+        selesai
+        tampilkan ""
+        
+        // Tutup koneksi
+        cursor_mysql.close()
+        conn_mysql.close()
+        tampilkan "✓ Koneksi MySQL ditutup"
+        
+    tangkap mysql.connector.Error sebagai e
+        tampilkan f"✗ MySQL Error: {e}"
+    selesai
+    
+tangkap ImportError
+    tampilkan "⚠ Module mysql-connector-python tidak terinstall"
+    tampilkan "  Install dengan: pip install mysql-connector-python"
+selesai
+
+tampilkan ""
+tampilkan "=" * 80
+tampilkan ""
+
+// ============================================
+// POSTGRESQL OPERATIONS
+// ============================================
+
+tampilkan "=== [B] PostgreSQL Operations ==="
+tampilkan ""
+
+coba
+    impor_python "psycopg2"
+    impor_python "psycopg2.sql"
+    
+    tampilkan "[1] Koneksi ke PostgreSQL..."
+    
+    // Konfigurasi koneksi PostgreSQL
+    config_pg itu {
+        "host": "localhost",
+        "database": "test_db",
+        "user": "postgres",
+        "password": "password",
+        "port": 5432
+    }
+    
+    coba
+conn_pg itu panggil_python psycopg2.connect( host=config_pg["host"], database=config_pg["database"], user=config_pg["user"], password=config_pg["password"], port=config_pg["port"] )
+        cursor_pg itu conn_pg.cursor()
+        tampilkan "✓ Berhasil terhubung ke PostgreSQL"
+        tampilkan ""
+        
+        // Membuat tabel
+        tampilkan "[2] Membuat tabel produk..."
+        cursor_pg.execute("""
+            CREATE TABLE IF NOT EXISTS produk (
+                id SERIAL PRIMARY KEY,
+                kode VARCHAR(20) UNIQUE NOT NULL,
+                nama VARCHAR(100) NOT NULL,
+                kategori VARCHAR(50),
+                harga NUMERIC(15,2),
+                stok INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
+        conn_pg.commit()
+        tampilkan "✓ Tabel produk berhasil dibuat"
+        tampilkan ""
+        
+        // Insert data dengan RETURNING
+        tampilkan "[3] Menambahkan data produk (dengan RETURNING)..."
+        data_produk itu [
+            ("PRD001", "Laptop Dell", "Elektronik", 12000000, 15),
+            ("PRD002", "Mouse Wireless", "Aksesoris", 150000, 100),
+            ("PRD003", "Keyboard Mechanical", "Aksesoris", 800000, 50),
+            ("PRD004", "Monitor Samsung", "Elektronik", 3000000, 25),
+            ("PRD005", "Headset Gaming", "Aksesoris", 500000, 40)
+        ]
+        
+        untuk setiap p dari data_produk
+            cursor_pg.execute("""
+                INSERT INTO produk (kode, nama, kategori, harga, stok)
+                VALUES (%s, %s, %s, %s, %s)
+                ON CONFLICT (kode) DO UPDATE 
+                SET nama = EXCLUDED.nama
+                RETURNING id, kode, nama
+            """, p)
+            result itu cursor_pg.fetchone()
+            tampilkan f"  ✓ Produk ditambahkan: ID={result[0]}, {result[2]}"
+        selesai
+        conn_pg.commit()
+        tampilkan ""
+        
+        // Select dengan JSON aggregation
+        tampilkan "[4] Query dengan JSON Aggregation..."
+        cursor_pg.execute("""
+            SELECT 
+                kategori,
+                json_agg(
+                    json_build_object(
+                        'kode', kode,
+                        'nama', nama,
+                        'harga', harga,
+                        'stok', stok
+                    )
+                ) as produk_list
+            FROM produk
+            GROUP BY kategori
+        """)
+        
+        hasil_json itu cursor_pg.fetchall()
+        untuk setiap row dari hasil_json
+            tampilkan f"Kategori: {row[0]}"
+            tampilkan f"  Produk: {row[1]}"
+        selesai
+        tampilkan ""
+        
+        // Window functions
+        tampilkan "[5] Query dengan Window Functions..."
+        cursor_pg.execute("""
+            SELECT 
+                kode,
+                nama,
+                kategori,
+                harga,
+                RANK() OVER (PARTITION BY kategori ORDER BY harga DESC) as rank_harga,
+                AVG(harga) OVER (PARTITION BY kategori) as avg_harga_kategori
+            FROM produk
+            ORDER BY kategori, rank_harga
+        """)
+        
+        hasil_window itu cursor_pg.fetchall()
+        tampilkan "-" * 110
+        tampilkan f"{'Kode':<10} {'Nama':<25} {'Kategori':<15} {'Harga':<15} {'Rank':<8} {'Avg Kategori':<20}"
+        tampilkan "-" * 110
+        
+        untuk setiap row dari hasil_window
+            tampilkan f"{row[0]:<10} {row[1]:<25} {row[2]:<15} Rp {row[3]:>10,.0f} {row[4]:<8} Rp {row[5]:>15,.0f}"
+        selesai
+        tampilkan ""
+        
+        // CTE (Common Table Expression)
+        tampilkan "[6] Query dengan CTE..."
+        cursor_pg.execute("""
+            WITH kategori_stats AS (
+                SELECT 
+                    kategori,
+                    COUNT(*) as jumlah,
+                    SUM(harga * stok) as nilai_total
+                FROM produk
+                GROUP BY kategori
+            )
+            SELECT 
+                kategori,
+                jumlah,
+                nilai_total,
+                ROUND((nilai_total * 100.0 / SUM(nilai_total) OVER ()), 2) as persentase
+            FROM kategori_stats
+            ORDER BY nilai_total DESC
+        """)
+        
+        hasil_cte itu cursor_pg.fetchall()
+        tampilkan "Statistik Nilai Stok per Kategori:"
+        untuk setiap row dari hasil_cte
+            tampilkan f"  {row[0]}: {row[1]} produk, Rp {row[2]:,.0f} ({row[3]}%)"
+        selesai
+        tampilkan ""
+        
+        // Full-text search
+        tampilkan "[7] Full-Text Search..."
+        cursor_pg.execute("""
+            SELECT kode, nama, kategori
+            FROM produk
+            WHERE to_tsvector('indonesian', nama) @@ to_tsquery('indonesian', 'gaming | wireless')
+        """)
+        
+        hasil_search itu cursor_pg.fetchall()
+        tampilkan "Hasil pencarian 'gaming' atau 'wireless':"
+        untuk setiap row dari hasil_search
+            tampilkan f"  • {row[1]} ({row[0]}) - {row[2]}"
+        selesai
+        tampilkan ""
+        
+        // Tutup koneksi
+        cursor_pg.close()
+        conn_pg.close()
+        tampilkan "✓ Koneksi PostgreSQL ditutup"
+        
+    tangkap psycopg2.Error sebagai e
+        tampilkan f"✗ PostgreSQL Error: {e}"
+    selesai
+    
+tangkap ImportError
+    tampilkan "⚠ Module psycopg2 tidak terinstall"
+    tampilkan "  Install dengan: pip install psycopg2-binary"
+selesai
+
+tampilkan ""
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Note: Contoh ini memerlukan MySQL/PostgreSQL server yang berjalan"
+tampilkan "      dan kredensial yang sesuai untuk dapat dijalankan."

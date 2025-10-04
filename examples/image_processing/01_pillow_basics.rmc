@@ -1,0 +1,400 @@
+// ============================================
+// Image Processing - Pillow/PIL
+// ============================================
+// Contoh pengolahan gambar dengan Pillow
+
+tampilkan "=== Image Processing with Pillow ==="
+tampilkan ""
+
+// Note: Install Pillow: pip install Pillow
+
+coba
+    impor_python "PIL.Image"
+    impor_python "PIL.ImageDraw"
+    impor_python "PIL.ImageFont"
+    impor_python "PIL.ImageFilter"
+    impor_python "PIL.ImageEnhance"
+    
+    tampilkan "[1] Basic Image Operations..."
+    tampilkan ""
+    
+    kode_basic itu """
+from PIL import Image
+
+# 1. Buka gambar
+img = Image.open('input.jpg')
+
+# Info gambar
+print(f"Format: {img.format}")
+print(f"Size: {img.size}")
+print(f"Mode: {img.mode}")
+
+# 2. Resize gambar
+img_resized = img.resize((800, 600))
+img_resized.save('resized.jpg')
+print("✓ Gambar di-resize")
+
+# 3. Crop gambar
+box = (100, 100, 400, 400)  # (left, top, right, bottom)
+img_cropped = img.crop(box)
+img_cropped.save('cropped.jpg')
+print("✓ Gambar di-crop")
+
+# 4. Rotate gambar
+img_rotated = img.rotate(45)
+img_rotated.save('rotated.jpg')
+print("✓ Gambar di-rotate")
+
+# 5. Flip gambar
+img_flipped = img.transpose(Image.FLIP_LEFT_RIGHT)
+img_flipped.save('flipped.jpg')
+print("✓ Gambar di-flip")
+
+# 6. Convert mode
+img_gray = img.convert('L')  # Grayscale
+img_gray.save('grayscale.jpg')
+print("✓ Gambar di-convert ke grayscale")
+"""
+    
+    tampilkan kode_basic
+    tampilkan ""
+    
+    // ============================================
+    // 2. IMAGE FILTERS
+    // ============================================
+    
+    tampilkan "[2] Image Filters..."
+    tampilkan ""
+    
+    kode_filters itu """
+from PIL import Image, ImageFilter
+
+img = Image.open('input.jpg')
+
+# Blur
+img_blur = img.filter(ImageFilter.BLUR)
+img_blur.save('blur.jpg')
+
+# Sharpen
+img_sharp = img.filter(ImageFilter.SHARPEN)
+img_sharp.save('sharpen.jpg')
+
+# Edge enhance
+img_edge = img.filter(ImageFilter.EDGE_ENHANCE)
+img_edge.save('edge.jpg')
+
+# Contour
+img_contour = img.filter(ImageFilter.CONTOUR)
+img_contour.save('contour.jpg')
+
+# Detail
+img_detail = img.filter(ImageFilter.DETAIL)
+img_detail.save('detail.jpg')
+
+# Emboss
+img_emboss = img.filter(ImageFilter.EMBOSS)
+img_emboss.save('emboss.jpg')
+
+# Find edges
+img_edges = img.filter(ImageFilter.FIND_EDGES)
+img_edges.save('edges.jpg')
+
+print("✓ Semua filter diterapkan")
+"""
+    
+    tampilkan kode_filters
+    tampilkan ""
+    
+    // ============================================
+    // 3. IMAGE ENHANCEMENT
+    // ============================================
+    
+    tampilkan "[3] Image Enhancement..."
+    tampilkan ""
+    
+    kode_enhance itu """
+from PIL import Image, ImageEnhance
+
+img = Image.open('input.jpg')
+
+# Brightness
+enhancer = ImageEnhance.Brightness(img)
+img_bright = enhancer.enhance(1.5)  # 1.5x brighter
+img_bright.save('bright.jpg')
+
+# Contrast
+enhancer = ImageEnhance.Contrast(img)
+img_contrast = enhancer.enhance(1.5)
+img_contrast.save('contrast.jpg')
+
+# Color
+enhancer = ImageEnhance.Color(img)
+img_color = enhancer.enhance(1.5)
+img_color.save('color.jpg')
+
+# Sharpness
+enhancer = ImageEnhance.Sharpness(img)
+img_sharpness = enhancer.enhance(2.0)
+img_sharpness.save('sharpness.jpg')
+
+print("✓ Enhancement selesai")
+"""
+    
+    tampilkan kode_enhance
+    tampilkan ""
+    
+    // ============================================
+    // 4. DRAWING ON IMAGES
+    // ============================================
+    
+    tampilkan "[4] Drawing on Images..."
+    tampilkan ""
+    
+    kode_draw itu """
+from PIL import Image, ImageDraw, ImageFont
+
+# Buat gambar baru atau buka existing
+img = Image.new('RGB', (800, 600), color='white')
+draw = ImageDraw.Draw(img)
+
+# Draw rectangle
+draw.rectangle([50, 50, 200, 200], outline='red', width=3)
+
+# Draw circle (ellipse)
+draw.ellipse([250, 50, 400, 200], outline='blue', width=3)
+
+# Draw line
+draw.line([50, 250, 400, 250], fill='green', width=5)
+
+# Draw polygon
+points = [(500, 50), (600, 150), (550, 200), (450, 150)]
+draw.polygon(points, outline='purple', width=3)
+
+# Draw text
+try:
+    font = ImageFont.truetype("arial.ttf", 40)
+except:
+    font = ImageFont.load_default()
+
+draw.text((50, 300), "Hello RenzmcLang!", fill='black', font=font)
+
+img.save('drawing.jpg')
+print("✓ Drawing selesai")
+"""
+    
+    tampilkan kode_draw
+    tampilkan ""
+    
+    // ============================================
+    // 5. THUMBNAIL GENERATION
+    // ============================================
+    
+    tampilkan "[5] Thumbnail Generation..."
+    tampilkan ""
+    
+    kode_thumbnail itu """
+from PIL import Image
+import os
+
+def create_thumbnail(input_path, output_path, size=(200, 200)):
+    '''Buat thumbnail dari gambar'''
+    try:
+        img = Image.open(input_path)
+        img.thumbnail(size)
+        img.save(output_path)
+        print(f"✓ Thumbnail created: {output_path}")
+        return True
+    except Exception as e:
+        print(f"✗ Error: {e}")
+        return False
+
+# Buat thumbnail untuk semua gambar di folder
+def batch_thumbnail(input_folder, output_folder, size=(200, 200)):
+    '''Buat thumbnail untuk semua gambar'''
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    
+    for filename in os.listdir(input_folder):
+        if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+            input_path = os.path.join(input_folder, filename)
+            output_path = os.path.join(output_folder, f"thumb_{filename}")
+            create_thumbnail(input_path, output_path, size)
+
+# Contoh penggunaan
+create_thumbnail('input.jpg', 'thumbnail.jpg', (200, 200))
+batch_thumbnail('images/', 'thumbnails/', (150, 150))
+"""
+    
+    tampilkan kode_thumbnail
+    tampilkan ""
+    
+    // ============================================
+    // 6. WATERMARK
+    // ============================================
+    
+    tampilkan "[6] Add Watermark..."
+    tampilkan ""
+    
+    kode_watermark itu """
+from PIL import Image, ImageDraw, ImageFont
+
+def add_watermark(input_path, output_path, watermark_text):
+    '''Tambah watermark ke gambar'''
+    img = Image.open(input_path)
+    
+    # Buat layer untuk watermark
+    watermark = Image.new('RGBA', img.size, (0, 0, 0, 0))
+    draw = ImageDraw.Draw(watermark)
+    
+    # Font
+    try:
+        font = ImageFont.truetype("arial.ttf", 50)
+    except:
+        font = ImageFont.load_default()
+    
+    # Posisi watermark (bottom right)
+    width, height = img.size
+    text_width, text_height = draw.textsize(watermark_text, font=font)
+    x = width - text_width - 10
+    y = height - text_height - 10
+    
+    # Draw watermark dengan transparency
+    draw.text((x, y), watermark_text, fill=(255, 255, 255, 128), font=font)
+    
+    # Combine
+    if img.mode != 'RGBA':
+        img = img.convert('RGBA')
+    
+    watermarked = Image.alpha_composite(img, watermark)
+    watermarked = watermarked.convert('RGB')
+    watermarked.save(output_path)
+    
+    print(f"✓ Watermark added: {output_path}")
+
+# Contoh penggunaan
+add_watermark('input.jpg', 'watermarked.jpg', '© RenzmcLang 2024')
+"""
+    
+    tampilkan kode_watermark
+    tampilkan ""
+    
+    // ============================================
+    // 7. IMAGE COLLAGE
+    // ============================================
+    
+    tampilkan "[7] Create Image Collage..."
+    tampilkan ""
+    
+    kode_collage itu """
+from PIL import Image
+
+def create_collage(images, output_path, cols=2):
+    '''Buat collage dari multiple images'''
+    # Load semua gambar
+    imgs = [Image.open(img) for img in images]
+    
+    # Resize semua ke ukuran yang sama
+    target_size = (400, 400)
+    imgs = [img.resize(target_size) for img in imgs]
+    
+    # Hitung dimensi collage
+    rows = (len(imgs) + cols - 1) // cols
+    collage_width = target_size[0] * cols
+    collage_height = target_size[1] * rows
+    
+    # Buat canvas
+    collage = Image.new('RGB', (collage_width, collage_height), 'white')
+    
+    # Paste images
+    for idx, img in enumerate(imgs):
+        row = idx // cols
+        col = idx % cols
+        x = col * target_size[0]
+        y = row * target_size[1]
+        collage.paste(img, (x, y))
+    
+    collage.save(output_path)
+    print(f"✓ Collage created: {output_path}")
+
+# Contoh penggunaan
+images = ['img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg']
+create_collage(images, 'collage.jpg', cols=2)
+"""
+    
+    tampilkan kode_collage
+    tampilkan ""
+    
+    // ============================================
+    // 8. BATCH PROCESSING
+    // ============================================
+    
+    tampilkan "[8] Batch Image Processing..."
+    tampilkan ""
+    
+    kode_batch itu """
+from PIL import Image
+import os
+
+def batch_process(input_folder, output_folder, operation='resize', **kwargs):
+    '''Batch process images'''
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    
+    for filename in os.listdir(input_folder):
+        if filename.lower().endswith(('.jpg', '.jpeg', '.png', '.gif')):
+            input_path = os.path.join(input_folder, filename)
+            output_path = os.path.join(output_folder, filename)
+            
+            try:
+                img = Image.open(input_path)
+                
+                if operation == 'resize':
+                    size = kwargs.get('size', (800, 600))
+                    img = img.resize(size)
+                
+                elif operation == 'grayscale':
+                    img = img.convert('L')
+                
+                elif operation == 'thumbnail':
+                    size = kwargs.get('size', (200, 200))
+                    img.thumbnail(size)
+                
+                elif operation == 'rotate':
+                    angle = kwargs.get('angle', 90)
+                    img = img.rotate(angle)
+                
+                img.save(output_path)
+                print(f"✓ Processed: {filename}")
+            
+            except Exception as e:
+                print(f"✗ Error processing {filename}: {e}")
+
+# Contoh penggunaan
+batch_process('input_images/', 'output_images/', 
+              operation='resize', size=(1024, 768))
+
+batch_process('input_images/', 'grayscale_images/', 
+              operation='grayscale')
+"""
+    
+    tampilkan kode_batch
+    tampilkan ""
+    
+    tampilkan "✓ Pillow examples siap digunakan"
+    
+tangkap ImportError
+    tampilkan "⚠ Module Pillow tidak terinstall"
+    tampilkan "  Install dengan: pip install Pillow"
+selesai
+
+tampilkan ""
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Image Processing Features:"
+tampilkan "  - Resize, crop, rotate"
+tampilkan "  - Filters (blur, sharpen, edge)"
+tampilkan "  - Enhancement (brightness, contrast)"
+tampilkan "  - Drawing (shapes, text)"
+tampilkan "  - Thumbnails"
+tampilkan "  - Watermarks"
+tampilkan "  - Batch processing"

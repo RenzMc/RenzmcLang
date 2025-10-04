@@ -1,0 +1,54 @@
+// Example: Data Analysis dengan Python
+// Menunjukkan cara analisis data menggunakan Python libraries
+
+tampilkan "╔══════════════════════════════════════════════════════════╗"
+tampilkan "║  Data Analysis Example - RenzmcLang + Python            ║"
+tampilkan "╚══════════════════════════════════════════════════════════╝"
+tampilkan ""
+
+// Import required libraries
+impor_python "statistics"
+impor_python "math"
+
+// Sample data
+data itu [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+tampilkan "Data: " + ke_teks(data)
+tampilkan ""
+
+// Calculate statistics
+mean itu panggil_python statistics.mean(data)
+tampilkan "✓ Mean (Rata-rata): " + ke_teks(mean)
+
+median itu panggil_python statistics.median(data)
+tampilkan "✓ Median (Nilai Tengah): " + ke_teks(median)
+
+stdev itu panggil_python statistics.stdev(data)
+tampilkan "✓ Standard Deviation: " + ke_teks(stdev)
+
+variance itu panggil_python statistics.variance(data)
+tampilkan "✓ Variance: " + ke_teks(variance)
+
+// Calculate min, max, sum
+min_val itu minimum(data)
+max_val itu maksimum(data)
+sum_val itu jumlah(data)
+
+tampilkan ""
+tampilkan "✓ Minimum: " + ke_teks(min_val)
+tampilkan "✓ Maximum: " + ke_teks(max_val)
+tampilkan "✓ Sum: " + ke_teks(sum_val)
+
+// Calculate range
+range_val itu max_val - min_val
+tampilkan "✓ Range: " + ke_teks(range_val)
+
+tampilkan ""
+tampilkan "╔══════════════════════════════════════════════════════════╗"
+tampilkan "║  Data analysis works perfectly! ✅                       ║"
+tampilkan "║                                                          ║"
+tampilkan "║  You can use:                                           ║"
+tampilkan "║  - statistics module (built-in)                         ║"
+tampilkan "║  - numpy (if installed)                                 ║"
+tampilkan "║  - pandas (if installed)                                ║"
+tampilkan "║  - scipy (if installed)                                 ║"
+tampilkan "╚══════════════════════════════════════════════════════════╝"

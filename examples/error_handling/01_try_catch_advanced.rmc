@@ -1,0 +1,209 @@
+# ===================================
+# Try-Catch-Finally Advanced
+# ===================================
+# Error handling yang robust untuk menangani kesalahan
+
+tampilkan "=== Try-Catch-Finally Advanced Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Basic Try-Catch
+# ===================================
+tampilkan "1. Basic Try-Catch:"
+
+coba
+    tampilkan "Mencoba operasi..."
+    hasil itu 10 / 2
+    tampilkan "Hasil: " + ke_teks(hasil)
+tangkap e
+    tampilkan "Error terjadi: " + ke_teks(e)
+selesai
+
+tampilkan ""
+
+# ===================================
+# 2. Try-Catch dengan Index Error
+# ===================================
+tampilkan "2. Try-Catch dengan Index Error:"
+
+daftar itu [1, 2, 3]
+tampilkan "Daftar: " + ke_teks(daftar)
+
+coba
+    tampilkan "Akses index yang valid (1)..."
+    nilai itu daftar[1]
+    tampilkan "Nilai: " + ke_teks(nilai)
+tangkap e
+    tampilkan "Error: " + ke_teks(e)
+selesai
+
+tampilkan ""
+
+# ===================================
+# 3. Try-Catch-Finally
+# ===================================
+tampilkan "3. Try-Catch-Finally:"
+
+coba
+    tampilkan "Operasi dalam try block"
+    x itu 10
+    tampilkan "x = " + ke_teks(x)
+tangkap e
+    tampilkan "Error: " + ke_teks(e)
+akhirnya
+    tampilkan "Finally block selalu dijalankan"
+selesai
+
+tampilkan ""
+
+# ===================================
+# 4. Try-Catch dalam Fungsi
+# ===================================
+tampilkan "4. Try-Catch dalam Fungsi:"
+
+fungsi bagi_aman(a, b):
+    coba
+        hasil_bagi itu a / b
+        hasil hasil_bagi
+    tangkap e
+        tampilkan "Error dalam pembagian"
+        hasil 0
+    selesai
+selesai
+
+tampilkan "10 / 2 = " + ke_teks(bagi_aman(10, 2))
+tampilkan "10 / 5 = " + ke_teks(bagi_aman(10, 5))
+
+tampilkan ""
+
+# ===================================
+# 5. Try-Catch untuk Validasi
+# ===================================
+tampilkan "5. Try-Catch untuk Validasi:"
+
+fungsi konversi_ke_angka_aman(teks):
+    coba
+        angka itu ke_angka(teks)
+        hasil angka
+    tangkap e
+        tampilkan "Tidak bisa konversi '" + teks + "' ke angka"
+        hasil 0
+    selesai
+selesai
+
+tampilkan "konversi '123': " + ke_teks(konversi_ke_angka_aman("123"))
+tampilkan "konversi '456': " + ke_teks(konversi_ke_angka_aman("456"))
+
+tampilkan ""
+
+# ===================================
+# 6. Try-Catch untuk Dict Access
+# ===================================
+tampilkan "6. Try-Catch untuk Dict Access:"
+
+data itu {"nama": "Budi", "umur": 25}
+tampilkan "Data: " + ke_teks(data)
+
+fungsi get_value_safe(dict_data, key):
+    coba
+        nilai itu dict_data[key]
+        hasil nilai
+    tangkap e
+        tampilkan "Key '" + key + "' tidak ditemukan"
+        hasil kosong
+    selesai
+selesai
+
+tampilkan "Nama: " + ke_teks(get_value_safe(data, "nama"))
+tampilkan "Umur: " + ke_teks(get_value_safe(data, "umur"))
+
+tampilkan ""
+
+# ===================================
+# 7. Multiple Try-Catch Blocks
+# ===================================
+tampilkan "7. Multiple Try-Catch Blocks:"
+
+# First try-catch
+coba
+    tampilkan "Try block 1"
+    x itu 5
+    tampilkan "x = " + ke_teks(x)
+tangkap e
+    tampilkan "Catch block 1"
+selesai
+
+# Second try-catch
+coba
+    tampilkan "Try block 2"
+    y itu 10
+    tampilkan "y = " + ke_teks(y)
+tangkap e
+    tampilkan "Catch block 2"
+selesai
+
+tampilkan ""
+
+# ===================================
+# 8. Try-Catch dengan Finally untuk Cleanup
+# ===================================
+tampilkan "8. Try-Catch dengan Finally untuk Cleanup:"
+
+resource_open itu salah
+
+coba
+    tampilkan "Opening resource..."
+    resource_open itu benar
+    tampilkan "Resource opened"
+    
+    # Simulate operation
+    tampilkan "Processing..."
+    
+tangkap e
+    tampilkan "Error during processing: " + ke_teks(e)
+akhirnya
+    jika resource_open
+        tampilkan "Closing resource..."
+        resource_open itu salah
+        tampilkan "Resource closed"
+    selesai
+selesai
+
+tampilkan ""
+
+# ===================================
+# 9. Try-Catch untuk List Operations
+# ===================================
+tampilkan "9. Try-Catch untuk List Operations:"
+
+fungsi get_element_safe(lst, index):
+    coba
+        element itu lst[index]
+        hasil element
+    tangkap e
+        tampilkan "Index " + ke_teks(index) + " tidak valid"
+        hasil kosong
+    selesai
+selesai
+
+my_list itu [10, 20, 30, 40, 50]
+tampilkan "List: " + ke_teks(my_list)
+tampilkan "Element [2]: " + ke_teks(get_element_safe(my_list, 2))
+tampilkan "Element [1]: " + ke_teks(get_element_safe(my_list, 1))
+
+tampilkan ""
+
+# ===================================
+# 10. Error Handling Best Practices
+# ===================================
+tampilkan "10. Error Handling Best Practices:"
+tampilkan "✓ Gunakan try-catch untuk operasi yang mungkin error"
+tampilkan "✓ Tangkap error dengan nama variabel (tangkap e)"
+tampilkan "✓ Gunakan finally untuk cleanup"
+tampilkan "✓ Berikan fallback value yang reasonable"
+tampilkan "✓ Log error untuk debugging"
+tampilkan "✓ Jangan suppress error tanpa handling"
+tampilkan "✓ Gunakan dalam fungsi untuk clean error handling"
+
+tampilkan ""
+tampilkan "=== Try-Catch-Finally Advanced Examples Complete ==="

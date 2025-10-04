@@ -1,0 +1,262 @@
+# ===================================
+# Walrus Operator (:=)
+# ===================================
+# Walrus operator adalah assignment expression yang memungkinkan
+# assignment dan return value dalam satu ekspresi
+# Sintaks: (variable := value)
+
+tampilkan "=== Walrus Operator Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Walrus Operator Dasar
+# ===================================
+tampilkan "1. Walrus Operator Dasar:"
+
+# Assignment dalam kondisi
+jika (nilai := 85) >= 60
+    tampilkan "Nilai: " + ke_teks(nilai)
+    tampilkan "Status: Lulus"
+selesai
+
+# Assignment dalam while
+tampilkan ""
+tampilkan "Countdown dengan walrus:"
+counter := 5
+selama (counter := counter - 1) >= 0
+    tampilkan "Counter: " + ke_teks(counter)
+selesai
+
+tampilkan ""
+
+# ===================================
+# 2. Walrus dalam Loop (Alternative to Comprehension)
+# ===================================
+tampilkan "2. Walrus dalam Loop:"
+
+# Gunakan walrus untuk menghindari perhitungan ganda
+angka itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+tampilkan "Angka: " + ke_teks(angka)
+
+# Kuadrat yang lebih dari 20 dengan walrus
+hasil itu []
+untuk setiap x dari angka
+    jika (kuadrat := x * x) > 20
+        hasil itu hasil + [kuadrat]
+    selesai
+selesai
+tampilkan "Kuadrat > 20: " + ke_teks(hasil)
+
+tampilkan ""
+
+# ===================================
+# 3. Walrus untuk Validasi Input
+# ===================================
+tampilkan "3. Walrus untuk Validasi Input:"
+
+# Simulasi input validation
+input_nilai itu 75
+
+jika (validated := input_nilai) >= 0 dan validated <= 100
+    tampilkan "Input valid: " + ke_teks(validated)
+    grade itu "A" jika validated >= 90 kalau tidak ("B" jika validated >= 80 kalau tidak "C")
+    tampilkan "Grade: " + grade
+selesai
+
+# Contoh validasi lain
+input_nilai_2 itu 150
+jika input_nilai_2 < 0 atau input_nilai_2 > 100
+    tampilkan "Input " + ke_teks(input_nilai_2) + " tidak valid (harus 0-100)"
+selesai
+
+tampilkan ""
+
+# ===================================
+# 4. Walrus untuk Caching Hasil
+# ===================================
+tampilkan "4. Walrus untuk Caching Hasil:"
+
+# Helper function untuk sum
+fungsi jumlah_manual(lst):
+    total itu 0
+    untuk setiap item dari lst
+        total itu total + item
+    selesai
+    hasil total
+selesai
+
+# Hitung sekali, gunakan berkali-kali
+data itu [10, 20, 30, 40, 50]
+tampilkan "Data: " + ke_teks(data)
+
+jika (total := jumlah_manual(data)) > 100
+    tampilkan "Total: " + ke_teks(total)
+    tampilkan "Rata-rata: " + ke_teks(total / panjang(data))
+    tampilkan "Status: Total besar"
+selesai
+
+tampilkan ""
+
+# ===================================
+# 5. Walrus dalam Loop
+# ===================================
+tampilkan "5. Walrus dalam Loop:"
+
+# Process data dengan walrus
+nilai_list itu [45, 67, 89, 23, 91, 56, 78]
+tampilkan "Nilai list: " + ke_teks(nilai_list)
+
+tampilkan "Nilai yang lulus (>= 60):"
+untuk setiap n dari nilai_list
+    jika (status := n) >= 60
+        tampilkan "  " + ke_teks(status) + " - Lulus"
+    selesai
+selesai
+
+tampilkan ""
+
+# ===================================
+# 6. Walrus untuk String Processing
+# ===================================
+tampilkan "6. Walrus untuk String Processing:"
+
+# Process string dengan walrus
+teks itu "Hello World"
+tampilkan "Teks: " + teks
+
+jika (panjang_teks := panjang(teks)) > 5
+    tampilkan "Panjang: " + ke_teks(panjang_teks)
+    tampilkan "Teks cukup panjang"
+    tampilkan "Uppercase: " + teks.upper()
+selesai
+
+tampilkan ""
+
+# ===================================
+# 7. Walrus untuk Perhitungan Kompleks
+# ===================================
+tampilkan "7. Walrus untuk Perhitungan Kompleks:"
+
+# Hitung dan gunakan hasil
+radius itu 5
+tampilkan "Radius: " + ke_teks(radius)
+
+jika (luas := 3.14159 * radius * radius) > 50
+    tampilkan "Luas lingkaran: " + ke_teks(luas)
+    tampilkan "Keliling: " + ke_teks(2 * 3.14159 * radius)
+    tampilkan "Lingkaran besar"
+selesai
+
+tampilkan ""
+
+# ===================================
+# 8. Walrus dengan Multiple Conditions
+# ===================================
+tampilkan "8. Walrus dengan Multiple Conditions:"
+
+# Multiple walrus dalam kondisi
+x itu 15
+y itu 25
+
+jika (sum_val := x + y) > 30 dan (diff_val := y - x) > 5
+    tampilkan "x: " + ke_teks(x) + ", y: " + ke_teks(y)
+    tampilkan "Sum: " + ke_teks(sum_val)
+    tampilkan "Diff: " + ke_teks(diff_val)
+    tampilkan "Kondisi terpenuhi"
+selesai
+
+tampilkan ""
+
+# ===================================
+# 9. Walrus untuk Data Processing
+# ===================================
+tampilkan "9. Walrus untuk Data Processing:"
+
+# Process list dengan walrus
+scores itu [85, 92, 78, 95, 88, 76, 90]
+tampilkan "Scores: " + ke_teks(scores)
+
+# Filter dan process
+high_scores itu []
+untuk setiap score dari scores
+    jika (processed := score) >= 85
+        high_scores itu high_scores + [processed]
+    selesai
+selesai
+
+tampilkan "High scores (>= 85): " + ke_teks(high_scores)
+jika (count := panjang(high_scores)) > 0
+    tampilkan "Total high scores: " + ke_teks(count)
+    tampilkan "Persentase: " + ke_teks((count * 100) / panjang(scores)) + "%"
+selesai
+
+tampilkan ""
+
+# ===================================
+# 10. Walrus untuk Optimization
+# ===================================
+tampilkan "10. Walrus untuk Optimization:"
+
+# Hindari perhitungan berulang
+angka_besar itu [100, 200, 300, 400, 500]
+tampilkan "Angka: " + ke_teks(angka_besar)
+
+# Dengan walrus - hitung sekali saja
+hasil_optimized itu []
+untuk setiap num dari angka_besar
+    jika (kuadrat := num * num) > 50000
+        hasil_optimized itu hasil_optimized + [kuadrat]
+    selesai
+selesai
+
+tampilkan "Kuadrat > 50000: " + ke_teks(hasil_optimized)
+
+tampilkan ""
+
+# ===================================
+# 11. Walrus dalam Dict Processing
+# ===================================
+tampilkan "11. Walrus dalam Dict Processing:"
+
+# Process dict dengan walrus
+siswa itu [
+    {"nama": "Budi", "nilai": 85},
+    {"nama": "Ani", "nilai": 92},
+    {"nama": "Citra", "nilai": 78}
+]
+
+tampilkan "Data siswa:"
+untuk setiap s dari siswa
+    jika (nilai := s["nilai"]) >= 80
+        tampilkan "  " + s["nama"] + ": " + ke_teks(nilai) + " - Excellent"
+    selesai
+selesai
+
+tampilkan ""
+
+# ===================================
+# 12. Walrus Best Practices
+# ===================================
+tampilkan "12. Walrus Best Practices:"
+
+# Good use case: Avoid repeated computation
+tampilkan "✓ Gunakan walrus untuk menghindari perhitungan berulang"
+tampilkan "✓ Gunakan dalam kondisi untuk assignment + check"
+tampilkan "✓ Gunakan dalam loop untuk caching hasil"
+tampilkan "✓ Selalu gunakan kurung: (var := value)"
+tampilkan "✓ Jangan overuse - gunakan hanya jika benar-benar perlu"
+
+# Bad practice example (commented)
+# Jangan: x := 5  # Assignment biasa lebih baik
+# Gunakan: x itu 5
+
+# Good practice
+tampilkan ""
+tampilkan "Good practice example:"
+data_list itu [1, 2, 3, 4, 5]
+jika (total := jumlah_manual(data_list)) > 10
+    tampilkan "Total: " + ke_teks(total) + " (calculated once)"
+selesai
+
+tampilkan ""
+tampilkan "=== Walrus Operator Examples Complete ==="

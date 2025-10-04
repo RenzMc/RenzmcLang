@@ -1,0 +1,204 @@
+# ===================================
+# Tuple Operations
+# ===================================
+# Tuple adalah collection yang immutable (tidak bisa diubah)
+# Sintaks: (| element1, element2, ... |)
+
+tampilkan "=== Tuple Operations Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Membuat Tuple
+# ===================================
+tampilkan "1. Membuat Tuple:"
+
+# Tuple dengan berbagai tipe data
+tuple1 itu (| 1, 2, 3, 4, 5 |)
+tampilkan "Tuple angka: " + ke_teks(tuple1)
+
+tuple2 itu (| "apel", "jeruk", "mangga" |)
+tampilkan "Tuple string: " + ke_teks(tuple2)
+
+tuple3 itu (| 1, "dua", 3.0, benar |)
+tampilkan "Tuple mixed: " + ke_teks(tuple3)
+
+# Tuple kosong
+tuple_kosong itu (| |)
+tampilkan "Tuple kosong: " + ke_teks(tuple_kosong)
+
+# Tuple dengan satu elemen
+tuple_satu itu (| 42 |)
+tampilkan "Tuple satu elemen: " + ke_teks(tuple_satu)
+
+tampilkan ""
+
+# ===================================
+# 2. Akses Elemen Tuple
+# ===================================
+tampilkan "2. Akses Elemen Tuple:"
+
+koordinat itu (| 10, 20, 30 |)
+tampilkan "Koordinat: " + ke_teks(koordinat)
+tampilkan "x (index 0): " + ke_teks(koordinat[0])
+tampilkan "y (index 1): " + ke_teks(koordinat[1])
+tampilkan "z (index 2): " + ke_teks(koordinat[2])
+
+# Negative indexing
+tampilkan "Last element: " + ke_teks(koordinat[-1])
+
+tampilkan ""
+
+# ===================================
+# 3. Tuple Unpacking
+# ===================================
+tampilkan "3. Tuple Unpacking:"
+
+# Unpack tuple ke variabel
+point itu (| 5, 10 |)
+x, y itu point
+tampilkan "Point: " + ke_teks(point)
+tampilkan "x = " + ke_teks(x) + ", y = " + ke_teks(y)
+
+# Unpack dengan lebih banyak nilai
+data itu (| "Budi", 25, "Jakarta" |)
+nama, umur, kota itu data
+tampilkan ""
+tampilkan "Data: " + ke_teks(data)
+tampilkan "Nama: " + nama
+tampilkan "Umur: " + ke_teks(umur)
+tampilkan "Kota: " + kota
+
+tampilkan ""
+
+# ===================================
+# 4. Tuple sebagai Return Value
+# ===================================
+tampilkan "4. Tuple sebagai Return Value:"
+
+fungsi get_min_max(numbers):
+    min_val itu numbers[0]
+    max_val itu numbers[0]
+    
+    untuk setiap num dari numbers
+        jika num < min_val
+            min_val itu num
+        selesai
+        jika num > max_val
+            max_val itu num
+        selesai
+    selesai
+    
+    hasil (| min_val, max_val |)
+selesai
+
+angka itu [5, 2, 9, 1, 7, 3]
+tampilkan "Angka: " + ke_teks(angka)
+
+min_max itu get_min_max(angka)
+tampilkan "Min-Max tuple: " + ke_teks(min_max)
+tampilkan "Min: " + ke_teks(min_max[0])
+tampilkan "Max: " + ke_teks(min_max[1])
+
+tampilkan ""
+
+# ===================================
+# 5. Tuple dalam Loop
+# ===================================
+tampilkan "5. Tuple dalam Loop:"
+
+# List of tuples
+siswa_list itu [
+    (| "Budi", 85 |),
+    (| "Ani", 92 |),
+    (| "Citra", 78 |)
+]
+
+tampilkan "Daftar siswa:"
+untuk setiap siswa dari siswa_list
+    tampilkan "  " + ke_teks(siswa[0]) + ": " + ke_teks(siswa[1])
+selesai
+
+tampilkan ""
+
+# ===================================
+# 6. Tuple Comparison
+# ===================================
+tampilkan "6. Tuple Comparison:"
+
+tuple_a itu (| 1, 2, 3 |)
+tuple_b itu (| 1, 2, 3 |)
+tuple_c itu (| 1, 2, 4 |)
+
+tampilkan "tuple_a: " + ke_teks(tuple_a)
+tampilkan "tuple_b: " + ke_teks(tuple_b)
+tampilkan "tuple_c: " + ke_teks(tuple_c)
+
+tampilkan "tuple_a == tuple_b: " + ke_teks(tuple_a == tuple_b)
+tampilkan "tuple_a == tuple_c: " + ke_teks(tuple_a == tuple_c)
+tampilkan "tuple_a < tuple_c: " + ke_teks(tuple_a < tuple_c)
+
+tampilkan ""
+
+# ===================================
+# 7. Tuple Length
+# ===================================
+tampilkan "7. Tuple Length:"
+
+tuple_test itu (| 1, 2, 3, 4, 5 |)
+tampilkan "Tuple: " + ke_teks(tuple_test)
+tampilkan "Panjang: " + ke_teks(panjang(tuple_test))
+
+tampilkan ""
+
+# ===================================
+# 8. Tuple Concatenation
+# ===================================
+tampilkan "8. Tuple Concatenation:"
+
+tuple1 itu (| 1, 2, 3 |)
+tuple2 itu (| 4, 5, 6 |)
+tampilkan "Tuple 1: " + ke_teks(tuple1)
+tampilkan "Tuple 2: " + ke_teks(tuple2)
+
+tuple_gabung itu tuple1 + tuple2
+tampilkan "Gabungan: " + ke_teks(tuple_gabung)
+
+tampilkan ""
+
+# ===================================
+# 9. Tuple Praktis: Koordinat
+# ===================================
+tampilkan "9. Tuple Praktis: Koordinat:"
+
+# Fungsi untuk menghitung jarak
+fungsi hitung_jarak(p1, p2):
+    dx itu p2[0] - p1[0]
+    dy itu p2[1] - p1[1]
+    jarak itu ((dx * dx) + (dy * dy)) ** 0.5
+    hasil jarak
+selesai
+
+point1 itu (| 0, 0 |)
+point2 itu (| 3, 4 |)
+
+tampilkan "Point 1: " + ke_teks(point1)
+tampilkan "Point 2: " + ke_teks(point2)
+
+jarak itu hitung_jarak(point1, point2)
+tampilkan "Jarak: " + ke_teks(jarak)
+
+tampilkan ""
+
+# ===================================
+# 10. Tuple Best Practices
+# ===================================
+tampilkan "10. Tuple Best Practices:"
+tampilkan "✓ Gunakan tuple untuk data yang tidak berubah"
+tampilkan "✓ Tuple lebih cepat dari list"
+tampilkan "✓ Gunakan untuk return multiple values"
+tampilkan "✓ Gunakan untuk koordinat, RGB colors, dll"
+tampilkan "✓ Tuple dapat digunakan sebagai dict key"
+tampilkan "✓ Sintaks: (| element1, element2, ... |)"
+
+tampilkan ""
+tampilkan "=== Tuple Operations Examples Complete ==="

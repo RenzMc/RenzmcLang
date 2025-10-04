@@ -1,0 +1,241 @@
+// ============================================
+// Built-in Functions: JSON & Utility Functions
+// ============================================
+// Comprehensive examples for JSON and utility functions
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║      JSON & UTILITY FUNCTIONS         ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// 1. JSON OPERATIONS
+// ============================================
+tampilkan "=== 1. JSON OPERATIONS ==="
+tampilkan ""
+
+// Create data structure
+data itu {
+    "nama": "RenzMcLang",
+    "versi": "0.0.1",
+    "fitur": ["Variables", "Functions", "OOP", "Python Integration"],
+    "aktif": benar,
+    "jumlah_fungsi": 122
+}
+
+tampilkan "Original data:"
+tampilkan data
+tampilkan ""
+
+// json_ke_teks - Convert to JSON string
+json_string itu json_ke_teks(data)
+tampilkan "✓ json_ke_teks(data):"
+tampilkan json_string
+tampilkan ""
+
+// teks_ke_json - Parse JSON string
+data_parsed itu teks_ke_json(json_string)
+tampilkan "✓ teks_ke_json(json_string):"
+tampilkan f"  Nama: {data_parsed['nama']}"
+tampilkan f"  Versi: {data_parsed['versi']}"
+tampilkan f"  Aktif: {data_parsed['aktif']}"
+tampilkan f"  Jumlah Fungsi: {data_parsed['jumlah_fungsi']}"
+
+tampilkan ""
+
+// ============================================
+// 2. HASH & ENCODING
+// ============================================
+tampilkan "=== 2. HASH & ENCODING ==="
+tampilkan ""
+
+teks_rahasia itu "password123"
+
+// hash_teks - Hash text (SHA256)
+hash_hasil itu hash_teks(teks_rahasia)
+tampilkan f"✓ hash_teks('{teks_rahasia}'):"
+tampilkan f"  Hash: {hash_hasil}"
+tampilkan ""
+
+// base64_encode - Encode to base64
+teks_asli itu "Hello RenzMcLang!"
+encoded itu base64_encode(teks_asli)
+tampilkan f"✓ base64_encode('{teks_asli}'):"
+tampilkan f"  Encoded: {encoded}"
+
+// base64_decode - Decode from base64
+decoded itu base64_decode(encoded)
+tampilkan f"✓ base64_decode('{encoded}'):"
+tampilkan f"  Decoded: {decoded}"
+
+tampilkan ""
+
+// ============================================
+// 3. URL ENCODING
+// ============================================
+tampilkan "=== 3. URL ENCODING ==="
+tampilkan ""
+
+url_text itu "Hello World! How are you?"
+
+// url_encode - Encode URL
+url_encoded itu url_encode(url_text)
+tampilkan f"✓ url_encode('{url_text}'):"
+tampilkan f"  Encoded: {url_encoded}"
+
+// url_decode - Decode URL
+url_decoded itu url_decode(url_encoded)
+tampilkan f"✓ url_decode('{url_encoded}'):"
+tampilkan f"  Decoded: {url_decoded}"
+
+tampilkan ""
+
+// ============================================
+// 4. UUID GENERATION
+// ============================================
+tampilkan "=== 4. UUID GENERATION ==="
+tampilkan ""
+
+// buat_uuid - Generate UUID
+uuid1 itu buat_uuid()
+uuid2 itu buat_uuid()
+uuid3 itu buat_uuid()
+
+tampilkan "✓ buat_uuid() - Generated UUIDs:"
+tampilkan f"  UUID 1: {uuid1}"
+tampilkan f"  UUID 2: {uuid2}"
+tampilkan f"  UUID 3: {uuid3}"
+
+tampilkan ""
+
+// ============================================
+// 5. REGEX OPERATIONS
+// ============================================
+tampilkan "=== 5. REGEX OPERATIONS ==="
+tampilkan ""
+
+teks_email itu "Contact us at: support@renzmclang.com or sales@renzmclang.com"
+pattern_email itu "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+
+// regex_match - Match regex pattern
+matches itu regex_match(pattern_email, teks_email)
+tampilkan f"✓ regex_match(email_pattern, text):"
+tampilkan f"  Found {panjang(matches)} email(s):"
+untuk setiap email dari matches
+    tampilkan f"    - {email}"
+selesai
+
+tampilkan ""
+
+// regex_replace - Replace using regex
+teks_angka itu "Phone: 123-456-7890"
+pattern_angka itu "\\d"
+hasil_replace itu regex_replace(pattern_angka, "X", teks_angka)
+tampilkan f"✓ regex_replace('\\d', 'X', '{teks_angka}'):"
+tampilkan f"  Result: {hasil_replace}"
+
+tampilkan ""
+
+// ============================================
+// 6. STRING FORMATTING
+// ============================================
+tampilkan "=== 6. STRING FORMATTING ==="
+tampilkan ""
+
+// format_teks - Format string (using f-string instead)
+nama_user itu "Alice"
+jumlah_pesan itu 5
+formatted itu f"Hello {nama_user}, you have {jumlah_pesan} new messages!"
+tampilkan f"✓ String formatting with f-string:"
+tampilkan f"  Result: {formatted}"
+
+tampilkan ""
+
+// ============================================
+// 7. PRACTICAL EXAMPLES
+// ============================================
+tampilkan "=== 7. PRACTICAL EXAMPLES ==="
+tampilkan ""
+
+// Example 1: API Response Handler
+tampilkan "Example 1: API Response Handler"
+
+buat fungsi buat_api_response dengan status, message, data
+    response itu {
+        "status": status,
+        "message": message,
+        "data": data,
+        "timestamp": waktu(),
+        "request_id": buat_uuid()
+    }
+    
+    hasil json_ke_teks(response)
+selesai
+
+api_data itu {
+    "user": "Alice",
+    "role": "admin"
+}
+
+response_json itu panggil buat_api_response dengan "success", "User retrieved", api_data
+tampilkan "API Response:"
+tampilkan response_json
+tampilkan ""
+
+// Example 2: Password Hasher
+tampilkan "Example 2: Password Security"
+
+buat fungsi hash_password dengan password
+    // Add salt
+    salt itu buat_uuid()
+    salted itu password + salt
+    
+    // Hash
+    hashed itu hash_teks(salted)
+    
+    hasil {
+        "hash": hashed,
+        "salt": salt
+    }
+selesai
+
+pwd_result itu panggil hash_password dengan "mySecurePassword123"
+tampilkan "Password hashed:"
+tampilkan f"  Hash: {potong(pwd_result['hash'], 0, 32)}..."
+tampilkan f"  Salt: {potong(pwd_result['salt'], 0, 32)}..."
+tampilkan ""
+
+// Example 3: Data Serialization
+tampilkan "Example 3: Save/Load Configuration"
+
+config itu {
+    "app_name": "RenzMcLang App",
+    "version": "1.0.0",
+    "settings": {
+        "theme": "dark",
+        "language": "id"
+    }
+}
+
+// Save to file
+config_json itu json_ke_teks(config)
+tulis_file("config.json", config_json)
+tampilkan "✓ Configuration saved to config.json"
+
+// Load from file
+loaded_json itu baca_file("config.json")
+loaded_config itu teks_ke_json(loaded_json)
+tampilkan "✓ Configuration loaded:"
+tampilkan f"  App: {loaded_config['app_name']}"
+tampilkan f"  Version: {loaded_config['version']}"
+tampilkan f"  Theme: {loaded_config['settings']['theme']}"
+
+// Cleanup
+hapus_file("config.json")
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  JSON & Utility Complete! ✅           ║"
+tampilkan "║                                        ║"
+tampilkan "║  Total Functions Demonstrated: 13      ║"
+tampilkan "╚════════════════════════════════════════╝"

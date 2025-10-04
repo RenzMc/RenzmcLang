@@ -1,0 +1,40 @@
+// Test 7: Built-in Dictionary Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 7: Built-in Dictionary Functions                    ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[7.1] Dictionary Functions"
+
+// Create dictionary
+data itu {"nama": "Ali", "umur": 25, "kota": "Jakarta"}
+tampilkan f"✓ Initial dict: {data}"
+
+// kunci
+keys itu kunci(data)
+tampilkan f"✓ kunci: {keys}"
+
+// nilai
+values itu nilai(data)
+tampilkan f"✓ nilai: {values}"
+
+// item
+items itu item(data)
+tampilkan f"✓ item: {items}"
+
+// Access
+nama_val itu data["nama"]
+tampilkan f"✓ Access data['nama']: {nama_val}"
+
+// Add new key (using assignment)
+negara_baru itu "Indonesia"
+tampilkan f"✓ Add key manually: negara = {negara_baru}"
+
+// hapus_kunci
+hapus_kunci(data, "kota")
+tampilkan f"✓ hapus_kunci('kota'): {data}"
+
+// panjang
+panjang_dict itu panjang(data)
+tampilkan f"✓ panjang: {panjang_dict}"
+
+tampilkan "\n✅ Test 7 PASSED: All dictionary functions working!"

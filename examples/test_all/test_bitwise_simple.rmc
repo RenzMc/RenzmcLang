@@ -1,0 +1,28 @@
+# Test bitwise operators (without NOT)
+x itu 5
+y itu 3
+
+# Bitwise AND
+z itu x & y
+tampilkan "5 & 3 ="
+tampilkan z
+
+# Bitwise OR
+a itu x | y
+tampilkan "5 | 3 ="
+tampilkan a
+
+# Bitwise XOR
+b itu x ^ y
+tampilkan "5 ^ 3 ="
+tampilkan b
+
+# Left shift
+c itu x << 2
+tampilkan "5 << 2 ="
+tampilkan c
+
+# Right shift
+d itu 20 >> 2
+tampilkan "20 >> 2 ="
+tampilkan d

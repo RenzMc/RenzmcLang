@@ -1,0 +1,291 @@
+# ============================================
+# ASYNC/AWAIT - ASYNCHRONOUS PROGRAMMING
+# ============================================
+# Comprehensive examples for async functions and await operations
+# in RenzmcLang
+
+tampilkan "=== ASYNC/AWAIT EXAMPLES ==="
+tampilkan ""
+
+# ============================================
+# 1. BASIC ASYNC FUNCTION
+# ============================================
+tampilkan "1. Basic Async Function:"
+tampilkan ""
+
+# Define an async function
+async buat fungsi ambil_data(url):
+    tampilkan "   Fetching data from: " + url
+    # Simulate data fetching
+    hasil "Data from " + url
+selesai
+
+# Call async function with await
+data itu tunggu panggil ambil_data dengan "https://api.example.com/users"
+tampilkan "   Result: " + data
+tampilkan ""
+
+# ============================================
+# 2. MULTIPLE ASYNC OPERATIONS
+# ============================================
+tampilkan "2. Multiple Async Operations:"
+tampilkan ""
+
+async buat fungsi proses_user(user_id):
+    tampilkan "   Processing user: " + ke_teks(user_id)
+    hasil "User " + ke_teks(user_id) + " processed"
+selesai
+
+# Process multiple users
+user1 itu tunggu panggil proses_user dengan 1
+tampilkan "   " + user1
+
+user2 itu tunggu panggil proses_user dengan 2
+tampilkan "   " + user2
+
+user3 itu tunggu panggil proses_user dengan 3
+tampilkan "   " + user3
+tampilkan ""
+
+# ============================================
+# 3. ASYNC FUNCTION WITH CALCULATIONS
+# ============================================
+tampilkan "3. Async Function with Calculations:"
+tampilkan ""
+
+async buat fungsi hitung_faktorial(n):
+    tampilkan "   Computing factorial of " + ke_teks(n)
+    hasil_faktorial itu 1
+    untuk i dari 1 sampai n
+        hasil_faktorial itu hasil_faktorial * i
+    selesai
+    hasil hasil_faktorial
+selesai
+
+faktorial_5 itu tunggu panggil hitung_faktorial dengan 5
+tampilkan "   Factorial of 5: " + ke_teks(faktorial_5)
+
+faktorial_10 itu tunggu panggil hitung_faktorial dengan 10
+tampilkan "   Factorial of 10: " + ke_teks(faktorial_10)
+tampilkan ""
+
+# ============================================
+# 4. ASYNC FUNCTION WITH DATA PROCESSING
+# ============================================
+tampilkan "4. Async Function with Data Processing:"
+tampilkan ""
+
+async buat fungsi proses_daftar(daftar):
+    tampilkan "   Processing list of " + ke_teks(panjang(daftar)) + " items"
+    total itu 0
+    untuk item dalam daftar
+        total itu total + item
+    selesai
+    hasil total
+selesai
+
+angka itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+total_angka itu tunggu panggil proses_daftar dengan angka
+tampilkan "   Sum of " + ke_teks(angka) + " = " + ke_teks(total_angka)
+tampilkan ""
+
+# ============================================
+# 5. ASYNC FUNCTION WITH STRING OPERATIONS
+# ============================================
+tampilkan "5. Async Function with String Operations:"
+tampilkan ""
+
+async buat fungsi format_nama(nama_depan, nama_belakang):
+    tampilkan "   Formatting name..."
+    nama_lengkap itu nama_depan + " " + nama_belakang
+    nama_upper itu huruf_besar(nama_lengkap)
+    hasil nama_upper
+selesai
+
+nama1 itu tunggu panggil format_nama dengan "Alice", "Smith"
+tampilkan "   Formatted: " + nama1
+
+nama2 itu tunggu panggil format_nama dengan "Bob", "Johnson"
+tampilkan "   Formatted: " + nama2
+tampilkan ""
+
+# ============================================
+# 6. ASYNC FUNCTION WITH CONDITIONAL LOGIC
+# ============================================
+tampilkan "6. Async Function with Conditional Logic:"
+tampilkan ""
+
+async buat fungsi cek_nilai(nilai):
+    tampilkan "   Checking score: " + ke_teks(nilai)
+    jika nilai >= 90
+        hasil "A - Excellent"
+    selesai
+    jika nilai >= 80
+        hasil "B - Good"
+    selesai
+    jika nilai >= 70
+        hasil "C - Average"
+    selesai
+    jika nilai >= 60
+        hasil "D - Pass"
+    selesai
+    hasil "F - Fail"
+selesai
+
+grade1 itu tunggu panggil cek_nilai dengan 95
+tampilkan "   Score 95: " + grade1
+
+grade2 itu tunggu panggil cek_nilai dengan 75
+tampilkan "   Score 75: " + grade2
+
+grade3 itu tunggu panggil cek_nilai dengan 55
+tampilkan "   Score 55: " + grade3
+tampilkan ""
+
+# ============================================
+# 7. PRACTICAL EXAMPLE: DATA VALIDATION
+# ============================================
+tampilkan "7. Practical Example - Data Validation:"
+tampilkan ""
+
+async buat fungsi validasi_email(email):
+    tampilkan "   Validating email: " + email
+    # Simple validation
+    jika berisi(email, "@") dan berisi(email, ".")
+        hasil benar
+    selesai
+    hasil salah
+selesai
+
+email1 itu "user@example.com"
+valid1 itu tunggu panggil validasi_email dengan email1
+tampilkan "   " + email1 + " is valid: " + ke_teks(valid1)
+
+email2 itu "invalid-email"
+valid2 itu tunggu panggil validasi_email dengan email2
+tampilkan "   " + email2 + " is valid: " + ke_teks(valid2)
+tampilkan ""
+
+# ============================================
+# 8. PRACTICAL EXAMPLE: DATA TRANSFORMATION
+# ============================================
+tampilkan "8. Practical Example - Data Transformation:"
+tampilkan ""
+
+async buat fungsi transform_data(data_list):
+    tampilkan "   Transforming data..."
+    hasil_list itu []
+    untuk item dalam data_list
+        # Transform each item
+        transformed itu {
+            "original": item,
+            "uppercase": huruf_besar(item),
+            "length": panjang(item)
+        }
+        tambah(hasil_list, transformed)
+    selesai
+    hasil hasil_list
+selesai
+
+kata_kata itu ["hello", "world", "async", "await"]
+transformed_data itu tunggu panggil transform_data dengan kata_kata
+
+tampilkan "   Transformed data:"
+untuk item dalam transformed_data
+    tampilkan "   - " + item["original"] + " -> " + item["uppercase"] + " (length: " + ke_teks(item["length"]) + ")"
+selesai
+tampilkan ""
+
+# ============================================
+# 9. PRACTICAL EXAMPLE: BATCH PROCESSING
+# ============================================
+tampilkan "9. Practical Example - Batch Processing:"
+tampilkan ""
+
+async buat fungsi proses_batch(items, batch_size):
+    tampilkan "   Processing " + ke_teks(panjang(items)) + " items in batches of " + ke_teks(batch_size)
+    total_processed itu 0
+    i itu 0
+    
+    selama i < panjang(items)
+        batch_end itu i + batch_size
+        jika batch_end > panjang(items)
+            batch_end itu panjang(items)
+        selesai
+        
+        batch_count itu batch_end - i
+        total_processed itu total_processed + batch_count
+        tampilkan "   Processed batch: items " + ke_teks(i) + " to " + ke_teks(batch_end - 1)
+        
+        i itu batch_end
+    selesai
+    
+    hasil total_processed
+selesai
+
+items itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+processed itu tunggu panggil proses_batch dengan items, 5
+tampilkan "   Total items processed: " + ke_teks(processed)
+tampilkan ""
+
+# ============================================
+# 10. ASYNC FUNCTION COMPOSITION
+# ============================================
+tampilkan "10. Async Function Composition:"
+tampilkan ""
+
+async buat fungsi step1(data):
+    tampilkan "   Step 1: Processing " + data
+    hasil "Step1(" + data + ")"
+selesai
+
+async buat fungsi step2(data):
+    tampilkan "   Step 2: Processing " + data
+    hasil "Step2(" + data + ")"
+selesai
+
+async buat fungsi step3(data):
+    tampilkan "   Step 3: Processing " + data
+    hasil "Step3(" + data + ")"
+selesai
+
+# Chain async operations
+input_data itu "initial"
+result1 itu tunggu panggil step1 dengan input_data
+result2 itu tunggu panggil step2 dengan result1
+result3 itu tunggu panggil step3 dengan result2
+
+tampilkan "   Final result: " + result3
+tampilkan ""
+
+# ============================================
+# 11. BEST PRACTICES
+# ============================================
+tampilkan "11. Best Practices for Async/Await:"
+tampilkan "    ✓ Use 'async' keyword to define async functions"
+tampilkan "    ✓ Use 'tunggu' (await) to wait for async operations"
+tampilkan "    ✓ Async functions can contain any regular code"
+tampilkan "    ✓ Chain async operations for sequential processing"
+tampilkan "    ✓ Use async for I/O-bound operations"
+tampilkan "    ✓ Keep async functions focused and simple"
+tampilkan ""
+
+# ============================================
+# SUMMARY
+# ============================================
+tampilkan "=== SUMMARY ==="
+tampilkan "Async/Await features covered:"
+tampilkan "1. Basic async function definition and calling"
+tampilkan "2. Multiple async operations"
+tampilkan "3. Async functions with calculations"
+tampilkan "4. Async functions with data processing"
+tampilkan "5. Async functions with string operations"
+tampilkan "6. Async functions with conditional logic"
+tampilkan "7-9. Practical examples (validation, transformation, batch processing)"
+tampilkan "10. Async function composition"
+tampilkan ""
+tampilkan "Key syntax:"
+tampilkan "- Define: async buat fungsi nama(params):"
+tampilkan "- Call: tunggu panggil nama dengan args"
+tampilkan ""
+tampilkan "✓ All examples completed successfully!"

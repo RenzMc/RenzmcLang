@@ -1,0 +1,249 @@
+# ===================================
+# Calculator Advanced
+# ===================================
+# Kalkulator dengan berbagai operasi matematika
+
+tampilkan "=== Calculator Advanced Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Basic Operations
+# ===================================
+tampilkan "1. Basic Operations:"
+
+fungsi tambah_angka(a, b):
+    hasil a + b
+selesai
+
+fungsi kurang_angka(a, b):
+    hasil a - b
+selesai
+
+fungsi kali_angka(a, b):
+    hasil a * b
+selesai
+
+fungsi bagi_angka(a, b):
+    jika b == 0
+        tampilkan "Error: Tidak bisa bagi dengan 0"
+        hasil 0
+    selesai
+    hasil a / b
+selesai
+
+a itu 10
+b itu 5
+
+tampilkan ke_teks(a) + " + " + ke_teks(b) + " = " + ke_teks(tambah_angka(a, b))
+tampilkan ke_teks(a) + " - " + ke_teks(b) + " = " + ke_teks(kurang_angka(a, b))
+tampilkan ke_teks(a) + " * " + ke_teks(b) + " = " + ke_teks(kali_angka(a, b))
+tampilkan ke_teks(a) + " / " + ke_teks(b) + " = " + ke_teks(bagi_angka(a, b))
+
+tampilkan ""
+
+# ===================================
+# 2. Advanced Operations
+# ===================================
+tampilkan "2. Advanced Operations:"
+
+fungsi pangkat_angka(base, exp):
+    hasil base ** exp
+selesai
+
+fungsi akar_kuadrat(n):
+    hasil n ** 0.5
+selesai
+
+fungsi modulo_angka(a, b):
+    hasil a % b
+selesai
+
+tampilkan "2 ^ 3 = " + ke_teks(pangkat_angka(2, 3))
+tampilkan "2 ^ 10 = " + ke_teks(pangkat_angka(2, 10))
+tampilkan "√16 = " + ke_teks(akar_kuadrat(16))
+tampilkan "√25 = " + ke_teks(akar_kuadrat(25))
+tampilkan "17 % 5 = " + ke_teks(modulo_angka(17, 5))
+
+tampilkan ""
+
+# ===================================
+# 3. Percentage Calculations
+# ===================================
+tampilkan "3. Percentage Calculations:"
+
+fungsi hitung_persen(nilai, total):
+    hasil (nilai / total) * 100
+selesai
+
+fungsi nilai_dari_persen(persen, total):
+    hasil (persen / 100) * total
+selesai
+
+tampilkan "50 dari 200 = " + ke_teks(hitung_persen(50, 200)) + "%"
+tampilkan "75 dari 150 = " + ke_teks(hitung_persen(75, 150)) + "%"
+tampilkan "20% dari 500 = " + ke_teks(nilai_dari_persen(20, 500))
+tampilkan "15% dari 1000 = " + ke_teks(nilai_dari_persen(15, 1000))
+
+tampilkan ""
+
+# ===================================
+# 4. Discount Calculator
+# ===================================
+tampilkan "4. Discount Calculator:"
+
+fungsi hitung_diskon(harga, persen_diskon):
+    diskon itu (persen_diskon / 100) * harga
+    harga_final itu harga - diskon
+    hasil (| harga_final, diskon |)
+selesai
+
+harga_asli itu 100000
+diskon_persen itu 20
+
+hasil_diskon itu hitung_diskon(harga_asli, diskon_persen)
+tampilkan "Harga: Rp " + ke_teks(harga_asli)
+tampilkan "Diskon: " + ke_teks(diskon_persen) + "%"
+tampilkan "Potongan: Rp " + ke_teks(hasil_diskon[1])
+tampilkan "Harga final: Rp " + ke_teks(hasil_diskon[0])
+
+tampilkan ""
+
+# ===================================
+# 5. Tax Calculator
+# ===================================
+tampilkan "5. Tax Calculator:"
+
+fungsi hitung_pajak(harga, persen_pajak):
+    pajak itu (persen_pajak / 100) * harga
+    total itu harga + pajak
+    hasil (| total, pajak |)
+selesai
+
+harga_barang itu 50000
+pajak_persen itu 10
+
+hasil_pajak itu hitung_pajak(harga_barang, pajak_persen)
+tampilkan "Harga: Rp " + ke_teks(harga_barang)
+tampilkan "Pajak: " + ke_teks(pajak_persen) + "%"
+tampilkan "Nilai pajak: Rp " + ke_teks(hasil_pajak[1])
+tampilkan "Total: Rp " + ke_teks(hasil_pajak[0])
+
+tampilkan ""
+
+# ===================================
+# 6. Average Calculator
+# ===================================
+tampilkan "6. Average Calculator:"
+
+fungsi hitung_rata_rata(numbers):
+    total itu 0
+    untuk setiap num dari numbers
+        total += num
+    selesai
+    hasil total / panjang(numbers)
+selesai
+
+nilai_siswa itu [85, 90, 78, 92, 88]
+tampilkan "Nilai: " + ke_teks(nilai_siswa)
+tampilkan "Rata-rata: " + ke_teks(hitung_rata_rata(nilai_siswa))
+
+tampilkan ""
+
+# ===================================
+# 7. BMI Calculator
+# ===================================
+tampilkan "7. BMI Calculator:"
+
+fungsi hitung_bmi(berat, tinggi):
+    # berat dalam kg, tinggi dalam meter
+    bmi itu berat / (tinggi * tinggi)
+    hasil bmi
+selesai
+
+fungsi kategori_bmi(bmi):
+    jika bmi < 18.5
+        hasil "Kurus"
+    selesai
+    jika bmi < 25
+        hasil "Normal"
+    selesai
+    jika bmi < 30
+        hasil "Gemuk"
+    selesai
+    hasil "Obesitas"
+selesai
+
+berat itu 70
+tinggi itu 1.75
+
+bmi itu hitung_bmi(berat, tinggi)
+kategori itu kategori_bmi(bmi)
+
+tampilkan "Berat: " + ke_teks(berat) + " kg"
+tampilkan "Tinggi: " + ke_teks(tinggi) + " m"
+tampilkan "BMI: " + ke_teks(bmi)
+tampilkan "Kategori: " + kategori
+
+tampilkan ""
+
+# ===================================
+# 8. Temperature Converter
+# ===================================
+tampilkan "8. Temperature Converter:"
+
+fungsi celsius_ke_fahrenheit(c):
+    hasil (c * 9 / 5) + 32
+selesai
+
+fungsi fahrenheit_ke_celsius(f):
+    hasil (f - 32) * 5 / 9
+selesai
+
+fungsi celsius_ke_kelvin(c):
+    hasil c + 273.15
+selesai
+
+celsius itu 25
+tampilkan ke_teks(celsius) + "°C = " + ke_teks(celsius_ke_fahrenheit(celsius)) + "°F"
+tampilkan ke_teks(celsius) + "°C = " + ke_teks(celsius_ke_kelvin(celsius)) + "K"
+
+fahrenheit itu 77
+tampilkan ke_teks(fahrenheit) + "°F = " + ke_teks(fahrenheit_ke_celsius(fahrenheit)) + "°C"
+
+tampilkan ""
+
+# ===================================
+# 9. Distance Calculator
+# ===================================
+tampilkan "9. Distance Calculator:"
+
+fungsi hitung_jarak_2d(x1, y1, x2, y2):
+    dx itu x2 - x1
+    dy itu y2 - y1
+    jarak itu ((dx * dx) + (dy * dy)) ** 0.5
+    hasil jarak
+selesai
+
+x1 itu 0
+y1 itu 0
+x2 itu 3
+y2 itu 4
+
+jarak itu hitung_jarak_2d(x1, y1, x2, y2)
+tampilkan "Jarak dari (" + ke_teks(x1) + "," + ke_teks(y1) + ") ke (" + ke_teks(x2) + "," + ke_teks(y2) + "): " + ke_teks(jarak)
+
+tampilkan ""
+
+# ===================================
+# 10. Calculator Best Practices
+# ===================================
+tampilkan "10. Calculator Best Practices:"
+tampilkan "✓ Buat fungsi untuk setiap operasi"
+tampilkan "✓ Handle division by zero"
+tampilkan "✓ Return tuple untuk multiple results"
+tampilkan "✓ Validasi input sebelum kalkulasi"
+tampilkan "✓ Gunakan nama fungsi yang deskriptif"
+tampilkan "✓ Dokumentasikan unit (kg, meter, dll)"
+
+tampilkan ""
+tampilkan "=== Calculator Advanced Examples Complete ==="

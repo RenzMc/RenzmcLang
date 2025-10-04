@@ -1,0 +1,296 @@
+// ============================================
+// SQLite Database - Advanced Operations
+// ============================================
+// Contoh operasi database lanjutan: transactions, indexes, joins
+
+tampilkan "=== SQLite Advanced Operations ==="
+tampilkan ""
+
+impor_python "sqlite3"
+impor_python "datetime"
+
+// Koneksi database
+conn itu sqlite3.connect("perpustakaan.db")
+cursor itu conn.cursor()
+
+// 1. Membuat multiple tables dengan foreign keys
+tampilkan "[1] Membuat struktur database perpustakaan..."
+
+// Tabel buku
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS buku (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        isbn TEXT UNIQUE NOT NULL,
+        judul TEXT NOT NULL,
+        penulis TEXT NOT NULL,
+        penerbit TEXT,
+        tahun INTEGER,
+        stok INTEGER DEFAULT 0,
+        dibuat_pada TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+""")
+
+// Tabel anggota
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS anggota (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nomor_anggota TEXT UNIQUE NOT NULL,
+        nama TEXT NOT NULL,
+        email TEXT,
+        telepon TEXT,
+        alamat TEXT,
+        tanggal_daftar TEXT DEFAULT CURRENT_TIMESTAMP
+    )
+""")
+
+// Tabel peminjaman
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS peminjaman (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        buku_id INTEGER NOT NULL,
+        anggota_id INTEGER NOT NULL,
+        tanggal_pinjam TEXT NOT NULL,
+        tanggal_kembali TEXT,
+        status TEXT DEFAULT 'dipinjam',
+        denda REAL DEFAULT 0,
+        FOREIGN KEY (buku_id) REFERENCES buku(id),
+        FOREIGN KEY (anggota_id) REFERENCES anggota(id)
+    )
+""")
+
+conn.commit()
+tampilkan "✓ Struktur database berhasil dibuat"
+tampilkan ""
+
+// 2. Membuat indexes untuk performa
+tampilkan "[2] Membuat indexes..."
+cursor.execute("CREATE INDEX IF NOT EXISTS idx_buku_isbn ON buku(isbn)")
+cursor.execute("CREATE INDEX IF NOT EXISTS idx_anggota_nomor ON anggota(nomor_anggota)")
+cursor.execute("CREATE INDEX IF NOT EXISTS idx_peminjaman_status ON peminjaman(status)")
+conn.commit()
+tampilkan "✓ Indexes berhasil dibuat"
+tampilkan ""
+
+// 3. Insert data dengan transaction
+tampilkan "[3] Menambahkan data buku (dengan transaction)..."
+
+data_buku itu [
+    ("978-1234567890", "Pemrograman Python", "John Doe", "Tech Publisher", 2023, 5),
+    ("978-1234567891", "Database Design", "Jane Smith", "Data Press", 2022, 3),
+    ("978-1234567892", "Web Development", "Bob Johnson", "Web Books", 2024, 4),
+    ("978-1234567893", "Machine Learning", "Alice Brown", "AI Publisher", 2023, 2),
+    ("978-1234567894", "Data Science", "Charlie Wilson", "Data Press", 2024, 6)
+]
+
+coba
+    // Mulai transaction
+    cursor.execute("BEGIN TRANSACTION")
+    
+    cursor.executemany("""
+        INSERT OR IGNORE INTO buku (isbn, judul, penulis, penerbit, tahun, stok)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, data_buku)
+    
+    // Commit transaction
+    conn.commit()
+    tampilkan f"✓ {cursor.rowcount} buku berhasil ditambahkan"
+tangkap Exception sebagai e
+    // Rollback jika error
+    conn.rollback()
+    tampilkan f"✗ Error: {e}"
+    tampilkan "✓ Transaction di-rollback"
+selesai
+tampilkan ""
+
+// 4. Insert data anggota
+tampilkan "[4] Menambahkan data anggota..."
+data_anggota itu [
+    ("A001", "Budi Santoso", "budi@email.com", "081234567890", "Jakarta"),
+    ("A002", "Ani Wijaya", "ani@email.com", "081234567891", "Bandung"),
+    ("A003", "Citra Dewi", "citra@email.com", "081234567892", "Surabaya"),
+    ("A004", "Dedi Pratama", "dedi@email.com", "081234567893", "Yogyakarta")
+]
+
+cursor.executemany("""
+    INSERT OR IGNORE INTO anggota (nomor_anggota, nama, email, telepon, alamat)
+    VALUES (?, ?, ?, ?, ?)
+""", data_anggota)
+conn.commit()
+tampilkan f"✓ {cursor.rowcount} anggota berhasil ditambahkan"
+tampilkan ""
+
+// 5. Simulasi peminjaman buku
+tampilkan "[5] Mencatat peminjaman buku..."
+
+// Fungsi untuk mencatat peminjaman
+fungsi pinjam_buku(buku_id, anggota_id, tanggal_pinjam):
+    coba
+        cursor.execute("BEGIN TRANSACTION")
+        
+        // Cek stok buku
+        cursor.execute("SELECT stok FROM buku WHERE id = ?", [buku_id])
+        stok itu cursor.fetchone()[0]
+        
+        jika stok > 0
+            // Kurangi stok
+            cursor.execute("UPDATE buku SET stok = stok - 1 WHERE id = ?", [buku_id])
+            
+            // Catat peminjaman
+            cursor.execute("""
+                INSERT INTO peminjaman (buku_id, anggota_id, tanggal_pinjam, status)
+                VALUES (?, ?, ?, 'dipinjam')
+            """, [buku_id, anggota_id, tanggal_pinjam])
+            
+            conn.commit()
+            hasil "berhasil"
+        kalau_tidak
+            conn.rollback()
+            hasil "stok habis"
+        selesai
+    tangkap Exception sebagai e
+        conn.rollback()
+        hasil f"error: {e}"
+    selesai
+selesai
+
+// Simulasi beberapa peminjaman
+peminjaman_list itu [
+    (1, 1, "2024-10-01"),
+    (2, 1, "2024-10-01"),
+    (3, 2, "2024-10-02"),
+    (1, 3, "2024-10-03"),
+    (4, 4, "2024-10-03")
+]
+
+untuk setiap pinjam dari peminjaman_list
+    status itu pinjam_buku(pinjam[0], pinjam[1], pinjam[2])
+    tampilkan f"  Peminjaman buku_id={pinjam[0]}, anggota_id={pinjam[1]}: {status}"
+selesai
+tampilkan ""
+
+// 6. Query dengan JOIN
+tampilkan "[6] Daftar peminjaman aktif (dengan JOIN)..."
+cursor.execute("""
+    SELECT 
+        p.id,
+        b.judul,
+        b.penulis,
+        a.nama as peminjam,
+        a.nomor_anggota,
+        p.tanggal_pinjam,
+        p.status
+    FROM peminjaman p
+    JOIN buku b ON p.buku_id = b.id
+    JOIN anggota a ON p.anggota_id = a.id
+    WHERE p.status = 'dipinjam'
+    ORDER BY p.tanggal_pinjam DESC
+""")
+
+hasil itu cursor.fetchall()
+tampilkan "-" * 100
+tampilkan f"{'ID':<5} {'Judul Buku':<30} {'Penulis':<20} {'Peminjam':<20} {'No. Anggota':<12} {'Tgl Pinjam':<12}"
+tampilkan "-" * 100
+
+untuk setiap row dari hasil
+    tampilkan f"{row[0]:<5} {row[1]:<30} {row[2]:<20} {row[3]:<20} {row[4]:<12} {row[5]:<12}"
+selesai
+tampilkan ""
+
+// 7. Aggregate dengan GROUP BY dan HAVING
+tampilkan "[7] Statistik peminjaman per anggota..."
+cursor.execute("""
+    SELECT 
+        a.nama,
+        a.nomor_anggota,
+        COUNT(p.id) as total_pinjam,
+        SUM(CASE WHEN p.status = 'dipinjam' THEN 1 ELSE 0 END) as sedang_pinjam
+    FROM anggota a
+    LEFT JOIN peminjaman p ON a.id = p.anggota_id
+    GROUP BY a.id, a.nama, a.nomor_anggota
+    HAVING COUNT(p.id) > 0
+    ORDER BY total_pinjam DESC
+""")
+
+statistik itu cursor.fetchall()
+tampilkan "-" * 70
+tampilkan f"{'Nama':<25} {'No. Anggota':<15} {'Total Pinjam':<15} {'Sedang Pinjam':<15}"
+tampilkan "-" * 70
+
+untuk setiap row dari statistik
+    tampilkan f"{row[0]:<25} {row[1]:<15} {row[2]:<15} {row[3]:<15}"
+selesai
+tampilkan ""
+
+// 8. Subquery
+tampilkan "[8] Buku paling populer (menggunakan subquery)..."
+cursor.execute("""
+    SELECT 
+        b.judul,
+        b.penulis,
+        (SELECT COUNT(*) FROM peminjaman WHERE buku_id = b.id) as jumlah_dipinjam
+    FROM buku b
+    WHERE (SELECT COUNT(*) FROM peminjaman WHERE buku_id = b.id) > 0
+    ORDER BY jumlah_dipinjam DESC
+    LIMIT 3
+""")
+
+populer itu cursor.fetchall()
+untuk setiap (i, row) dari enumerate(populer, 1)
+    tampilkan f"{i}. {row[0]} - {row[1]} ({row[2]} kali dipinjam)"
+selesai
+tampilkan ""
+
+// 9. View untuk laporan
+tampilkan "[9] Membuat VIEW untuk laporan..."
+cursor.execute("""
+    CREATE VIEW IF NOT EXISTS v_laporan_peminjaman AS
+    SELECT 
+        p.id,
+        b.judul,
+        b.isbn,
+        a.nama as peminjam,
+        a.nomor_anggota,
+        p.tanggal_pinjam,
+        p.tanggal_kembali,
+        p.status,
+        CASE 
+            WHEN p.status = 'dipinjam' AND julianday('now') - julianday(p.tanggal_pinjam) > 14 
+            THEN (julianday('now') - julianday(p.tanggal_pinjam) - 14) * 1000
+            ELSE 0 
+        END as denda_terlambat
+    FROM peminjaman p
+    JOIN buku b ON p.buku_id = b.id
+    JOIN anggota a ON p.anggota_id = a.id
+""")
+conn.commit()
+tampilkan "✓ VIEW berhasil dibuat"
+
+// Query dari VIEW
+cursor.execute("SELECT * FROM v_laporan_peminjaman WHERE status = 'dipinjam'")
+laporan itu cursor.fetchall()
+tampilkan f"Total peminjaman aktif: {panjang(laporan)}"
+tampilkan ""
+
+// 10. Backup data ke JSON
+tampilkan "[10] Backup data ke JSON..."
+impor_python "json"
+
+// Backup buku
+cursor.execute("SELECT * FROM buku")
+kolom_buku itu [desc[0] untuk setiap desc dari cursor.description]
+data_buku_backup itu [dict(zip(kolom_buku, row)) untuk setiap row dari cursor.fetchall()]
+
+// Simpan ke file
+dengan buka("backup_buku.json", "w") sebagai f
+    json.dump(data_buku_backup, f, indent=2)
+selesai
+
+tampilkan f"✓ {panjang(data_buku_backup)} buku berhasil di-backup ke backup_buku.json"
+tampilkan ""
+
+// Tutup koneksi
+cursor.close()
+conn.close()
+tampilkan "✓ Koneksi database ditutup"
+tampilkan ""
+tampilkan "=== Selesai ==="

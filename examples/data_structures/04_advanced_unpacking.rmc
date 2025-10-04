@@ -1,0 +1,323 @@
+# ============================================
+# ADVANCED DATA STRUCTURE OPERATIONS
+# ============================================
+# Comprehensive examples for tuple unpacking, list operations,
+# and advanced data structure manipulations
+
+tampilkan "=== ADVANCED DATA STRUCTURE OPERATIONS ==="
+tampilkan ""
+
+# ============================================
+# 1. TUPLE UNPACKING
+# ============================================
+tampilkan "1. Tuple Unpacking:"
+tampilkan ""
+
+# Basic tuple unpacking
+koordinat itu (10, 20)
+x, y itu koordinat
+tampilkan "   Basic unpacking:"
+tampilkan "   x = " + ke_teks(x) + ", y = " + ke_teks(y)
+tampilkan ""
+
+# Multiple assignment
+a, b, c itu 1, 2, 3
+tampilkan "   Multiple assignment:"
+tampilkan "   a = " + ke_teks(a) + ", b = " + ke_teks(b) + ", c = " + ke_teks(c)
+tampilkan ""
+
+# Swapping values using tuple unpacking
+nilai1 itu 100
+nilai2 itu 200
+tampilkan "   Before swap: nilai1 = " + ke_teks(nilai1) + ", nilai2 = " + ke_teks(nilai2)
+nilai1, nilai2 itu nilai2, nilai1
+tampilkan "   After swap:  nilai1 = " + ke_teks(nilai1) + ", nilai2 = " + ke_teks(nilai2)
+tampilkan ""
+
+# Unpacking from list
+data itu [5, 10, 15]
+first, second, third itu data[0], data[1], data[2]
+tampilkan "   Unpacking from list:"
+tampilkan "   first = " + ke_teks(first) + ", second = " + ke_teks(second) + ", third = " + ke_teks(third)
+tampilkan ""
+
+# ============================================
+# 2. NESTED DATA STRUCTURES
+# ============================================
+tampilkan "2. Nested Data Structures:"
+tampilkan ""
+
+# Nested lists
+matrix itu [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+tampilkan "   Matrix:"
+untuk baris dalam matrix
+    tampilkan "   " + ke_teks(baris)
+selesai
+tampilkan ""
+
+# Accessing nested elements
+tampilkan "   Element at [1][2]: " + ke_teks(matrix[1][2])
+tampilkan "   Element at [0][0]: " + ke_teks(matrix[0][0])
+tampilkan ""
+
+# Nested dictionaries
+mahasiswa itu {
+    "nama": "Alice",
+    "nilai": {
+        "matematika": 90,
+        "fisika": 85,
+        "kimia": 88
+    },
+    "alamat": {
+        "kota": "Jakarta",
+        "kode_pos": "12345"
+    }
+}
+
+tampilkan "   Nested dictionary:"
+tampilkan "   Nama: " + mahasiswa["nama"]
+tampilkan "   Nilai Matematika: " + ke_teks(mahasiswa["nilai"]["matematika"])
+tampilkan "   Kota: " + mahasiswa["alamat"]["kota"]
+tampilkan ""
+
+# ============================================
+# 3. LIST SLICING AND MANIPULATION
+# ============================================
+tampilkan "3. List Slicing and Manipulation:"
+tampilkan ""
+
+angka itu [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tampilkan "   Original list: " + ke_teks(angka)
+
+# Get first 5 elements
+lima_pertama itu []
+untuk i dari 0 sampai 4
+    tambah(lima_pertama, angka[i])
+selesai
+tampilkan "   First 5: " + ke_teks(lima_pertama)
+
+# Get last 3 elements
+tiga_terakhir itu []
+panjang_list itu panjang(angka)
+untuk i dari panjang_list - 3 sampai panjang_list - 1
+    tambah(tiga_terakhir, angka[i])
+selesai
+tampilkan "   Last 3: " + ke_teks(tiga_terakhir)
+
+# Get every second element
+setiap_dua itu []
+untuk i dari 0 sampai panjang(angka) - 1
+    jika i % 2 == 0
+        tambah(setiap_dua, angka[i])
+    selesai
+selesai
+tampilkan "   Every 2nd: " + ke_teks(setiap_dua)
+tampilkan ""
+
+# ============================================
+# 4. LIST COMPREHENSION PATTERNS
+# ============================================
+tampilkan "4. List Comprehension Patterns:"
+tampilkan ""
+
+# Square numbers
+numbers itu [1, 2, 3, 4, 5]
+squares itu [x * x untuk setiap x dari numbers]
+tampilkan "   Numbers: " + ke_teks(numbers)
+tampilkan "   Squares: " + ke_teks(squares)
+tampilkan ""
+
+# Filter even numbers
+all_nums itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+evens itu [x untuk setiap x dari all_nums jika x % 2 == 0]
+tampilkan "   All numbers: " + ke_teks(all_nums)
+tampilkan "   Even numbers: " + ke_teks(evens)
+tampilkan ""
+
+# String operations
+words itu ["hello", "world", "python", "code"]
+upper_words itu [huruf_besar(w) untuk setiap w dari words]
+tampilkan "   Original: " + ke_teks(words)
+tampilkan "   Uppercase: " + ke_teks(upper_words)
+tampilkan ""
+
+# ============================================
+# 5. DICT COMPREHENSION PATTERNS
+# ============================================
+tampilkan "5. Dict Comprehension Patterns:"
+tampilkan ""
+
+# Create dict from lists
+keys itu ["a", "b", "c"]
+values itu [1, 2, 3]
+result_dict itu {}
+untuk i dari 0 sampai panjang(keys) - 1
+    result_dict[keys[i]] itu values[i]
+selesai
+tampilkan "   Keys: " + ke_teks(keys)
+tampilkan "   Values: " + ke_teks(values)
+tampilkan "   Dict: " + ke_teks(result_dict)
+tampilkan ""
+
+# Square dict
+nums itu [1, 2, 3, 4, 5]
+square_dict itu {ke_teks(x): x * x untuk setiap x dari nums}
+tampilkan "   Square dict: " + ke_teks(square_dict)
+tampilkan ""
+
+# ============================================
+# 6. COMBINING DATA STRUCTURES
+# ============================================
+tampilkan "6. Combining Data Structures:"
+tampilkan ""
+
+# List of dicts
+students itu [
+    {"nama": "Alice", "umur": 20, "nilai": 85},
+    {"nama": "Bob", "umur": 22, "nilai": 90},
+    {"nama": "Charlie", "umur": 21, "nilai": 88}
+]
+
+tampilkan "   Students:"
+untuk student dalam students
+    tampilkan "   - " + student["nama"] + " (umur: " + ke_teks(student["umur"]) + ", nilai: " + ke_teks(student["nilai"]) + ")"
+selesai
+tampilkan ""
+
+# Calculate average
+total itu 0
+untuk student dalam students
+    total itu total + student["nilai"]
+selesai
+rata_rata itu total / panjang(students)
+tampilkan "   Average score: " + ke_teks(rata_rata)
+tampilkan ""
+
+# ============================================
+# 7. PRACTICAL EXAMPLE: DATA PROCESSING
+# ============================================
+tampilkan "7. Practical Example - Data Processing:"
+tampilkan ""
+
+# Sales data
+sales_data itu [
+    {"produk": "Laptop", "harga": 10000000, "jumlah": 5},
+    {"produk": "Mouse", "harga": 150000, "jumlah": 20},
+    {"produk": "Keyboard", "harga": 500000, "jumlah": 15},
+    {"produk": "Monitor", "harga": 2000000, "jumlah": 8}
+]
+
+tampilkan "   Sales Data:"
+total_revenue itu 0
+untuk item dalam sales_data
+    revenue itu item["harga"] * item["jumlah"]
+    total_revenue itu total_revenue + revenue
+    tampilkan "   - " + item["produk"] + ": Rp " + ke_teks(revenue)
+selesai
+tampilkan "   Total Revenue: Rp " + ke_teks(total_revenue)
+tampilkan ""
+
+# ============================================
+# 8. PRACTICAL EXAMPLE: GROUPING DATA
+# ============================================
+tampilkan "8. Practical Example - Grouping Data:"
+tampilkan ""
+
+# Student data with classes
+all_students itu [
+    {"nama": "Alice", "kelas": "A", "nilai": 85},
+    {"nama": "Bob", "kelas": "B", "nilai": 90},
+    {"nama": "Charlie", "kelas": "A", "nilai": 88},
+    {"nama": "David", "kelas": "B", "nilai": 92},
+    {"nama": "Eve", "kelas": "A", "nilai": 87}
+]
+
+# Group by class
+kelas_a itu []
+kelas_b itu []
+
+untuk student dalam all_students
+    jika student["kelas"] == "A"
+        tambah(kelas_a, student)
+    selesai
+    jika student["kelas"] == "B"
+        tambah(kelas_b, student)
+    selesai
+selesai
+
+tampilkan "   Class A students:"
+untuk student dalam kelas_a
+    tampilkan "   - " + student["nama"] + " (nilai: " + ke_teks(student["nilai"]) + ")"
+selesai
+tampilkan ""
+
+tampilkan "   Class B students:"
+untuk student dalam kelas_b
+    tampilkan "   - " + student["nama"] + " (nilai: " + ke_teks(student["nilai"]) + ")"
+selesai
+tampilkan ""
+
+# ============================================
+# 9. PRACTICAL EXAMPLE: DATA TRANSFORMATION
+# ============================================
+tampilkan "9. Practical Example - Data Transformation:"
+tampilkan ""
+
+# Transform data
+raw_data itu [
+    "Alice:85",
+    "Bob:90",
+    "Charlie:88"
+]
+
+tampilkan "   Raw data: " + ke_teks(raw_data)
+tampilkan ""
+
+# Parse and transform
+parsed_data itu []
+untuk entry dalam raw_data
+    parts itu pisah(entry, ":")
+    student_dict itu {
+        "nama": parts[0],
+        "nilai": ke_angka(parts[1])
+    }
+    tambah(parsed_data, student_dict)
+selesai
+
+tampilkan "   Parsed data:"
+untuk student dalam parsed_data
+    tampilkan "   - " + student["nama"] + ": " + ke_teks(student["nilai"])
+selesai
+tampilkan ""
+
+# ============================================
+# 10. BEST PRACTICES
+# ============================================
+tampilkan "10. Best Practices:"
+tampilkan "    ✓ Use tuple unpacking for multiple assignments"
+tampilkan "    ✓ Use list comprehensions for transformations"
+tampilkan "    ✓ Use dict comprehensions for key-value mappings"
+tampilkan "    ✓ Combine data structures for complex data"
+tampilkan "    ✓ Use nested structures when appropriate"
+tampilkan "    ✓ Keep data structures simple and readable"
+tampilkan ""
+
+# ============================================
+# SUMMARY
+# ============================================
+tampilkan "=== SUMMARY ==="
+tampilkan "Advanced data structure operations covered:"
+tampilkan "1. Tuple unpacking and multiple assignment"
+tampilkan "2. Nested data structures (lists and dicts)"
+tampilkan "3. List slicing and manipulation"
+tampilkan "4. List comprehension patterns"
+tampilkan "5. Dict comprehension patterns"
+tampilkan "6. Combining different data structures"
+tampilkan "7-9. Practical examples with real-world data"
+tampilkan ""
+tampilkan "✓ All examples completed successfully!"

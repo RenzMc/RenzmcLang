@@ -1,0 +1,46 @@
+# Test bitwise operators
+tampilkan "=== Bitwise Operators ==="
+a itu 5
+b itu 3
+tampilkan "5 & 3 ="
+tampilkan a & b
+tampilkan "5 | 3 ="
+tampilkan a | b
+tampilkan "5 ^ 3 ="
+tampilkan a ^ b
+tampilkan "~5 ="
+tampilkan ~a
+tampilkan "5 << 1 ="
+tampilkan a << 1
+tampilkan "5 >> 1 ="
+tampilkan a >> 1
+
+# Test membership operators
+tampilkan ""
+tampilkan "=== Membership Operators ==="
+daftar itu [1, 2, 3, 4, 5]
+tampilkan "3 dalam [1,2,3,4,5]:"
+jika 3 dalam daftar maka
+    tampilkan "Benar"
+selesai
+
+tampilkan "10 tidak dalam [1,2,3,4,5]:"
+jika 10 tidak dalam daftar maka
+    tampilkan "Benar"
+selesai
+
+# Test identity operators
+tampilkan ""
+tampilkan "=== Identity Operators ==="
+x itu [1, 2, 3]
+y itu x
+z itu [1, 2, 3]
+tampilkan "x adalah y:"
+jika x adalah y maka
+    tampilkan "Benar"
+selesai
+
+tampilkan "x bukan z:"
+jika x bukan z maka
+    tampilkan "Benar"
+selesai

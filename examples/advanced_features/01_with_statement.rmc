@@ -1,0 +1,236 @@
+# ============================================
+# WITH STATEMENT (CONTEXT MANAGER) - STATUS
+# ============================================
+# The 'dengan...sebagai...selesai' statement is implemented in RenzmcLang
+# to support Python's context manager protocol.
+#
+# Syntax: dengan <context_manager> sebagai <variable>
+#             <code block>
+#         selesai
+#
+# CURRENT STATUS:
+# - The with statement parser and interpreter are fully implemented
+# - However, there are no built-in RenzmcLang functions that return
+#   context manager objects (objects with __enter__ and __exit__ methods)
+# - The built-in file functions (baca_file, tulis_file) work with
+#   complete files, not file objects
+#
+# This example demonstrates:
+# 1. The current file handling approach in RenzmcLang
+# 2. How the with statement would work (conceptually)
+# 3. Alternative approaches for resource management
+
+tampilkan "=== WITH STATEMENT & FILE OPERATIONS ==="
+tampilkan ""
+
+# ============================================
+# 1. CURRENT FILE HANDLING IN RENZMCLANG
+# ============================================
+tampilkan "1. Current File Handling Approach:"
+tampilkan "   RenzmcLang provides simple file functions:"
+tampilkan ""
+
+# Write entire file at once
+tulis_file("example.txt", "Hello from RenzmcLang!\nThis is line 2\nThis is line 3")
+tampilkan "   ✓ File written using tulis_file()"
+
+# Read entire file at once
+isi itu baca_file("example.txt")
+tampilkan "   ✓ File read using baca_file()"
+tampilkan "   Content:"
+baris_list itu pisah(isi, "\n")
+untuk baris dalam baris_list
+    tampilkan "   - " + baris
+selesai
+
+tampilkan ""
+
+# ============================================
+# 2. APPEND TO FILE
+# ============================================
+tampilkan "2. Appending to Files:"
+tampilkan "   Using tambah_file() function"
+
+tambah_file("example.txt", "\nAppended line 4")
+tambah_file("example.txt", "\nAppended line 5")
+
+isi_baru itu baca_file("example.txt")
+tampilkan "   ✓ Content after appending:"
+baris_list2 itu pisah(isi_baru, "\n")
+untuk baris dalam baris_list2
+    tampilkan "   - " + baris
+selesai
+
+tampilkan ""
+
+# ============================================
+# 3. MULTIPLE FILE OPERATIONS
+# ============================================
+tampilkan "3. Working with Multiple Files:"
+
+# Create source file
+tulis_file("source.txt", "Original content line 1\nOriginal content line 2\nOriginal content line 3")
+tampilkan "   ✓ Source file created"
+
+# Read and copy to destination
+konten_source itu baca_file("source.txt")
+tulis_file("destination.txt", konten_source)
+tampilkan "   ✓ Content copied to destination file"
+
+# Verify
+konten_dest itu baca_file("destination.txt")
+tampilkan "   ✓ Destination file content:"
+baris_dest itu pisah(konten_dest, "\n")
+untuk baris dalam baris_dest
+    tampilkan "   - " + baris
+selesai
+
+tampilkan ""
+
+# ============================================
+# 4. FILE OPERATIONS SAFETY
+# ============================================
+tampilkan "4. File Operations Safety:"
+tampilkan "   Always check if operations succeed"
+tampilkan "   ✓ Use simple, atomic file operations"
+tampilkan "   ✓ Keep file handling straightforward"
+tampilkan ""
+
+# ============================================
+# 5. PRACTICAL EXAMPLE: LOG FILE
+# ============================================
+tampilkan "5. Practical Example - Log File:"
+
+# Function to write log entry
+buat fungsi tulis_log dengan pesan
+    # Create new log entry
+    waktu itu "2024-01-15 10:30:00"
+    entri itu "[" + waktu + "] " + pesan + "\n"
+    
+    # Append to log file
+    tambah_file("app.log", entri)
+selesai
+
+# Write some log entries
+panggil tulis_log dengan "Application started"
+panggil tulis_log dengan "User logged in"
+panggil tulis_log dengan "Processing data..."
+panggil tulis_log dengan "Data processed successfully"
+panggil tulis_log dengan "Application stopped"
+
+# Read and display log
+tampilkan "   Log file contents:"
+log_konten itu baca_file("app.log")
+log_baris itu pisah(log_konten, "\n")
+untuk baris dalam log_baris
+    jika panjang(baris) > 0
+        tampilkan "   " + baris
+    selesai
+selesai
+
+tampilkan ""
+
+# ============================================
+# 6. DATA PROCESSING EXAMPLE
+# ============================================
+tampilkan "6. Data Processing Example:"
+
+# Create sample CSV data
+csv_data itu "Name,Age,City\nAlice,25,Jakarta\nBob,30,Bandung\nCharlie,35,Surabaya"
+tulis_file("data.csv", csv_data)
+tampilkan "   ✓ CSV data file created"
+
+# Process the data
+konten_csv itu baca_file("data.csv")
+baris_csv itu pisah(konten_csv, "\n")
+
+tampilkan "   Processing data:"
+hasil_proses itu ""
+nomor itu 1
+
+untuk i dari 0 sampai panjang(baris_csv) - 1
+    jika i > 0  # Skip header
+        baris itu baris_csv[i]
+        jika panjang(baris) > 0
+            hasil_proses itu hasil_proses + "Record " + ke_teks(nomor) + ": " + baris + "\n"
+            tampilkan "   Processed: " + baris
+            nomor itu nomor + 1
+        selesai
+    selesai
+selesai
+
+# Save processed data
+tulis_file("processed_data.txt", hasil_proses)
+tampilkan "   ✓ Processed data saved"
+
+tampilkan ""
+
+# ============================================
+# 7. WORKING WITH TEXT DATA
+# ============================================
+tampilkan "7. Working with Text Data:"
+
+# Create a text file with multiple lines
+teks_data itu "Line 1: Introduction\nLine 2: Main content\nLine 3: Conclusion"
+tulis_file("text_data.txt", teks_data)
+tampilkan "   ✓ Text file created"
+
+# Read and process
+konten_teks itu baca_file("text_data.txt")
+baris_teks itu pisah(konten_teks, "\n")
+tampilkan "   ✓ File has " + ke_teks(panjang(baris_teks)) + " lines"
+
+untuk baris dalam baris_teks
+    tampilkan "   > " + baris
+selesai
+
+tampilkan ""
+
+# ============================================
+# 8. BEST PRACTICES
+# ============================================
+tampilkan "8. Best Practices for File Operations:"
+tampilkan "   ✓ Use tulis_file() for creating/overwriting files"
+tampilkan "   ✓ Use baca_file() for reading entire files"
+tampilkan "   ✓ Use tambah_file() for appending to files"
+tampilkan "   ✓ Always use try-catch for file operations"
+tampilkan "   ✓ Handle errors gracefully"
+tampilkan "   ✓ Keep file operations simple and atomic"
+tampilkan ""
+
+# ============================================
+# 9. ABOUT THE WITH STATEMENT
+# ============================================
+tampilkan "9. About the 'dengan' (with) Statement:"
+tampilkan "   The with statement is implemented in RenzmcLang's"
+tampilkan "   parser and interpreter, following Python's context"
+tampilkan "   manager protocol."
+tampilkan ""
+tampilkan "   However, currently there are no built-in functions"
+tampilkan "   that return context manager objects (objects with"
+tampilkan "   __enter__ and __exit__ methods)."
+tampilkan ""
+tampilkan "   The with statement can be used with:"
+tampilkan "   - Custom Python objects imported via Python integration"
+tampilkan "   - Future built-in context managers"
+tampilkan ""
+tampilkan "   Current file operations use simpler functions that"
+tampilkan "   handle complete files at once, which is often more"
+tampilkan "   convenient for scripting tasks."
+tampilkan ""
+
+# ============================================
+# SUMMARY
+# ============================================
+tampilkan "=== SUMMARY ==="
+tampilkan "RenzmcLang File Operations:"
+tampilkan "1. tulis_file(nama, konten) - Write/overwrite file"
+tampilkan "2. baca_file(nama) - Read entire file"
+tampilkan "3. tambah_file(nama, konten) - Append to file"
+tampilkan "4. Always use try-catch for error handling"
+tampilkan "5. Simple, atomic operations for scripting"
+tampilkan ""
+tampilkan "The 'dengan' statement is implemented but requires"
+tampilkan "context manager objects to function."
+tampilkan ""
+tampilkan "✓ All examples completed successfully!"

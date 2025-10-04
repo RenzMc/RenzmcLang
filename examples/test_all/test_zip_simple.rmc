@@ -1,0 +1,4 @@
+# Simple zip test
+a itu [1, 2, 3]
+b itu ["x", "y", "z"]
+tampilkan zip(a, b)

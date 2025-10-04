@@ -1,0 +1,63 @@
+// Test Class-Based OOP - Complete
+tampilkan "=== Testing Complete Class-Based OOP ==="
+tampilkan ""
+
+// Class dengan konstruktor dan multiple methods
+kelas Mahasiswa:
+    konstruktor(nama, nim):
+        diri.nama itu nama
+        diri.nim itu nim
+        diri.nilai itu []
+    selesai
+    
+    metode tambah_nilai(nilai):
+        diri.nilai.append(nilai)
+        tampilkan f"✓ Nilai {nilai} ditambahkan untuk {diri.nama}"
+    selesai
+    
+    metode rata_rata():
+        total itu 0
+        untuk setiap n dari diri.nilai
+            total itu total + n
+        selesai
+        count itu panjang(diri.nilai)
+        hasil total / count
+    selesai
+    
+    metode info():
+        tampilkan f"Nama: {diri.nama}"
+        tampilkan f"NIM: {diri.nim}"
+        tampilkan f"Jumlah Nilai: {panjang(diri.nilai)}"
+    selesai
+selesai
+
+// Test 1: Buat instance
+tampilkan "[1] Membuat instance Mahasiswa..."
+mhs1 itu Mahasiswa("Budi Santoso", "12345")
+mhs2 itu Mahasiswa("Ani Wijaya", "12346")
+tampilkan "✓ 2 instance berhasil dibuat"
+tampilkan ""
+
+// Test 2: Tambah nilai
+tampilkan "[2] Menambah nilai untuk Budi..."
+mhs1.tambah_nilai(85)
+mhs1.tambah_nilai(90)
+mhs1.tambah_nilai(78)
+tampilkan ""
+
+tampilkan "[3] Menambah nilai untuk Ani..."
+mhs2.tambah_nilai(92)
+mhs2.tambah_nilai(88)
+mhs2.tambah_nilai(95)
+tampilkan ""
+
+// Test 3: Tampilkan info
+tampilkan "[4] Info Mahasiswa 1:"
+mhs1.info()
+tampilkan ""
+
+tampilkan "[5] Info Mahasiswa 2:"
+mhs2.info()
+tampilkan ""
+
+tampilkan "=== Test Selesai - Class-Based OOP Working! ==="

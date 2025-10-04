@@ -1,0 +1,287 @@
+// ============================================
+// Regular Expressions - Pattern Matching
+// ============================================
+// Contoh penggunaan regex untuk pattern matching
+
+tampilkan "=== Regular Expressions (Regex) ==="
+tampilkan ""
+
+impor_python "re"
+
+// ============================================
+// 1. BASIC PATTERN MATCHING
+// ============================================
+
+tampilkan "[1] Basic Pattern Matching..."
+tampilkan ""
+
+// Simple search
+teks itu "Email saya adalah budi@example.com"
+pattern itu "budi"
+
+match itu panggil_python re.search(pattern, teks)
+jika match
+    tampilkan f"✓ Pattern '{pattern}' ditemukan di posisi {match.start()}"
+kalau_tidak
+    tampilkan f"✗ Pattern '{pattern}' tidak ditemukan"
+selesai
+tampilkan ""
+
+// ============================================
+// 2. EMAIL VALIDATION
+// ============================================
+
+tampilkan "[2] Email Validation..."
+tampilkan ""
+
+email_pattern itu r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+
+emails itu [
+    "budi@example.com",
+    "ani.wijaya@company.co.id",
+    "invalid.email@",
+    "test@domain",
+    "user123@test.com"
+]
+
+tampilkan "Validasi Email:"
+untuk setiap email dari emails
+    match itu panggil_python re.match(email_pattern, email)
+    status itu "✓ Valid" jika match lainnya "✗ Invalid"
+    tampilkan f"  {email:<30} {status}"
+selesai
+tampilkan ""
+
+// ============================================
+// 3. PHONE NUMBER EXTRACTION
+// ============================================
+
+tampilkan "[3] Phone Number Extraction..."
+tampilkan ""
+
+teks itu """
+Hubungi kami di:
+- Kantor: 021-1234567
+- Mobile: 0812-3456-7890
+- Fax: (021) 9876543
+- WhatsApp: +62 813 4567 8901
+"""
+
+// Pattern untuk nomor telepon Indonesia
+phone_pattern itu r"(\+62|0)\s?(\d{2,3})[\s-]?(\d{3,4})[\s-]?(\d{3,4})"
+
+matches itu panggil_python re.findall(phone_pattern, teks)
+tampilkan f"Ditemukan {panjang(matches)} nomor telepon:"
+untuk setiap match dari matches
+    nomor itu "".join(match)
+    tampilkan f"  • {nomor}"
+selesai
+tampilkan ""
+
+// ============================================
+// 4. URL EXTRACTION
+// ============================================
+
+tampilkan "[4] URL Extraction..."
+tampilkan ""
+
+teks itu """
+Kunjungi website kami:
+- https://www.example.com
+- http://blog.example.com/artikel
+- ftp://files.example.com
+- www.simple-url.com
+"""
+
+url_pattern itu r"https?://[^\s]+"
+urls itu panggil_python re.findall(url_pattern, teks)
+
+tampilkan f"Ditemukan {panjang(urls)} URL:"
+untuk setiap url dari urls
+    tampilkan f"  • {url}"
+selesai
+tampilkan ""
+
+// ============================================
+// 5. TEXT REPLACEMENT
+// ============================================
+
+tampilkan "[5] Text Replacement..."
+tampilkan ""
+
+teks itu "Harga produk adalah Rp 100000 dan Rp 250000"
+
+// Ganti angka dengan format ribuan
+fungsi format_rupiah(match):
+    angka itu int(match.group())
+    hasil f"Rp {angka:,}"
+selesai
+
+hasil itu panggil_python re.sub(r"Rp\s?(\d+)", format_rupiah, teks)
+tampilkan f"Original: {teks}"
+tampilkan f"Formatted: {hasil}"
+tampilkan ""
+
+// ============================================
+// 6. PASSWORD VALIDATION
+// ============================================
+
+tampilkan "[6] Password Validation..."
+tampilkan ""
+
+fungsi validasi_password(password):
+    jika panjang(password) < 8
+        hasil salah, "Password minimal 8 karakter"
+    selesai
+    
+    jika tidak panggil_python re.search(r"[A-Z]", password)
+        hasil salah, "Password harus mengandung huruf besar"
+    selesai
+    
+    jika tidak panggil_python re.search(r"[a-z]", password)
+        hasil salah, "Password harus mengandung huruf kecil"
+    selesai
+    
+    jika tidak panggil_python re.search(r"\d", password)
+        hasil salah, "Password harus mengandung angka"
+    selesai
+    
+    jika tidak panggil_python re.search(r"[!@#$%^&*(),.?&quot;:{}|<>]", password)
+        hasil salah, "Password harus mengandung karakter spesial"
+    selesai
+    
+    hasil benar, "Password valid"
+selesai
+
+passwords itu [
+    "weak",
+    "StrongPass123!",
+    "NoSpecial123",
+    "noupppercase123!",
+    "NOLOWERCASE123!",
+    "NoNumber!@#",
+    "ValidPass123!"
+]
+
+tampilkan "Validasi Password:"
+untuk setiap pwd dari passwords
+    valid, pesan itu validasi_password(pwd)
+    status itu "✓" jika valid lainnya "✗"
+    tampilkan f"  {status} {pwd:<20} - {pesan}"
+selesai
+tampilkan ""
+
+// ============================================
+// 7. DATA EXTRACTION FROM TEXT
+// ============================================
+
+tampilkan "[7] Data Extraction from Text..."
+tampilkan ""
+
+teks itu """
+Invoice #INV-2024-001
+Date: 03/10/2024
+Customer: PT. Example Indonesia
+Amount: Rp 5,000,000
+Tax: 10%
+Total: Rp 5,500,000
+"""
+
+// Extract invoice number
+invoice_match itu panggil_python re.search(r"Invoice #([\w-]+)", teks)
+jika invoice_match
+    invoice_no itu invoice_match.group(1)
+    tampilkan f"Invoice Number: {invoice_no}"
+selesai
+
+// Extract date
+date_match itu panggil_python re.search(r"Date: (\d{2}/\d{2}/\d{4})", teks)
+jika date_match
+    tanggal itu date_match.group(1)
+    tampilkan f"Date: {tanggal}"
+selesai
+
+// Extract amounts
+amounts itu panggil_python re.findall(r"Rp\s?([\d,]+)", teks)
+tampilkan f"Amounts found: {amounts}"
+tampilkan ""
+
+// ============================================
+// 8. HTML TAG REMOVAL
+// ============================================
+
+tampilkan "[8] HTML Tag Removal..."
+tampilkan ""
+
+html itu "<p>Ini adalah <b>teks</b> dengan <a href='#'>link</a></p>"
+clean_text itu panggil_python re.sub(r"<[^>]+>", "", html)
+
+tampilkan f"HTML: {html}"
+tampilkan f"Clean: {clean_text}"
+tampilkan ""
+
+// ============================================
+// 9. WORD FREQUENCY
+// ============================================
+
+tampilkan "[9] Word Frequency Analysis..."
+tampilkan ""
+
+teks itu """
+Python adalah bahasa pemrograman yang populer.
+Python mudah dipelajari dan Python memiliki banyak library.
+Banyak developer menggunakan Python untuk berbagai project.
+"""
+
+// Extract semua kata
+words itu panggil_python re.findall(r"\b\w+\b", teks.lower())
+
+// Hitung frekuensi
+word_count itu {}
+untuk setiap word dari words
+    jika word tidak dalam word_count
+        word_count[word] itu 0
+    selesai
+    word_count[word] itu word_count[word] + 1
+selesai
+
+// Tampilkan top 5
+tampilkan "Top 5 kata paling sering:"
+sorted_words itu sorted(word_count.items(), key=lambda x: x[1], reverse=benar)
+untuk setiap i dari range(0, 5)
+    jika i < panjang(sorted_words)
+        word, count itu sorted_words[i]
+        tampilkan f"  {i + 1}. {word}: {count} kali"
+    selesai
+selesai
+tampilkan ""
+
+// ============================================
+// 10. SPLIT WITH MULTIPLE DELIMITERS
+// ============================================
+
+tampilkan "[10] Split with Multiple Delimiters..."
+tampilkan ""
+
+teks itu "apple,banana;orange|grape:melon"
+
+// Split dengan multiple delimiter
+items itu panggil_python re.split(r"[,;|:]", teks)
+tampilkan f"Original: {teks}"
+tampilkan f"Split result: {items}"
+tampilkan ""
+
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Regex Cheat Sheet:"
+tampilkan "  \\d - digit (0-9)"
+tampilkan "  \\w - word character (a-z, A-Z, 0-9, _)"
+tampilkan "  \\s - whitespace"
+tampilkan "  . - any character"
+tampilkan "  * - 0 or more"
+tampilkan "  + - 1 or more"
+tampilkan "  ? - 0 or 1"
+tampilkan "  ^ - start of string"
+tampilkan "  $ - end of string"
+tampilkan "  [] - character class"
+tampilkan "  () - capture group"

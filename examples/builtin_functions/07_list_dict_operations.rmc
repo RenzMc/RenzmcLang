@@ -1,0 +1,251 @@
+// ============================================
+// Built-in Functions: List & Dictionary Operations
+// ============================================
+// Comprehensive examples for list and dict functions
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║   LIST & DICT OPERATIONS COMPLETE     ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// 1. LIST BASIC OPERATIONS
+// ============================================
+tampilkan "=== 1. LIST BASIC OPERATIONS ==="
+tampilkan ""
+
+daftar itu [1, 2, 3, 4, 5]
+tampilkan f"Original list: {daftar}"
+tampilkan ""
+
+// tambah - Add element to list
+tambah(daftar, 6)
+tampilkan f"✓ tambah(daftar, 6) = {daftar}"
+
+// hapus - Remove element from list
+hapus(daftar, 3)
+tampilkan f"✓ hapus(daftar, 3) = {daftar}"
+
+// masukkan - Insert element at index
+masukkan(daftar, 2, 99)
+tampilkan f"✓ masukkan(daftar, 2, 99) = {daftar}"
+
+// hapus_pada - Remove element at index
+hapus_pada(daftar, 2)
+tampilkan f"✓ hapus_pada(daftar, 2) = {daftar}"
+
+tampilkan ""
+
+// ============================================
+// 2. LIST SORTING & REVERSING
+// ============================================
+tampilkan "=== 2. LIST SORTING & REVERSING ==="
+tampilkan ""
+
+angka_acak itu [5, 2, 8, 1, 9, 3, 7, 4, 6]
+tampilkan f"Original: {angka_acak}"
+
+// urutkan - Sort list in place
+urutkan(angka_acak)
+tampilkan f"✓ urutkan(angka_acak) = {angka_acak}"
+
+// balikkan - Reverse list in place
+balikkan(angka_acak)
+tampilkan f"✓ balikkan(angka_acak) = {angka_acak}"
+
+tampilkan ""
+
+// ============================================
+// 3. LIST SEARCHING
+// ============================================
+tampilkan "=== 3. LIST SEARCHING ==="
+tampilkan ""
+
+buah itu ["apel", "jeruk", "mangga", "pisang", "apel"]
+tampilkan f"List: {buah}"
+tampilkan ""
+
+// hitung - Count occurrences
+jumlah_apel itu hitung(buah, "apel")
+tampilkan f"✓ hitung(buah, 'apel') = {jumlah_apel}"
+
+// indeks - Find index of element
+idx_mangga itu indeks(buah, "mangga")
+tampilkan f"✓ indeks(buah, 'mangga') = {idx_mangga}"
+
+tampilkan ""
+
+// ============================================
+// 4. LIST COPYING & EXTENDING
+// ============================================
+tampilkan "=== 4. LIST COPYING & EXTENDING ==="
+tampilkan ""
+
+list1 itu [1, 2, 3]
+list2 itu [4, 5, 6]
+
+// salin - Shallow copy
+list_copy itu salin(list1)
+tampilkan f"✓ salin({list1}) = {list_copy}"
+
+// salin_dalam - Deep copy
+nested_list itu [[1, 2], [3, 4]]
+deep_copy itu salin_dalam(nested_list)
+tampilkan f"✓ salin_dalam({nested_list}) = {deep_copy}"
+
+// extend / gabung_daftar - Extend list
+extend(list1, list2)
+tampilkan f"✓ extend({list1}, {list2}) = {list1}"
+
+tampilkan ""
+
+// ============================================
+// 5. DICTIONARY OPERATIONS
+// ============================================
+tampilkan "=== 5. DICTIONARY OPERATIONS ==="
+tampilkan ""
+
+data itu {
+    "nama": "Alice",
+    "umur": 25,
+    "kota": "Jakarta",
+    "pekerjaan": "Engineer"
+}
+
+tampilkan f"Dictionary: {data}"
+tampilkan ""
+
+// kunci - Get all keys
+keys itu kunci(data)
+tampilkan f"✓ kunci(data) = {keys}"
+
+// nilai - Get all values
+values itu nilai(data)
+tampilkan f"✓ nilai(data) = {values}"
+
+// item - Get all key-value pairs
+items itu item(data)
+tampilkan f"✓ item(data) = {items}"
+
+// hapus_kunci - Remove key from dict
+hapus_kunci(data, "pekerjaan")
+tampilkan f"✓ hapus_kunci(data, 'pekerjaan') = {data}"
+
+tampilkan ""
+
+// ============================================
+// 6. PRACTICAL EXAMPLES
+// ============================================
+tampilkan "=== 6. PRACTICAL EXAMPLES ==="
+tampilkan ""
+
+// Example 1: Shopping Cart
+tampilkan "Example 1: Shopping Cart Manager"
+
+cart itu []
+
+buat fungsi tambah_ke_cart dengan item, harga, jumlah
+    cart_item itu {
+        "item": item,
+        "harga": harga,
+        "jumlah": jumlah,
+        "subtotal": harga * jumlah
+    }
+    tambah(cart, cart_item)
+    tampilkan f"  ✓ Added: {item} x{jumlah} = Rp {harga * jumlah}"
+selesai
+
+buat fungsi hitung_total_cart
+    total itu 0
+    untuk setiap item dari cart
+        total itu total + item["subtotal"]
+    selesai
+    hasil total
+selesai
+
+panggil tambah_ke_cart dengan "Laptop", 5000000, 1
+panggil tambah_ke_cart dengan "Mouse", 150000, 2
+panggil tambah_ke_cart dengan "Keyboard", 300000, 1
+
+total_belanja itu panggil hitung_total_cart
+tampilkan f"\n  Total Belanja: Rp {total_belanja}"
+
+tampilkan ""
+
+// Example 2: Student Grade Manager
+tampilkan "Example 2: Student Grade Manager"
+
+students itu {
+    "Alice": [85, 90, 88],
+    "Bob": [78, 82, 80],
+    "Charlie": [92, 95, 93]
+}
+
+buat fungsi hitung_rata_rata_siswa dengan nama
+    grades itu students[nama]
+    total itu jumlah(grades)
+    rata itu total / panjang(grades)
+    hasil rata
+selesai
+
+tampilkan "Student Averages:"
+student_names itu kunci(students)
+untuk setiap nama dari student_names
+    avg itu panggil hitung_rata_rata_siswa dengan nama
+    tampilkan f"  {nama:10} -> {avg}"
+selesai
+
+tampilkan ""
+
+// Example 3: Unique List
+tampilkan "Example 3: Remove Duplicates"
+
+buat fungsi hapus_duplikat dengan list_input
+    unique_list itu []
+    
+    untuk setiap item dari list_input
+        jumlah_item itu hitung(unique_list, item)
+        jika jumlah_item == 0
+            tambah(unique_list, item)
+        selesai
+    selesai
+    
+    hasil unique_list
+selesai
+
+numbers_with_dup itu [1, 2, 3, 2, 4, 1, 5, 3, 6]
+unique_numbers itu panggil hapus_duplikat dengan numbers_with_dup
+
+tampilkan f"  Original: {numbers_with_dup}"
+tampilkan f"  Unique: {unique_numbers}"
+
+tampilkan ""
+
+// Example 4: Dictionary Merge
+tampilkan "Example 4: Merge Dictionaries"
+
+dict1 itu {"a": 1, "b": 2}
+dict2 itu {"c": 3, "d": 4}
+
+buat fungsi gabung_dict dengan d1, d2
+    result itu salin(d1)
+    
+    keys_d2 itu kunci(d2)
+    untuk setiap key dari keys_d2
+        result[key] itu d2[key]
+    selesai
+    
+    hasil result
+selesai
+
+merged itu panggil gabung_dict dengan dict1, dict2
+tampilkan f"  Dict1: {dict1}"
+tampilkan f"  Dict2: {dict2}"
+tampilkan f"  Merged: {merged}"
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  List & Dict Operations Complete! ✅   ║"
+tampilkan "║                                        ║"
+tampilkan "║  Total Functions Demonstrated: 18      ║"
+tampilkan "╚════════════════════════════════════════╝"

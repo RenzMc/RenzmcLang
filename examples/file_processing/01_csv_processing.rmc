@@ -1,0 +1,249 @@
+// ============================================
+// CSV File Processing
+// ============================================
+// Membaca, menulis, dan memproses file CSV
+
+tampilkan "=== CSV File Processing ==="
+tampilkan ""
+
+impor_python "csv"
+impor_python "os"
+
+// ============================================
+// 1. MEMBUAT FILE CSV
+// ============================================
+
+tampilkan "[1] Membuat File CSV..."
+
+// Data mahasiswa
+data_mahasiswa itu [
+    ["NIM", "Nama", "Jurusan", "IPK", "Semester"],
+    ["12345", "Budi Santoso", "Teknik Informatika", "3.75", "6"],
+    ["12346", "Ani Wijaya", "Sistem Informasi", "3.85", "6"],
+    ["12347", "Citra Dewi", "Teknik Komputer", "3.65", "5"],
+    ["12348", "Dedi Pratama", "Teknik Informatika", "3.90", "7"],
+    ["12349", "Eka Putri", "Sistem Informasi", "3.55", "5"],
+    ["12350", "Fajar Ramadhan", "Teknik Informatika", "3.70", "6"],
+    ["12351", "Gita Savitri", "Teknik Komputer", "3.80", "6"],
+    ["12352", "Hadi Wijaya", "Sistem Informasi", "3.60", "5"],
+    ["12353", "Indah Permata", "Teknik Informatika", "3.95", "7"],
+    ["12354", "Joko Susilo", "Teknik Komputer", "3.50", "5"]
+]
+
+// Tulis ke file CSV
+dengan buka("mahasiswa.csv", "w", newline="") sebagai file
+    writer itu panggil_python csv.writer(file)
+    untuk setiap row dari data_mahasiswa
+        panggil_python writer.writerow(row)
+    selesai
+selesai
+
+tampilkan "✓ File mahasiswa.csv berhasil dibuat"
+tampilkan f"  Total baris: {panjang(data_mahasiswa)}"
+tampilkan ""
+
+// ============================================
+// 2. MEMBACA FILE CSV
+// ============================================
+
+tampilkan "[2] Membaca File CSV..."
+
+dengan buka("mahasiswa.csv", "r") sebagai file
+    reader itu panggil_python csv.reader(file)
+    rows itu list(reader)
+    
+    tampilkan f"Total baris: {panjang(rows)}"
+    tampilkan ""
+    
+    // Tampilkan header
+    header itu rows[0]
+    tampilkan "Header:"
+    tampilkan "  " + ", ".join(header)
+    tampilkan ""
+    
+    // Tampilkan beberapa baris data
+    tampilkan "Data (5 baris pertama):"
+    tampilkan "-" * 100
+    tampilkan f"{'NIM':<10} {'Nama':<20} {'Jurusan':<25} {'IPK':<8} {'Semester':<10}"
+    tampilkan "-" * 100
+    
+    untuk setiap i dari range(1, 6)
+        row itu rows[i]
+        tampilkan f"{row[0]:<10} {row[1]:<20} {row[2]:<25} {row[3]:<8} {row[4]:<10}"
+    selesai
+selesai
+tampilkan ""
+
+// ============================================
+// 3. MEMBACA CSV SEBAGAI DICTIONARY
+// ============================================
+
+tampilkan "[3] Membaca CSV sebagai Dictionary..."
+
+dengan buka("mahasiswa.csv", "r") sebagai file
+    reader itu panggil_python csv.DictReader(file)
+    mahasiswa_list itu list(reader)
+    
+    tampilkan f"Total mahasiswa: {panjang(mahasiswa_list)}"
+    tampilkan ""
+    
+    // Tampilkan beberapa data
+    tampilkan "Contoh data (format dictionary):"
+    untuk setiap i dari range(0, 3)
+        mhs itu mahasiswa_list[i]
+        tampilkan f"  Mahasiswa {i + 1}:"
+        tampilkan f"    NIM: {mhs['NIM']}"
+        tampilkan f"    Nama: {mhs['Nama']}"
+        tampilkan f"    Jurusan: {mhs['Jurusan']}"
+        tampilkan f"    IPK: {mhs['IPK']}"
+        tampilkan f"    Semester: {mhs['Semester']}"
+        tampilkan ""
+    selesai
+selesai
+
+// ============================================
+// 4. FILTER DAN ANALISIS DATA
+// ============================================
+
+tampilkan "[4] Filter dan Analisis Data..."
+
+dengan buka("mahasiswa.csv", "r") sebagai file
+    reader itu panggil_python csv.DictReader(file)
+    mahasiswa_list itu list(reader)
+    
+    // Filter mahasiswa dengan IPK >= 3.70
+    tampilkan "Mahasiswa dengan IPK >= 3.70:"
+    ipk_tinggi itu []
+    untuk setiap mhs dari mahasiswa_list
+        ipk itu float(mhs['IPK'])
+        jika ipk >= 3.70
+            tambah(ipk_tinggi, mhs)
+            tampilkan f"  • {mhs['Nama']} ({mhs['NIM']}) - IPK: {ipk}"
+        selesai
+    selesai
+    tampilkan f"Total: {panjang(ipk_tinggi)} mahasiswa"
+    tampilkan ""
+    
+    // Hitung rata-rata IPK per jurusan
+    tampilkan "Rata-rata IPK per Jurusan:"
+    jurusan_ipk itu {}
+    
+    untuk setiap mhs dari mahasiswa_list
+        jurusan itu mhs['Jurusan']
+        ipk itu float(mhs['IPK'])
+        
+        jika jurusan tidak dalam jurusan_ipk
+            jurusan_ipk[jurusan] itu []
+        selesai
+        
+        tambah(jurusan_ipk[jurusan], ipk)
+    selesai
+    
+    untuk setiap (jurusan, ipk_list) dari jurusan_ipk.items()
+        rata_rata itu sum(ipk_list) / panjang(ipk_list)
+        tampilkan f"  {jurusan}: {rata_rata:.2f}"
+    selesai
+    tampilkan ""
+selesai
+
+// ============================================
+// 5. MENULIS HASIL FILTER KE CSV BARU
+// ============================================
+
+tampilkan "[5] Menulis Hasil Filter ke CSV Baru..."
+
+// Tulis mahasiswa dengan IPK tinggi ke file baru
+dengan buka("mahasiswa_ipk_tinggi.csv", "w", newline="") sebagai file
+    fieldnames itu ["NIM", "Nama", "Jurusan", "IPK", "Semester"]
+    writer itu panggil_python csv.DictWriter(file, fieldnames=fieldnames)
+    
+    panggil_python writer.writeheader()
+    untuk setiap mhs dari ipk_tinggi
+        panggil_python writer.writerow(mhs)
+    selesai
+selesai
+
+tampilkan "✓ File mahasiswa_ipk_tinggi.csv berhasil dibuat"
+tampilkan f"  Total baris: {panjang(ipk_tinggi)}"
+tampilkan ""
+
+// ============================================
+// 6. UPDATE DATA CSV
+// ============================================
+
+tampilkan "[6] Update Data CSV..."
+
+// Baca semua data
+dengan buka("mahasiswa.csv", "r") sebagai file
+    reader itu panggil_python csv.DictReader(file)
+    mahasiswa_list itu list(reader)
+selesai
+
+// Update IPK mahasiswa tertentu
+untuk setiap mhs dari mahasiswa_list
+    jika mhs['NIM'] == "12345"
+        mhs['IPK'] itu "3.80"
+        tampilkan f"✓ IPK mahasiswa {mhs['Nama']} diupdate menjadi {mhs['IPK']}"
+    selesai
+selesai
+
+// Tulis kembali ke file
+dengan buka("mahasiswa.csv", "w", newline="") sebagai file
+    fieldnames itu ["NIM", "Nama", "Jurusan", "IPK", "Semester"]
+    writer itu panggil_python csv.DictWriter(file, fieldnames=fieldnames)
+    
+    panggil_python writer.writeheader()
+    untuk setiap mhs dari mahasiswa_list
+        panggil_python writer.writerow(mhs)
+    selesai
+selesai
+tampilkan ""
+
+// ============================================
+// 7. STATISTIK LENGKAP
+// ============================================
+
+tampilkan "[7] Statistik Lengkap..."
+
+dengan buka("mahasiswa.csv", "r") sebagai file
+    reader itu panggil_python csv.DictReader(file)
+    mahasiswa_list itu list(reader)
+    
+    // Hitung statistik
+    total_mahasiswa itu panjang(mahasiswa_list)
+    ipk_list itu [float(mhs['IPK']) untuk setiap mhs dari mahasiswa_list]
+    
+    ipk_tertinggi itu max(ipk_list)
+    ipk_terendah itu min(ipk_list)
+    ipk_rata_rata itu sum(ipk_list) / panjang(ipk_list)
+    
+    tampilkan f"Total Mahasiswa: {total_mahasiswa}"
+    tampilkan f"IPK Tertinggi: {ipk_tertinggi}"
+    tampilkan f"IPK Terendah: {ipk_terendah}"
+    tampilkan f"IPK Rata-rata: {ipk_rata_rata:.2f}"
+    tampilkan ""
+    
+    // Distribusi per jurusan
+    tampilkan "Distribusi Mahasiswa per Jurusan:"
+    jurusan_count itu {}
+    
+    untuk setiap mhs dari mahasiswa_list
+        jurusan itu mhs['Jurusan']
+        jika jurusan tidak dalam jurusan_count
+            jurusan_count[jurusan] itu 0
+        selesai
+        jurusan_count[jurusan] itu jurusan_count[jurusan] + 1
+    selesai
+    
+    untuk setiap (jurusan, count) dari jurusan_count.items()
+        persentase itu (count / total_mahasiswa) * 100
+        tampilkan f"  {jurusan}: {count} mahasiswa ({persentase:.1f}%)"
+    selesai
+selesai
+tampilkan ""
+
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "File yang dibuat:"
+tampilkan "  - mahasiswa.csv"
+tampilkan "  - mahasiswa_ipk_tinggi.csv"

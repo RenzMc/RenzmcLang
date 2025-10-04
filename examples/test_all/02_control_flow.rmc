@@ -1,0 +1,46 @@
+// Test 2: Control Flow
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 2: Control Flow                                     ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+// If-else
+tampilkan "\n[2.1] If-Else Statements"
+x itu 10
+jika x > 5
+    tampilkan "✓ If statement works"
+selesai
+
+jika x < 5
+    tampilkan "✗ Should not print"
+kalau tidak
+    tampilkan "✓ Else statement works"
+selesai
+
+// Nested if
+tampilkan "\n[2.2] Nested If"
+nilai itu 85
+jika nilai >= 80
+    jika nilai >= 90
+        tampilkan "✓ Grade: A"
+    kalau tidak
+        tampilkan "✓ Grade: B"
+    selesai
+selesai
+
+// For loop
+tampilkan "\n[2.3] For Loop"
+total itu 0
+untuk setiap i dari [1, 2, 3, 4, 5]
+    total itu total + i
+selesai
+tampilkan f"✓ Sum 1-5: {total}"
+
+// While loop
+tampilkan "\n[2.4] While Loop"
+counter itu 0
+selama counter < 3
+    counter itu counter + 1
+selesai
+tampilkan f"✓ Counter reached: {counter}"
+
+tampilkan "\n✅ Test 2 PASSED: All control flow working!"

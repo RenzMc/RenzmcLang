@@ -1,0 +1,5 @@
+# Test simple bitwise
+x itu 5
+y itu 3
+z itu x & y
+tampilkan z

@@ -1,0 +1,24 @@
+// Test 10: Built-in JSON Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 10: Built-in JSON Functions                         ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[10.1] JSON Functions"
+
+// Create data
+data itu {"nama": "RenzmcLang", "versi": "1.0", "fitur": ["Python", "Data Processing"]}
+tampilkan f"✓ Original data: {data}"
+
+// json_ke_teks
+json_str itu json_ke_teks(data)
+tampilkan f"✓ json_ke_teks: {json_str}"
+
+// teks_ke_json
+parsed itu teks_ke_json(json_str)
+tampilkan f"✓ teks_ke_json: {parsed}"
+
+// Verify
+nama_parsed itu parsed["nama"]
+tampilkan f"✓ Parsed nama: {nama_parsed}"
+
+tampilkan "\n✅ Test 10 PASSED: All JSON functions working!"

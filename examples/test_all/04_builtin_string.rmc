@@ -1,0 +1,54 @@
+// Test 4: Built-in String Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 4: Built-in String Functions                        ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[4.1] String Functions"
+teks itu "hello world"
+
+// huruf_besar
+hasil1 itu huruf_besar(teks)
+tampilkan f"✓ huruf_besar: {hasil1}"
+
+// huruf_kecil
+hasil2 itu huruf_kecil("HELLO")
+tampilkan f"✓ huruf_kecil: {hasil2}"
+
+// panjang
+panjang_teks itu panjang(teks)
+tampilkan f"✓ panjang: {panjang_teks}"
+
+// potong
+hasil3 itu potong(teks, 0, 5)
+tampilkan f"✓ potong: {hasil3}"
+
+// gabung
+hasil4 itu gabung(" ", ["hello", "world"])
+tampilkan f"✓ gabung: {hasil4}"
+
+// pisah
+hasil5 itu pisah(teks, " ")
+tampilkan f"✓ pisah: {hasil5}"
+
+// ganti
+hasil6 itu ganti(teks, "world", "RenzmcLang")
+tampilkan f"✓ ganti: {hasil6}"
+
+// mulai_dengan
+hasil7 itu mulai_dengan(teks, "hello")
+tampilkan f"✓ mulai_dengan: {hasil7}"
+
+// akhir_dengan
+hasil8 itu akhir_dengan(teks, "world")
+tampilkan f"✓ akhir_dengan: {hasil8}"
+
+// berisi
+hasil9 itu berisi(teks, "lo wo")
+tampilkan f"✓ berisi: {hasil9}"
+
+// hapus_spasi
+teks_spasi itu "  hello  "
+hasil10 itu hapus_spasi(teks_spasi)
+tampilkan f"✓ hapus_spasi: '{hasil10}'"
+
+tampilkan "\n✅ Test 4 PASSED: All string functions working!"

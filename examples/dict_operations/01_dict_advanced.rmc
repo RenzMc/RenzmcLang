@@ -1,0 +1,226 @@
+# ===================================
+# Dictionary Operations Advanced
+# ===================================
+# Operasi dictionary lanjutan untuk data key-value
+
+tampilkan "=== Dictionary Operations Advanced Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Dict Creation
+# ===================================
+tampilkan "1. Dict Creation:"
+
+# Empty dict
+dict1 itu {}
+tampilkan "Empty dict: " + ke_teks(dict1)
+
+# Dict dengan data
+dict2 itu {"nama": "Budi", "umur": 25, "kota": "Jakarta"}
+tampilkan "Dict data: " + ke_teks(dict2)
+
+# Dict dengan comprehension
+angka itu [1, 2, 3, 4, 5]
+dict3 itu {x: x * x untuk setiap x dari angka}
+tampilkan "Dict comprehension: " + ke_teks(dict3)
+
+tampilkan ""
+
+# ===================================
+# 2. Dict Access
+# ===================================
+tampilkan "2. Dict Access:"
+
+person itu {"nama": "Ani", "umur": 30, "pekerjaan": "Developer"}
+tampilkan "Person: " + ke_teks(person)
+
+tampilkan "Nama: " + person["nama"]
+tampilkan "Umur: " + ke_teks(person["umur"])
+tampilkan "Pekerjaan: " + person["pekerjaan"]
+
+tampilkan ""
+
+# ===================================
+# 3. Dict Modification
+# ===================================
+tampilkan "3. Dict Modification:"
+
+data itu {"a": 1, "b": 2}
+tampilkan "Data awal: " + ke_teks(data)
+
+# Update value
+data["a"] itu 10
+tampilkan "Setelah update a: " + ke_teks(data)
+
+# Add new key
+data["c"] itu 3
+tampilkan "Setelah add c: " + ke_teks(data)
+
+tampilkan ""
+
+# ===================================
+# 4. Dict Keys & Values
+# ===================================
+tampilkan "4. Dict Keys & Values:"
+
+scores itu {"Budi": 85, "Ani": 92, "Citra": 78}
+tampilkan "Scores: " + ke_teks(scores)
+
+keys itu scores.keys()
+tampilkan "Keys: " + ke_teks(keys)
+
+values itu scores.values()
+tampilkan "Values: " + ke_teks(values)
+
+tampilkan ""
+
+# ===================================
+# 5. Dict Iteration
+# ===================================
+tampilkan "5. Dict Iteration:"
+
+buah_harga itu {"apel": 5000, "jeruk": 3000, "mangga": 7000}
+tampilkan "Harga buah:"
+
+untuk setiap buah dari buah_harga.keys()
+    harga itu buah_harga[buah]
+    tampilkan "  " + buah + ": Rp " + ke_teks(harga)
+selesai
+
+tampilkan ""
+
+# ===================================
+# 6. Dict Membership
+# ===================================
+tampilkan "6. Dict Membership:"
+
+config itu {"debug": benar, "port": 8080, "host": "localhost"}
+tampilkan "Config: " + ke_teks(config)
+
+tampilkan "'debug' dalam config: " + ke_teks("debug" dalam config)
+tampilkan "'timeout' dalam config: " + ke_teks("timeout" dalam config)
+
+tampilkan ""
+
+# ===================================
+# 7. Dict Length
+# ===================================
+tampilkan "7. Dict Length:"
+
+data_dict itu {"a": 1, "b": 2, "c": 3, "d": 4}
+tampilkan "Dict: " + ke_teks(data_dict)
+tampilkan "Panjang: " + ke_teks(panjang(data_dict))
+
+tampilkan ""
+
+# ===================================
+# 8. Dict Get with Default
+# ===================================
+tampilkan "8. Dict Get with Default:"
+
+settings itu {"theme": "dark", "language": "id"}
+tampilkan "Settings: " + ke_teks(settings)
+
+# Get existing key
+theme itu settings["theme"]
+tampilkan "Theme: " + theme
+
+# Get with default (manual)
+fungsi dict_get(d, key, default):
+    jika key dalam d
+        hasil d[key]
+    selesai
+    hasil default
+selesai
+
+timeout itu dict_get(settings, "timeout", 30)
+tampilkan "Timeout (default): " + ke_teks(timeout)
+
+tampilkan ""
+
+# ===================================
+# 9. Dict Update
+# ===================================
+tampilkan "9. Dict Update:"
+
+dict_a itu {"a": 1, "b": 2}
+dict_b itu {"c": 3, "d": 4}
+tampilkan "Dict A: " + ke_teks(dict_a)
+tampilkan "Dict B: " + ke_teks(dict_b)
+
+# Manual update
+untuk setiap key dari dict_b.keys()
+    dict_a[key] itu dict_b[key]
+selesai
+
+tampilkan "A setelah update: " + ke_teks(dict_a)
+
+tampilkan ""
+
+# ===================================
+# 10. Dict Praktis: Counter
+# ===================================
+tampilkan "10. Dict Praktis: Counter:"
+
+words itu ["hello", "world", "hello", "python", "world", "hello"]
+tampilkan "Words: " + ke_teks(words)
+
+# Count occurrences
+counter itu {}
+untuk setiap word dari words
+    jika word dalam counter
+        counter[word] itu counter[word] + 1
+    selesai
+    jika tidak (word dalam counter)
+        counter[word] itu 1
+    selesai
+selesai
+
+tampilkan "Counter: " + ke_teks(counter)
+
+tampilkan ""
+
+# ===================================
+# 11. Dict Praktis: Grouping
+# ===================================
+tampilkan "11. Dict Praktis: Grouping:"
+
+siswa itu [
+    {"nama": "Budi", "kelas": "A"},
+    {"nama": "Ani", "kelas": "B"},
+    {"nama": "Citra", "kelas": "A"},
+    {"nama": "Doni", "kelas": "B"}
+]
+
+# Group by kelas
+kelas_a itu []
+kelas_b itu []
+
+untuk setiap s dari siswa
+    jika s["kelas"] == "A"
+        kelas_a itu kelas_a + [s["nama"]]
+    selesai
+    jika s["kelas"] == "B"
+        kelas_b itu kelas_b + [s["nama"]]
+    selesai
+selesai
+
+tampilkan "Kelas A: " + ke_teks(kelas_a)
+tampilkan "Kelas B: " + ke_teks(kelas_b)
+
+tampilkan ""
+
+# ===================================
+# 12. Dict Best Practices
+# ===================================
+tampilkan "12. Dict Best Practices:"
+tampilkan "✓ Dict adalah mutable (bisa diubah)"
+tampilkan "✓ Key harus unique dan immutable"
+tampilkan "✓ Gunakan comprehension untuk transformasi"
+tampilkan "✓ Gunakan 'dalam' untuk check key existence"
+tampilkan "✓ Gunakan .keys() untuk iterate keys"
+tampilkan "✓ Gunakan .values() untuk iterate values"
+tampilkan "✓ Dict ideal untuk mapping dan lookup"
+
+tampilkan ""
+tampilkan "=== Dictionary Operations Advanced Examples Complete ==="

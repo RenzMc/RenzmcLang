@@ -1,0 +1,66 @@
+// ============================================
+// HTTP Server - Simple Web Server
+// ============================================
+// Membuat web server sederhana dengan Python http.server
+
+tampilkan "=== Simple HTTP Server ==="
+tampilkan ""
+
+impor_python "http.server"
+impor_python "socketserver"
+impor_python "os"
+
+tampilkan "[1] Konfigurasi Server..."
+PORT itu 8080
+DIRECTORY itu "."
+
+tampilkan f"Port: {PORT}"
+tampilkan f"Directory: {DIRECTORY}"
+tampilkan ""
+
+// Buat handler untuk HTTP requests
+tampilkan "[2] Membuat HTTP Request Handler..."
+
+// Fungsi untuk menjalankan server
+fungsi jalankan_server():
+    tampilkan "Memulai HTTP Server..."
+    tampilkan f"Server berjalan di http://localhost:{PORT}"
+    tampilkan "Tekan Ctrl+C untuk menghentikan server"
+    tampilkan ""
+    
+    coba
+        // Buat handler
+        Handler itu panggil_python http.server.SimpleHTTPRequestHandler
+        
+        // Buat server
+        dengan panggil_python socketserver.TCPServer(["", PORT], Handler) sebagai httpd
+            tampilkan f"✓ Server aktif di port {PORT}"
+            tampilkan "Menunggu koneksi..."
+            
+            // Jalankan server (ini akan blocking)
+            panggil_python httpd.serve_forever()
+        selesai
+        
+    tangkap KeyboardInterrupt
+        tampilkan ""
+        tampilkan "✓ Server dihentikan"
+    tangkap Exception sebagai e
+        tampilkan f"✗ Error: {e}"
+    selesai
+selesai
+
+tampilkan "[3] Informasi Server..."
+tampilkan "Server ini akan melayani file dari direktori saat ini"
+tampilkan "Akses melalui browser: http://localhost:8080"
+tampilkan ""
+tampilkan "Contoh endpoints:"
+tampilkan "  - http://localhost:8080/           (index.html atau daftar file)"
+tampilkan "  - http://localhost:8080/file.txt   (file tertentu)"
+tampilkan ""
+
+// Uncomment baris berikut untuk menjalankan server
+// jalankan_server()
+
+tampilkan "Note: Uncomment baris 'jalankan_server()' untuk menjalankan server"
+tampilkan ""
+tampilkan "=== Selesai ==="

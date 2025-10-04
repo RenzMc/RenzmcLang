@@ -1,0 +1,254 @@
+// ============================================
+// GUI with Tkinter - Basic Examples
+// ============================================
+// Membuat GUI aplikasi dengan Tkinter
+
+tampilkan "=== Tkinter GUI Examples ==="
+tampilkan ""
+
+// Note: Install tkinter jika belum ada (biasanya sudah include di Python)
+
+coba
+    impor_python "tkinter"
+    impor_python "tkinter.messagebox"
+    impor_python "tkinter.ttk"
+    
+    tampilkan "[1] Simple Window Example..."
+    tampilkan ""
+    
+    // Contoh 1: Window Sederhana
+    tampilkan "Contoh kode untuk window sederhana:"
+    tampilkan ""
+    
+    kode_window itu """
+import tkinter as tk
+
+# Buat window
+root = tk.Tk()
+root.title("Hello RenzmcLang")
+root.geometry("400x300")
+
+# Tambah label
+label = tk.Label(root, text="Selamat datang di RenzmcLang GUI!", 
+                 font=("Arial", 16))
+label.pack(pady=20)
+
+# Tambah button
+def on_click():
+    print("Button diklik!")
+    
+button = tk.Button(root, text="Klik Saya", command=on_click)
+button.pack(pady=10)
+
+# Jalankan aplikasi
+root.mainloop()
+"""
+    
+    tampilkan kode_window
+    tampilkan ""
+    
+    // Contoh 2: Form Input
+    tampilkan "[2] Form Input Example..."
+    tampilkan ""
+    
+    kode_form itu """
+import tkinter as tk
+from tkinter import messagebox
+
+def submit_form():
+    nama = entry_nama.get()
+    umur = entry_umur.get()
+    
+    if nama and umur:
+        messagebox.showinfo("Info", f"Nama: {nama}\\nUmur: {umur}")
+    else:
+        messagebox.showwarning("Warning", "Mohon isi semua field!")
+
+# Buat window
+root = tk.Tk()
+root.title("Form Input")
+root.geometry("400x300")
+
+# Label dan Entry untuk Nama
+tk.Label(root, text="Nama:").grid(row=0, column=0, padx=10, pady=10)
+entry_nama = tk.Entry(root, width=30)
+entry_nama.grid(row=0, column=1, padx=10, pady=10)
+
+# Label dan Entry untuk Umur
+tk.Label(root, text="Umur:").grid(row=1, column=0, padx=10, pady=10)
+entry_umur = tk.Entry(root, width=30)
+entry_umur.grid(row=1, column=1, padx=10, pady=10)
+
+# Button Submit
+btn_submit = tk.Button(root, text="Submit", command=submit_form)
+btn_submit.grid(row=2, column=0, columnspan=2, pady=20)
+
+root.mainloop()
+"""
+    
+    tampilkan kode_form
+    tampilkan ""
+    
+    // Contoh 3: Calculator GUI
+    tampilkan "[3] Calculator GUI Example..."
+    tampilkan ""
+    
+    kode_calculator itu """
+import tkinter as tk
+
+class Calculator:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Kalkulator")
+        self.root.geometry("300x400")
+        
+        self.expression = ""
+        
+        # Display
+        self.display = tk.Entry(root, font=("Arial", 20), 
+                               justify="right", bd=10)
+        self.display.grid(row=0, column=0, columnspan=4, 
+                         padx=10, pady=10)
+        
+        # Buttons
+        buttons = [
+            '7', '8', '9', '/',
+            '4', '5', '6', '*',
+            '1', '2', '3', '-',
+            'C', '0', '=', '+'
+        ]
+        
+        row = 1
+        col = 0
+        
+        for button in buttons:
+            cmd = lambda x=button: self.click(x)
+            tk.Button(root, text=button, width=5, height=2,
+                     font=("Arial", 14), command=cmd).grid(
+                         row=row, column=col, padx=5, pady=5)
+            col += 1
+            if col > 3:
+                col = 0
+                row += 1
+    
+    def click(self, key):
+        if key == '=':
+            try:
+                result = eval(self.expression)
+                self.display.delete(0, tk.END)
+                self.display.insert(0, str(result))
+                self.expression = str(result)
+            except:
+                self.display.delete(0, tk.END)
+                self.display.insert(0, "Error")
+                self.expression = ""
+        elif key == 'C':
+            self.expression = ""
+            self.display.delete(0, tk.END)
+        else:
+            self.expression += str(key)
+            self.display.delete(0, tk.END)
+            self.display.insert(0, self.expression)
+
+# Jalankan aplikasi
+root = tk.Tk()
+calc = Calculator(root)
+root.mainloop()
+"""
+    
+    tampilkan kode_calculator
+    tampilkan ""
+    
+    // Contoh 4: Todo List GUI
+    tampilkan "[4] Todo List GUI Example..."
+    tampilkan ""
+    
+    kode_todo itu """
+import tkinter as tk
+from tkinter import messagebox
+
+class TodoApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Todo List")
+        self.root.geometry("400x500")
+        
+        # Frame untuk input
+        input_frame = tk.Frame(root)
+        input_frame.pack(pady=10)
+        
+        # Entry untuk task baru
+        self.task_entry = tk.Entry(input_frame, width=30, 
+                                   font=("Arial", 12))
+        self.task_entry.pack(side=tk.LEFT, padx=5)
+        
+        # Button tambah
+        tk.Button(input_frame, text="Tambah", 
+                 command=self.add_task).pack(side=tk.LEFT)
+        
+        # Listbox untuk tasks
+        self.task_listbox = tk.Listbox(root, width=50, height=15,
+                                       font=("Arial", 11))
+        self.task_listbox.pack(pady=10)
+        
+        # Frame untuk buttons
+        button_frame = tk.Frame(root)
+        button_frame.pack(pady=10)
+        
+        tk.Button(button_frame, text="Hapus", 
+                 command=self.delete_task).pack(side=tk.LEFT, padx=5)
+        tk.Button(button_frame, text="Clear All", 
+                 command=self.clear_all).pack(side=tk.LEFT, padx=5)
+    
+    def add_task(self):
+        task = self.task_entry.get()
+        if task:
+            self.task_listbox.insert(tk.END, task)
+            self.task_entry.delete(0, tk.END)
+        else:
+            messagebox.showwarning("Warning", "Masukkan task!")
+    
+    def delete_task(self):
+        try:
+            index = self.task_listbox.curselection()[0]
+            self.task_listbox.delete(index)
+        except:
+            messagebox.showwarning("Warning", "Pilih task yang akan dihapus!")
+    
+    def clear_all(self):
+        self.task_listbox.delete(0, tk.END)
+
+# Jalankan aplikasi
+root = tk.Tk()
+app = TodoApp(root)
+root.mainloop()
+"""
+    
+    tampilkan kode_todo
+    tampilkan ""
+    
+    tampilkan "[5] Cara Menjalankan..."
+    tampilkan ""
+    tampilkan "1. Simpan salah satu kode di atas ke file .py"
+    tampilkan "2. Jalankan dengan: python nama_file.py"
+    tampilkan "3. GUI window akan muncul"
+    tampilkan ""
+    
+    tampilkan "✓ Tkinter examples siap digunakan"
+    
+tangkap ImportError
+    tampilkan "⚠ Module tkinter tidak tersedia"
+    tampilkan "  Tkinter biasanya sudah include di Python"
+    tampilkan "  Jika tidak ada, install Python dengan tkinter support"
+selesai
+
+tampilkan ""
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Tkinter Features:"
+tampilkan "  - Window dan Frame"
+tampilkan "  - Label, Button, Entry"
+tampilkan "  - Listbox, Combobox"
+tampilkan "  - Menu dan Menubar"
+tampilkan "  - Dialog boxes"
+tampilkan "  - Canvas untuk drawing"

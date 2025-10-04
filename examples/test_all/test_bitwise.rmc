@@ -1,0 +1,27 @@
+# Test bitwise operators
+x itu 5
+y itu 3
+z itu x & y
+tampilkan z
+
+a itu 5
+b itu 3
+c itu a | b
+tampilkan c
+
+d itu 5
+e itu 3
+f itu d ^ e
+tampilkan f
+
+g itu 5
+h itu ~g
+tampilkan h
+
+i itu 5
+j itu i << 2
+tampilkan j
+
+k itu 20
+l itu k >> 2
+tampilkan l

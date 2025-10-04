@@ -1,0 +1,86 @@
+import hashlib
+import uuid
+import base64
+import urllib.parse
+
+try:
+    from cryptography.fernet import Fernet
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+
+    CRYPTOGRAPHY_AVAILABLE = True
+except ImportError:
+    Fernet = None
+    hashes = None
+    PBKDF2HMAC = None
+    CRYPTOGRAPHY_AVAILABLE = False
+
+
+class CryptoOperations:
+
+    @staticmethod
+    def encrypt(text, key):
+        if not CRYPTOGRAPHY_AVAILABLE:
+            raise ImportError("Cryptography library tidak tersedia")
+        try:
+            if isinstance(key, str):
+                key_bytes = key.encode("utf-8")
+            else:
+                key_bytes = key
+            kdf = PBKDF2HMAC(
+                algorithm=hashes.SHA256(), length=32, salt=b"salt_", iterations=100000
+            )
+            derived_key = base64.urlsafe_b64encode(kdf.derive(key_bytes))
+            cipher = Fernet(derived_key)
+            encrypted = cipher.encrypt(text.encode("utf-8"))
+            return base64.b64encode(encrypted).decode("utf-8")
+        except Exception as e:
+            raise ValueError(f"Error dalam enkripsi: {str(e)}")
+
+    @staticmethod
+    def decrypt(encrypted_text, key):
+        if not CRYPTOGRAPHY_AVAILABLE:
+            raise ImportError("Cryptography library tidak tersedia")
+        try:
+            if isinstance(key, str):
+                key_bytes = key.encode("utf-8")
+            else:
+                key_bytes = key
+            kdf = PBKDF2HMAC(
+                algorithm=hashes.SHA256(), length=32, salt=b"salt_", iterations=100000
+            )
+            derived_key = base64.urlsafe_b64encode(kdf.derive(key_bytes))
+            cipher = Fernet(derived_key)
+            encrypted_bytes = base64.b64decode(encrypted_text.encode("utf-8"))
+            decrypted = cipher.decrypt(encrypted_bytes)
+            return decrypted.decode("utf-8")
+        except Exception as e:
+            raise ValueError(f"Error dalam dekripsi: {str(e)}")
+
+    @staticmethod
+    def hash_text(text, algorithm="sha256"):
+        try:
+            if algorithm == "md5":
+                return hashlib.md5(text.encode("utf-8")).hexdigest()
+            elif algorithm == "sha1":
+                return hashlib.sha1(text.encode("utf-8")).hexdigest()
+            elif algorithm == "sha256":
+                return hashlib.sha256(text.encode("utf-8")).hexdigest()
+            elif algorithm == "sha512":
+                return hashlib.sha512(text.encode("utf-8")).hexdigest()
+            else:
+                raise ValueError(f"Algoritma hash tidak didukung: {algorithm}")
+        except Exception as e:
+            raise ValueError(f"Error dalam hashing: {str(e)}")
+
+    @staticmethod
+    def create_uuid():
+        return str(uuid.uuid4())
+
+    @staticmethod
+    def url_encode(text):
+        return urllib.parse.quote(text)
+
+    @staticmethod
+    def url_decode(text):
+        return urllib.parse.unquote(text)

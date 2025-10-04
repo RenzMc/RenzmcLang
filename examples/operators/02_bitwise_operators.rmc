@@ -1,0 +1,239 @@
+# ===================================
+# Bitwise Operators (Extended)
+# ===================================
+# Operasi bit-level untuk manipulasi data binary
+
+tampilkan "=== Bitwise Operators Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Bitwise AND (&)
+# ===================================
+tampilkan "1. Bitwise AND (&):"
+
+a itu 12  # 1100
+b itu 10  # 1010
+hasil itu a & b  # 1000 = 8
+
+tampilkan "a = " + ke_teks(a) + " (binary: 1100)"
+tampilkan "b = " + ke_teks(b) + " (binary: 1010)"
+tampilkan "a & b = " + ke_teks(hasil) + " (binary: 1000)"
+
+tampilkan ""
+
+# ===================================
+# 2. Bitwise OR (|)
+# ===================================
+tampilkan "2. Bitwise OR (|):"
+
+a itu 12  # 1100
+b itu 10  # 1010
+hasil itu a | b  # 1110 = 14
+
+tampilkan "a = " + ke_teks(a) + " (binary: 1100)"
+tampilkan "b = " + ke_teks(b) + " (binary: 1010)"
+tampilkan "a | b = " + ke_teks(hasil) + " (binary: 1110)"
+
+tampilkan ""
+
+# ===================================
+# 3. Bitwise XOR (^)
+# ===================================
+tampilkan "3. Bitwise XOR (^):"
+
+a itu 12  # 1100
+b itu 10  # 1010
+hasil itu a ^ b  # 0110 = 6
+
+tampilkan "a = " + ke_teks(a) + " (binary: 1100)"
+tampilkan "b = " + ke_teks(b) + " (binary: 1010)"
+tampilkan "a ^ b = " + ke_teks(hasil) + " (binary: 0110)"
+
+tampilkan ""
+
+# ===================================
+# 4. Bitwise NOT (~)
+# ===================================
+tampilkan "4. Bitwise NOT (~):"
+
+a itu 5  # 0101
+hasil itu ~a  # Inverts all bits
+
+tampilkan "a = " + ke_teks(a)
+tampilkan "~a = " + ke_teks(hasil)
+
+tampilkan ""
+
+# ===================================
+# 5. Left Shift (<<)
+# ===================================
+tampilkan "5. Left Shift (<<):"
+
+a itu 5  # 101
+hasil1 itu a << 1  # 1010 = 10
+hasil2 itu a << 2  # 10100 = 20
+hasil3 itu a << 3  # 101000 = 40
+
+tampilkan "a = " + ke_teks(a) + " (binary: 101)"
+tampilkan "a << 1 = " + ke_teks(hasil1) + " (multiply by 2)"
+tampilkan "a << 2 = " + ke_teks(hasil2) + " (multiply by 4)"
+tampilkan "a << 3 = " + ke_teks(hasil3) + " (multiply by 8)"
+
+tampilkan ""
+
+# ===================================
+# 6. Right Shift (>>)
+# ===================================
+tampilkan "6. Right Shift (>>):"
+
+a itu 40  # 101000
+hasil1 itu a >> 1  # 10100 = 20
+hasil2 itu a >> 2  # 1010 = 10
+hasil3 itu a >> 3  # 101 = 5
+
+tampilkan "a = " + ke_teks(a) + " (binary: 101000)"
+tampilkan "a >> 1 = " + ke_teks(hasil1) + " (divide by 2)"
+tampilkan "a >> 2 = " + ke_teks(hasil2) + " (divide by 4)"
+tampilkan "a >> 3 = " + ke_teks(hasil3) + " (divide by 8)"
+
+tampilkan ""
+
+# ===================================
+# 7. Practical: Check Even/Odd
+# ===================================
+tampilkan "7. Practical: Check Even/Odd with Bitwise:"
+
+angka_list itu [10, 15, 22, 33, 44, 55]
+tampilkan "Angka: " + ke_teks(angka_list)
+
+untuk setiap num dari angka_list
+    # Check last bit: if 0 then even, if 1 then odd
+    status itu "genap" jika (num & 1) == 0 kalau tidak "ganjil"
+    tampilkan "  " + ke_teks(num) + " adalah " + status
+selesai
+
+tampilkan ""
+
+# ===================================
+# 8. Practical: Swap Two Numbers
+# ===================================
+tampilkan "8. Practical: Swap dengan XOR:"
+
+x itu 10
+y itu 20
+tampilkan "Sebelum swap: x = " + ke_teks(x) + ", y = " + ke_teks(y)
+
+# Swap using XOR
+x itu x ^ y
+y itu x ^ y
+x itu x ^ y
+
+tampilkan "Setelah swap: x = " + ke_teks(x) + ", y = " + ke_teks(y)
+
+tampilkan ""
+
+# ===================================
+# 9. Practical: Power of 2 Check
+# ===================================
+tampilkan "9. Practical: Check Power of 2:"
+
+angka_test itu [1, 2, 4, 8, 16, 32, 15, 20, 31]
+tampilkan "Angka: " + ke_teks(angka_test)
+
+untuk setiap num dari angka_test
+    # Power of 2 has only one bit set
+    # n & (n-1) == 0 for power of 2
+    jika num > 0 dan (num & (num - 1)) == 0
+        tampilkan "  " + ke_teks(num) + " adalah power of 2"
+    selesai
+    jika (num & 1) != 0
+        tampilkan "  " + ke_teks(num) + " bukan power of 2"
+    selesai
+selesai
+
+tampilkan ""
+
+# ===================================
+# 10. Practical: Count Set Bits
+# ===================================
+tampilkan "10. Practical: Count Set Bits:"
+
+fungsi count_bits(n):
+    count itu 0
+    selama n > 0
+        count += n & 1
+        n >>= 1
+    selesai
+    hasil count
+selesai
+
+angka_bits itu [7, 15, 31, 63, 127]
+tampilkan "Angka: " + ke_teks(angka_bits)
+
+untuk setiap num dari angka_bits
+    bits itu count_bits(num)
+    tampilkan "  " + ke_teks(num) + " memiliki " + ke_teks(bits) + " bit yang set"
+selesai
+
+tampilkan ""
+
+# ===================================
+# 11. Practical: Set/Clear/Toggle Bit
+# ===================================
+tampilkan "11. Practical: Set/Clear/Toggle Bit:"
+
+flags itu 0
+tampilkan "Flags awal: " + ke_teks(flags)
+
+# Set bit 0
+flags itu flags | (1 << 0)
+tampilkan "Set bit 0: " + ke_teks(flags)
+
+# Set bit 2
+flags itu flags | (1 << 2)
+tampilkan "Set bit 2: " + ke_teks(flags)
+
+# Clear bit 0
+flags itu flags & ~(1 << 0)
+tampilkan "Clear bit 0: " + ke_teks(flags)
+
+# Toggle bit 2
+flags itu flags ^ (1 << 2)
+tampilkan "Toggle bit 2: " + ke_teks(flags)
+
+tampilkan ""
+
+# ===================================
+# 12. Practical: Extract Bits
+# ===================================
+tampilkan "12. Practical: Extract Bits:"
+
+# Extract bits from position
+nilai itu 214  # binary: 11010110
+tampilkan "Nilai: " + ke_teks(nilai) + " (binary: 11010110)"
+
+# Extract bit at position 3
+bit_3 itu (nilai >> 3) & 1
+tampilkan "Bit at position 3: " + ke_teks(bit_3)
+
+# Extract bits 2-4
+mask itu 7  # binary: 111 (3 bits)
+bits_2_4 itu (nilai >> 2) & mask
+tampilkan "Bits 2-4: " + ke_teks(bits_2_4)
+
+tampilkan ""
+
+# ===================================
+# 13. Best Practices
+# ===================================
+tampilkan "13. Bitwise Best Practices:"
+tampilkan "✓ Gunakan untuk operasi low-level"
+tampilkan "✓ Efisien untuk flag management"
+tampilkan "✓ Cepat untuk multiply/divide by power of 2"
+tampilkan "✓ Berguna untuk bit manipulation"
+tampilkan "✓ & untuk AND, | untuk OR, ^ untuk XOR"
+tampilkan "✓ << untuk shift left, >> untuk shift right"
+tampilkan "✓ ~ untuk NOT (invert)"
+
+tampilkan ""
+tampilkan "=== Bitwise Operators Examples Complete ==="

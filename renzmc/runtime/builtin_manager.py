@@ -163,6 +163,7 @@ class BuiltinManager:
                "masukan": renzmc_builtins.masukan,
                "print": renzmc_builtins.print,
                "cetak": renzmc_builtins.cetak,
+                 "tampilkan": renzmc_builtins.tampilkan,
                "list": renzmc_builtins.list_renzmc,
                "daftar": renzmc_builtins.daftar,
                "dict": renzmc_builtins.dict_renzmc,

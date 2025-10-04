@@ -1871,3 +1871,58 @@ def reversed_impl(seq):
 
 reversed_renzmc = RenzmcBuiltinFunction(reversed_impl, "reversed")
 terbalik = RenzmcBuiltinFunction(reversed_impl, "terbalik")  # Indonesian alias
+
+
+# ============================================================================
+# HTTP CLIENT FUNCTIONS - Built-in HTTP client
+# ============================================================================
+
+def http_get_impl(url, **kwargs):
+    """HTTP GET request"""
+    from renzmc.runtime.http_client import http_get
+    return http_get(url, **kwargs)
+
+def http_post_impl(url, **kwargs):
+    """HTTP POST request"""
+    from renzmc.runtime.http_client import http_post
+    return http_post(url, **kwargs)
+
+def http_put_impl(url, **kwargs):
+    """HTTP PUT request"""
+    from renzmc.runtime.http_client import http_put
+    return http_put(url, **kwargs)
+
+def http_delete_impl(url, **kwargs):
+    """HTTP DELETE request"""
+    from renzmc.runtime.http_client import http_delete
+    return http_delete(url, **kwargs)
+
+def http_patch_impl(url, **kwargs):
+    """HTTP PATCH request"""
+    from renzmc.runtime.http_client import http_patch
+    return http_patch(url, **kwargs)
+
+def http_set_header_impl(key, value):
+    """Set default HTTP header"""
+    from renzmc.runtime.http_client import http_set_header
+    return http_set_header(key, value)
+
+def http_set_timeout_impl(timeout):
+    """Set default HTTP timeout"""
+    from renzmc.runtime.http_client import http_set_timeout
+    return http_set_timeout(timeout)
+
+# HTTP functions
+http_get = RenzmcBuiltinFunction(http_get_impl, "http_get")
+http_post = RenzmcBuiltinFunction(http_post_impl, "http_post")
+http_put = RenzmcBuiltinFunction(http_put_impl, "http_put")
+http_delete = RenzmcBuiltinFunction(http_delete_impl, "http_delete")
+http_patch = RenzmcBuiltinFunction(http_patch_impl, "http_patch")
+http_set_header = RenzmcBuiltinFunction(http_set_header_impl, "http_set_header")
+http_set_timeout = RenzmcBuiltinFunction(http_set_timeout_impl, "http_set_timeout")
+
+# Indonesian aliases
+ambil_http = RenzmcBuiltinFunction(http_get_impl, "ambil_http")
+kirim_http = RenzmcBuiltinFunction(http_post_impl, "kirim_http")
+perbarui_http = RenzmcBuiltinFunction(http_put_impl, "perbarui_http")
+hapus_http = RenzmcBuiltinFunction(http_delete_impl, "hapus_http")

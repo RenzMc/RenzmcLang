@@ -43,16 +43,10 @@ def run_code(source_code, filename="<stdin>", interpreter=None):
 
 
 def run_interactive():
-    try:
-        readline.parse_and_bind("tab: complete")
-        if not os.path.exists(HISTORY_FILE):
-            open(HISTORY_FILE, "a").close()
-        readline.read_history_file(HISTORY_FILE)
-        atexit.register(readline.write_history_file, HISTORY_FILE)
-    except (ImportError, IOError):
-        pass
-    print(f"RenzmcLang {__version__} - Bahasa pemrograman berbasis Bahasa Indonesia")
-    print("Ketik 'keluar' untuk keluar dari interpreter.")
+    # Use the new REPL
+    from renzmc.repl import RenzmcREPL
+    repl = RenzmcREPL()
+    repl.run()
     print("Untuk kode multi-baris, akhiri dengan baris kosong.")
     print()
     interpreter = Interpreter()

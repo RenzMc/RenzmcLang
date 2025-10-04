@@ -5,7 +5,7 @@
 
 RenzMcLang adalah bahasa pemrograman yang menggunakan sintaks Bahasa Indonesia, dirancang untuk memudahkan pembelajaran pemrograman bagi penutur Bahasa Indonesia sambil tetap menyediakan fitur-fitur modern dan powerful.
 
-[![Version](https://img.shields.io/badge/version-0.0.2-blue.svg)](https://github.com/RenzMc/RenzmcLang)
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
 [![Python](https://img.shields.io/badge/python-3.6+-green.svg)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 [![PyPI](https://img.shields.io/badge/pypi-renzmc-blue.svg)](https://pypi.org/project/renzmc/)

@@ -41,7 +41,7 @@ class Lexer:
             "adalah": TokenType.ADALAH,
             "bukan": TokenType.BUKAN,
             "tampilkan": TokenType.TAMPILKAN,
-            "tulis": TokenType.TULIS,
+            # "tulis": TokenType.TULIS,  # Removed - should be a function, not keyword
             "tunjukkan": TokenType.TUNJUKKAN,
             "tanya": TokenType.TANYA,
             "buat": TokenType.BUAT,
@@ -221,9 +221,9 @@ class Lexer:
             self.advance()
 
         if "." in result:
-            return Token(TokenType.FLOAT_CONST, float(result), start_line, start_column)
+            return Token(TokenType.ANGKA, float(result), start_line, start_column)
         else:
-            return Token(TokenType.INTEGER_CONST, int(result), start_line, start_column)
+            return Token(TokenType.ANGKA, int(result), start_line, start_column)
 
     def string(self):
         start_line = self.line
@@ -236,38 +236,70 @@ class Lexer:
 
         quote_type = self.current_char
         self.advance()
+        
+        # Check for triple quotes
+        is_triple = False
+        if self.current_char == quote_type and self.peek() == quote_type:
+            is_triple = True
+            self.advance()
+            self.advance()
+        
         result = ""
 
-        while self.current_char is not None and self.current_char != quote_type:
-            if self.current_char == "\\":
-                self.advance()
-                if self.current_char == "n":
-                    result += "\n"
-                elif self.current_char == "t":
-                    result += "\t"
-                elif self.current_char == "r":
-                    result += "\r"
-                elif self.current_char == "\\":
-                    result += "\\"
-                elif self.current_char == quote_type:
-                    result += quote_type
+        if is_triple:
+            # Triple-quoted string - read until we find three consecutive quotes
+            found_closing = False
+            while self.current_char is not None:
+                if self.current_char == quote_type:
+                    # Check if this is the start of closing triple quotes
+                    if self.peek() == quote_type and self.peek(2) == quote_type:
+                        # Found closing triple quotes
+                        self.advance()  # Skip first closing quote
+                        self.advance()  # Skip second closing quote
+                        self.advance()  # Skip third closing quote
+                        found_closing = True
+                        break
+                    else:
+                        # Just a single quote in the content
+                        result += self.current_char
+                        self.advance()
                 else:
-                    result += "\\" + self.current_char
-            else:
-                result += self.current_char
+                    result += self.current_char
+                    self.advance()
+            
+            if not found_closing:
+                self.error(f"Triple-quoted string not closed")
+        else:
+            # Single-quoted string - original logic
+            while self.current_char is not None and self.current_char != quote_type:
+                if self.current_char == chr(92):  # backslash
+                    self.advance()
+                    if self.current_char == "n":
+                        result += chr(10)  # newline
+                    elif self.current_char == "t":
+                        result += chr(9)  # tab
+                    elif self.current_char == "r":
+                        result += chr(13)  # carriage return
+                    elif self.current_char == chr(92):  # backslash
+                        result += chr(92)
+                    elif self.current_char == quote_type:
+                        result += quote_type
+                    else:
+                        result += chr(92) + self.current_char
+                else:
+                    result += self.current_char
+                self.advance()
+
+            if self.current_char is None:
+                self.error(f"String not closed")
+
             self.advance()
 
-        if self.current_char is None:
-            self.error(
-                f"String tidak ditutup dengan benar, dimulai pada baris {start_line}, kolom {start_column}"
-            )
-
-        self.advance()
-
         if is_f_string:
-            return Token(TokenType.F_STRING, result, start_line, start_column)
+            return Token(TokenType.FORMAT_STRING, result, start_line, start_column)
         else:
-            return Token(TokenType.STRING_CONST, result, start_line, start_column)
+            return Token(TokenType.TEKS, result, start_line, start_column)
+
 
     def identifier(self):
         result = ""
@@ -280,11 +312,55 @@ class Lexer:
             result += self.current_char
             self.advance()
 
+        # Check for raw string prefix: r"..." or r'...'
+        if result == "r" and self.current_char in ('"', "'"):
+            quote_type = self.current_char
+            self.advance()
+            raw_result = ""
+            while self.current_char is not None and self.current_char != quote_type:
+                raw_result += self.current_char
+                self.advance()
+            if self.current_char is None:
+                self.error(f"Raw string not closed")
+            self.advance()  # Skip closing quote
+            return Token(TokenType.TEKS, raw_result, start_line, start_column)
+        
+        # Check for multi-word keywords like "tidak dalam"
+        if result == "tidak":
+            # Save current position
+            saved_pos = self.pos
+            saved_char = self.current_char
+            saved_line = self.line
+            saved_column = self.column
+            
+            # Skip whitespace
+            while self.current_char is not None and self.current_char in (' ', '\t'):
+                self.advance()
+            
+            # Check if next word is "dalam"
+            if self.current_char is not None and self.current_char.isalpha():
+                next_word = ""
+                while self.current_char is not None and (
+                    self.current_char.isalnum() or self.current_char == "_"
+                ):
+                    next_word += self.current_char
+                    self.advance()
+                
+                if next_word == "dalam":
+                    # Return TIDAK_DALAM token
+                    return Token(TokenType.TIDAK_DALAM, "tidak dalam", start_line, start_column)
+            
+            # Restore position if not "tidak dalam"
+            self.pos = saved_pos
+            self.current_char = saved_char
+            self.line = saved_line
+            self.column = saved_column
+
         if result in self.keywords:
             token_type = self.keywords[result]
             return Token(token_type, result, start_line, start_column)
         else:
-            return Token(TokenType.ID, result, start_line, start_column)
+            return Token(TokenType.IDENTIFIER, result, start_line, start_column)
 
     def get_next_token(self):
         while self.current_char is not None:
@@ -461,11 +537,11 @@ class Lexer:
                 return token
 
             if self.current_char == "&":
-                token = Token(TokenType.BITWISE_AND, "&", self.line, self.column)
+                token = Token(TokenType.BIT_DAN, "&", self.line, self.column)
                 self.advance()
                 if self.current_char == "=":
                     token = Token(
-                        TokenType.BITWISE_AND_SAMA_DENGAN,
+                        TokenType.BIT_DAN_SAMA_DENGAN,
                         "&=",
                         token.line,
                         token.column,
@@ -474,21 +550,21 @@ class Lexer:
                 return token
 
             if self.current_char == "|":
-                token = Token(TokenType.BITWISE_OR, "|", self.line, self.column)
+                token = Token(TokenType.BIT_ATAU, "|", self.line, self.column)
                 self.advance()
                 if self.current_char == "=":
                     token = Token(
-                        TokenType.BITWISE_OR_SAMA_DENGAN, "|=", token.line, token.column
+                        TokenType.BIT_ATAU_SAMA_DENGAN, "|=", token.line, token.column
                     )
                     self.advance()
                 return token
 
             if self.current_char == "^":
-                token = Token(TokenType.BITWISE_XOR, "^", self.line, self.column)
+                token = Token(TokenType.BIT_XOR, "^", self.line, self.column)
                 self.advance()
                 if self.current_char == "=":
                     token = Token(
-                        TokenType.BITWISE_XOR_SAMA_DENGAN,
+                        TokenType.BIT_XOR_SAMA_DENGAN,
                         "^=",
                         token.line,
                         token.column,
@@ -497,53 +573,57 @@ class Lexer:
                 return token
 
             if self.current_char == "~":
-                token = Token(TokenType.BITWISE_NOT, "~", self.line, self.column)
+                token = Token(TokenType.BIT_NOT, "~", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == "(":
-                token = Token(TokenType.LPAREN, "(", self.line, self.column)
+                token = Token(TokenType.KURUNG_AWAL, "(", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == ")":
-                token = Token(TokenType.RPAREN, ")", self.line, self.column)
+                token = Token(TokenType.KURUNG_AKHIR, ")", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == "{":
-                token = Token(TokenType.LBRACE, "{", self.line, self.column)
+                token = Token(TokenType.KAMUS_AWAL, "{", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == "}":
-                token = Token(TokenType.RBRACE, "}", self.line, self.column)
+                token = Token(TokenType.KAMUS_AKHIR, "}", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == "[":
-                token = Token(TokenType.LBRACKET, "[", self.line, self.column)
+                token = Token(TokenType.DAFTAR_AWAL, "[", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == "]":
-                token = Token(TokenType.RBRACKET, "]", self.line, self.column)
+                token = Token(TokenType.DAFTAR_AKHIR, "]", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == ",":
-                token = Token(TokenType.COMMA, ",", self.line, self.column)
+                token = Token(TokenType.KOMA, ",", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == ".":
-                token = Token(TokenType.DOT, ".", self.line, self.column)
+                token = Token(TokenType.TITIK, ".", self.line, self.column)
                 self.advance()
                 return token
 
             if self.current_char == ":":
-                token = Token(TokenType.COLON, ":", self.line, self.column)
+                token = Token(TokenType.TITIK_DUA, ":", self.line, self.column)
                 self.advance()
+                # Check for walrus operator :=
+                if self.current_char == "=":
+                    token = Token(TokenType.WALRUS, ":=", token.line, token.column)
+                    self.advance()
                 return token
 
             if self.current_char == ";":

@@ -300,12 +300,30 @@ class Parser:
     def lambda_expr(self):
         token = self.current_token
         self.eat(TokenType.LAMBDA)
-        self.eat(TokenType.DENGAN)
+        
+        # Support both RenzMC syntax (lambda dengan x -> ...) and Python syntax (lambda x: ...)
         params = []
-        param_name = self.current_token.value
-        self.eat(TokenType.IDENTIFIER)
-        params.append(param_name)
-        self.eat(TokenType.ARROW)
+        
+        # Check for RenzMC syntax with "dengan"
+        if self.current_token.type == TokenType.DENGAN:
+            self.eat(TokenType.DENGAN)
+            param_name = self.current_token.value
+            self.eat(TokenType.IDENTIFIER)
+            params.append(param_name)
+            self.eat(TokenType.ARROW)
+        # Python-style syntax: lambda x: ...
+        else:
+            param_name = self.current_token.value
+            self.eat(TokenType.IDENTIFIER)
+            params.append(param_name)
+            # Support multiple params: lambda x, y: ...
+            while self.current_token.type == TokenType.KOMA:
+                self.eat(TokenType.KOMA)
+                param_name = self.current_token.value
+                self.eat(TokenType.IDENTIFIER)
+                params.append(param_name)
+            self.eat(TokenType.TITIK_DUA)  # Colon in Python lambda
+        
         body = self.expr()
         return Lambda(params, body, token)
 
@@ -433,8 +451,22 @@ class Parser:
         token = self.current_token
         self.eat(TokenType.UNTUK)
         self.eat(TokenType.SETIAP)
-        var_name = self.current_token.value
-        self.eat(TokenType.IDENTIFIER)
+        
+        # Support tuple unpacking: untuk setiap (i, row) dari ...
+        if self.current_token.type == TokenType.KURUNG_AWAL:
+            self.eat(TokenType.KURUNG_AWAL)
+            var_names = [self.current_token.value]
+            self.eat(TokenType.IDENTIFIER)
+            while self.current_token.type == TokenType.KOMA:
+                self.eat(TokenType.KOMA)
+                var_names.append(self.current_token.value)
+                self.eat(TokenType.IDENTIFIER)
+            self.eat(TokenType.KURUNG_AKHIR)
+            var_name = tuple(var_names)  # Store as tuple to indicate unpacking
+        else:
+            var_name = self.current_token.value
+            self.eat(TokenType.IDENTIFIER)
+        
         self.eat(TokenType.DARI)
         start_expr = self.expr()
         if self.current_token.type == TokenType.SAMPAI:
@@ -636,6 +668,11 @@ class Parser:
             elif self.current_token.type == TokenType.IDENTIFIER:
                 exception_type = self.current_token.value
                 self.eat(TokenType.IDENTIFIER)
+                # Support dotted exception names like mysql.connector.Error
+                while self.current_token.type == TokenType.TITIK:
+                    self.eat(TokenType.TITIK)
+                    exception_type += "." + self.current_token.value
+                    self.eat(TokenType.IDENTIFIER)
                 if self.current_token.type == TokenType.SEBAGAI:
                     self.eat(TokenType.SEBAGAI)
                     var_name = self.current_token.value
@@ -721,7 +758,15 @@ class Parser:
         self.eat(TokenType.HASIL)
         expr = None
         if self.current_token.type != TokenType.NEWLINE:
-            expr = self.expr()
+            # Support returning multiple values as tuple: hasil val1, val2, val3
+            exprs = [self.expr()]
+            while self.current_token.type == TokenType.KOMA:
+                self.eat(TokenType.KOMA)
+                exprs.append(self.expr())
+            if len(exprs) == 1:
+                expr = exprs[0]
+            else:
+                expr = Tuple(exprs, token)
         return Return(expr, token)
 
     def yield_statement(self):
@@ -767,7 +812,12 @@ class Parser:
             if_expr = node
             self.eat(TokenType.JIKA)
             condition = self.walrus_expr()
-            if (
+            # Support both "kalau tidak" and "lainnya" for else clause
+            if self.current_token.type == TokenType.LAINNYA:
+                self.eat(TokenType.LAINNYA)
+                else_expr = self.walrus_expr()
+                node = Ternary(condition, if_expr, else_expr)
+            elif (
                 self.current_token.type == TokenType.KALAU
                 and self.lexer.peek_token()
                 and (self.lexer.peek_token().type == TokenType.TIDAK)
@@ -777,7 +827,7 @@ class Parser:
                 else_expr = self.walrus_expr()
                 node = Ternary(condition, if_expr, else_expr)
             else:
-                self.error("Operator ternary tidak lengkap: diharapkan 'kalau tidak'")
+                self.error("Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'")
         return node
 
     def walrus_expr(self):
@@ -953,6 +1003,7 @@ class Parser:
             TokenType.TAMBAH,
             TokenType.KURANG,
             TokenType.TIDAK,
+            TokenType.BUKAN,
             TokenType.BIT_NOT,
         ):
             token = self.current_token
@@ -962,6 +1013,8 @@ class Parser:
                 self.eat(TokenType.KURANG)
             elif token.type == TokenType.TIDAK:
                 self.eat(TokenType.TIDAK)
+            elif token.type == TokenType.BUKAN:
+                self.eat(TokenType.BUKAN)
             elif token.type == TokenType.BIT_NOT:
                 self.eat(TokenType.BIT_NOT)
             return UnaryOp(token, self.unary())
@@ -1012,17 +1065,36 @@ class Parser:
             primary = NoneValue(token)
         elif token.type == TokenType.KURUNG_AWAL:
             self.eat(TokenType.KURUNG_AWAL)
-            first_expr = self.expr()
-            if self.current_token.type == TokenType.KOMA:
-                elements = [first_expr]
-                while self.current_token.type == TokenType.KOMA:
-                    self.eat(TokenType.KOMA)
-                    elements.append(self.expr())
+            # Check for pipe tuple syntax: (| ... |)
+            if self.current_token.type == TokenType.BIT_ATAU:
+                self.eat(TokenType.BIT_ATAU)  # Eat the opening |
+                elements = []
+                # Parse elements until we hit closing |
+                # Use bitwise_xor() to skip bitwise_or which would consume the |
+                while self.current_token.type != TokenType.BIT_ATAU:
+                    elements.append(self.bitwise_xor())
+                    if self.current_token.type == TokenType.KOMA:
+                        self.eat(TokenType.KOMA)
+                    elif self.current_token.type == TokenType.BIT_ATAU:
+                        break
+                    else:
+                        self.error(f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}")
+                # Eat closing |
+                self.eat(TokenType.BIT_ATAU)
                 self.eat(TokenType.KURUNG_AKHIR)
                 primary = Tuple(elements, token)
             else:
-                self.eat(TokenType.KURUNG_AKHIR)
-                primary = first_expr
+                first_expr = self.expr()
+                if self.current_token.type == TokenType.KOMA:
+                    elements = [first_expr]
+                    while self.current_token.type == TokenType.KOMA:
+                        self.eat(TokenType.KOMA)
+                        elements.append(self.expr())
+                    self.eat(TokenType.KURUNG_AKHIR)
+                    primary = Tuple(elements, token)
+                else:
+                    self.eat(TokenType.KURUNG_AKHIR)
+                    primary = first_expr
         elif token.type == TokenType.IDENTIFIER:
             self.eat(TokenType.IDENTIFIER)
             if self.current_token.type == TokenType.KURUNG_AWAL:
@@ -1058,6 +1130,9 @@ class Parser:
             self.eat(TokenType.AWAIT)
             expr = self.factor()
             primary = Await(expr, token)
+        elif token.type == TokenType.LAMBDA:
+            # Parse lambda expression
+            primary = self.lambda_expr()
         else:
             self.error(f"Kesalahan sintaks: Token tidak terduga '{token.type}'")
         return self.apply_postfix_operations(primary)
@@ -1143,6 +1218,28 @@ class Parser:
         self.eat(TokenType.KAMUS_AWAL)
         while self.current_token.type == TokenType.NEWLINE:
             self.eat(TokenType.NEWLINE)
+        
+        # Check for pipe set syntax: {| ... |}
+        if self.current_token.type == TokenType.BIT_ATAU:
+            self.eat(TokenType.BIT_ATAU)  # Eat the opening |
+            elements = []
+            # Parse elements until we hit closing |
+            # Use bitwise_xor() to skip bitwise_or which would consume the |
+            if self.current_token.type != TokenType.BIT_ATAU:
+                elements.append(self.bitwise_xor())
+                while self.current_token.type == TokenType.KOMA:
+                    self.eat(TokenType.KOMA)
+                    while self.current_token.type == TokenType.NEWLINE:
+                        self.eat(TokenType.NEWLINE)
+                    if self.current_token.type != TokenType.BIT_ATAU:
+                        elements.append(self.bitwise_xor())
+            # Eat closing |
+            self.eat(TokenType.BIT_ATAU)
+            while self.current_token.type == TokenType.NEWLINE:
+                self.eat(TokenType.NEWLINE)
+            self.eat(TokenType.KAMUS_AKHIR)
+            return Set(elements, token)
+        
         if self.current_token.type == TokenType.KAMUS_AKHIR:
             self.eat(TokenType.KAMUS_AKHIR)
             return Dict([], token)
@@ -1692,15 +1789,13 @@ class Parser:
         self.eat(TokenType.PANGGIL_PYTHON)
         func_expr = self._parse_python_function_reference()
         args = []
+        kwargs = {}
         if self.current_token.type == TokenType.KURUNG_AWAL:
             self.eat(TokenType.KURUNG_AWAL)
             if self.current_token.type != TokenType.KURUNG_AKHIR:
-                args.append(self.expr())
-                while self.current_token.type == TokenType.KOMA:
-                    self.eat(TokenType.KOMA)
-                    args.append(self.expr())
+                args, kwargs = self.parse_arguments()
             self.eat(TokenType.KURUNG_AKHIR)
-        return PythonCall(func_expr, args, token)
+        return PythonCall(func_expr, args, token, kwargs)
 
     def _parse_python_function_reference(self):
         token = self.current_token
@@ -1719,15 +1814,12 @@ class Parser:
         self.eat(TokenType.PANGGIL_PYTHON)
         func_expr = self._parse_python_function_reference()
         args = []
+        kwargs = {}
         if self.current_token.type == TokenType.KURUNG_AWAL:
             self.eat(TokenType.KURUNG_AWAL)
-            if self.current_token.type != TokenType.KURUNG_AKHIR:
-                args.append(self.expr())
-                while self.current_token.type == TokenType.KOMA:
-                    self.eat(TokenType.KOMA)
-                    args.append(self.expr())
+            args, kwargs = self.parse_arguments()
             self.eat(TokenType.KURUNG_AKHIR)
-        return PythonCall(func_expr, args, token)
+        return PythonCall(func_expr, args, token, kwargs)
 
     def handle_self_attribute(self):
         expr = self.expr()

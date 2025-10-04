@@ -263,6 +263,10 @@ def urutkan(lst, terbalik=False):
         raise TypeError(
             f"Argumen pertama harus berupa daftar, bukan '{type(lst).__name__}'"
         )
+    
+    # Convert RenzMC boolean strings to Python booleans
+    terbalik = _convert_to_bool(terbalik)
+    
     try:
         lst.sort(reverse=terbalik)
         return None
@@ -1073,10 +1077,28 @@ ada = any
 
 
 def sorted_impl(iterable, key=None, reverse=False):
+    # Convert RenzMC boolean strings to Python booleans
+    reverse = _convert_to_bool(reverse)
+    
     if key is None:
         return _builtin_sorted(iterable, reverse=reverse)
     else:
-        return _builtin_sorted(iterable, key=key, reverse=reverse)
+        # Check if key is a RenzMC function that needs to be called
+        if hasattr(key, '__call__'):
+            # Create a wrapper that properly calls the RenzMC function
+            def key_wrapper(item):
+                try:
+                    # Try to call it as a RenzMC function
+                    result = key(item)
+                    return result
+                except Exception as e:
+                    # If it fails, raise the error for debugging
+                    import traceback
+                    traceback.print_exc()
+                    raise
+            return _builtin_sorted(iterable, key=key_wrapper, reverse=reverse)
+        else:
+            return _builtin_sorted(iterable, key=key, reverse=reverse)
 
 
 sorted = RenzmcBuiltinFunction(sorted_impl, "sorted")
@@ -1304,3 +1326,548 @@ def quantiles_impl(data, n=4):
 
 quantiles = RenzmcBuiltinFunction(quantiles_impl, "quantiles")
 kuantil = quantiles
+
+
+# ============================================================================
+# HELPER FUNCTION - Convert RenzMC boolean strings to Python booleans
+# ============================================================================
+
+def _convert_to_bool(value):
+    """Convert RenzMC boolean strings to Python booleans."""
+    if isinstance(value, str):
+        if value == "benar" or value == "true" or value == "True":
+            return True
+        elif value == "salah" or value == "false" or value == "False":
+            return False
+        else:
+            return bool(value)
+    return bool(value)
+
+
+# ============================================================================
+# RANGE FUNCTION - Generate sequence of numbers
+# ============================================================================
+
+def range_impl(*args):
+    """
+    Generate a sequence of numbers.
+    
+    Usage:
+        range(stop) - from 0 to stop-1
+        range(start, stop) - from start to stop-1
+        range(start, stop, step) - from start to stop-1 with step
+    """
+    # Use Python's built-in range
+    import builtins
+    if len(args) == 1:
+        return list(builtins.range(args[0]))
+    elif len(args) == 2:
+        return list(builtins.range(args[0], args[1]))
+    elif len(args) == 3:
+        return list(builtins.range(args[0], args[1], args[2]))
+    else:
+        raise TypeError(f"range() mengharapkan 1-3 argumen, mendapat {len(args)}")
+
+
+range_func = RenzmcBuiltinFunction(range_impl, "range")
+range = range_func
+rentang = range_func  # Indonesian alias
+
+
+# ============================================================================
+# BUKA (OPEN) FUNCTION - File operations
+# ============================================================================
+
+def buka_impl(filename, mode='r', encoding='utf-8', **kwargs):
+    """
+    Open a file and return a file object.
+    
+    Modes:
+        'r' - read (default)
+        'w' - write (truncate)
+        'a' - append
+        'r+' - read and write
+        'w+' - write and read (truncate)
+        'a+' - append and read
+        'rb' - read binary
+        'wb' - write binary
+        'ab' - append binary
+    
+    Additional kwargs: newline, buffering, errors, etc.
+    """
+    import builtins
+    if 'b' in mode:
+        # Binary mode - don't use encoding
+        return builtins.open(filename, mode, **kwargs)
+    else:
+        # Text mode - use encoding
+        return builtins.open(filename, mode, encoding=encoding, **kwargs)
+
+
+buka = RenzmcBuiltinFunction(buka_impl, "buka")
+open_file = buka  # English alias
+
+
+# ============================================================================
+# TUTUP (CLOSE) FUNCTION - Close file
+# ============================================================================
+
+def tutup_impl(file_obj):
+    """Close a file object."""
+    if hasattr(file_obj, 'close'):
+        file_obj.close()
+    else:
+        raise TypeError(f"Objek tidak memiliki metode close()")
+
+
+tutup = RenzmcBuiltinFunction(tutup_impl, "tutup")
+close_file = tutup  # English alias
+
+
+# ============================================================================
+# TULIS (WRITE) FUNCTION - Write to file object
+# ============================================================================
+
+def tulis_impl(file_obj, content):
+    """Write content to a file object."""
+    if hasattr(file_obj, 'write'):
+        file_obj.write(content)
+    else:
+        raise TypeError(f"Objek tidak memiliki metode write()")
+
+
+tulis = RenzmcBuiltinFunction(tulis_impl, "tulis")
+write_to_file = tulis  # English alias
+
+
+# ============================================================================
+# BACA (READ) FUNCTION - Read from file object
+# ============================================================================
+
+def baca_impl(file_obj, size=-1):
+    """Read from a file object."""
+    if hasattr(file_obj, 'read'):
+        return file_obj.read(size)
+    else:
+        raise TypeError(f"Objek tidak memiliki metode read()")
+
+
+baca = RenzmcBuiltinFunction(baca_impl, "baca")
+read_from_file = baca  # English alias
+
+
+# ============================================================================
+# TULIS_JSON FUNCTION - Write JSON to file
+# ============================================================================
+
+def tulis_json_impl(filename, data, indent=2):
+    """Write data as JSON to a file."""
+    import json
+    import builtins as _builtins
+    with _builtins.open(filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=indent, ensure_ascii=False)
+
+
+tulis_json = RenzmcBuiltinFunction(tulis_json_impl, "tulis_json")
+write_json = tulis_json  # English alias
+
+
+# ============================================================================
+# BACA_JSON FUNCTION - Read JSON from file
+# ============================================================================
+
+def baca_json_impl(filename):
+    """Read JSON data from a file."""
+    import json
+    import builtins as _builtins
+    with _builtins.open(filename, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+
+baca_json = RenzmcBuiltinFunction(baca_json_impl, "baca_json")
+read_json = baca_json  # English alias
+
+
+# ============================================================================
+# KE_JSON FUNCTION - Convert to JSON string
+# ============================================================================
+
+def ke_json_impl(data, indent=None):
+    """Convert data to JSON string."""
+    import json
+    return json.dumps(data, indent=indent, ensure_ascii=False)
+
+
+ke_json = RenzmcBuiltinFunction(ke_json_impl, "ke_json")
+to_json = ke_json  # English alias
+
+
+# ============================================================================
+# DARI_JSON FUNCTION - Parse JSON string
+# ============================================================================
+
+def dari_json_impl(json_string):
+    """Parse JSON string to data."""
+    import json
+    return json.loads(json_string)
+
+
+dari_json = RenzmcBuiltinFunction(dari_json_impl, "dari_json")
+from_json = dari_json  # English alias
+
+
+# ============================================================================
+# CEK_MODUL_PYTHON FUNCTION - Check if Python module is available
+# ============================================================================
+
+def cek_modul_python_impl(module_name):
+    """Check if a Python module is available."""
+    try:
+        import importlib
+        importlib.import_module(module_name)
+        return True
+    except ImportError:
+        return False
+
+
+cek_modul_python = RenzmcBuiltinFunction(cek_modul_python_impl, "cek_modul_python")
+check_python_module = cek_modul_python  # English alias
+
+
+# ============================================================================
+# PATH_MODUL_PYTHON FUNCTION - Get Python module path
+# ============================================================================
+
+def path_modul_python_impl(module_name):
+    """Get the file path of a Python module."""
+    try:
+        import importlib
+        module = importlib.import_module(module_name)
+        if hasattr(module, '__file__'):
+            return module.__file__
+        else:
+            return f"<built-in module '{module_name}'>"
+    except ImportError:
+        return None
+
+
+path_modul_python = RenzmcBuiltinFunction(path_modul_python_impl, "path_modul_python")
+get_python_module_path = path_modul_python  # English alias
+
+
+# ============================================================================
+# VERSI_MODUL_PYTHON FUNCTION - Get Python module version
+# ============================================================================
+
+def versi_modul_python_impl(module_name):
+    """Get the version of a Python module."""
+    try:
+        import importlib
+        module = importlib.import_module(module_name)
+        if hasattr(module, '__version__'):
+            return module.__version__
+        else:
+            return "Unknown"
+    except ImportError:
+        return None
+
+
+versi_modul_python = RenzmcBuiltinFunction(versi_modul_python_impl, "versi_modul_python")
+get_python_module_version = versi_modul_python  # English alias
+
+
+# ============================================================================
+# EVALUASI_PYTHON FUNCTION - Evaluate Python expression
+# ============================================================================
+
+def evaluasi_python_impl(expression):
+    """Evaluate a Python expression and return the result."""
+    try:
+        return eval(expression)
+    except Exception as e:
+        raise RuntimeError(f"Error evaluating Python expression: {str(e)}")
+
+
+evaluasi_python = RenzmcBuiltinFunction(evaluasi_python_impl, "evaluasi_python")
+eval_python = evaluasi_python  # English alias
+
+
+# ============================================================================
+# EKSEKUSI_PYTHON FUNCTION - Execute Python code
+# ============================================================================
+
+def eksekusi_python_impl(code):
+    """Execute Python code."""
+    try:
+        exec(code)
+        return None
+    except Exception as e:
+        raise RuntimeError(f"Error executing Python code: {str(e)}")
+
+
+eksekusi_python = RenzmcBuiltinFunction(eksekusi_python_impl, "eksekusi_python")
+exec_python = eksekusi_python  # English alias
+
+
+# ============================================================================
+# INPUT FUNCTION - Get user input
+# ============================================================================
+
+def input_impl(prompt=''):
+    """Get input from user."""
+    import builtins
+    return builtins.input(prompt)
+
+
+input_func = RenzmcBuiltinFunction(input_impl, "input")
+input = input_func
+masukan = input_func  # Indonesian alias
+
+
+# ============================================================================
+# PRINT FUNCTION - Print to console (alias for tampilkan)
+# ============================================================================
+
+def print_impl(*args, sep=' ', end='\n'):
+    """Print values to console."""
+    import builtins
+    builtins.print(*args, sep=sep, end=end)
+
+
+print_func = RenzmcBuiltinFunction(print_impl, "print")
+print = print_func
+cetak = print_func  # Indonesian alias
+
+
+# ============================================================================
+# LIST FUNCTION - Convert to list
+# ============================================================================
+
+def list_impl(iterable):
+    """Convert an iterable to a list."""
+    import builtins as _builtins
+    return _builtins.list(iterable)
+
+
+list_renzmc = RenzmcBuiltinFunction(list_impl, "list")
+daftar = RenzmcBuiltinFunction(list_impl, "daftar")  # Indonesian alias
+
+
+# ============================================================================
+# DICT FUNCTION - Create dictionary
+# ============================================================================
+
+def dict_impl(*args, **kwargs):
+    """Create a dictionary."""
+    import builtins as _builtins
+    return _builtins.dict(*args, **kwargs)
+
+
+dict_renzmc = RenzmcBuiltinFunction(dict_impl, "dict")
+kamus = RenzmcBuiltinFunction(dict_impl, "kamus")  # Indonesian alias
+
+
+# ============================================================================
+# SET FUNCTION - Create set
+# ============================================================================
+
+def set_impl(iterable=None):
+    """Create a set."""
+    import builtins as _builtins
+    if iterable is None:
+        return _builtins.set()
+    return _builtins.set(iterable)
+
+
+set_renzmc = RenzmcBuiltinFunction(set_impl, "set")
+himpunan = RenzmcBuiltinFunction(set_impl, "himpunan")  # Indonesian alias
+
+
+# ============================================================================
+# TUPLE FUNCTION - Create tuple
+# ============================================================================
+
+def tuple_impl(iterable=None):
+    """Create a tuple."""
+    import builtins as _builtins
+    if iterable is None:
+        return _builtins.tuple()
+    return _builtins.tuple(iterable)
+
+
+tuple_renzmc = RenzmcBuiltinFunction(tuple_impl, "tuple")
+tupel = RenzmcBuiltinFunction(tuple_impl, "tupel")  # Indonesian alias
+
+
+# ============================================================================
+# STR FUNCTION - Convert to string
+# ============================================================================
+
+def str_impl(obj):
+    """Convert object to string."""
+    import builtins as _builtins
+    return _builtins.str(obj)
+
+
+str_renzmc = RenzmcBuiltinFunction(str_impl, "str")
+teks_convert = RenzmcBuiltinFunction(str_impl, "teks")  # Indonesian alias
+
+
+# ============================================================================
+# INT FUNCTION - Convert to integer
+# ============================================================================
+
+def int_impl(obj, base=10):
+    """Convert object to integer."""
+    import builtins as _builtins
+    if isinstance(obj, str) and base != 10:
+        return _builtins.int(obj, base)
+    return _builtins.int(obj)
+
+
+int_renzmc = RenzmcBuiltinFunction(int_impl, "int")
+bulat_int = RenzmcBuiltinFunction(int_impl, "bulat_int")  # Indonesian alias
+
+
+# ============================================================================
+# FLOAT FUNCTION - Convert to float
+# ============================================================================
+
+def float_impl(obj):
+    """Convert object to float."""
+    import builtins as _builtins
+    return _builtins.float(obj)
+
+
+float_renzmc = RenzmcBuiltinFunction(float_impl, "float")
+pecahan = RenzmcBuiltinFunction(float_impl, "pecahan")  # Indonesian alias
+
+
+# ============================================================================
+# BOOL FUNCTION - Convert to boolean
+# ============================================================================
+
+def bool_impl(obj):
+    """Convert object to boolean."""
+    import builtins as _builtins
+    return _builtins.bool(obj)
+
+
+bool_renzmc = RenzmcBuiltinFunction(bool_impl, "bool")
+boolean = RenzmcBuiltinFunction(bool_impl, "boolean")  # Indonesian alias
+
+
+# ============================================================================
+# SUM FUNCTION - Sum of iterable
+# ============================================================================
+
+def sum_impl(iterable, start=0):
+    """Return the sum of a 'start' value (default: 0) plus an iterable of numbers."""
+    import builtins as _builtins
+    return _builtins.sum(iterable, start)
+
+
+sum_renzmc = RenzmcBuiltinFunction(sum_impl, "sum")
+# jumlahkan = RenzmcBuiltinFunction(sum_impl, "jumlahkan")  # Removed - conflicts with user functions
+
+
+# ============================================================================
+# LEN FUNCTION - Length of object
+# ============================================================================
+
+def len_impl(obj):
+    """Return the length of an object."""
+    import builtins as _builtins
+    return _builtins.len(obj)
+
+
+len_renzmc = RenzmcBuiltinFunction(len_impl, "len")
+panjang_len = RenzmcBuiltinFunction(len_impl, "panjang_len")  # Indonesian alias (avoid conflict with existing panjang)
+
+
+# ============================================================================
+# MIN FUNCTION - Minimum value
+# ============================================================================
+
+def min_impl(*args, **kwargs):
+    """Return the smallest item."""
+    import builtins as _builtins
+    return _builtins.min(*args, **kwargs)
+
+
+min_renzmc = RenzmcBuiltinFunction(min_impl, "min")
+min_nilai = RenzmcBuiltinFunction(min_impl, "min_nilai")  # Indonesian alias
+
+
+# ============================================================================
+# MAX FUNCTION - Maximum value
+# ============================================================================
+
+def max_impl(*args, **kwargs):
+    """Return the largest item."""
+    import builtins as _builtins
+    return _builtins.max(*args, **kwargs)
+
+
+max_renzmc = RenzmcBuiltinFunction(max_impl, "max")
+max_nilai = RenzmcBuiltinFunction(max_impl, "max_nilai")  # Indonesian alias
+
+
+# ============================================================================
+# ABS FUNCTION - Absolute value
+# ============================================================================
+
+def abs_impl(x):
+    """Return the absolute value of a number."""
+    import builtins as _builtins
+    return _builtins.abs(x)
+
+
+abs_renzmc = RenzmcBuiltinFunction(abs_impl, "abs")
+nilai_absolut = RenzmcBuiltinFunction(abs_impl, "nilai_absolut")  # Indonesian alias
+
+
+# ============================================================================
+# ROUND FUNCTION - Round number
+# ============================================================================
+
+def round_impl(number, ndigits=None):
+    """Round a number to a given precision."""
+    import builtins as _builtins
+    if ndigits is None:
+        return _builtins.round(number)
+    return _builtins.round(number, ndigits)
+
+
+round_renzmc = RenzmcBuiltinFunction(round_impl, "round")
+bulatkan = RenzmcBuiltinFunction(round_impl, "bulatkan")  # Indonesian alias
+
+
+# ============================================================================
+# POW FUNCTION - Power
+# ============================================================================
+
+def pow_impl(base, exp, mod=None):
+    """Return base to the power exp."""
+    import builtins as _builtins
+    if mod is None:
+        return _builtins.pow(base, exp)
+    return _builtins.pow(base, exp, mod)
+
+
+pow_renzmc = RenzmcBuiltinFunction(pow_impl, "pow")
+pangkat_pow = RenzmcBuiltinFunction(pow_impl, "pangkat_pow")  # Indonesian alias
+
+
+# ============================================================================
+# REVERSED FUNCTION - Reverse iterator
+# ============================================================================
+
+def reversed_impl(seq):
+    """Return a reverse iterator."""
+    import builtins as _builtins
+    return list(_builtins.reversed(seq))
+
+
+reversed_renzmc = RenzmcBuiltinFunction(reversed_impl, "reversed")
+terbalik = RenzmcBuiltinFunction(reversed_impl, "terbalik")  # Indonesian alias

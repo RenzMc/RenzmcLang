@@ -134,14 +134,10 @@ if __name__ == '__main__':
     tampilkan "curl http://localhost:5000/api/mahasiswa/1"
     tampilkan ""
     tampilkan "# POST new mahasiswa"
-    tampilkan "curl -X POST http://localhost:5000/api/mahasiswa \&quot;
-    tampilkan "  -H &quot;Content-Type: application/json&quot; \&quot;
-    tampilkan "  -d '{&quot;nim&quot;:&quot;12348&quot;,&quot;nama&quot;:&quot;Dedi Pratama&quot;,&quot;jurusan&quot;:&quot;Teknik Elektro&quot;}'"
+    tampilkan "curl -X POST http://localhost:5000/api/mahasiswa -H 'Content-Type: application/json' -d '{...}'"
     tampilkan ""
     tampilkan "# PUT update mahasiswa"
-    tampilkan "curl -X PUT http://localhost:5000/api/mahasiswa/1 \&quot;
-    tampilkan "  -H &quot;Content-Type: application/json&quot; \&quot;
-    tampilkan "  -d '{&quot;nama&quot;:&quot;Budi Santoso Updated&quot;}'"
+    tampilkan "curl -X PUT http://localhost:5000/api/mahasiswa/1 -H 'Content-Type: application/json' -d '{...}'"
     tampilkan ""
     tampilkan "# DELETE mahasiswa"
     tampilkan "curl -X DELETE http://localhost:5000/api/mahasiswa/1"

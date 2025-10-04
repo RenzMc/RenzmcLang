@@ -316,10 +316,11 @@ class PythonImport(AST):
 
 class PythonCall(AST):
 
-    def __init__(self, func_expr, args, token=None):
+    def __init__(self, func_expr, args, token=None, kwargs=None):
         super().__init__(token)
         self.func_expr = func_expr
         self.args = args
+        self.kwargs = kwargs if kwargs is not None else {}
 
 
 class TryCatch(AST):

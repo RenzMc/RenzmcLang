@@ -1,0 +1,317 @@
+// ============================================
+// Advanced Features: OOP - Classes & Objects
+// ============================================
+// Comprehensive examples for Object-Oriented Programming
+// Using function-based approach (RenzMcLang style)
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║     OOP: CLASSES & OBJECTS            ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// 1. BASIC CLASS: Person
+// ============================================
+tampilkan "=== 1. BASIC CLASS: Person ==="
+tampilkan ""
+
+// Constructor
+buat fungsi buat_orang dengan nama, umur
+    orang itu {
+        "nama": nama,
+        "umur": umur
+    }
+    hasil orang
+selesai
+
+// Method: perkenalan
+buat fungsi perkenalan dengan orang
+    hasil f"Halo, nama saya {orang['nama']}, umur {orang['umur']} tahun"
+selesai
+
+// Method: ulang_tahun
+buat fungsi ulang_tahun dengan orang
+    orang["umur"] itu orang["umur"] + 1
+    tampilkan f"{orang['nama']} sekarang berumur {orang['umur']} tahun"
+selesai
+
+// Create objects
+orang1 itu panggil buat_orang dengan "Alice", 25
+orang2 itu panggil buat_orang dengan "Bob", 30
+
+tampilkan "✓ Objects created:"
+msg1 itu panggil perkenalan dengan orang1
+tampilkan f"  {msg1}"
+msg2 itu panggil perkenalan dengan orang2
+tampilkan f"  {msg2}"
+
+tampilkan ""
+tampilkan "✓ Calling methods:"
+panggil ulang_tahun dengan orang1
+panggil ulang_tahun dengan orang2
+
+tampilkan ""
+
+// ============================================
+// 2. CLASS WITH PROPERTIES: BankAccount
+// ============================================
+tampilkan "=== 2. CLASS WITH PROPERTIES: BankAccount ==="
+tampilkan ""
+
+// Constructor
+buat fungsi buat_bank_account dengan pemilik, saldo_awal
+    account itu {
+        "pemilik": pemilik,
+        "saldo": saldo_awal,
+        "transaksi": []
+    }
+    hasil account
+selesai
+
+// Method: deposit
+buat fungsi deposit dengan account, jumlah
+    account["saldo"] itu account["saldo"] + jumlah
+    tambah(account["transaksi"], f"Deposit: +Rp {jumlah}")
+    tampilkan f"✓ Deposit Rp {jumlah} berhasil"
+selesai
+
+// Method: withdraw
+buat fungsi withdraw dengan account, jumlah
+    jika jumlah > account["saldo"]
+        tampilkan f"✗ Saldo tidak cukup! (Saldo: Rp {account['saldo']})"
+        hasil salah
+    selesai
+    
+    account["saldo"] itu account["saldo"] - jumlah
+    tambah(account["transaksi"], f"Withdraw: -Rp {jumlah}")
+    tampilkan f"✓ Withdraw Rp {jumlah} berhasil"
+    hasil benar
+selesai
+
+// Method: cek_saldo
+buat fungsi cek_saldo dengan account
+    tampilkan f"Saldo {account['pemilik']}: Rp {account['saldo']}"
+selesai
+
+// Method: riwayat
+buat fungsi riwayat dengan account
+    tampilkan f"Riwayat transaksi {account['pemilik']}:"
+    untuk setiap trans dari account["transaksi"]
+        tampilkan f"  - {trans}"
+    selesai
+selesai
+
+// Create account
+akun itu panggil buat_bank_account dengan "Alice", 1000000
+
+tampilkan "✓ Bank account created:"
+panggil cek_saldo dengan akun
+
+tampilkan ""
+tampilkan "✓ Performing transactions:"
+panggil deposit dengan akun, 500000
+panggil withdraw dengan akun, 200000
+panggil withdraw dengan akun, 2000000
+panggil cek_saldo dengan akun
+
+tampilkan ""
+panggil riwayat dengan akun
+
+tampilkan ""
+
+// ============================================
+// 3. INHERITANCE: Student extends Person
+// ============================================
+tampilkan "=== 3. INHERITANCE: Student extends Person ==="
+tampilkan ""
+
+// Constructor for Student (extends Person)
+buat fungsi buat_student dengan nama, umur, jurusan
+    student itu {
+        "nama": nama,
+        "umur": umur,
+        "jurusan": jurusan,
+        "nilai": []
+    }
+    hasil student
+selesai
+
+// Method: tambah_nilai
+buat fungsi tambah_nilai dengan student, mata_kuliah, nilai
+    tambah(student["nilai"], {"mk": mata_kuliah, "nilai": nilai})
+    tampilkan f"✓ Nilai {mata_kuliah}: {nilai} ditambahkan"
+selesai
+
+// Method: hitung_ipk
+buat fungsi hitung_ipk dengan student
+    jumlah_nilai itu panjang(student["nilai"])
+    
+    jika jumlah_nilai < 1
+        hasil 0
+    selesai
+    
+    total itu 0
+    untuk setiap item dari student["nilai"]
+        total itu total + item["nilai"]
+    selesai
+    
+    ipk itu total / jumlah_nilai
+    hasil ipk
+selesai
+
+// Method: info_student
+buat fungsi info_student dengan student
+    tampilkan f"Student: {student['nama']}"
+    tampilkan f"  Umur: {student['umur']} tahun"
+    tampilkan f"  Jurusan: {student['jurusan']}"
+    
+    jika panjang(student["nilai"]) > 0
+        ipk itu panggil hitung_ipk dengan student
+        tampilkan f"  IPK: {ipk}"
+    kalau tidak
+        tampilkan "  IPK: Belum ada nilai"
+    selesai
+selesai
+
+// Create student
+mahasiswa itu panggil buat_student dengan "Charlie", 20, "Informatika"
+
+tampilkan "✓ Student created:"
+panggil info_student dengan mahasiswa
+
+tampilkan ""
+tampilkan "✓ Adding grades:"
+panggil tambah_nilai dengan mahasiswa, "Algoritma", 85
+panggil tambah_nilai dengan mahasiswa, "Database", 90
+panggil tambah_nilai dengan mahasiswa, "Web Dev", 88
+
+tampilkan ""
+panggil info_student dengan mahasiswa
+
+tampilkan ""
+
+// ============================================
+// 4. COMPLEX CLASS: Library System
+// ============================================
+tampilkan "=== 4. COMPLEX CLASS: Library System ==="
+tampilkan ""
+
+// Constructor for Book
+buat fungsi buat_buku dengan judul, penulis, tahun
+    buku itu {
+        "judul": judul,
+        "penulis": penulis,
+        "tahun": tahun,
+        "dipinjam": salah
+    }
+    hasil buku
+selesai
+
+// Constructor for Library
+buat fungsi buat_perpustakaan dengan nama
+    perpus itu {
+        "nama": nama,
+        "buku": [],
+        "peminjam": []
+    }
+    hasil perpus
+selesai
+
+// Method: tambah_buku
+buat fungsi tambah_buku dengan perpus, buku
+    tambah(perpus["buku"], buku)
+    tampilkan f"✓ Buku '{buku['judul']}' ditambahkan ke perpustakaan"
+selesai
+
+// Method: pinjam_buku
+buat fungsi pinjam_buku dengan perpus, judul, peminjam
+    untuk setiap buku dari perpus["buku"]
+        jika buku["judul"] == judul
+            jika buku["dipinjam"] == benar
+                tampilkan f"✗ Buku '{judul}' sedang dipinjam"
+                hasil salah
+            selesai
+            
+            buku["dipinjam"] itu benar
+            tambah(perpus["peminjam"], {"buku": judul, "peminjam": peminjam})
+            tampilkan f"✓ Buku '{judul}' dipinjam oleh {peminjam}"
+            hasil benar
+        selesai
+    selesai
+    
+    tampilkan f"✗ Buku '{judul}' tidak ditemukan"
+    hasil salah
+selesai
+
+// Method: kembalikan_buku
+buat fungsi kembalikan_buku dengan perpus, judul
+    untuk setiap buku dari perpus["buku"]
+        jika buku["judul"] == judul
+            jika buku["dipinjam"] == salah
+                tampilkan f"✗ Buku '{judul}' tidak sedang dipinjam"
+                hasil salah
+            selesai
+            
+            buku["dipinjam"] itu salah
+            tampilkan f"✓ Buku '{judul}' telah dikembalikan"
+            hasil benar
+        selesai
+    selesai
+    
+    tampilkan f"✗ Buku '{judul}' tidak ditemukan"
+    hasil salah
+selesai
+
+// Method: daftar_buku
+buat fungsi daftar_buku dengan perpus
+    tampilkan f"Daftar buku di {perpus['nama']}:"
+    untuk setiap buku dari perpus["buku"]
+        status itu "Tersedia"
+        jika buku["dipinjam"] == benar
+            status itu "Dipinjam"
+        selesai
+        tampilkan f"  - {buku['judul']} oleh {buku['penulis']} ({buku['tahun']}) - {status}"
+    selesai
+selesai
+
+// Create library
+perpus itu panggil buat_perpustakaan dengan "Perpustakaan Kota"
+
+tampilkan "✓ Library created:"
+tampilkan f"  {perpus['nama']}"
+
+tampilkan ""
+tampilkan "✓ Adding books:"
+buku1 itu panggil buat_buku dengan "Clean Code", "Robert Martin", 2008
+buku2 itu panggil buat_buku dengan "Design Patterns", "Gang of Four", 1994
+buku3 itu panggil buat_buku dengan "Refactoring", "Martin Fowler", 1999
+
+panggil tambah_buku dengan perpus, buku1
+panggil tambah_buku dengan perpus, buku2
+panggil tambah_buku dengan perpus, buku3
+
+tampilkan ""
+panggil daftar_buku dengan perpus
+
+tampilkan ""
+tampilkan "✓ Borrowing books:"
+panggil pinjam_buku dengan perpus, "Clean Code", "Alice"
+panggil pinjam_buku dengan perpus, "Design Patterns", "Bob"
+panggil pinjam_buku dengan perpus, "Clean Code", "Charlie"
+
+tampilkan ""
+panggil daftar_buku dengan perpus
+
+tampilkan ""
+tampilkan "✓ Returning books:"
+panggil kembalikan_buku dengan perpus, "Clean Code"
+
+tampilkan ""
+panggil daftar_buku dengan perpus
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  OOP Examples Complete! ✅             ║"
+tampilkan "║                                        ║"
+tampilkan "║  Total Classes Demonstrated: 4        ║"
+tampilkan "╚════════════════════════════════════════╝"

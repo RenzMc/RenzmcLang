@@ -1169,11 +1169,11 @@ class Interpreter(NodeVisitor):
             return left and right
         elif node.op.type == TokenType.ATAU:
             return left or right
-        elif node.op.type == TokenType.BIT_DAN:
+        elif node.op.type in (TokenType.BIT_DAN, TokenType.BITWISE_AND):
             return int(left) & int(right)
-        elif node.op.type == TokenType.BIT_ATAU:
+        elif node.op.type in (TokenType.BIT_ATAU, TokenType.BITWISE_OR):
             return int(left) | int(right)
-        elif node.op.type == TokenType.BIT_XOR:
+        elif node.op.type in (TokenType.BIT_XOR, TokenType.BITWISE_XOR):
             return int(left) ^ int(right)
         elif node.op.type == TokenType.GESER_KIRI:
             return int(left) << int(right)
@@ -1195,9 +1195,9 @@ class Interpreter(NodeVisitor):
             return +expr
         elif node.op.type == TokenType.KURANG:
             return -expr
-        elif node.op.type == TokenType.TIDAK:
+        elif node.op.type in (TokenType.TIDAK, TokenType.NOT):
             return not expr
-        elif node.op.type == TokenType.BIT_NOT:
+        elif node.op.type in (TokenType.BIT_NOT, TokenType.BITWISE_NOT):
             return ~int(expr)
         raise RuntimeError(f"Operator unary tidak didukung: {node.op.type}")
 
@@ -1315,11 +1315,11 @@ class Interpreter(NodeVisitor):
             new_value = current_value**operand
         elif node.op.type == TokenType.PEMBAGIAN_BULAT_SAMA_DENGAN:
             new_value = current_value // operand
-        elif node.op.type == TokenType.BIT_DAN_SAMA_DENGAN:
+        elif node.op.type in (TokenType.BIT_DAN_SAMA_DENGAN, TokenType.BITWISE_AND_SAMA_DENGAN):
             new_value = current_value & operand
-        elif node.op.type == TokenType.BIT_ATAU_SAMA_DENGAN:
+        elif node.op.type in (TokenType.BIT_ATAU_SAMA_DENGAN, TokenType.BITWISE_OR_SAMA_DENGAN):
             new_value = current_value | operand
-        elif node.op.type == TokenType.BIT_XOR_SAMA_DENGAN:
+        elif node.op.type in (TokenType.BIT_XOR_SAMA_DENGAN, TokenType.BITWISE_XOR_SAMA_DENGAN):
             new_value = current_value ^ operand
         elif node.op.type == TokenType.GESER_KIRI_SAMA_DENGAN:
             new_value = current_value << operand
@@ -1502,7 +1502,22 @@ class Interpreter(NodeVisitor):
                 f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
             )
         for item in iterable:
-            self.set_variable(var_name, item)
+            # Support tuple unpacking
+            if isinstance(var_name, tuple):
+                # Unpack the item into multiple variables
+                if hasattr(item, '__iter__') and not isinstance(item, str):
+                    unpacked = list(item)
+                    if len(unpacked) != len(var_name):
+                        raise ValueError(
+                            f"Tidak dapat unpack {len(unpacked)} nilai ke {len(var_name)} variabel"
+                        )
+                    for var, val in zip(var_name, unpacked):
+                        self.set_variable(var, val)
+                else:
+                    raise TypeError(f"Tidak dapat unpack nilai tipe '{type(item).__name__}'")
+            else:
+                self.set_variable(var_name, item)
+            
             body_block = Block(node.body)
             result = self.visit(body_block)
             if self.break_flag:
@@ -2158,7 +2173,8 @@ class Interpreter(NodeVisitor):
     def visit_PythonCall(self, node):
         func = self.visit(node.func_expr)
         args = [self.visit(arg) for arg in node.args]
-        return self._call_python_function(func, *args)
+        kwargs = {key: self.visit(value) for key, value in node.kwargs.items()}
+        return self._call_python_function(func, *args, **kwargs)
 
     def visit_TryCatch(self, node):
         try:

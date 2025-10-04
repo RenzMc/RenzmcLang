@@ -54,7 +54,7 @@ hasil_list itu []
 lock itu panggil_python threading.Lock()
 
 fungsi hitung_kuadrat(angka):
-    panggil_python time.sleep(0.5)
+    panggil_python time.sleep(0.1)
     hasil itu angka * angka
     
     // Gunakan lock untuk thread-safe append
@@ -103,7 +103,7 @@ fungsi producer(nama, jumlah):
         task itu f"Task-{i}"
         panggil_python task_queue.put(task)
         tampilkan f"[{nama}] Menghasilkan: {task}"
-        panggil_python time.sleep(0.3)
+        panggil_python time.sleep(0.1)
     selesai
     tampilkan f"[{nama}] Selesai memproduksi"
 selesai
@@ -114,11 +114,11 @@ fungsi consumer(nama):
             // Ambil task dari queue dengan timeout
             task itu panggil_python task_queue.get(timeout=2)
             tampilkan f"  [{nama}] Memproses: {task}"
-            panggil_python time.sleep(0.5)
+            panggil_python time.sleep(0.1)
             panggil_python task_queue.task_done()
         tangkap Exception
             // Timeout, keluar dari loop
-            keluar
+            berhenti
         selesai
     selesai
     tampilkan f"  [{nama}] Selesai mengkonsumsi"
@@ -177,7 +177,11 @@ urls itu [
 tampilkan "Menggunakan ThreadPoolExecutor:"
 dengan panggil_python concurrent.futures.ThreadPoolExecutor(max_workers=3) sebagai executor
     // Submit semua tasks
-    futures itu [panggil_python executor.submit(download_simulasi, url) untuk setiap url dari urls]
+    futures itu []
+    untuk setiap url dari urls
+        future itu panggil_python executor.submit(download_simulasi, url)
+        tambah(futures, future)
+    selesai
     
     // Tunggu semua selesai dan ambil hasil
     hasil_downloads itu []
@@ -238,10 +242,10 @@ tampilkan ""
 
 fungsi daemon_worker():
     counter itu 0
-    selama benar
+    selama counter < 4
         counter itu counter + 1
         tampilkan f"  [Daemon] Running... {counter}"
-        panggil_python time.sleep(0.5)
+        panggil_python time.sleep(0.1)
     selesai
 selesai
 
@@ -251,7 +255,7 @@ daemon_thread.daemon itu benar
 panggil_python daemon_thread.start()
 
 tampilkan "Daemon thread berjalan di background..."
-panggil_python time.sleep(2)
+panggil_python time.sleep(1.0)
 tampilkan "Main thread selesai (daemon akan otomatis berhenti)"
 tampilkan ""
 

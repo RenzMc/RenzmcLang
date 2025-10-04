@@ -19,7 +19,7 @@ tampilkan ""
 // 2. Membuat tabel
 tampilkan "[2] Membuat tabel 'mahasiswa'..."
 coba
-    cursor.execute("
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS mahasiswa (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nim TEXT UNIQUE NOT NULL,
@@ -28,7 +28,7 @@ coba
             ipk REAL,
             tanggal_daftar TEXT
         )
-    ")
+    """)
     conn.commit()
     tampilkan "✓ Tabel berhasil dibuat"
 tangkap Exception sebagai e
@@ -47,10 +47,10 @@ data_mahasiswa itu [
 ]
 
 coba
-    cursor.executemany("
+    cursor.executemany("""
         INSERT OR IGNORE INTO mahasiswa (nim, nama, jurusan, ipk, tanggal_daftar)
         VALUES (?, ?, ?, ?, ?)
-    ", data_mahasiswa)
+    """, data_mahasiswa)
     conn.commit()
     tampilkan f"✓ {cursor.rowcount} data berhasil ditambahkan"
 tangkap Exception sebagai e
@@ -76,11 +76,11 @@ tampilkan ""
 // 5. Update data (UPDATE)
 tampilkan "[5] Mengupdate IPK mahasiswa dengan NIM 12345..."
 coba
-    cursor.execute("
+    cursor.execute("""
         UPDATE mahasiswa 
         SET ipk = ? 
         WHERE nim = ?
-    ", [3.80, "12345"])
+    """, [3.80, "12345"])
     conn.commit()
     tampilkan f"✓ {cursor.rowcount} data berhasil diupdate"
 tangkap Exception sebagai e
@@ -90,12 +90,12 @@ tampilkan ""
 
 // 6. Query dengan filter
 tampilkan "[6] Mencari mahasiswa dengan IPK >= 3.70..."
-cursor.execute("
+cursor.execute("""
     SELECT nim, nama, jurusan, ipk 
     FROM mahasiswa 
     WHERE ipk >= ? 
     ORDER BY ipk DESC
-", [3.70])
+""", [3.70])
 hasil_filter itu cursor.fetchall()
 
 tampilkan f"Ditemukan {panjang(hasil_filter)} mahasiswa:"
@@ -106,7 +106,7 @@ tampilkan ""
 
 // 7. Aggregate functions
 tampilkan "[7] Statistik mahasiswa per jurusan..."
-cursor.execute("
+cursor.execute("""
     SELECT 
         jurusan,
         COUNT(*) as jumlah,
@@ -116,7 +116,7 @@ cursor.execute("
     FROM mahasiswa
     GROUP BY jurusan
     ORDER BY rata_ipk DESC
-")
+""")
 statistik itu cursor.fetchall()
 
 tampilkan "-" * 80

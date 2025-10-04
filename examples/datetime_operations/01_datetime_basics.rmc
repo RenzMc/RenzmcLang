@@ -75,9 +75,9 @@ tampilkan "[4] DateTime Arithmetic..."
 tampilkan ""
 
 // Tambah/kurang hari
-besok itu sekarang + panggil_python datetime.timedelta(**{"days": 1})
-kemarin itu sekarang - panggil_python datetime.timedelta(**{"days": 1})
-minggu_depan itu sekarang + panggil_python datetime.timedelta(**{"weeks": 1})
+besok itu sekarang + panggil_python datetime.timedelta(days=1)
+kemarin itu sekarang - panggil_python datetime.timedelta(days=1)
+minggu_depan itu sekarang + panggil_python datetime.timedelta(weeks=1)
 
 tampilkan f"Sekarang: {panggil_python sekarang.strftime('%d/%m/%Y')}"
 tampilkan f"Besok: {panggil_python besok.strftime('%d/%m/%Y')}"
@@ -86,7 +86,7 @@ tampilkan f"Minggu depan: {panggil_python minggu_depan.strftime('%d/%m/%Y')}"
 tampilkan ""
 
 // Tambah jam, menit, detik
-nanti itu sekarang + panggil_python datetime.timedelta(**{"hours": 2, "minutes": 30})
+nanti itu sekarang + panggil_python datetime.timedelta(hours=2, minutes=30)
 tampilkan f"2 jam 30 menit dari sekarang: {panggil_python nanti.strftime('%H:%M:%S')}"
 tampilkan ""
 
@@ -160,7 +160,7 @@ tampilkan ""
 // Cek akhir pekan
 jika hari_index >= 5
     tampilkan "✓ Hari ini adalah akhir pekan!"
-kalau_tidak
+kalau tidak
     tampilkan "✓ Hari ini adalah hari kerja"
 selesai
 tampilkan ""
@@ -172,16 +172,16 @@ tampilkan ""
 tampilkan "[8] Generate Range Tanggal..."
 tampilkan ""
 
-mulai itu panggil_python datetime.date(2024, 10, 1)
-akhir itu panggil_python datetime.date(2024, 10, 7)
+tanggal_mulai itu panggil_python datetime.date(2024, 10, 1)
+tanggal_akhir itu panggil_python datetime.date(2024, 10, 7)
 
-tampilkan f"Tanggal dari {mulai} sampai {akhir}:"
-tanggal_current itu mulai
-selama tanggal_current <= akhir
+tampilkan f"Tanggal dari {tanggal_mulai} sampai {tanggal_akhir}:"
+tanggal_current itu tanggal_mulai
+selama tanggal_current <= tanggal_akhir
     hari_idx itu tanggal_current.weekday()
     hari_nama itu hari_names[hari_idx]
     tampilkan f"  {tanggal_current} - {hari_nama}"
-    tanggal_current itu tanggal_current + panggil_python datetime.timedelta(**{"days": 1})
+    tanggal_current itu tanggal_current + panggil_python datetime.timedelta(days=1)
 selesai
 tampilkan ""
 
@@ -226,7 +226,7 @@ tampilkan ""
 
 // Hitung deadline
 tampilkan "Sistem Deadline:"
-deadline itu sekarang + panggil_python datetime.timedelta(**{"days": 7})
+deadline itu sekarang + panggil_python datetime.timedelta(days=7)
 tampilkan f"Deadline: {panggil_python deadline.strftime('%d %B %Y, %H:%M')}"
 
 sisa_waktu itu deadline - sekarang
@@ -237,9 +237,9 @@ tampilkan f"Sisa waktu: {sisa_hari} hari, {sisa_jam} jam"
 
 jika sisa_hari <= 1
     tampilkan "⚠ URGENT: Deadline kurang dari 2 hari!"
-kalau_tidak_jika sisa_hari <= 3
+lainnya_jika sisa_hari <= 3
     tampilkan "⚠ WARNING: Deadline kurang dari 4 hari"
-kalau_tidak
+kalau tidak
     tampilkan "✓ Masih ada waktu"
 selesai
 tampilkan ""

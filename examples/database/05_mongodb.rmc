@@ -226,10 +226,7 @@ panggil_python produk_collection.update_one( {"kode": "PRD001"}, {"$pull": {"tag
         produk_collection.create_index([("nama", "text"), ("tags", "text")])
         
         // Search
-        hasil_search itu produk_collection.find(
-            {"$text": {"$search": "gaming"}},
-            {"score": {"$meta": "textScore"}}
-        ).sort([("score", {"$meta": "textScore"})])
+        hasil_search itu produk_collection.find({"$text": {"$search": "gaming"}}, {"score": {"$meta": "textScore"}}).sort([("score", {"$meta": "textScore"})])
         
         tampilkan "Hasil pencarian 'gaming':"
         untuk setiap p dari hasil_search
@@ -285,9 +282,7 @@ panggil_python produk_collection.update_one( {"kode": "PRD001"}, {"$pull": {"tag
         
         // Query nested documents
         tampilkan "[13] Query Nested Documents..."
-        hasil_nested itu transaksi_collection.find(
-            {"customer.nama": "Budi Santoso"}
-        )
+        hasil_nested itu transaksi_collection.find({"customer.nama": "Budi Santoso"})
         
         tampilkan "Transaksi atas nama Budi Santoso:"
         untuk setiap t dari hasil_nested

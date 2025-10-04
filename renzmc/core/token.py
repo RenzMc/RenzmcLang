@@ -128,6 +128,35 @@ class TokenType(Enum):
     FORMAT_STRING = auto()
     FORMAT_EXPR_START = auto()
     FORMAT_EXPR_END = auto()
+    
+    # Critical missing tokens used by lexer
+    STRING_CONST = auto()
+    INTEGER_CONST = auto()
+    FLOAT_CONST = auto()
+    F_STRING = auto()
+    LPAREN = auto()
+    RPAREN = auto()
+    LBRACKET = auto()
+    RBRACKET = auto()
+    LBRACE = auto()
+    RBRACE = auto()
+    COMMA = auto()
+    COLON = auto()
+    DOT = auto()
+    SEMICOLON = auto()
+    
+    # Bitwise operators
+    BITWISE_AND = auto()
+    BITWISE_OR = auto()
+    BITWISE_XOR = auto()
+    BITWISE_NOT = auto()
+    BITWISE_AND_SAMA_DENGAN = auto()
+    BITWISE_OR_SAMA_DENGAN = auto()
+    BITWISE_XOR_SAMA_DENGAN = auto()
+    
+    # Logical NOT
+    NOT = auto()
+    
     UNTUK_DALAM = auto()
     JIKA_KONDISI = auto()
     NEWLINE = auto()

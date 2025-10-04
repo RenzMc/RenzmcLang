@@ -22,7 +22,7 @@ pattern itu "budi"
 match itu panggil_python re.search(pattern, teks)
 jika match
     tampilkan f"✓ Pattern '{pattern}' ditemukan di posisi {match.start()}"
-kalau_tidak
+kalau tidak
     tampilkan f"✗ Pattern '{pattern}' tidak ditemukan"
 selesai
 tampilkan ""
@@ -113,7 +113,7 @@ teks itu "Harga produk adalah Rp 100000 dan Rp 250000"
 
 // Ganti angka dengan format ribuan
 fungsi format_rupiah(match):
-    angka itu int(match.group())
+    angka itu int(match.group(1))
     hasil f"Rp {angka:,}"
 selesai
 

@@ -31,16 +31,16 @@ buat fungsi login dengan username, password
         selesai
     selesai
     
-    jika username_ada
+    jika username_ada == benar
         user_data itu users[username]
         
-        jika user_data["password"] == password
-            hasil {"sukses": benar, "data": user_data}
+        jika user_data['password'] == password
+            hasil {'sukses': benar, 'data': user_data}
         kalau tidak
-            hasil {"sukses": salah, "pesan": "Password salah!"}
+            hasil {'sukses': salah, 'pesan': 'Password salah!'}
         selesai
     kalau tidak
-        hasil {"sukses": salah, "pesan": "Username tidak ditemukan!"}
+        hasil {'sukses': salah, 'pesan': 'Username tidak ditemukan!'}
     selesai
 selesai
 
@@ -57,13 +57,16 @@ tampilkan f"Password: {'*' * panjang(password1)}"
 
 hasil_login1 itu panggil login dengan username1, password1
 
-jika hasil_login1["sukses"]
-    user_data itu hasil_login1["data"]
+jika hasil_login1['sukses'] == benar
+    user_data itu hasil_login1['data']
+    nama_user itu user_data['nama']
+    role_user itu user_data['role']
     tampilkan f"\n✓ Login berhasil!"
-    tampilkan f"Selamat datang, {user_data['nama']}!"
-    tampilkan f"Role: {user_data['role']}"
+    tampilkan f"Selamat datang, {nama_user}!"
+    tampilkan f"Role: {role_user}"
 kalau tidak
-    tampilkan f"\n✗ {hasil_login1['pesan']}"
+    pesan_error itu hasil_login1['pesan']
+    tampilkan f"\n✗ {pesan_error}"
 selesai
 
 tampilkan "\n=== DEMO 2: Login Gagal (Password Salah) ==="
@@ -75,12 +78,14 @@ tampilkan f"Password: {'*' * panjang(password2)}"
 
 hasil_login2 itu panggil login dengan username2, password2
 
-jika hasil_login2["sukses"]
-    user_data2 itu hasil_login2["data"]
+jika hasil_login2['sukses'] == benar
+    user_data2 itu hasil_login2['data']
+    nama_user2 itu user_data2['nama']
     tampilkan f"\n✓ Login berhasil!"
-    tampilkan f"Selamat datang, {user_data2['nama']}!"
+    tampilkan f"Selamat datang, {nama_user2}!"
 kalau tidak
-    tampilkan f"\n✗ {hasil_login2['pesan']}"
+    pesan_error2 itu hasil_login2['pesan']
+    tampilkan f"\n✗ {pesan_error2}"
 selesai
 
 tampilkan "\n=== DEMO 3: Login Gagal (Username Tidak Ada) ==="
@@ -92,12 +97,14 @@ tampilkan f"Password: {'*' * panjang(password3)}"
 
 hasil_login3 itu panggil login dengan username3, password3
 
-jika hasil_login3["sukses"]
-    user_data3 itu hasil_login3["data"]
+jika hasil_login3['sukses'] == benar
+    user_data3 itu hasil_login3['data']
+    nama_user3 itu user_data3['nama']
     tampilkan f"\n✓ Login berhasil!"
-    tampilkan f"Selamat datang, {user_data3['nama']}!"
+    tampilkan f"Selamat datang, {nama_user3}!"
 kalau tidak
-    tampilkan f"\n✗ {hasil_login3['pesan']}"
+    pesan_error3 itu hasil_login3['pesan']
+    tampilkan f"\n✗ {pesan_error3}"
 selesai
 
 tampilkan "\n=== DEMO SELESAI ==="

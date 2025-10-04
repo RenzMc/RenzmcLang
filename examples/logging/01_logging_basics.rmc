@@ -182,8 +182,8 @@ fungsi operasi_lambat():
         total itu total + i
     selesai
     
-    selesai itu panggil_python time.time()
-    durasi itu selesai - mulai
+    waktu_selesai itu panggil_python time.time()
+    durasi itu waktu_selesai - mulai
     
     panggil_python logger.info(f"Operasi selesai dalam {durasi:.4f} detik")
     hasil total

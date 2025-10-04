@@ -93,6 +93,7 @@ from renzmc.core.error import (
 )
 from renzmc.core.error import ImportError as RenzmcImportError
 from renzmc.core.base_visitor import NodeVisitor
+from renzmc.core.error_handler import RenzmcErrorHandler, ErrorContext, ErrorCategory, ErrorSeverity
 from renzmc.runtime.builtin_manager import BuiltinManager
 from renzmc.runtime.scope_manager import ScopeManager
 from renzmc.runtime.python_integration import PythonIntegration
@@ -1180,8 +1181,14 @@ class Interpreter(NodeVisitor):
         elif node.op.type == TokenType.GESER_KANAN:
             return int(left) >> int(right)
         elif node.op.type in (TokenType.DALAM, TokenType.DALAM_OP):
+            # Check if right operand is iterable
+            if not hasattr(right, '__iter__') and not hasattr(right, '__contains__'):
+                raise TypeError(f"argument of type '{type(right).__name__}' is not iterable")
             return left in right
         elif node.op.type == TokenType.TIDAK_DALAM:
+            # Check if right operand is iterable
+            if not hasattr(right, '__iter__') and not hasattr(right, '__contains__'):
+                raise TypeError(f"argument of type '{type(right).__name__}' is not iterable")
             return left not in right
         elif node.op.type in (TokenType.ADALAH, TokenType.ADALAH_OP):
             return left is right
@@ -1429,7 +1436,7 @@ class Interpreter(NodeVisitor):
     def visit_Print(self, node):
         value = self.visit(node.expr)
         print(value)
-        return value
+        return None  # Return None to prevent REPL from printing again
 
     def visit_Input(self, node):
         prompt = self.visit(node.prompt)

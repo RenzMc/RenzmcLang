@@ -1,1247 +1,970 @@
-# Referensi Fungsi Bawaan
+# 📦 Built-in Functions - RenzMcLang v0.0.4
 
-RenzMcLang menyediakan 118+ fungsi bawaan untuk tugas pemrograman umum. Semua fungsi tersedia tanpa perlu impor apapun.
-
-## Daftar Isi
-
-- [Fungsi Dasar](#fungsi-dasar)
-- [Fungsi String](#fungsi-string)
-- [Validasi String](#validasi-string)
-- [Fungsi Matematika](#fungsi-matematika)
-- [Statistik](#statistik)
-- [Fungsi List](#fungsi-list)
-- [Fungsi Iterasi](#fungsi-iterasi)
-- [Fungsi Dictionary](#fungsi-dictionary)
-- [Operasi File](#operasi-file)
-- [Operasi Path](#operasi-path)
-- [Fungsi Sistem](#fungsi-sistem)
-- [JSON & Utilitas](#json--utilitas)
-- [Fungsi HTTP](#fungsi-http)
+**Last Updated:** 2025-10-04  
+**Version:** 0.0.4  
+**Total Functions:** 184+
 
 ---
 
-## Fungsi Dasar
+## 🎯 Overview
 
-### `panjang(obj)`
-
-Mendapatkan panjang dari sebuah objek
-
-```python
-// Contoh
-data itu [1, 2, 3]
-hasil itu panjang(data)
-```
-
-### `jenis(obj)`
-
-Mendapatkan tipe dari sebuah objek
-
-```python
-// Contoh
-data itu [1, 2, 3]
-hasil itu jenis(data)
-```
-
-### `ke_teks(obj)`
-
-Mengkonversi objek menjadi teks
-
-```python
-// Contoh
-angka itu 123
-hasil itu ke_teks(angka)
-```
-
-### `ke_angka(obj)`
-
-Mengkonversi objek menjadi angka
-
-```python
-// Contoh
-teks itu "123"
-hasil itu ke_angka(teks)
-```
-
-### `ke_float(obj)`
-
-Mengkonversi objek menjadi float
-
-```python
-// Contoh
-teks itu "123.45"
-hasil itu ke_float(teks)
-```
-
-### `ke_bool(obj)`
-
-Mengkonversi objek menjadi boolean
-
-```python
-// Contoh
-teks itu "True"
-hasil itu ke_bool(teks)
-```
-
-### `ke_list(obj)`
-
-Mengkonversi objek menjadi list
-
-```python
-// Contoh
-teks itu "abc"
-hasil itu ke_list(teks)  // ['a', 'b', 'c']
-```
-
-### `ke_tuple(obj)`
-
-Mengkonversi objek menjadi tuple
-
-```python
-// Contoh
-list itu [1, 2, 3]
-hasil itu ke_tuple(list)  // (1, 2, 3)
-```
-
-### `ke_set(obj)`
-
-Mengkonversi objek menjadi set
-
-```python
-// Contoh
-list itu [1, 2, 2, 3]
-hasil itu ke_set(list)  // {1, 2, 3}
-```
-
-### `ke_dict(obj)`
-
-Mengkonversi objek menjadi dictionary
-
-```python
-// Contoh
-list itu [["a", 1], ["b", 2]]
-hasil itu ke_dict(list)  // {"a": 1, "b": 2}
-```
-
-### `cetak(obj)`
-
-Mencetak objek ke konsol
-
-```python
-// Contoh
-cetak("Hello World")
-```
-
-### `input(prompt)`
-
-Mendapatkan input dari pengguna
-
-```python
-// Contoh
-nama itu input("Masukkan nama: ")
-```
-
-### `input_angka(prompt)`
-
-Mendapatkan input angka dari pengguna
-
-```python
-// Contoh
-umur itu input_angka("Masukkan umur: ")
-```
-
-### `range(start, stop, step)`
-
-Membuat range angka
-
-```python
-// Contoh
-angka itu range(1, 10, 2)  // [1, 3, 5, 7, 9]
-```
+RenzMcLang menyediakan 184+ built-in functions yang mencakup berbagai kebutuhan programming, dari operasi string hingga HTTP requests. Semua fungsi tersedia langsung tanpa perlu import.
 
 ---
 
-## Fungsi String
+## 📋 Table of Contents
 
-### `huruf_besar(text)`
+1. [String Functions](#string-functions)
+2. [Math & Statistics](#math--statistics)
+3. [List & Dict Operations](#list--dict-operations)
+4. [File Operations](#file-operations)
+5. [JSON Utilities](#json-utilities)
+6. [HTTP Functions](#http-functions-new)
+7. [System Functions](#system-functions)
+8. [Type Conversion](#type-conversion)
+9. [Iteration Functions](#iteration-functions)
+10. [Utility Functions](#utility-functions)
 
-Mengkonversi teks menjadi huruf besar
+---
+
+## String Functions
+
+### Basic String Operations
+
+#### `panjang(string)` / `len(string)`
+Mengembalikan panjang string.
 
 ```python
-// Contoh
+teks itu "Hello"
+panjang_teks itu panjang(teks)  // 5
+```
+
+#### `huruf_besar(string)` / `upper(string)`
+Mengubah string menjadi huruf besar.
+
+```python
 teks itu "hello"
-hasil itu huruf_besar(teks)  // "HELLO"
+besar itu huruf_besar(teks)  // "HELLO"
 ```
 
-### `huruf_kecil(text)`
-
-Mengkonversi teks menjadi huruf kecil
+#### `huruf_kecil(string)` / `lower(string)`
+Mengubah string menjadi huruf kecil.
 
 ```python
-// Contoh
 teks itu "HELLO"
-hasil itu huruf_kecil(teks)  // "hello"
+kecil itu huruf_kecil(teks)  // "hello"
 ```
 
-### `kapital(text)`
-
-Mengkapitalisasi teks
+#### `huruf_kapital(string)` / `capitalize(string)`
+Mengubah huruf pertama menjadi kapital.
 
 ```python
-// Contoh
 teks itu "hello world"
-hasil itu kapital(teks)  // "Hello World"
+kapital itu huruf_kapital(teks)  // "Hello world"
 ```
 
-### `potong(text)`
-
-Menghapus spasi di awal dan akhir teks
+#### `huruf_judul(string)` / `title(string)`
+Mengubah setiap kata menjadi title case.
 
 ```python
-// Contoh
+teks itu "hello world"
+judul itu huruf_judul(teks)  // "Hello World"
+```
+
+### String Manipulation
+
+#### `potong(string, start, end)` / `slice(string, start, end)`
+Memotong string dari index start sampai end.
+
+```python
+teks itu "Hello World"
+bagian itu potong(teks, 0, 5)  // "Hello"
+```
+
+#### `ganti(string, old, new)` / `replace(string, old, new)`
+Mengganti substring dengan string baru.
+
+```python
+teks itu "Hello World"
+baru itu ganti(teks, "World", "Python")  // "Hello Python"
+```
+
+#### `pisah(string, separator)` / `split(string, separator)`
+Memisahkan string menjadi list.
+
+```python
+teks itu "a,b,c,d"
+list_hasil itu pisah(teks, ",")  // ["a", "b", "c", "d"]
+```
+
+#### `gabung(separator, list)` / `join(separator, list)`
+Menggabungkan list menjadi string.
+
+```python
+items itu ["a", "b", "c"]
+hasil itu gabung("-", items)  // "a-b-c"
+```
+
+#### `hapus_spasi(string)` / `strip(string)`
+Menghapus spasi di awal dan akhir string.
+
+```python
 teks itu "  hello  "
-hasil itu potong(teks)  // "hello"
+bersih itu hapus_spasi(teks)  // "hello"
 ```
 
-### `ganti(text, old, new)`
-
-Mengganti teks
+#### `hapus_spasi_kiri(string)` / `lstrip(string)`
+Menghapus spasi di awal string.
 
 ```python
-// Contoh
-teks itu "hello world"
-hasil itu ganti(teks, "world", "dunia")  // "hello dunia"
+teks itu "  hello"
+bersih itu hapus_spasi_kiri(teks)  // "hello"
 ```
 
-### `pisah(text, separator)`
-
-Memisahkan teks menjadi list
+#### `hapus_spasi_kanan(string)` / `rstrip(string)`
+Menghapus spasi di akhir string.
 
 ```python
-// Contoh
-teks itu "a,b,c"
-hasil itu pisah(teks, ",")  // ["a", "b", "c"]
+teks itu "hello  "
+bersih itu hapus_spasi_kanan(teks)  // "hello"
 ```
 
-### `gabung(separator, items)`
+### String Search & Validation
 
-Menggabungkan list menjadi teks
+#### `cari(string, substring)` / `find(string, substring)`
+Mencari posisi substring dalam string.
 
 ```python
-// Contoh
-list itu ["a", "b", "c"]
-hasil itu gabung(",", list)  // "a,b,c"
+teks itu "Hello World"
+posisi itu cari(teks, "World")  // 6
 ```
 
-### `awalan(text, prefix)`
-
-Memeriksa apakah teks dimulai dengan awalan tertentu
+#### `mulai_dengan(string, prefix)` / `startswith(string, prefix)`
+Mengecek apakah string dimulai dengan prefix.
 
 ```python
-// Contoh
-teks itu "hello world"
-hasil itu awalan(teks, "hello")  // benar
+teks itu "Hello World"
+hasil itu mulai_dengan(teks, "Hello")  // benar
 ```
 
-### `akhiran(text, suffix)`
-
-Memeriksa apakah teks diakhiri dengan akhiran tertentu
+#### `akhiri_dengan(string, suffix)` / `endswith(string, suffix)`
+Mengecek apakah string diakhiri dengan suffix.
 
 ```python
-// Contoh
-teks itu "hello world"
-hasil itu akhiran(teks, "world")  // benar
+teks itu "Hello World"
+hasil itu akhiri_dengan(teks, "World")  // benar
 ```
 
-### `indeks(text, substring)`
-
-Mendapatkan indeks substring dalam teks
+#### `adalah_angka(string)` / `isdigit(string)`
+Mengecek apakah string hanya berisi angka.
 
 ```python
-// Contoh
-teks itu "hello world"
-hasil itu indeks(teks, "world")  // 6
+teks itu "12345"
+hasil itu adalah_angka(teks)  // benar
 ```
 
-### `hitung(text, substring)`
-
-Menghitung jumlah kemunculan substring dalam teks
+#### `adalah_huruf(string)` / `isalpha(string)`
+Mengecek apakah string hanya berisi huruf.
 
 ```python
-// Contoh
-teks itu "hello hello"
-hasil itu hitung(teks, "hello")  // 2
+teks itu "Hello"
+hasil itu adalah_huruf(teks)  // benar
 ```
 
-### `format(template, *args, **kwargs)`
-
-Memformat teks dengan argumen
+#### `adalah_alfanumerik(string)` / `isalnum(string)`
+Mengecek apakah string hanya berisi huruf dan angka.
 
 ```python
-// Contoh
+teks itu "Hello123"
+hasil itu adalah_alfanumerik(teks)  // benar
+```
+
+### String Formatting
+
+#### `format_string(template, *args)` / `format(template, *args)`
+Format string dengan placeholder.
+
+```python
 template itu "Nama: {}, Umur: {}"
-hasil itu format(template, "Budi", 25)  // "Nama: Budi, Umur: 25"
+hasil itu format_string(template, "Budi", 25)
+// "Nama: Budi, Umur: 25"
+```
+
+#### `padding_kiri(string, width, char)` / `ljust(string, width, char)`
+Menambahkan padding di kiri.
+
+```python
+teks itu "Hello"
+hasil itu padding_kiri(teks, 10, " ")  // "Hello     "
+```
+
+#### `padding_kanan(string, width, char)` / `rjust(string, width, char)`
+Menambahkan padding di kanan.
+
+```python
+teks itu "Hello"
+hasil itu padding_kanan(teks, 10, " ")  // "     Hello"
+```
+
+#### `padding_tengah(string, width, char)` / `center(string, width, char)`
+Menambahkan padding di tengah.
+
+```python
+teks itu "Hello"
+hasil itu padding_tengah(teks, 10, " ")  // "  Hello   "
 ```
 
 ---
 
-## Validasi String
+## Math & Statistics
 
-### `adalah_alfabet(text)`
+### Basic Math
 
-Memeriksa apakah teks hanya berisi huruf
+#### `abs(number)` / `absolut(number)`
+Mengembalikan nilai absolut.
 
 ```python
-// Contoh
-hasil itu adalah_alfabet("abc")  // benar
-hasil itu adalah_alfabet("abc123")  // salah
+nilai itu absolut(-5)  // 5
 ```
 
-### `adalah_alfanumerik(text)`
-
-Memeriksa apakah teks hanya berisi huruf dan angka
+#### `round(number, digits)` / `bulat(number, digits)`
+Membulatkan angka.
 
 ```python
-// Contoh
-hasil itu adalah_alfanumerik("abc123")  // benar
-hasil itu adalah_alfanumerik("abc_123")  // salah
+nilai itu bulat(3.14159, 2)  // 3.14
 ```
 
-### `adalah_angka(text)`
-
-Memeriksa apakah teks hanya berisi angka
+#### `ceil(number)` / `pembulatan_atas(number)`
+Membulatkan ke atas.
 
 ```python
-// Contoh
-hasil itu adalah_angka("123")  // benar
-hasil itu adalah_angka("123a")  // salah
+nilai itu pembulatan_atas(3.2)  // 4
 ```
 
-### `adalah_desimal(text)`
-
-Memeriksa apakah teks adalah angka desimal
+#### `floor(number)` / `pembulatan_bawah(number)`
+Membulatkan ke bawah.
 
 ```python
-// Contoh
-hasil itu adalah_desimal("123.45")  // benar
-hasil itu adalah_desimal("123")  // benar
-hasil itu adalah_desimal("123a")  // salah
+nilai itu pembulatan_bawah(3.8)  // 3
 ```
 
-### `adalah_huruf_kecil(text)`
-
-Memeriksa apakah teks hanya berisi huruf kecil
+#### `pow(base, exp)` / `pangkat(base, exp)`
+Menghitung pangkat.
 
 ```python
-// Contoh
-hasil itu adalah_huruf_kecil("abc")  // benar
-hasil itu adalah_huruf_kecil("Abc")  // salah
+nilai itu pangkat(2, 3)  // 8
 ```
 
-### `adalah_huruf_besar(text)`
-
-Memeriksa apakah teks hanya berisi huruf besar
+#### `sqrt(number)` / `akar(number)`
+Menghitung akar kuadrat.
 
 ```python
-// Contoh
-hasil itu adalah_huruf_besar("ABC")  // benar
-hasil itu adalah_huruf_besar("Abc")  // salah
+nilai itu akar(16)  // 4.0
 ```
 
-### `adalah_spasi(text)`
+### Trigonometry
 
-Memeriksa apakah teks hanya berisi spasi
+#### `sin(angle)` / `sinus(angle)`
+Menghitung sinus (dalam radian).
 
 ```python
-// Contoh
-hasil itu adalah_spasi("   ")  // benar
-hasil itu adalah_spasi(" a ")  // salah
+nilai itu sinus(0)  // 0.0
 ```
 
-### `adalah_judul(text)`
-
-Memeriksa apakah teks dalam format judul
+#### `cos(angle)` / `cosinus(angle)`
+Menghitung cosinus (dalam radian).
 
 ```python
-// Contoh
-hasil itu adalah_judul("Hello World")  // benar
-hasil itu adalah_judul("Hello world")  // salah
+nilai itu cosinus(0)  // 1.0
 ```
 
-### `cocok_pola(text, pattern)`
-
-Memeriksa apakah teks cocok dengan pola regex
+#### `tan(angle)` / `tangen(angle)`
+Menghitung tangen (dalam radian).
 
 ```python
-// Contoh
-hasil itu cocok_pola("abc123", "[a-z]+[0-9]+")  // benar
+nilai itu tangen(0)  // 0.0
 ```
 
----
+### Logarithms
 
-## Fungsi Matematika
-
-### `absolut(x)`
-
-Mendapatkan nilai absolut
+#### `log(number, base)` / `logaritma(number, base)`
+Menghitung logaritma.
 
 ```python
-// Contoh
-hasil itu absolut(-5)  // 5
+nilai itu logaritma(100, 10)  // 2.0
 ```
 
-### `akar(x)`
-
-Mendapatkan akar kuadrat
+#### `ln(number)` / `logaritma_natural(number)`
+Menghitung logaritma natural.
 
 ```python
-// Contoh
-hasil itu akar(16)  // 4.0
+nilai itu logaritma_natural(2.718)  // ~1.0
 ```
 
-### `pangkat(x, y)`
+### Statistics
 
-Menghitung x pangkat y
+#### `mean(list)` / `rata_rata(list)`
+Menghitung rata-rata.
 
 ```python
-// Contoh
-hasil itu pangkat(2, 3)  // 8
+data itu [1, 2, 3, 4, 5]
+rata itu rata_rata(data)  // 3.0
 ```
 
-### `bulat(x)`
-
-Membulatkan angka
+#### `median(list)` / `nilai_tengah(list)`
+Menghitung median.
 
 ```python
-// Contoh
-hasil itu bulat(3.7)  // 4
+data itu [1, 2, 3, 4, 5]
+tengah itu nilai_tengah(data)  // 3
 ```
 
-### `bulat_bawah(x)`
-
-Membulatkan ke bawah
+#### `mode(list)` / `modus(list)`
+Menghitung modus.
 
 ```python
-// Contoh
-hasil itu bulat_bawah(3.7)  // 3
+data itu [1, 2, 2, 3, 4]
+mod itu modus(data)  // 2
 ```
 
-### `bulat_atas(x)`
-
-Membulatkan ke atas
+#### `stdev(list)` / `deviasi_standar(list)`
+Menghitung standar deviasi.
 
 ```python
-// Contoh
-hasil itu bulat_atas(3.2)  // 4
+data itu [1, 2, 3, 4, 5]
+dev itu deviasi_standar(data)  // ~1.41
 ```
 
-### `sinus(x)`
-
-Menghitung sinus
+#### `variance(list)` / `variansi(list)`
+Menghitung variansi.
 
 ```python
-// Contoh
-hasil itu sinus(0)  // 0.0
+data itu [1, 2, 3, 4, 5]
+var itu variansi(data)  // 2.0
 ```
 
-### `kosinus(x)`
+### Random Numbers
 
-Menghitung kosinus
+#### `random()` / `acak()`
+Menghasilkan angka acak 0-1.
 
 ```python
-// Contoh
-hasil itu kosinus(0)  // 1.0
+nilai itu acak()  // 0.xxx
 ```
 
-### `tangen(x)`
-
-Menghitung tangen
+#### `randint(min, max)` / `acak_bulat(min, max)`
+Menghasilkan integer acak.
 
 ```python
-// Contoh
-hasil itu tangen(0)  // 0.0
+nilai itu acak_bulat(1, 10)  // 1-10
 ```
 
-### `log(x, base)`
-
-Menghitung logaritma
-
-```python
-// Contoh
-hasil itu log(100, 10)  // 2.0
-```
-
-### `faktorial(x)`
-
-Menghitung faktorial
+#### `choice(list)` / `pilih_acak(list)`
+Memilih elemen acak dari list.
 
 ```python
-// Contoh
-hasil itu faktorial(5)  // 120
-```
-
-### `acak()`
-
-Mendapatkan angka acak antara 0 dan 1
-
-```python
-// Contoh
-hasil itu acak()  // 0.123456789...
-```
-
-### `acak_int(min, max)`
-
-Mendapatkan angka acak integer
-
-```python
-// Contoh
-hasil itu acak_int(1, 10)  // 7
-```
-
-### `acak_pilih(items)`
-
-Memilih item acak dari list
-
-```python
-// Contoh
-hasil itu acak_pilih([1, 2, 3, 4, 5])  // 3
-```
-
-### `acak_urut(items)`
-
-Mengacak urutan list
-
-```python
-// Contoh
-hasil itu acak_urut([1, 2, 3, 4, 5])  // [3, 1, 5, 2, 4]
+items itu ["a", "b", "c"]
+pilihan itu pilih_acak(items)  // "a", "b", atau "c"
 ```
 
 ---
 
-## Statistik
+## List & Dict Operations
 
-### `rata_rata(data)`
+### List Operations
 
-Menghitung rata-rata
+#### `tambah(list, item)` / `append(list, item)`
+Menambahkan item ke list.
 
 ```python
-// Contoh
-hasil itu rata_rata([1, 2, 3, 4, 5])  // 3.0
+data itu [1, 2, 3]
+tambah(data, 4)  // [1, 2, 3, 4]
 ```
 
-### `median(data)`
-
-Menghitung nilai tengah
+#### `hapus(list, item)` / `remove(list, item)`
+Menghapus item dari list.
 
 ```python
-// Contoh
-hasil itu median([1, 2, 3, 4, 5])  // 3
+data itu [1, 2, 3, 4]
+hapus(data, 3)  // [1, 2, 4]
 ```
 
-### `modus(data)`
-
-Menghitung nilai yang paling sering muncul
+#### `sisipkan(list, index, item)` / `insert(list, index, item)`
+Menyisipkan item di index tertentu.
 
 ```python
-// Contoh
-hasil itu modus([1, 2, 2, 3, 4])  // 2
+data itu [1, 2, 4]
+sisipkan(data, 2, 3)  // [1, 2, 3, 4]
 ```
 
-### `varians(data)`
-
-Menghitung varians
+#### `urutkan(list)` / `sort(list)`
+Mengurutkan list.
 
 ```python
-// Contoh
-hasil itu varians([1, 2, 3, 4, 5])  // 2.5
+data itu [3, 1, 4, 2]
+urutkan(data)  // [1, 2, 3, 4]
 ```
 
-### `std_deviasi(data)`
-
-Menghitung standar deviasi
+#### `balik(list)` / `reverse(list)`
+Membalik urutan list.
 
 ```python
-// Contoh
-hasil itu std_deviasi([1, 2, 3, 4, 5])  // 1.5811388300841898
+data itu [1, 2, 3, 4]
+balik(data)  // [4, 3, 2, 1]
 ```
 
-### `minimum(data)`
-
-Mendapatkan nilai minimum
+#### `jumlah(list)` / `sum(list)`
+Menjumlahkan semua elemen.
 
 ```python
-// Contoh
-hasil itu minimum([5, 3, 8, 1, 2])  // 1
+data itu [1, 2, 3, 4]
+total itu jumlah(data)  // 10
 ```
 
-### `maksimum(data)`
-
-Mendapatkan nilai maksimum
+#### `min(list)` / `nilai_minimum(list)`
+Mencari nilai minimum.
 
 ```python
-// Contoh
-hasil itu maksimum([5, 3, 8, 1, 2])  // 8
+data itu [3, 1, 4, 2]
+minimum itu min(data)  // 1
 ```
 
-### `jumlah(data)`
-
-Menjumlahkan semua nilai
+#### `max(list)` / `nilai_maksimum(list)`
+Mencari nilai maksimum.
 
 ```python
-// Contoh
-hasil itu jumlah([1, 2, 3, 4, 5])  // 15
+data itu [3, 1, 4, 2]
+maksimum itu max(data)  // 4
 ```
 
-### `produk(data)`
+### Dict Operations
 
-Mengalikan semua nilai
+#### `kunci(dict)` / `keys(dict)`
+Mendapatkan semua kunci.
 
 ```python
-// Contoh
-hasil itu produk([1, 2, 3, 4, 5])  // 120
+data itu {"a": 1, "b": 2}
+keys itu kunci(data)  // ["a", "b"]
 ```
 
----
-
-## Fungsi List
-
-### `tambah(list, item)`
-
-Menambahkan item ke list
+#### `nilai(dict)` / `values(dict)`
+Mendapatkan semua nilai.
 
 ```python
-// Contoh
-list itu [1, 2, 3]
-tambah(list, 4)  // [1, 2, 3, 4]
+data itu {"a": 1, "b": 2}
+vals itu nilai(data)  // [1, 2]
 ```
 
-### `hapus(list, item)`
-
-Menghapus item dari list
+#### `items(dict)` / `pasangan(dict)`
+Mendapatkan pasangan key-value.
 
 ```python
-// Contoh
-list itu [1, 2, 3, 4]
-hapus(list, 3)  // [1, 2, 4]
+data itu {"a": 1, "b": 2}
+pairs itu items(data)  // [("a", 1), ("b", 2)]
 ```
 
-### `sisipkan(list, index, item)`
-
-Menyisipkan item pada indeks tertentu
-
-```python
-// Contoh
-list itu [1, 2, 4]
-sisipkan(list, 2, 3)  // [1, 2, 3, 4]
-```
-
-### `pop(list, index)`
-
-Menghapus dan mengembalikan item pada indeks tertentu
+#### `update(dict, other)` / `perbarui(dict, other)`
+Memperbarui dictionary.
 
 ```python
-// Contoh
-list itu [1, 2, 3, 4]
-item itu pop(list, 2)  // item = 3, list = [1, 2, 4]
-```
-
-### `indeks_list(list, item)`
-
-Mendapatkan indeks item dalam list
-
-```python
-// Contoh
-list itu [1, 2, 3, 4]
-hasil itu indeks_list(list, 3)  // 2
-```
-
-### `hitung_list(list, item)`
-
-Menghitung jumlah kemunculan item dalam list
-
-```python
-// Contoh
-list itu [1, 2, 2, 3, 4]
-hasil itu hitung_list(list, 2)  // 2
-```
-
-### `urutkan(list)`
-
-Mengurutkan list
-
-```python
-// Contoh
-list itu [3, 1, 4, 2]
-urutkan(list)  // [1, 2, 3, 4]
-```
-
-### `balikkan(list)`
-
-Membalikkan urutan list
-
-```python
-// Contoh
-list itu [1, 2, 3, 4]
-balikkan(list)  // [4, 3, 2, 1]
-```
-
-### `salin(list)`
-
-Menyalin list
-
-```python
-// Contoh
-list1 itu [1, 2, 3]
-list2 itu salin(list1)
-```
-
-### `bersihkan(list)`
-
-Menghapus semua item dari list
-
-```python
-// Contoh
-list itu [1, 2, 3]
-bersihkan(list)  // []
-```
-
-### `gabung_list(list1, list2)`
-
-Menggabungkan dua list
-
-```python
-// Contoh
-list1 itu [1, 2]
-list2 itu [3, 4]
-hasil itu gabung_list(list1, list2)  // [1, 2, 3, 4]
-```
-
-### `potong_list(list, start, end)`
-
-Memotong list
-
-```python
-// Contoh
-list itu [1, 2, 3, 4, 5]
-hasil itu potong_list(list, 1, 4)  // [2, 3, 4]
-```
-
-### `unik(list)`
-
-Menghapus duplikat dari list
-
-```python
-// Contoh
-list itu [1, 2, 2, 3, 4, 4]
-hasil itu unik(list)  // [1, 2, 3, 4]
+data itu {"a": 1}
+perbarui(data, {"b": 2})  // {"a": 1, "b": 2}
 ```
 
 ---
 
-## Fungsi Iterasi
+## File Operations
 
-### `map(func, iterable)`
+### File Reading
 
-Menerapkan fungsi ke setiap item
+#### `baca_file(path)` / `read_file(path)`
+Membaca seluruh file.
 
 ```python
-// Contoh
-list itu [1, 2, 3]
-hasil itu map(lambda x: x * 2, list)  // [2, 4, 6]
+content itu baca_file("data.txt")
 ```
 
-### `filter(func, iterable)`
-
-Memfilter item berdasarkan fungsi
+#### `baca_baris(path)` / `read_lines(path)`
+Membaca file per baris.
 
 ```python
-// Contoh
-list itu [1, 2, 3, 4, 5]
-hasil itu filter(lambda x: x % 2 == 0, list)  // [2, 4]
+lines itu baca_baris("data.txt")
 ```
 
-### `reduce(func, iterable)`
+### File Writing
 
-Mengurangi list menjadi satu nilai
-
-```python
-// Contoh
-list itu [1, 2, 3, 4]
-hasil itu reduce(lambda x, y: x + y, list)  // 10
-```
-
-### `zip(iterable1, iterable2)`
-
-Menggabungkan dua iterable
+#### `tulis_file(path, content)` / `write_file(path, content)`
+Menulis ke file (overwrite).
 
 ```python
-// Contoh
-list1 itu [1, 2, 3]
-list2 itu ["a", "b", "c"]
-hasil itu zip(list1, list2)  // [(1, "a"), (2, "b"), (3, "c")]
-```
-
-### `enumerate(iterable)`
-
-Mengembalikan indeks dan nilai
-
-```python
-// Contoh
-list itu ["a", "b", "c"]
-hasil itu enumerate(list)  // [(0, "a"), (1, "b"), (2, "c")]
-```
-
-### `semua(iterable)`
-
-Memeriksa apakah semua item bernilai benar
-
-```python
-// Contoh
-hasil itu semua([True, True, True])  // benar
-hasil itu semua([True, False, True])  // salah
-```
-
-### `ada(iterable)`
-
-Memeriksa apakah ada item yang bernilai benar
-
-```python
-// Contoh
-hasil itu ada([False, False, True])  // benar
-hasil itu ada([False, False, False])  // salah
-```
-
----
-
-## Fungsi Dictionary
-
-### `kunci(dict)`
-
-Mendapatkan semua kunci dari dictionary
-
-```python
-// Contoh
-dict itu {"a": 1, "b": 2}
-hasil itu kunci(dict)  // ["a", "b"]
-```
-
-### `nilai(dict)`
-
-Mendapatkan semua nilai dari dictionary
-
-```python
-// Contoh
-dict itu {"a": 1, "b": 2}
-hasil itu nilai(dict)  // [1, 2]
-```
-
-### `item(dict)`
-
-Mendapatkan semua pasangan kunci-nilai
-
-```python
-// Contoh
-dict itu {"a": 1, "b": 2}
-hasil itu item(dict)  // [("a", 1), ("b", 2)]
-```
-
-### `ambil(dict, key, default)`
-
-Mengambil nilai dengan kunci, dengan nilai default
-
-```python
-// Contoh
-dict itu {"a": 1, "b": 2}
-hasil itu ambil(dict, "c", 0)  // 0
-```
-
-### `hapus_kunci(dict, key)`
-
-Menghapus kunci dari dictionary
-
-```python
-// Contoh
-dict itu {"a": 1, "b": 2}
-hapus_kunci(dict, "a")  // {"b": 2}
-```
-
-### `update_dict(dict1, dict2)`
-
-Memperbarui dictionary dengan dictionary lain
-
-```python
-// Contoh
-dict1 itu {"a": 1, "b": 2}
-dict2 itu {"b": 3, "c": 4}
-update_dict(dict1, dict2)  // {"a": 1, "b": 3, "c": 4}
-```
-
-### `bersihkan_dict(dict)`
-
-Menghapus semua item dari dictionary
-
-```python
-// Contoh
-dict itu {"a": 1, "b": 2}
-bersihkan_dict(dict)  // {}
-```
-
----
-
-## Operasi File
-
-### `baca_file(path)`
-
-Membaca isi file
-
-```python
-// Contoh
-isi itu baca_file("data.txt")
-```
-
-### `tulis_file(path, content)`
-
-Menulis ke file
-
-```python
-// Contoh
 tulis_file("data.txt", "Hello World")
 ```
 
-### `tambah_file(path, content)`
-
-Menambahkan ke file
+#### `tambah_file(path, content)` / `append_file(path, content)`
+Menambahkan ke file.
 
 ```python
-// Contoh
-tambah_file("data.txt", "\nHello Again")
+tambah_file("data.txt", "\nBaris baru")
 ```
 
-### `hapus_file(path)`
+### File Management
 
-Menghapus file
+#### `ada_file(path)` / `file_exists(path)`
+Mengecek apakah file ada.
 
 ```python
-// Contoh
+exists itu ada_file("data.txt")  // benar/salah
+```
+
+#### `hapus_file(path)` / `delete_file(path)`
+Menghapus file.
+
+```python
 hapus_file("data.txt")
 ```
 
-### `file_ada(path)`
-
-Memeriksa apakah file ada
+#### `salin_file(src, dst)` / `copy_file(src, dst)`
+Menyalin file.
 
 ```python
-// Contoh
-hasil itu file_ada("data.txt")
+salin_file("data.txt", "backup.txt")
 ```
 
-### `buat_folder(path)`
-
-Membuat folder
+#### `pindah_file(src, dst)` / `move_file(src, dst)`
+Memindahkan file.
 
 ```python
-// Contoh
-buat_folder("data")
+pindah_file("data.txt", "folder/data.txt")
 ```
 
-### `hapus_folder(path)`
+### Directory Operations
 
-Menghapus folder
+#### `buat_direktori(path)` / `create_directory(path)`
+Membuat direktori.
 
 ```python
-// Contoh
-hapus_folder("data")
+buat_direktori("folder_baru")
 ```
 
-### `folder_ada(path)`
-
-Memeriksa apakah folder ada
+#### `hapus_direktori(path)` / `delete_directory(path)`
+Menghapus direktori.
 
 ```python
-// Contoh
-hasil itu folder_ada("data")
+hapus_direktori("folder_lama")
 ```
 
-### `daftar_file(path)`
-
-Mendapatkan daftar file dalam folder
+#### `daftar_file(path)` / `list_files(path)`
+Mendaftar file dalam direktori.
 
 ```python
-// Contoh
 files itu daftar_file(".")
 ```
 
 ---
 
-## Operasi Path
+## JSON Utilities
 
-### `gabung_path(path1, path2)`
-
-Menggabungkan path
+#### `json_parse(string)` / `parse_json(string)`
+Parse JSON string menjadi object.
 
 ```python
-// Contoh
-path itu gabung_path("/home/user", "data.txt")  // "/home/user/data.txt"
+json_str itu '{"nama": "Budi", "umur": 25}'
+data itu json_parse(json_str)
+tampilkan data["nama"]  // "Budi"
 ```
 
-### `ekstensi_file(path)`
-
-Mendapatkan ekstensi file
+#### `json_stringify(object)` / `to_json(object)`
+Convert object menjadi JSON string.
 
 ```python
-// Contoh
-ext itu ekstensi_file("data.txt")  // ".txt"
+data itu {"nama": "Budi", "umur": 25}
+json_str itu json_stringify(data)
+// '{"nama": "Budi", "umur": 25}'
 ```
 
-### `nama_file(path)`
-
-Mendapatkan nama file
+#### `json_baca(path)` / `read_json(path)`
+Membaca file JSON.
 
 ```python
-// Contoh
-name itu nama_file("/home/user/data.txt")  // "data.txt"
+data itu json_baca("data.json")
 ```
 
-### `direktori(path)`
-
-Mendapatkan direktori dari path
-
-```python
-// Contoh
-dir itu direktori("/home/user/data.txt")  // "/home/user"
-```
-
-### `path_absolut(path)`
-
-Mendapatkan path absolut
+#### `json_tulis(path, data)` / `write_json(path, data)`
+Menulis ke file JSON.
 
 ```python
-// Contoh
-abs_path itu path_absolut("data.txt")  // "/home/user/data.txt"
+data itu {"nama": "Budi"}
+json_tulis("data.json", data)
 ```
 
 ---
 
-## Fungsi Sistem
+## HTTP Functions (NEW!)
 
-### `waktu()`
+### HTTP Requests
 
-Mendapatkan waktu saat ini (detik sejak epoch)
+#### `http_get(url, params, headers, timeout)`
+Melakukan HTTP GET request.
 
 ```python
-// Contoh
-now itu waktu()
+response itu http_get("https://api.example.com/users")
+tampilkan response.status_code  // 200
+
+// With parameters
+params itu {"page": 1, "limit": 10}
+response itu http_get("https://api.example.com/users", params=params)
+
+// With headers
+headers itu {"Authorization": "Bearer token123"}
+response itu http_get("https://api.example.com/data", headers=headers)
+
+// With timeout
+response itu http_get("https://api.example.com/data", timeout=10)
 ```
 
-### `tidur(seconds)`
-
-Menunda eksekusi
+#### `http_post(url, data, json, headers, timeout)`
+Melakukan HTTP POST request.
 
 ```python
-// Contoh
-tidur(2)  // Tunggu 2 detik
+// POST with JSON
+data itu {"nama": "Budi", "email": "budi@example.com"}
+response itu http_post("https://api.example.com/users", json=data)
+
+// POST with form data
+form_data itu {"username": "budi", "password": "secret"}
+response itu http_post("https://api.example.com/login", data=form_data)
 ```
 
-### `tanggal()`
-
-Mendapatkan tanggal saat ini
+#### `http_put(url, data, json, headers, timeout)`
+Melakukan HTTP PUT request.
 
 ```python
-// Contoh
-today itu tanggal()  // "2023-01-01"
+data itu {"nama": "Budi Updated"}
+response itu http_put("https://api.example.com/users/1", json=data)
 ```
 
-### `waktu_lengkap()`
-
-Mendapatkan waktu lengkap saat ini
+#### `http_delete(url, headers, timeout)`
+Melakukan HTTP DELETE request.
 
 ```python
-// Contoh
-now itu waktu_lengkap()  // "2023-01-01 12:00:00"
+response itu http_delete("https://api.example.com/users/1")
 ```
 
-### `lingkungan(name)`
-
-Mendapatkan variabel lingkungan
+#### `http_patch(url, data, json, headers, timeout)`
+Melakukan HTTP PATCH request.
 
 ```python
-// Contoh
-home itu lingkungan("HOME")
+data itu {"email": "newemail@example.com"}
+response itu http_patch("https://api.example.com/users/1", json=data)
 ```
 
-### `set_lingkungan(name, value)`
+### HTTP Configuration
 
-Mengatur variabel lingkungan
+#### `http_set_header(key, value)`
+Set default HTTP header.
 
 ```python
-// Contoh
-set_lingkungan("DEBUG", "true")
+http_set_header("Authorization", "Bearer token123")
+http_set_header("User-Agent", "MyApp/1.0")
 ```
 
-### `jalankan(command)`
-
-Menjalankan perintah shell
+#### `http_set_timeout(timeout)`
+Set default HTTP timeout.
 
 ```python
-// Contoh
-output itu jalankan("ls -la")
+http_set_timeout(30)  // 30 seconds
 ```
 
-### `keluar(code)`
+### Indonesian Aliases
 
-Keluar dari program
+#### `ambil_http(url, ...)`
+Alias untuk `http_get`.
 
 ```python
-// Contoh
-keluar(0)
+response itu ambil_http("https://api.example.com/data")
 ```
 
----
-
-## JSON & Utilitas
-
-### `ke_json(obj)`
-
-Mengkonversi objek ke JSON
+#### `kirim_http(url, ...)`
+Alias untuk `http_post`.
 
 ```python
-// Contoh
-data itu {"name": "Budi", "age": 25}
-json_str itu ke_json(data)
+data itu {"nama": "Budi"}
+response itu kirim_http("https://api.example.com/users", json=data)
 ```
 
-### `dari_json(json_str)`
-
-Mengkonversi JSON ke objek
+#### `perbarui_http(url, ...)`
+Alias untuk `http_put`.
 
 ```python
-// Contoh
-json_str itu '{"name": "Budi", "age": 25}'
-data itu dari_json(json_str)
+data itu {"nama": "Budi Updated"}
+response itu perbarui_http("https://api.example.com/users/1", json=data)
 ```
 
-### `ke_base64(text)`
-
-Mengkonversi teks ke base64
+#### `hapus_http(url, ...)`
+Alias untuk `http_delete`.
 
 ```python
-// Contoh
-encoded itu ke_base64("Hello")
+response itu hapus_http("https://api.example.com/users/1")
 ```
 
-### `dari_base64(encoded)`
+### Response Object
 
-Mengkonversi base64 ke teks
-
-```python
-// Contoh
-decoded itu dari_base64("SGVsbG8=")
-```
-
-### `hash_md5(text)`
-
-Menghitung hash MD5
+HTTP response memiliki properties:
 
 ```python
-// Contoh
-hash itu hash_md5("Hello")
-```
+response itu http_get("https://api.example.com/data")
 
-### `hash_sha256(text)`
+// Properties
+tampilkan response.status_code  // 200
+tampilkan response.url          // URL
+tampilkan response.text         // Response body
+tampilkan response.headers      // Headers dict
 
-Menghitung hash SHA256
-
-```python
-// Contoh
-hash itu hash_sha256("Hello")
-```
-
-### `enkripsi(text, key)`
-
-Mengenkripsi teks
-
-```python
-// Contoh
-encrypted itu enkripsi("Hello", "secret")
-```
-
-### `dekripsi(encrypted, key)`
-
-Mendekripsi teks
-
-```python
-// Contoh
-decrypted itu dekripsi(encrypted, "secret")
+// Methods
+data itu response.json()        // Parse JSON
+is_ok itu response.ok()         // Check if 200-299
 ```
 
 ---
 
-## Fungsi HTTP
+## System Functions
 
-### `http_get(url, headers)`
-
-Melakukan HTTP GET request
+#### `waktu_sekarang()` / `current_time()`
+Mendapatkan waktu sekarang.
 
 ```python
-// Contoh
-response itu http_get("https://api.example.com")
+waktu itu waktu_sekarang()
 ```
 
-### `http_post(url, data, headers)`
-
-Melakukan HTTP POST request
+#### `tanggal_sekarang()` / `current_date()`
+Mendapatkan tanggal sekarang.
 
 ```python
-// Contoh
-data itu {"name": "Budi", "age": 25}
-response itu http_post("https://api.example.com", data)
+tanggal itu tanggal_sekarang()
 ```
 
-### `http_put(url, data, headers)`
-
-Melakukan HTTP PUT request
+#### `sleep(seconds)` / `tidur(seconds)`
+Menunda eksekusi.
 
 ```python
-// Contoh
-data itu {"name": "Budi", "age": 26}
-response itu http_put("https://api.example.com/user/1", data)
+tidur(2)  // Tidur 2 detik
 ```
 
-### `http_delete(url, headers)`
-
-Melakukan HTTP DELETE request
+#### `exit(code)` / `keluar(code)`
+Keluar dari program.
 
 ```python
-// Contoh
-response itu http_delete("https://api.example.com/user/1")
+keluar(0)  // Exit dengan code 0
 ```
 
-### `unduh_file(url, path)`
-
-Mengunduh file dari URL
-
-```python
-// Contoh
-unduh_file("https://example.com/file.pdf", "file.pdf")
-```
-
-### `parse_url(url)`
-
-Mengurai URL
+#### `env(key)` / `lingkungan(key)`
+Mendapatkan environment variable.
 
 ```python
-// Contoh
-parts itu parse_url("https://example.com/path?query=value")
-```
-
-### `buat_url(scheme, host, path, query)`
-
-Membuat URL
-
-```python
-// Contoh
-url itu buat_url("https", "example.com", "/path", {"query": "value"})
+path itu env("PATH")
 ```
 
 ---
 
-**Selamat Coding dengan RenzMcLang! 🚀**
+## Type Conversion
+
+#### `ke_teks(value)` / `to_string(value)` / `str(value)`
+Convert ke string.
+
+```python
+angka itu 123
+teks itu ke_teks(angka)  // "123"
+```
+
+#### `ke_angka(value)` / `to_number(value)` / `float(value)`
+Convert ke float.
+
+```python
+teks itu "3.14"
+angka itu ke_angka(teks)  // 3.14
+```
+
+#### `ke_bulat(value)` / `to_integer(value)` / `int(value)`
+Convert ke integer.
+
+```python
+teks itu "42"
+bulat itu ke_bulat(teks)  // 42
+```
+
+#### `ke_boolean(value)` / `to_bool(value)` / `bool(value)`
+Convert ke boolean.
+
+```python
+nilai itu ke_boolean(1)  // benar
+```
+
+#### `ke_list(value)` / `to_list(value)` / `list(value)`
+Convert ke list.
+
+```python
+teks itu "hello"
+chars itu ke_list(teks)  // ["h", "e", "l", "l", "o"]
+```
+
+---
+
+## Iteration Functions
+
+#### `map(function, list)` / `petakan(function, list)`
+Menerapkan fungsi ke setiap elemen.
+
+```python
+angka itu [1, 2, 3, 4]
+kuadrat itu map(lambda dengan x -> x * x, angka)
+// [1, 4, 9, 16]
+```
+
+#### `filter(function, list)` / `saring(function, list)`
+Menyaring elemen berdasarkan kondisi.
+
+```python
+angka itu [1, 2, 3, 4, 5]
+genap itu filter(lambda dengan x -> x % 2 == 0, angka)
+// [2, 4]
+```
+
+#### `reduce(function, list)` / `reduksi(function, list)`
+Mereduksi list menjadi satu nilai.
+
+```python
+angka itu [1, 2, 3, 4]
+total itu reduce(lambda dengan a, b -> a + b, angka)
+// 10
+```
+
+#### `zip(list1, list2)` / `gabung_list(list1, list2)`
+Menggabungkan dua list.
+
+```python
+nama itu ["a", "b", "c"]
+nilai itu [1, 2, 3]
+pairs itu zip(nama, nilai)
+// [("a", 1), ("b", 2), ("c", 3)]
+```
+
+#### `enumerate(list)` / `enumerasi(list)`
+Menambahkan index ke list.
+
+```python
+items itu ["a", "b", "c"]
+indexed itu enumerate(items)
+// [(0, "a"), (1, "b"), (2, "c")]
+```
+
+---
+
+## Utility Functions
+
+#### `jenis(value)` / `type(value)`
+Mendapatkan tipe data.
+
+```python
+nilai itu 123
+tipe itu jenis(nilai)  // "int"
+```
+
+#### `id(value)` / `identitas(value)`
+Mendapatkan ID object.
+
+```python
+obj itu [1, 2, 3]
+obj_id itu id(obj)
+```
+
+#### `help(function)` / `bantuan(function)`
+Mendapatkan bantuan fungsi.
+
+```python
+bantuan(panjang)
+```
+
+#### `dir(object)` / `daftar_atribut(object)`
+Mendaftar atribut object.
+
+```python
+attrs itu dir([])
+```
+
+---
+
+## 💡 Usage Examples
+
+### Example 1: String Processing
+```python
+// Input
+teks itu "  Hello World  "
+
+// Process
+bersih itu hapus_spasi(teks)
+besar itu huruf_besar(bersih)
+kata itu pisah(besar, " ")
+
+// Output
+tampilkan kata  // ["HELLO", "WORLD"]
+```
+
+### Example 2: Math Operations
+```python
+// Data
+angka itu [1, 2, 3, 4, 5]
+
+// Statistics
+rata itu rata_rata(angka)
+tengah itu nilai_tengah(angka)
+dev itu deviasi_standar(angka)
+
+// Output
+tampilkan f"Rata-rata: {rata}"
+tampilkan f"Median: {tengah}"
+tampilkan f"Std Dev: {dev}"
+```
+
+### Example 3: HTTP Request
+```python
+// GET request
+response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
+
+// Check status
+jika response.ok()
+    data itu response.json()
+    tampilkan f"Title: {data['title']}"
+    tampilkan f"Body: {data['body']}"
+kalau_tidak
+    tampilkan f"Error: {response.status_code}"
+selesai
+```
+
+### Example 4: File Processing
+```python
+// Read file
+content itu baca_file("data.txt")
+
+// Process
+lines itu pisah(content, "\n")
+filtered itu filter(lambda dengan x -> panjang(x) > 0, lines)
+
+// Write result
+hasil itu gabung("\n", filtered)
+tulis_file("output.txt", hasil)
+```
+
+---
+
+## 📚 See Also
+
+- [Syntax Basics](syntax-basics.md) - Basic syntax
+- [Advanced Features](advanced-features.md) - Advanced features
+- [Examples](examples.md) - Code examples
+- [Python Integration](python-integration.md) - Python integration
+
+---
+
+**Total Functions: 184+**  
+**Categories: 10**  
+**Version: 0.0.4**

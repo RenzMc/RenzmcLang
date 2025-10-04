@@ -1,349 +1,698 @@
-# Fitur Lanjutan
+# 🚀 Advanced Features - RenzMcLang v0.0.4
 
-## 🚀 Pengenalan
-
-RenzMcLang mendukung fitur pemrograman lanjutan termasuk Pemrograman Berorientasi Objek (OOP), pemrograman asinkron, dekorator, dan lainnya. Panduan ini mencakup semua fitur lanjutan dengan contoh yang berfungsi.
-
-## 📑 Daftar Isi
-
-- [Pemrograman Berorientasi Objek (OOP)](#pemrograman-berorientasi-objek-oop)
-- [Fungsi Lambda](#fungsi-lambda)
-- [List & Dictionary Comprehensions](#list--dictionary-comprehensions)
-- [Async/Await](#asyncawait)
-- [Dekorator](#dekorator)
-- [Penanganan Error](#penanganan-error)
-- [Context Managers (Pernyataan With)](#context-managers-pernyataan-with)
-- [Generator](#generator)
-- [Operator Lanjutan](#operator-lanjutan)
+**Last Updated:** 2025-10-04  
+**Version:** 0.0.4
 
 ---
 
-## Pemrograman Berorientasi Objek (OOP)
+## 🎯 Overview
 
-### Struktur Kelas Dasar
+RenzMcLang menyediakan fitur-fitur advanced yang powerful untuk development modern, termasuk OOP, Async/Await, Comprehensions, dan banyak lagi.
 
-RenzMcLang menggunakan pendekatan berbasis fungsi untuk OOP:
+---
 
-```python
-// Fungsi konstruktor
-buat fungsi buat_orang dengan nama, umur
-    orang itu {
-        "nama": nama,
-        "umur": umur
-    }
-    hasil orang
-selesai
+## 📋 Table of Contents
 
-// Fungsi metode
-buat fungsi perkenalan dengan orang
-    hasil f"Halo, nama saya {orang['nama']}, umur {orang['umur']} tahun"
-selesai
+1. [Object-Oriented Programming (OOP)](#object-oriented-programming-oop)
+2. [Async/Await](#asyncawait)
+3. [Comprehensions](#comprehensions)
+4. [Lambda Functions](#lambda-functions)
+5. [Decorators](#decorators)
+6. [Context Managers](#context-managers)
+7. [Generators](#generators)
+8. [Error Handling](#error-handling)
+9. [Pattern Matching](#pattern-matching)
+10. [Type Hints](#type-hints)
 
-// Buat objek
-orang1 itu panggil buat_orang dengan "Alice", 25
+---
 
-// Panggil metode
-pesan itu panggil perkenalan dengan orang1
-tampilkan pesan
-```
+## Object-Oriented Programming (OOP)
 
-### Kelas dengan Properti
+### 1. Classes and Objects
+
+#### Basic Class Definition
 
 ```python
-// Kelas Bank Account
-buat fungsi buat_bank_account dengan pemilik, saldo_awal
-    account itu {
-        "pemilik": pemilik,
-        "saldo": saldo_awal,
-        "transaksi": []
-    }
-    hasil account
-selesai
-
-// Metode deposit
-buat fungsi deposit dengan account, jumlah
-    account["saldo"] itu account["saldo"] + jumlah
-    tambah(account["transaksi"], f"Deposit: +Rp {jumlah}")
-    tampilkan f"✓ Deposit Rp {jumlah} berhasil"
-selesai
-
-// Metode withdraw
-buat fungsi withdraw dengan account, jumlah
-    jika jumlah > account["saldo"]
-        tampilkan "✗ Saldo tidak cukup"
-        hasil salah
+kelas Mahasiswa:
+    konstruktor(nama, nim):
+        diri.nama itu nama
+        diri.nim itu nim
+        diri.nilai itu []
     selesai
     
-    account["saldo"] itu account["saldo"] - jumlah
-    tambah(account["transaksi"], f"Withdraw: -Rp {jumlah}")
-    tampilkan f"✓ Withdraw Rp {jumlah} berhasil"
-    hasil benar
+    metode tambah_nilai(nilai):
+        diri.nilai.tambah(nilai)
+    selesai
+    
+    metode rata_rata():
+        jika panjang(diri.nilai) == 0
+            hasil 0
+        selesai
+        hasil jumlah(diri.nilai) / panjang(diri.nilai)
+    selesai
+    
+    metode info():
+        tampilkan f"Nama: {diri.nama}"
+        tampilkan f"NIM: {diri.nim}"
+        tampilkan f"Rata-rata: {diri.rata_rata()}"
+    selesai
 selesai
 
-// Penggunaan
-akun itu panggil buat_bank_account dengan "Budi", 1000000
-panggil deposit dengan akun, 500000
-panggil withdraw dengan akun, 200000
+// Create instance
+mhs itu Mahasiswa("Budi", "12345")
+mhs.tambah_nilai(85)
+mhs.tambah_nilai(90)
+mhs.tambah_nilai(88)
+mhs.info()
 ```
 
-### Pola Pewarisan
+### 2. Inheritance
 
 ```python
-// Kelas dasar: Animal
-buat fungsi buat_animal dengan nama, jenis
-    animal itu {
-        "nama": nama,
-        "jenis": jenis
-    }
-    hasil animal
+// Base class
+kelas Orang:
+    konstruktor(nama, umur):
+        diri.nama itu nama
+        diri.umur itu umur
+    selesai
+    
+    metode perkenalan():
+        tampilkan f"Nama: {diri.nama}, Umur: {diri.umur}"
+    selesai
 selesai
 
-// Kelas turunan: Dog (memperluas Animal)
-buat fungsi buat_dog dengan nama, ras
-    // Panggil konstruktor induk
-    dog itu panggil buat_animal dengan nama, "Anjing"
-    // Tambahkan properti khusus
-    dog["ras"] itu ras
-    hasil dog
+// Derived class
+kelas Mahasiswa warisi Orang:
+    konstruktor(nama, umur, nim):
+        super().__init__(nama, umur)
+        diri.nim itu nim
+    selesai
+    
+    metode perkenalan():
+        super().perkenalan()
+        tampilkan f"NIM: {diri.nim}"
+    selesai
 selesai
 
-// Metode untuk Dog
-buat fungsi gonggong dengan dog
-    tampilkan f"{dog['nama']} berkata: Woof! Woof!"
+// Usage
+mhs itu Mahasiswa("Budi", 20, "12345")
+mhs.perkenalan()
+```
+
+### 3. Properties
+
+```python
+kelas BankAccount:
+    konstruktor(nama, saldo_awal):
+        diri.nama itu nama
+        diri._saldo itu saldo_awal
+    selesai
+    
+    @properti
+    metode saldo():
+        hasil diri._saldo
+    selesai
+    
+    metode setor(jumlah):
+        jika jumlah > 0
+            diri._saldo += jumlah
+            tampilkan f"Setor: Rp {jumlah}"
+        selesai
+    selesai
+    
+    metode tarik(jumlah):
+        jika jumlah > 0 dan jumlah <= diri._saldo
+            diri._saldo -= jumlah
+            tampilkan f"Tarik: Rp {jumlah}"
+        kalau_tidak
+            tampilkan "Saldo tidak cukup"
+        selesai
+    selesai
 selesai
 
-// Penggunaan
-anjing itu panggil buat_dog dengan "Buddy", "Golden Retriever"
-panggil gonggong dengan anjing
+// Usage
+akun itu BankAccount("Budi", 1000000)
+tampilkan f"Saldo: Rp {akun.saldo}"
+akun.setor(500000)
+akun.tarik(200000)
 ```
 
----
-
-## Fungsi Lambda
-
-Fungsi lambda adalah fungsi anonim untuk operasi cepat:
+### 4. Static Methods
 
 ```python
-// Lambda sederhana
-kuadrat itu lambda x: x * x
-tampilkan kuadrat(5)  // Output: 25
+kelas MathUtils:
+    @metode_statis
+    metode tambah(a, b):
+        hasil a + b
+    selesai
+    
+    @metode_statis
+    metode kali(a, b):
+        hasil a * b
+    selesai
+selesai
 
-// Lambda dengan beberapa parameter
-tambah itu lambda x, y: x + y
-tampilkan tambah(3, 4)  // Output: 7
-
-// Lambda dengan kondisi
-is_genap itu lambda x: x % 2 == 0
-tampilkan is_genap(4)  // Output: benar
-
-// Menggunakan lambda dengan map
-angka itu [1, 2, 3, 4, 5]
-kuadrat_list itu map(lambda x: x * x, angka)
-tampilkan kuadrat_list  // Output: [1, 4, 9, 16, 25]
+// Usage (no instance needed)
+hasil itu MathUtils.tambah(5, 3)
+tampilkan hasil  // 8
 ```
 
----
-
-## List & Dictionary Comprehensions
-
-### List Comprehension
+### 5. Class Methods
 
 ```python
-// List comprehension dasar
-kuadrat itu [x * x untuk x dari [1, 2, 3, 4, 5]]
-// Output: [1, 4, 9, 16, 25]
+kelas Counter:
+    jumlah itu 0
+    
+    @metode_kelas
+    metode increment(cls):
+        cls.jumlah += 1
+    selesai
+    
+    @metode_kelas
+    metode get_count(cls):
+        hasil cls.jumlah
+    selesai
+selesai
 
-// Dengan kondisi
-genap itu [x untuk x dari [1, 2, 3, 4, 5, 6] jika x % 2 == 0]
-// Output: [2, 4, 6]
-
-// Comprehension bersarang
-matrix itu [[i * j untuk j dari [1, 2, 3]] untuk i dari [1, 2, 3]]
-// Output: [[1, 2, 3], [2, 4, 6], [3, 6, 9]]
-```
-
-### Dictionary Comprehension
-
-```python
-// Dict comprehension dasar
-kuadrat_dict itu {x: x * x untuk x dari [1, 2, 3, 4, 5]}
-// Output: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
-
-// Dengan kondisi
-genap_dict itu {x: x * x untuk x dari [1, 2, 3, 4, 5, 6] jika x % 2 == 0}
-// Output: {2: 4, 4: 16, 6: 36}
+// Usage
+Counter.increment()
+Counter.increment()
+tampilkan Counter.get_count()  // 2
 ```
 
 ---
 
 ## Async/Await
 
-Pemrograman asinkron untuk operasi konkuren:
+### 1. Async Functions
 
 ```python
-// Impor pustaka async
-impor_python "asyncio"
-
-// Fungsi async
 async fungsi fetch_data(url):
-    tampilkan f"Mengambil {url}..."
-    await panggil_python asyncio.sleep(1)
-    hasil f"Data dari {url}"
+    tampilkan f"Fetching from {url}..."
+    await tidur(2)  // Simulate delay
+    hasil f"Data from {url}"
 selesai
 
-// Fungsi async utama
+// Call async function
+hasil itu await fetch_data("https://api.example.com")
+tampilkan hasil
+```
+
+### 2. Multiple Async Operations
+
+```python
+async fungsi process_user(user_id):
+    tampilkan f"Processing user {user_id}..."
+    await tidur(1)
+    hasil f"User {user_id} processed"
+selesai
+
 async fungsi main():
-    data1 itu await fetch_data("https://api1.com")
-    data2 itu await fetch_data("https://api2.com")
-    tampilkan data1
-    tampilkan data2
+    // Sequential
+    hasil1 itu await process_user(1)
+    hasil2 itu await process_user(2)
+    
+    tampilkan hasil1
+    tampilkan hasil2
 selesai
 
-// Jalankan fungsi async
-panggil_python asyncio.run(main())
+await main()
+```
+
+### 3. Async with HTTP
+
+```python
+async fungsi fetch_users():
+    response itu await http_get("https://jsonplaceholder.typicode.com/users")
+    data itu response.json()
+    
+    untuk setiap user dari data
+        tampilkan f"User: {user['name']}"
+    selesai
+selesai
+
+await fetch_users()
 ```
 
 ---
 
-## Dekorator
+## Comprehensions
 
-Dekorator memodifikasi perilaku fungsi:
+### 1. List Comprehension
 
 ```python
-// Dekorator timer
-buat fungsi timer_decorator dengan func
-    buat fungsi wrapper(*args):
-        start itu waktu()
-        result itu panggil func dengan *args
-        end itu waktu()
-        tampilkan f"Waktu eksekusi: {end - start} detik"
-        hasil result
+// Basic list comprehension
+angka itu [1, 2, 3, 4, 5]
+kuadrat itu [x * x untuk setiap x dari angka]
+// [1, 4, 9, 16, 25]
+
+// With condition
+genap itu [x untuk setiap x dari angka jika x % 2 == 0]
+// [2, 4]
+
+// Nested comprehension
+matrix itu [[i * j untuk setiap j dari [1, 2, 3]] untuk setiap i dari [1, 2, 3]]
+// [[1, 2, 3], [2, 4, 6], [3, 6, 9]]
+```
+
+### 2. Dict Comprehension
+
+```python
+// Basic dict comprehension
+angka itu [1, 2, 3, 4, 5]
+kuadrat_dict itu {x: x * x untuk setiap x dari angka}
+// {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+// With condition
+genap_dict itu {x: x * x untuk setiap x dari angka jika x % 2 == 0}
+// {2: 4, 4: 16}
+
+// From two lists
+keys itu ["a", "b", "c"]
+values itu [1, 2, 3]
+dict_result itu {k: v untuk setiap k, v dari zip(keys, values)}
+// {"a": 1, "b": 2, "c": 3}
+```
+
+### 3. Set Comprehension
+
+```python
+// Basic set comprehension
+angka itu [1, 2, 2, 3, 3, 4]
+unique itu {x untuk setiap x dari angka}
+// {1, 2, 3, 4}
+
+// With transformation
+huruf itu ["a", "b", "c"]
+upper_set itu {x.upper() untuk setiap x dari huruf}
+// {"A", "B", "C"}
+```
+
+---
+
+## Lambda Functions
+
+### 1. Basic Lambda
+
+```python
+// Simple lambda
+kuadrat itu lambda dengan x -> x * x
+tampilkan kuadrat(5)  // 25
+
+// Lambda with multiple parameters
+tambah itu lambda dengan a, b -> a + b
+tampilkan tambah(3, 4)  // 7
+```
+
+### 2. Lambda with Map
+
+```python
+angka itu [1, 2, 3, 4, 5]
+kuadrat itu map(lambda dengan x -> x * x, angka)
+tampilkan kuadrat  // [1, 4, 9, 16, 25]
+```
+
+### 3. Lambda with Filter
+
+```python
+angka itu [1, 2, 3, 4, 5, 6]
+genap itu filter(lambda dengan x -> x % 2 == 0, angka)
+tampilkan genap  // [2, 4, 6]
+```
+
+### 4. Lambda with Sort
+
+```python
+data itu [{"nama": "Budi", "umur": 25}, {"nama": "Ani", "umur": 22}]
+sorted_data itu sorted(data, key=lambda dengan x -> x["umur"])
+```
+
+---
+
+## Decorators
+
+### 1. Function Decorators
+
+```python
+fungsi timer(func):
+    fungsi wrapper(*args, **kwargs):
+        start itu waktu_sekarang()
+        hasil itu func(*args, **kwargs)
+        end itu waktu_sekarang()
+        tampilkan f"Execution time: {end - start}s"
+        hasil hasil
     selesai
     hasil wrapper
 selesai
 
-// Terapkan dekorator
-@timer_decorator
+@timer
 fungsi slow_function():
     tidur(2)
-    tampilkan "Fungsi selesai"
+    tampilkan "Done!"
+selesai
+
+slow_function()
+```
+
+### 2. Class Decorators
+
+```python
+@dekorator
+kelas Singleton:
+    _instance itu kosong
+    
+    konstruktor():
+        jika Singleton._instance tidak kosong
+            raise Exception("Singleton already exists")
+        selesai
+        Singleton._instance itu diri
+    selesai
 selesai
 ```
 
 ---
 
-## Penanganan Error
+## Context Managers
 
-Penanganan error komprehensif dengan try-catch-finally:
-
-```python
-// Try-catch dasar
-coba
-    hasil itu 10 / 0
-tangkap ZeroDivisionError sebagai e:
-    tampilkan "Error: Tidak bisa membagi dengan nol!"
-selesai
-
-// Try-catch-finally
-coba
-    file itu baca_file("data.txt")
-    tampilkan file
-tangkap FileNotFoundError:
-    tampilkan "File tidak ditemukan"
-tangkap Exception sebagai e:
-    tampilkan f"Error: {e}"
-akhirnya
-    tampilkan "Pembersihan selesai"
-selesai
-```
-
----
-
-## Context Managers (Pernyataan With)
-
-Manajemen sumber daya otomatis:
+### 1. File Context Manager
 
 ```python
-// Penanganan file dengan context manager
-dengan buka("data.txt", "r") sebagai f:
-    content itu f.read()
+// Automatic file closing
+dengan buka("data.txt", "r") sebagai f
+    content itu f.baca()
     tampilkan content
 selesai
-// File otomatis ditutup
+// File automatically closed
+```
 
-// Multiple context managers
-dengan buka("input.txt", "r") sebagai f_in, buka("output.txt", "w") sebagai f_out:
-    data itu f_in.read()
-    f_out.write(data)
+### 2. Custom Context Manager
+
+```python
+kelas DatabaseConnection:
+    konstruktor(db_name):
+        diri.db_name itu db_name
+        diri.connection itu kosong
+    selesai
+    
+    metode __enter__():
+        diri.connection itu connect(diri.db_name)
+        hasil diri.connection
+    selesai
+    
+    metode __exit__(exc_type, exc_val, exc_tb):
+        jika diri.connection
+            diri.connection.close()
+        selesai
+    selesai
 selesai
+
+// Usage
+dengan DatabaseConnection("mydb") sebagai conn
+    // Use connection
+    data itu conn.query("SELECT * FROM users")
+selesai
+// Connection automatically closed
 ```
 
 ---
 
-## Generator
+## Generators
 
-Iterasi yang efisien memori:
+### 1. Basic Generator
 
 ```python
-// Fungsi generator
 fungsi countdown(n):
     selama n > 0
-        yield n
+        hasilkan n
         n -= 1
     selesai
 selesai
 
-// Gunakan generator
+// Usage
 untuk setiap num dari countdown(5)
     tampilkan num
 selesai
+// Output: 5, 4, 3, 2, 1
 ```
 
----
-
-## Operator Lanjutan
-
-### Operator Walrus (:=)
+### 2. Generator Expression
 
 ```python
-// Ekspresi penugasan
-jika (n := panjang(data)) > 10
-    tampilkan f"Data memiliki {n} item"
+// Generator expression (lazy evaluation)
+gen itu (x * x untuk setiap x dari range(1000000))
+
+// Only compute when needed
+untuk setiap val dari gen
+    jika val > 100
+        berhenti
+    selesai
+    tampilkan val
 selesai
 ```
 
-### Operator Bitwise
+### 3. Yield From
 
 ```python
-a itu 5   // 0101 dalam biner
-b itu 3   // 0011 dalam biner
+fungsi flatten(nested_list):
+    untuk setiap item dari nested_list
+        jika jenis(item) == list
+            hasil_dari flatten(item)
+        kalau_tidak
+            hasilkan item
+        selesai
+    selesai
+selesai
 
-tampilkan a & b    // AND: 1 (0001)
-tampilkan a | b    // OR: 7 (0111)
-tampilkan a ^ b    // XOR: 6 (0110)
-tampilkan ~a       // NOT: -6
-tampilkan a << 1   // Geser kiri: 10 (1010)
-tampilkan a >> 1  // Geser kanan: 2 (0010)
+// Usage
+nested itu [1, [2, 3], [4, [5, 6]]]
+flat itu list(flatten(nested))
+tampilkan flat  // [1, 2, 3, 4, 5, 6]
 ```
 
 ---
 
-## Ringkasan
+## Error Handling
 
-RenzMcLang mendukung semua fitur pemrograman modern:
+### 1. Try-Catch-Finally
 
-- ✅ Pemrograman Berorientasi Objek (berbasis fungsi)
-- ✅ Fungsi lambda dan pemrograman fungsional
-- ✅ List dan dictionary comprehensions
-- ✅ Async/await untuk pemrograman konkuren
-- ✅ Dekorator untuk modifikasi fungsi
-- ✅ Penanganan error komprehensif
-- ✅ Context manager untuk manajemen sumber daya
-- ✅ Generator untuk efisiensi memori
-- ✅ Operator lanjutan (walrus, bitwise)
+```python
+coba
+    // Code that might raise error
+    nilai itu ke_angka(input("Masukkan angka: "))
+    hasil itu 100 / nilai
+    tampilkan f"Hasil: {hasil}"
+tangkap ZeroDivisionError sebagai e
+    tampilkan "Error: Tidak bisa dibagi nol"
+tangkap ValueError sebagai e
+    tampilkan "Error: Input bukan angka"
+tangkap Exception sebagai e
+    tampilkan f"Error: {e}"
+akhirnya
+    tampilkan "Selesai"
+selesai
+```
 
-Untuk contoh lebih lanjut, lihat direktori [examples](../examples/).
+### 2. Custom Exceptions
+
+```python
+kelas ValidationError warisi Exception:
+    konstruktor(message):
+        diri.message itu message
+    selesai
+selesai
+
+fungsi validate_age(age):
+    jika age < 0
+        raise ValidationError("Umur tidak boleh negatif")
+    selesai
+    jika age > 150
+        raise ValidationError("Umur tidak valid")
+    selesai
+    hasil benar
+selesai
+
+// Usage
+coba
+    validate_age(-5)
+tangkap ValidationError sebagai e
+    tampilkan f"Validation error: {e.message}"
+selesai
+```
+
+### 3. Error Propagation
+
+```python
+fungsi read_config(path):
+    coba
+        content itu baca_file(path)
+        config itu json_parse(content)
+        hasil config
+    tangkap FileNotFoundError
+        tampilkan f"Config file not found: {path}"
+        raise  // Re-raise the exception
+    tangkap JSONDecodeError
+        tampilkan "Invalid JSON format"
+        raise
+    selesai
+selesai
+```
 
 ---
 
-**Selamat Coding Lanjutan dengan RenzMcLang! 🚀**
+## Pattern Matching
+
+### 1. Switch/Case
+
+```python
+fungsi process_command(cmd):
+    cocok cmd
+        kasus "start":
+            tampilkan "Starting..."
+        kasus "stop":
+            tampilkan "Stopping..."
+        kasus "restart":
+            tampilkan "Restarting..."
+        bawaan:
+            tampilkan "Unknown command"
+    selesai
+selesai
+
+process_command("start")
+```
+
+### 2. Pattern Matching with Values
+
+```python
+fungsi describe_number(n):
+    cocok n
+        kasus 0:
+            hasil "zero"
+        kasus 1:
+            hasil "one"
+        kasus n jika n > 0:
+            hasil "positive"
+        kasus n jika n < 0:
+            hasil "negative"
+        bawaan:
+            hasil "unknown"
+    selesai
+selesai
+```
+
+---
+
+## Type Hints
+
+### 1. Function Type Hints
+
+```python
+fungsi tambah(a: angka, b: angka) -> angka:
+    hasil a + b
+selesai
+
+fungsi sapa(nama: teks) -> teks:
+    hasil f"Hello, {nama}!"
+selesai
+```
+
+### 2. Variable Type Hints
+
+```python
+nama: teks itu "Budi"
+umur: angka itu 25
+is_student: boolean itu benar
+nilai: list[angka] itu [85, 90, 88]
+```
+
+### 3. Complex Type Hints
+
+```python
+fungsi process_data(data: dict[teks, angka]) -> list[teks]:
+    hasil [k untuk setiap k dari data.keys()]
+selesai
+```
+
+---
+
+## 💡 Best Practices
+
+### 1. OOP Best Practices
+
+```python
+// ✅ Good - Clear class structure
+kelas User:
+    konstruktor(username, email):
+        diri.username itu username
+        diri.email itu email
+        diri._password itu kosong
+    selesai
+    
+    metode set_password(password):
+        // Hash password
+        diri._password itu hash(password)
+    selesai
+    
+    metode verify_password(password):
+        hasil hash(password) == diri._password
+    selesai
+selesai
+
+// ❌ Bad - Exposing internal state
+kelas User:
+    konstruktor(username, email, password):
+        diri.username itu username
+        diri.email itu email
+        diri.password itu password  // Direct access
+    selesai
+selesai
+```
+
+### 2. Async Best Practices
+
+```python
+// ✅ Good - Proper async usage
+async fungsi fetch_all_users():
+    users itu await http_get("/api/users")
+    hasil users.json()
+selesai
+
+// ❌ Bad - Blocking in async
+async fungsi fetch_all_users():
+    users itu http_get("/api/users")  // Missing await
+    hasil users.json()
+selesai
+```
+
+### 3. Error Handling Best Practices
+
+```python
+// ✅ Good - Specific error handling
+coba
+    data itu json_parse(content)
+tangkap JSONDecodeError sebagai e
+    tampilkan f"Invalid JSON: {e}"
+tangkap FileNotFoundError sebagai e
+    tampilkan f"File not found: {e}"
+selesai
+
+// ❌ Bad - Catching all errors
+coba
+    data itu json_parse(content)
+tangkap Exception sebagai e
+    tampilkan "Something went wrong"
+selesai
+```
+
+---
+
+## 📚 See Also
+
+- [Syntax Basics](syntax-basics.md) - Basic syntax
+- [Built-in Functions](builtin-functions.md) - Built-in functions
+- [Examples](examples.md) - Code examples
+- [Python Integration](python-integration.md) - Python integration
+
+---
+
+**Version: 0.0.4**  
+**Last Updated: 2025-10-04**

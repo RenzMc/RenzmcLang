@@ -1,174 +1,384 @@
-# Panduan Instalasi
+# 📦 Installation Guide - RenzMcLang v0.0.4
 
-## 📦 Menginstal RenzMcLang
+**Last Updated:** 2025-10-04  
+**Version:** 0.0.4
 
-RenzMcLang adalah bahasa pemrograman berbasis Python dengan sintaks Bahasa Indonesia. Ikuti langkah-langkah berikut untuk menginstalnya di sistem Anda.
+---
 
-### Prasyarat
+## 🎯 Overview
 
-- Python 3.8 atau lebih tinggi
-- pip (pengelola paket Python)
+RenzMcLang adalah bahasa pemrograman berbasis Bahasa Indonesia yang modern dan powerful. Panduan ini akan membantu Anda menginstall RenzMcLang di sistem Anda.
 
-### Metode Instalasi
+---
 
-#### Metode 1: Instal dari PyPI (Direkomendasikan)
+## 📋 System Requirements
+
+### Minimum Requirements
+- **Python:** 3.8 atau lebih tinggi
+- **Operating System:** Windows, macOS, atau Linux
+- **RAM:** 512 MB (minimum)
+- **Disk Space:** 100 MB
+
+### Recommended Requirements
+- **Python:** 3.11 atau lebih tinggi
+- **RAM:** 2 GB atau lebih
+- **Disk Space:** 500 MB
+
+---
+
+## 🚀 Installation Methods
+
+### Method 1: Install from PyPI (Recommended)
+
+Cara termudah untuk menginstall RenzMcLang adalah melalui PyPI:
 
 ```bash
 pip install renzmc
 ```
 
-#### Metode 2: Instal dari Sumber
+**Verify Installation:**
+```bash
+rmc --version
+# Output: RenzmcLang 0.0.4
+```
+
+### Method 2: Install from Source
+
+Untuk development atau kontribusi:
 
 ```bash
-# Klon repositori
-git clone https://github.com/yourusername/RenzMcLang.git
-cd RenzMcLang
+# Clone repository
+git clone https://github.com/RenzMc/RenzmcLang.git
+cd RenzmcLang
 
-# Instal dependensi
-pip install -r requirements.txt
-
-# Instal paket
+# Install in development mode
 pip install -e .
 ```
 
-### Verifikasi Instalasi
+**Verify Installation:**
+```bash
+rmc --version
+# Output: RenzmcLang 0.0.4
+```
 
-Setelah instalasi, verifikasi bahwa RenzMcLang terinstal dengan benar:
+### Method 3: Using Installation Scripts
 
+#### For Linux/macOS:
+```bash
+cd RenzmcLang
+chmod +x install.sh
+./install.sh
+```
+
+#### For Windows:
+```cmd
+cd RenzmcLang
+install.bat
+```
+
+---
+
+## 📦 Dependencies
+
+RenzMcLang memerlukan beberapa Python packages:
+
+### Core Dependencies
+- `aiohttp>=3.8.1` - Async HTTP client
+- `requests>=2.27.1` - HTTP library
+- `cryptography>=36.0.0` - Cryptographic operations
+- `python-dateutil>=2.8.2` - Date utilities
+- `pytz>=2021.3` - Timezone support
+- `pyyaml>=6.0` - YAML parser
+- `ujson>=5.1.0` - Fast JSON parser
+- `regex>=2022.1.18` - Advanced regex
+
+### Optional Dependencies
+
+#### For Development:
+```bash
+pip install renzmc[dev]
+```
+
+Includes:
+- `pytest>=7.0.0` - Testing framework
+- `pytest-asyncio>=0.18.0` - Async testing
+- `black>=22.1.0` - Code formatter
+- `isort>=5.10.1` - Import sorter
+- `mypy>=0.931` - Type checker
+- `flake8>=4.0.1` - Linter
+
+#### For Documentation:
+```bash
+pip install renzmc[docs]
+```
+
+Includes:
+- `sphinx>=4.0.0` - Documentation generator
+- `sphinx-rtd-theme>=1.0.0` - ReadTheDocs theme
+
+---
+
+## ✅ Verification
+
+### 1. Check Version
 ```bash
 rmc --version
 ```
 
-Anda akan melihat output seperti:
+**Expected Output:**
 ```
-RenzmcLang 1.0.0
+RenzmcLang 0.0.4
 ```
 
-### Menjalankan Program Pertama Anda
-
-Buat file bernama `hello.rmc`:
-
+### 2. Run Hello World
+Create a file `hello.rmc`:
 ```python
 tampilkan "Hello, World!"
+tampilkan "Selamat datang di RenzMcLang!"
 ```
 
-Jalankan:
-
+Run it:
 ```bash
 rmc hello.rmc
 ```
 
-Output:
+**Expected Output:**
 ```
 Hello, World!
+Selamat datang di RenzMcLang!
 ```
 
-### Mode Interaktif (REPL)
-
-Mulai interpreter interaktif:
-
+### 3. Test REPL (Interactive Shell)
 ```bash
 rmc
 ```
 
-Anda akan melihat:
-
+**Expected Output:**
 ```
-RenzmcLang 1.0.0 - Bahasa pemrograman berbasis Bahasa Indonesia
-Ketik 'keluar' untuk keluar dari interpreter.
+╔════════════════════════════════════════════════════════════════╗
+║           RenzMcLang Interactive Shell (REPL)                 ║
+║                    Version 0.0.4                               ║
+╚════════════════════════════════════════════════════════════════╝
 
->>> 
+Selamat datang di RenzMcLang REPL!
+Ketik 'bantuan' untuk melihat perintah yang tersedia
+Ketik 'keluar' atau tekan Ctrl+D untuk keluar
+
+>>>
 ```
 
-Coba beberapa perintah:
-
+### 4. Test HTTP Client
+Create a file `test_http.rmc`:
 ```python
->>> tampilkan "Halo!"
-Halo!
->>> angka itu 42
->>> tampilkan angka
-42
->>> keluar
+response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
+tampilkan f"Status: {response.status_code}"
+data itu response.json()
+tampilkan f"Title: {data['title']}"
 ```
 
-### Opsi Baris Perintah
-
-RenzMcLang mendukung beberapa opsi baris perintah:
-
+Run it:
 ```bash
-# Jalankan file
-rmc script.rmc
-
-# Jalankan kode secara langsung
-rmc -c "tampilkan 'Hello'"
-
-# Tampilkan versi
-rmc --version
-
-# Mode interaktif (default ketika tidak ada argumen)
-rmc
+rmc test_http.rmc
 ```
 
-### Dependensi
-
-RenzMcLang membutuhkan paket Python berikut:
-
-- `aiohttp>=3.8.1` - Untuk operasi HTTP asinkron
-- `requests>=2.27.1` - Untuk permintaan HTTP
-- `cryptography>=36.0.0` - Untuk fitur enkripsi
-- `python-dateutil>=2.8.2` - Untuk operasi tanggal/waktu
-- `pytz>=2021.3` - Untuk dukungan zona waktu
-- `pyyaml>=6.0` - Untuk penguraian YAML
-- `ujson>=5.1.0` - Untuk operasi JSON cepat
-- `regex>=2022.1.18` - Untuk dukungan regex lanjutan
-
-Semua ini otomatis diinstal saat Anda menginstal RenzMcLang melalui pip.
-
-### Pemecahan Masalah
-
-#### "rmc: command not found"
-
-Jika Anda mendapatkan error ini, pastikan direktori skrip Python ada di PATH Anda:
-
-**Linux/macOS:**
-```bash
-export PATH="$HOME/.local/bin:$PATH"
+**Expected Output:**
+```
+Status: 200
+Title: sunt aut facere repellat provident occaecati excepturi optio reprehenderit
 ```
 
-**Windows:**
-Tambahkan `%APPDATA%\Python\Scripts` ke variabel lingkungan PATH Anda.
+---
 
-#### Error Impor
+## 🔧 Configuration
 
-Jika Anda mengalami error impor, instal ulang dependensi:
+### Environment Variables
+
+RenzMcLang supports the following environment variables:
 
 ```bash
-pip install --upgrade -r requirements.txt
+# Set default timeout for HTTP requests (in seconds)
+export RENZMC_HTTP_TIMEOUT=30
+
+# Set log level (DEBUG, INFO, WARNING, ERROR)
+export RENZMC_LOG_LEVEL=INFO
+
+# Set REPL history file location
+export RENZMC_HISTORY_FILE=~/.renzmc_history
 ```
 
-#### Error Izin
+### Configuration File
 
-Pada Linux/macOS, Anda mungkin perlu menggunakan `pip install --user`:
+Create `~/.renzmcrc` for custom configuration:
 
+```yaml
+# RenzMcLang Configuration
+http:
+  timeout: 30
+  user_agent: "RenzMcLang/0.0.4"
+
+repl:
+  history_size: 1000
+  multiline_mode: true
+
+logging:
+  level: INFO
+  file: ~/.renzmc.log
+```
+
+---
+
+## 🐛 Troubleshooting
+
+### Issue 1: Command Not Found
+
+**Problem:**
 ```bash
+rmc: command not found
+```
+
+**Solution:**
+```bash
+# Make sure pip bin directory is in PATH
+export PATH="$PATH:$HOME/.local/bin"
+
+# Or use python -m
+python -m renzmc --version
+```
+
+### Issue 2: Import Error
+
+**Problem:**
+```
+ImportError: No module named 'renzmc'
+```
+
+**Solution:**
+```bash
+# Reinstall RenzMcLang
+pip uninstall renzmc
+pip install renzmc
+
+# Or check Python path
+python -c "import sys; print(sys.path)"
+```
+
+### Issue 3: Permission Denied
+
+**Problem:**
+```
+Permission denied: '/usr/local/bin/rmc'
+```
+
+**Solution:**
+```bash
+# Install for user only
 pip install --user renzmc
+
+# Or use sudo (not recommended)
+sudo pip install renzmc
 ```
 
-### Menghapus Instalasi
+### Issue 4: HTTP Client Not Working
 
-Untuk menghapus instalasi RenzMcLang:
+**Problem:**
+```
+Error: http_get not found
+```
 
+**Solution:**
+```bash
+# Make sure you have the latest version
+pip install --upgrade renzmc
+
+# Check version
+rmc --version  # Should be 0.0.4 or higher
+```
+
+---
+
+## 🔄 Updating
+
+### Update from PyPI
+```bash
+pip install --upgrade renzmc
+```
+
+### Update from Source
+```bash
+cd RenzmcLang
+git pull origin main
+pip install -e . --upgrade
+```
+
+### Check for Updates
+```bash
+pip list --outdated | grep renzmc
+```
+
+---
+
+## 🗑️ Uninstallation
+
+### Uninstall RenzMcLang
 ```bash
 pip uninstall renzmc
 ```
 
-### Langkah Selanjutnya
+### Remove Configuration Files
+```bash
+# Remove REPL history
+rm ~/.renzmc_history
 
-- Baca panduan [Dasar-dasar Sintaks](syntax-basics.md)
-- Jelajahi [Fungsi Bawaan](builtin-functions.md)
-- Lihat [Contoh](examples.md)
-- Pelajari tentang [Integrasi Python](python-integration.md)
+# Remove configuration
+rm ~/.renzmcrc
+
+# Remove logs
+rm ~/.renzmc.log
+```
 
 ---
 
-**Butuh Bantuan?** Kunjungi [repositori GitHub](https://github.com/yourusername/RenzMcLang) kami atau buka issue.
+## 📚 Next Steps
+
+After installation, you can:
+
+1. **Learn the Basics:** Read [Syntax Basics](syntax-basics.md)
+2. **Try Examples:** Explore [Examples Guide](examples.md)
+3. **Use REPL:** Start interactive shell with `rmc`
+4. **Build Projects:** Check [Advanced Features](advanced-features.md)
+5. **Integrate Python:** See [Python Integration](python-integration.md)
+
+---
+
+## 🆘 Getting Help
+
+### Documentation
+- [Quick Reference](quick-reference.md)
+- [Built-in Functions](builtin-functions.md)
+- [Examples](examples.md)
+
+### Community
+- **GitHub:** https://github.com/RenzMc/RenzmcLang
+- **Issues:** https://github.com/RenzMc/RenzmcLang/issues
+- **Email:** renzaja11@gmail.com
+
+### Support
+If you encounter any issues:
+1. Check this troubleshooting guide
+2. Search existing GitHub issues
+3. Create a new issue with details
+4. Contact via email
+
+---
+
+## 📝 Notes
+
+- RenzMcLang requires Python 3.8+
+- All dependencies are automatically installed
+- REPL is available in v0.0.4+
+- HTTP client is built-in (no imports needed)
+- Backward compatible with v0.0.3
+
+---
+
+**Happy Coding with RenzMcLang! 🚀**

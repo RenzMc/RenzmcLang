@@ -1637,6 +1637,7 @@ def print_impl(*args, sep=' ', end='\n'):
 print_func = RenzmcBuiltinFunction(print_impl, "print")
 print = print_func
 cetak = print_func  # Indonesian alias
+tampilkan = print_func  # Indonesian alias for display/show
 
 
 # ============================================================================

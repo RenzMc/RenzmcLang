@@ -68,6 +68,8 @@ RenzMcLang adalah bahasa pemrograman yang menggunakan sintaks Bahasa Indonesia, 
 
 [EXAMPLE WEBSITE YG PAKE BAHASA PEMROGRAMAN RENZMC](https://github.com/RenzMc/renzmc-website)
 
+🔍 Bahasa pemrograman **RenzmcLang** sekarang sudah punya ekstensi VSCode — cek di [GitHub Renzmc Extension](https://github.com/RenzMc/renzmc-extension/tree/main)
+
 ## 📥 Instalasi
 
 ### Dari PyPI (Recommended)

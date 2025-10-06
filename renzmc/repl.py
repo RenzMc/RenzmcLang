@@ -1,5 +1,4 @@
-"""
-Enhanced REPL (Read-Eval-Print Loop) untuk RenzMcLang
+""" REPL (Read-Eval-Print Loop) untuk RenzMcLang
 Interactive shell dengan fitur modern seperti Python REPL
 """
 

@@ -1,0 +1,467 @@
+// ============================================
+// Email Sending - SMTP Email
+// ============================================
+// Contoh mengirim email dengan Python smtplib
+
+tampilkan "=== Email Sending Examples ==="
+tampilkan ""
+
+impor_python "smtplib"
+impor_python "email.mime.text"
+impor_python "email.mime.multipart"
+impor_python "email.mime.base"
+
+// ============================================
+// 1. BASIC EMAIL
+// ============================================
+
+tampilkan "[1] Basic Email Example..."
+tampilkan ""
+
+kode_basic itu """
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_email(sender, password, recipient, subject, body):
+    '''Kirim email sederhana'''
+    
+    # Buat message
+    msg = MIMEMultipart()
+    msg['From'] = sender
+    msg['To'] = recipient
+    msg['Subject'] = subject
+    
+    # Tambah body
+    msg.attach(MIMEText(body, 'plain'))
+    
+    # Kirim email
+    try:
+        # Gmail SMTP
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender, password)
+        
+        text = msg.as_string()
+        server.sendmail(sender, recipient, text)
+        server.quit()
+        
+        print("✓ Email berhasil dikirim!")
+        return True
+    except Exception as e:
+        print(f"✗ Error: {e}")
+        return False
+
+# Contoh penggunaan
+sender_email = "your_email@gmail.com"
+sender_password = "your_app_password"
+recipient_email = "recipient@example.com"
+
+send_email(
+    sender_email,
+    sender_password,
+    recipient_email,
+    "Test Email",
+    "Ini adalah test email dari RenzmcLang!"
+)
+"""
+
+tampilkan kode_basic
+tampilkan ""
+
+// ============================================
+// 2. HTML EMAIL
+// ============================================
+
+tampilkan "[2] HTML Email Example..."
+tampilkan ""
+
+kode_html itu """
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_html_email(sender, password, recipient, subject, html_content):
+    '''Kirim email dengan HTML'''
+    
+    msg = MIMEMultipart('alternative')
+    msg['From'] = sender
+    msg['To'] = recipient
+    msg['Subject'] = subject
+    
+    # Plain text version
+    text = "Silakan lihat email ini di HTML viewer"
+    
+    # HTML version
+    html = f'''
+    <html>
+      <head></head>
+      <body>
+        {html_content}
+      </body>
+    </html>
+    '''
+    
+    # Attach kedua versi
+    part1 = MIMEText(text, 'plain')
+    part2 = MIMEText(html, 'html')
+    
+    msg.attach(part1)
+    msg.attach(part2)
+    
+    # Kirim
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender, password)
+        server.sendmail(sender, recipient, msg.as_string())
+        server.quit()
+        print("✓ HTML email berhasil dikirim!")
+        return True
+    except Exception as e:
+        print(f"✗ Error: {e}")
+        return False
+
+# Contoh HTML content
+html_content = '''
+<h1>Selamat Datang!</h1>
+<p>Ini adalah email dengan <strong>HTML formatting</strong>.</p>
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+</ul>
+<p style="color: blue;">Email ini dikirim dari RenzmcLang</p>
+'''
+
+send_html_email(
+    "your_email@gmail.com",
+    "your_app_password",
+    "recipient@example.com",
+    "HTML Email Test",
+    html_content
+)
+"""
+
+tampilkan kode_html
+tampilkan ""
+
+// ============================================
+// 3. EMAIL WITH ATTACHMENT
+// ============================================
+
+tampilkan "[3] Email with Attachment..."
+tampilkan ""
+
+kode_attachment itu """
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+import os
+
+def send_email_with_attachment(sender, password, recipient, 
+                               subject, body, filename):
+    '''Kirim email dengan attachment'''
+    
+    msg = MIMEMultipart()
+    msg['From'] = sender
+    msg['To'] = recipient
+    msg['Subject'] = subject
+    
+    # Body
+    msg.attach(MIMEText(body, 'plain'))
+    
+    # Attachment
+    try:
+        with open(filename, 'rb') as attachment:
+            part = MIMEBase('application', 'octet-stream')
+            part.set_payload(attachment.read())
+        
+        encoders.encode_base64(part)
+        
+        part.add_header(
+            'Content-Disposition',
+            f'attachment; filename= {os.path.basename(filename)}'
+        )
+        
+        msg.attach(part)
+        
+        # Kirim
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender, password)
+        server.sendmail(sender, recipient, msg.as_string())
+        server.quit()
+        
+        print(f"✓ Email dengan attachment '{filename}' berhasil dikirim!")
+        return True
+    except FileNotFoundError:
+        print(f"✗ File '{filename}' tidak ditemukan")
+        return False
+    except Exception as e:
+        print(f"✗ Error: {e}")
+        return False
+
+# Contoh penggunaan
+send_email_with_attachment(
+    "your_email@gmail.com",
+    "your_app_password",
+    "recipient@example.com",
+    "Email dengan Attachment",
+    "Silakan lihat file terlampir.",
+    "document.pdf"
+)
+"""
+
+tampilkan kode_attachment
+tampilkan ""
+
+// ============================================
+// 4. MULTIPLE RECIPIENTS
+// ============================================
+
+tampilkan "[4] Multiple Recipients..."
+tampilkan ""
+
+kode_multiple itu """
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_to_multiple(sender, password, recipients, subject, body):
+    '''Kirim email ke multiple recipients'''
+    
+    msg = MIMEMultipart()
+    msg['From'] = sender
+    msg['To'] = ', '.join(recipients)
+    msg['Subject'] = subject
+    
+    msg.attach(MIMEText(body, 'plain'))
+    
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender, password)
+        
+        # Kirim ke semua recipients
+        server.sendmail(sender, recipients, msg.as_string())
+        server.quit()
+        
+        print(f"✓ Email berhasil dikirim ke {len(recipients)} recipients")
+        return True
+    except Exception as e:
+        print(f"✗ Error: {e}")
+        return False
+
+# Contoh penggunaan
+recipients = [
+    "recipient1@example.com",
+    "recipient2@example.com",
+    "recipient3@example.com"
+]
+
+send_to_multiple(
+    "your_email@gmail.com",
+    "your_app_password",
+    recipients,
+    "Broadcast Email",
+    "Ini adalah email broadcast untuk semua."
+)
+"""
+
+tampilkan kode_multiple
+tampilkan ""
+
+// ============================================
+// 5. EMAIL TEMPLATE
+// ============================================
+
+tampilkan "[5] Email Template System..."
+tampilkan ""
+
+kode_template itu """
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from string import Template
+
+class EmailTemplate:
+    def __init__(self, template_file):
+        with open(template_file, 'r') as f:
+            self.template = Template(f.read())
+    
+    def render(self, **kwargs):
+        return self.template.substitute(**kwargs)
+
+def send_templated_email(sender, password, recipient, 
+                        subject, template_file, **kwargs):
+    '''Kirim email dengan template'''
+    
+    # Load dan render template
+    email_template = EmailTemplate(template_file)
+    body = email_template.render(**kwargs)
+    
+    msg = MIMEMultipart()
+    msg['From'] = sender
+    msg['To'] = recipient
+    msg['Subject'] = subject
+    
+    msg.attach(MIMEText(body, 'html'))
+    
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(sender, password)
+        server.sendmail(sender, recipient, msg.as_string())
+        server.quit()
+        print("✓ Templated email berhasil dikirim!")
+        return True
+    except Exception as e:
+        print(f"✗ Error: {e}")
+        return False
+
+# Template file (welcome_email.html):
+# <html>
+#   <body>
+#     <h1>Selamat Datang, $name!</h1>
+#     <p>Terima kasih telah mendaftar di $app_name.</p>
+#     <p>Email Anda: $email</p>
+#   </body>
+# </html>
+
+send_templated_email(
+    "your_email@gmail.com",
+    "your_app_password",
+    "recipient@example.com",
+    "Welcome Email",
+    "welcome_email.html",
+    name="John Doe",
+    app_name="MyApp",
+    email="john@example.com"
+)
+"""
+
+tampilkan kode_template
+tampilkan ""
+
+// ============================================
+// 6. EMAIL CONFIGURATION
+// ============================================
+
+tampilkan "[6] Email Configuration..."
+tampilkan ""
+
+kode_config itu """
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+class EmailConfig:
+    # Gmail
+    GMAIL = {
+        'host': 'smtp.gmail.com',
+        'port': 587,
+        'use_tls': True
+    }
+    
+    # Outlook
+    OUTLOOK = {
+        'host': 'smtp-mail.outlook.com',
+        'port': 587,
+        'use_tls': True
+    }
+    
+    # Yahoo
+    YAHOO = {
+        'host': 'smtp.mail.yahoo.com',
+        'port': 587,
+        'use_tls': True
+    }
+
+class EmailSender:
+    def __init__(self, config, username, password):
+        self.config = config
+        self.username = username
+        self.password = password
+    
+    def send(self, recipient, subject, body):
+        msg = MIMEMultipart()
+        msg['From'] = self.username
+        msg['To'] = recipient
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain'))
+        
+        try:
+            server = smtplib.SMTP(
+                self.config['host'], 
+                self.config['port']
+            )
+            
+            if self.config['use_tls']:
+                server.starttls()
+            
+            server.login(self.username, self.password)
+            server.sendmail(self.username, recipient, msg.as_string())
+            server.quit()
+            
+            print("✓ Email berhasil dikirim!")
+            return True
+        except Exception as e:
+            print(f"✗ Error: {e}")
+            return False
+
+# Contoh penggunaan
+sender = EmailSender(
+    EmailConfig.GMAIL,
+    "your_email@gmail.com",
+    "your_app_password"
+)
+
+sender.send(
+    "recipient@example.com",
+    "Test Email",
+    "Ini adalah test email"
+)
+"""
+
+tampilkan kode_config
+tampilkan ""
+
+// ============================================
+// 7. SETUP GMAIL APP PASSWORD
+// ============================================
+
+tampilkan "[7] Setup Gmail App Password..."
+tampilkan ""
+
+tampilkan "Langkah-langkah setup Gmail App Password:"
+tampilkan ""
+tampilkan "1. Buka Google Account Settings"
+tampilkan "   https://myaccount.google.com/"
+tampilkan ""
+tampilkan "2. Pilih Security"
+tampilkan ""
+tampilkan "3. Enable 2-Step Verification"
+tampilkan ""
+tampilkan "4. Buat App Password:"
+tampilkan "   - Pilih 'App passwords'"
+tampilkan "   - Pilih app: 'Mail'"
+tampilkan "   - Pilih device: 'Other'"
+tampilkan "   - Beri nama: 'RenzmcLang'"
+tampilkan "   - Copy password yang dihasilkan"
+tampilkan ""
+tampilkan "5. Gunakan App Password (bukan password biasa)"
+tampilkan ""
+
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Email Best Practices:"
+tampilkan "  1. Gunakan App Password, bukan password biasa"
+tampilkan "  2. Jangan hardcode credentials di code"
+tampilkan "  3. Gunakan environment variables"
+tampilkan "  4. Handle exceptions dengan baik"
+tampilkan "  5. Validate email addresses"
+tampilkan "  6. Use templates untuk consistency"
+tampilkan "  7. Test dengan test email addresses"

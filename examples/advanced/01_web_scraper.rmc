@@ -1,0 +1,78 @@
+// ============================================
+// Contoh: Data Processing (Simplified)
+// ============================================
+
+tampilkan "=== DEMO DATA PROCESSING ==="
+tampilkan ""
+
+// Simulasi data dari API (dalam bentuk dictionary)
+data itu [
+    {"id": 1, "name": "Alice", "email": "alice@example.com", "city": "Jakarta"},
+    {"id": 2, "name": "Bob", "email": "bob@example.com", "city": "Bandung"},
+    {"id": 3, "name": "Charlie", "email": "charlie@example.com", "city": "Surabaya"},
+    {"id": 4, "name": "Diana", "email": "diana@example.com", "city": "Jakarta"},
+    {"id": 5, "name": "Eve", "email": "eve@example.com", "city": "Bandung"}
+]
+
+tampilkan f"✓ Data berhasil dimuat!"
+tampilkan f"Jumlah item: {panjang(data)}"
+
+// Tampilkan preview (3 item pertama)
+tampilkan "\n=== PREVIEW DATA (3 item pertama) ==="
+tampilkan "=" * 50
+
+counter itu 0
+untuk setiap item dari data
+    jika counter >= 3
+        berhenti
+    selesai
+    
+    tampilkan f"\nItem {counter + 1}:"
+    tampilkan f"  ID: {item['id']}"
+    tampilkan f"  Name: {item['name']}"
+    tampilkan f"  Email: {item['email']}"
+    tampilkan f"  City: {item['city']}"
+    
+    counter itu counter + 1
+selesai
+
+// Filter data berdasarkan kota
+tampilkan "\n=== FILTER: User dari Jakarta ==="
+jakarta_users itu []
+
+untuk setiap item dari data
+    jika item["city"] == "Jakarta"
+        tambah(jakarta_users, item)
+    selesai
+selesai
+
+tampilkan f"Jumlah user dari Jakarta: {panjang(jakarta_users)}"
+untuk setiap user dari jakarta_users
+    tampilkan f"  - {user['name']} ({user['email']})"
+selesai
+
+// Statistik
+tampilkan "\n=== STATISTIK ==="
+cities itu []
+
+untuk setiap item dari data
+    city itu item["city"]
+    
+    // Cek apakah city sudah ada di list
+    city_ada itu salah
+    untuk setiap c dari cities
+        jika c == city
+            city_ada itu benar
+        selesai
+    selesai
+    
+    // Tambah jika belum ada
+    jika tidak city_ada
+        tambah(cities, city)
+    selesai
+selesai
+
+tampilkan f"Jumlah kota unik: {panjang(cities)}"
+tampilkan f"Daftar kota: {cities}"
+
+tampilkan "\n✓ Demo data processing selesai!"

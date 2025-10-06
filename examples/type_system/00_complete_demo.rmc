@@ -1,0 +1,255 @@
+// ============================================
+// DEMO LENGKAP: Sistem Tipe RenzmcLang Phase 1
+// ============================================
+// Demonstrasi semua fitur type system dalam satu file
+
+tampilkan "╔════════════════════════════════════════════════════════╗"
+tampilkan "║   DEMO LENGKAP: Sistem Tipe RenzmcLang Phase 1        ║"
+tampilkan "╚════════════════════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// 1. TYPE HINTS DASAR
+// ============================================
+tampilkan "═══ 1. TYPE HINTS DASAR ═══"
+tampilkan ""
+
+// Tipe numerik
+umur: Integer itu 25
+harga: Float itu 99.99
+tampilkan "✓ Integer: umur = " + ke_teks(umur)
+tampilkan "✓ Float: harga = " + ke_teks(harga)
+
+// Tipe teks
+nama: String itu "Budi Santoso"
+kota: String itu "Jakarta"
+tampilkan "✓ String: nama = " + nama
+tampilkan "✓ String: kota = " + kota
+
+// Tipe boolean
+is_active: Boolean itu benar
+is_verified: Boolean itu salah
+tampilkan "✓ Boolean: is_active = " + ke_teks(is_active)
+tampilkan "✓ Boolean: is_verified = " + ke_teks(is_verified)
+
+// Tipe koleksi
+hobi: List itu ["membaca", "coding", "gaming"]
+nilai: Dict itu {"matematika": 90, "fisika": 85}
+tampilkan "✓ List: hobi = " + ke_teks(hobi)
+tampilkan "✓ Dict: nilai = " + ke_teks(nilai)
+
+tampilkan ""
+
+// ============================================
+// 2. NAMA TIPE BAHASA INDONESIA
+// ============================================
+tampilkan "═══ 2. NAMA TIPE BAHASA INDONESIA ═══"
+tampilkan ""
+
+jumlah: Bilangan itu 100
+pesan: Teks itu "Halo Dunia!"
+tinggi: Desimal itu 175.5
+daftar_item: Daftar itu ["apel", "jeruk", "mangga"]
+data_siswa: Kamus itu {"nama": "Ani", "kelas": "10A"}
+
+tampilkan "✓ Bilangan: jumlah = " + ke_teks(jumlah)
+tampilkan "✓ Teks: pesan = " + pesan
+tampilkan "✓ Desimal: tinggi = " + ke_teks(tinggi)
+tampilkan "✓ Daftar: daftar_item = " + ke_teks(daftar_item)
+tampilkan "✓ Kamus: data_siswa = " + ke_teks(data_siswa)
+
+tampilkan ""
+
+// ============================================
+// 3. FUNGSI DENGAN TYPE HINTS
+// ============================================
+tampilkan "═══ 3. FUNGSI DENGAN TYPE HINTS ═══"
+tampilkan ""
+
+// Fungsi sederhana
+fungsi jumlahkan(a: Integer, b: Integer):
+    hasil a + b
+selesai
+
+hasil1 itu jumlahkan(10, 20)
+tampilkan "✓ jumlahkan(10, 20) = " + ke_teks(hasil1)
+
+// Fungsi dengan berbagai tipe
+fungsi buat_salam(nama: String, umur: Integer):
+    salam itu "Halo " + nama + ", umur " + ke_teks(umur) + " tahun"
+    hasil salam
+selesai
+
+salam1 itu buat_salam("Budi", 25)
+tampilkan "✓ " + salam1
+
+// Fungsi dengan Float
+fungsi hitung_luas_lingkaran(radius: Float):
+    pi itu 3.14159
+    luas itu pi * radius * radius
+    hasil luas
+selesai
+
+luas1 itu hitung_luas_lingkaran(5.0)
+tampilkan "✓ Luas lingkaran (r=5.0) = " + ke_teks(luas1)
+
+// Fungsi dengan List
+fungsi hitung_rata_rata(angka: List):
+    total itu 0
+    jumlah_item itu 0
+    untuk setiap num dari angka
+        total += num
+        jumlah_item += 1
+    selesai
+    rata itu total / jumlah_item
+    hasil rata
+selesai
+
+data_nilai itu [80, 85, 90, 75, 95]
+rata_rata itu hitung_rata_rata(data_nilai)
+tampilkan "✓ Rata-rata " + ke_teks(data_nilai) + " = " + ke_teks(rata_rata)
+
+tampilkan ""
+
+// ============================================
+// 4. KONVERSI TIPE OTOMATIS
+// ============================================
+tampilkan "═══ 4. KONVERSI TIPE OTOMATIS ═══"
+tampilkan ""
+
+// Integer ke Float - OK
+nilai_float: Float itu 42
+tampilkan "✓ Integer → Float: " + ke_teks(nilai_float)
+
+// Fungsi menerima Float, diberi Integer - OK
+fungsi kalikan_float(x: Float, y: Float):
+    hasil x * y
+selesai
+
+hasil_kali itu kalikan_float(5, 3)  // Integer diterima sebagai Float
+tampilkan "✓ kalikan_float(5, 3) = " + ke_teks(hasil_kali)
+
+tampilkan ""
+
+// ============================================
+// 5. BACKWARD COMPATIBILITY
+// ============================================
+tampilkan "═══ 5. BACKWARD COMPATIBILITY ═══"
+tampilkan ""
+
+// Variabel tanpa type hints - TETAP BERFUNGSI
+nama_lama itu "Tanpa Type Hint"
+umur_lama itu 30
+tampilkan "✓ Variabel tanpa type hint: " + nama_lama + ", " + ke_teks(umur_lama)
+
+// Fungsi tanpa type hints - TETAP BERFUNGSI
+fungsi pengurangan(a, b):
+    hasil a - b
+selesai
+
+hasil_kurang itu pengurangan(100, 25)
+tampilkan "✓ Fungsi tanpa type hint: pengurangan(100, 25) = " + ke_teks(hasil_kurang)
+
+// Mixing - sebagian dengan type hints
+fungsi hitung_diskon(harga: Float, persen):
+    diskon itu harga * persen / 100
+    hasil harga - diskon
+selesai
+
+harga_akhir itu hitung_diskon(100.0, 10)
+tampilkan "✓ Mixing type hints: harga_akhir = " + ke_teks(harga_akhir)
+
+tampilkan ""
+
+// ============================================
+// 6. CONTOH PRAKTIS: SISTEM PENILAIAN
+// ============================================
+tampilkan "═══ 6. CONTOH PRAKTIS: SISTEM PENILAIAN ═══"
+tampilkan ""
+
+fungsi hitung_nilai_akhir(tugas: Float, uts: Float, uas: Float):
+    // Bobot: Tugas 30%, UTS 30%, UAS 40%
+    nilai_akhir itu (tugas * 0.3) + (uts * 0.3) + (uas * 0.4)
+    hasil nilai_akhir
+selesai
+
+fungsi tentukan_grade(nilai: Float):
+    jika nilai >= 85
+        hasil "A"
+    kalau_tidak_jika nilai >= 70
+        hasil "B"
+    kalau_tidak_jika nilai >= 60
+        hasil "C"
+    kalau_tidak_jika nilai >= 50
+        hasil "D"
+    kalau_tidak
+        hasil "E"
+    selesai
+selesai
+
+fungsi buat_laporan(nama: String, tugas: Float, uts: Float, uas: Float):
+    nilai_akhir itu hitung_nilai_akhir(tugas, uts, uas)
+    grade itu tentukan_grade(nilai_akhir)
+    
+    tampilkan "  Nama: " + nama
+    tampilkan "  Tugas: " + ke_teks(tugas)
+    tampilkan "  UTS: " + ke_teks(uts)
+    tampilkan "  UAS: " + ke_teks(uas)
+    tampilkan "  Nilai Akhir: " + ke_teks(nilai_akhir)
+    tampilkan "  Grade: " + grade
+selesai
+
+tampilkan "Laporan Nilai Mahasiswa:"
+buat_laporan("Budi Santoso", 85.0, 80.0, 90.0)
+
+tampilkan ""
+
+// ============================================
+// 7. CONTOH PRAKTIS: MANAJEMEN PRODUK
+// ============================================
+tampilkan "═══ 7. CONTOH PRAKTIS: MANAJEMEN PRODUK ═══"
+tampilkan ""
+
+fungsi hitung_total_harga(harga: Float, jumlah: Integer, diskon: Float):
+    subtotal itu harga * jumlah
+    potongan itu subtotal * diskon / 100
+    total itu subtotal - potongan
+    hasil total
+selesai
+
+fungsi format_rupiah(nilai: Float):
+    hasil "Rp " + ke_teks(nilai)
+selesai
+
+// Data produk
+nama_produk: String itu "Laptop Gaming"
+harga_satuan: Float itu 15000000.0
+qty: Integer itu 2
+diskon_persen: Float itu 10.0
+
+total_bayar itu hitung_total_harga(harga_satuan, qty, diskon_persen)
+
+tampilkan "Detail Pembelian:"
+tampilkan "  Produk: " + nama_produk
+tampilkan "  Harga Satuan: " + format_rupiah(harga_satuan)
+tampilkan "  Jumlah: " + ke_teks(qty)
+tampilkan "  Diskon: " + ke_teks(diskon_persen) + "%"
+tampilkan "  Total Bayar: " + format_rupiah(total_bayar)
+
+tampilkan ""
+
+// ============================================
+// KESIMPULAN
+// ============================================
+tampilkan "╔════════════════════════════════════════════════════════╗"
+tampilkan "║              DEMO SELESAI - SEMUA BERHASIL!           ║"
+tampilkan "╚════════════════════════════════════════════════════════╝"
+tampilkan ""
+tampilkan "✅ Type hints untuk variabel"
+tampilkan "✅ Type hints untuk parameter fungsi"
+tampilkan "✅ Nama tipe bilingual (Indonesia & Inggris)"
+tampilkan "✅ Konversi tipe otomatis (Integer → Float)"
+tampilkan "✅ Backward compatibility (kode lama tetap jalan)"
+tampilkan "✅ Contoh praktis: Sistem Penilaian & Manajemen Produk"
+tampilkan ""
+tampilkan "🎉 Sistem Tipe RenzmcLang Phase 1 - SUKSES!"

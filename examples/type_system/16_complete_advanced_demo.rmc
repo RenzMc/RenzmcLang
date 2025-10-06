@@ -1,0 +1,101 @@
+tampilkan "=== Complete Advanced Type System Demo ==="
+tampilkan ""
+
+tampilkan "1. Type Aliases:"
+tipe UserId = Integer
+tipe Email = String
+tipe Status = Literal["aktif", "nonaktif", "pending"]
+tipe User = TypedDict["id": UserId, "email": Email, "nama": String, "status": Status]
+
+tampilkan "Type aliases defined successfully!"
+
+tampilkan ""
+tampilkan "2. Creating Users with TypedDict:"
+fungsi create_user(id: UserId, email: Email, nama: String, status: Status) -> User:
+    hasil {
+        "id": id,
+        "email": email,
+        "nama": nama,
+        "status": status
+    }
+selesai
+
+user1 itu create_user(1, "budi@example.com", "Budi Santoso", "aktif")
+user2 itu create_user(2, "ani@example.com", "Ani Wijaya", "pending")
+
+tampilkan "User 1: "
+tampilkan user1
+tampilkan ""
+tampilkan "User 2: "
+tampilkan user2
+
+tampilkan ""
+tampilkan "3. Functions with Return Type Hints:"
+fungsi get_user_status(user: User) -> Status:
+    hasil user["status"]
+selesai
+
+fungsi get_user_id(user: User) -> UserId:
+    hasil user["id"]
+selesai
+
+status1 itu get_user_status(user1)
+tampilkan "Status User 1: " + status1
+
+id2 itu get_user_id(user2)
+tampilkan "ID User 2: " + ke_teks(id2)
+
+tampilkan ""
+tampilkan "4. Update User Status:"
+fungsi update_status(user: User, new_status: Status) -> User:
+    user["status"] itu new_status
+    hasil user
+selesai
+
+tampilkan "Updating user2 status to 'aktif'..."
+user2 itu update_status(user2, "aktif")
+tampilkan "User 2 Updated: "
+tampilkan user2
+
+tampilkan ""
+tampilkan "5. Optional Return Types:"
+fungsi find_user_by_id(users: List[User], id: UserId) -> User?:
+    untuk setiap user dari users
+        jika user["id"] == id
+            hasil user
+        selesai
+    selesai
+    hasil kosong
+selesai
+
+all_users itu [user1, user2]
+found_user itu find_user_by_id(all_users, 1)
+
+jika found_user != kosong
+    tampilkan "Found user: "
+    tampilkan found_user
+kalau_tidak
+    tampilkan "User not found"
+selesai
+
+tampilkan ""
+tampilkan "6. Generic Types with Type Aliases:"
+tipe UserList = List[User]
+
+fungsi get_active_users(users: UserList) -> UserList:
+    active itu []
+    untuk setiap user dari users
+        jika user["status"] == "aktif"
+            active itu active + [user]
+        selesai
+    selesai
+    hasil active
+selesai
+
+active_users itu get_active_users(all_users)
+tampilkan "Active Users Count: " + ke_teks(panjang(active_users))
+tampilkan "Active Users: "
+tampilkan active_users
+
+tampilkan ""
+tampilkan "=== Complete Advanced Type System Demo Selesai! ==="

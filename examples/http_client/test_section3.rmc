@@ -1,0 +1,16 @@
+// 3. Check response status
+tampilkan "[3] Check Response Status"
+coba
+    response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
+    
+    is_ok itu response.ok()
+    jika is_ok
+        tampilkan "✓ Request successful!"
+        tampilkan f"Status code: {response.status_code}"
+    kalau_tidak
+        tampilkan "✗ Request failed!"
+    selesai
+tangkap e
+    tampilkan f"Error: {e}"
+selesai
+tampilkan ""

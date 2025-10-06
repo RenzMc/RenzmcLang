@@ -1,0 +1,132 @@
+// ============================================
+// PROJECT: Aplikasi TODO List (Demo Version)
+// ============================================
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║       APLIKASI TODO LIST v1.0          ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// Inisialisasi data - todos sebagai list of strings
+todos itu []
+todos_selesai itu []
+
+// Fungsi untuk menambah todo
+buat fungsi tambah_todo dengan judul
+    tambah(todos, judul)
+    hasil {"sukses": benar, "pesan": "Todo berhasil ditambahkan!"}
+selesai
+
+// Fungsi untuk melihat semua todo
+buat fungsi lihat_todos
+    jika panjang(todos) == 0 dan panjang(todos_selesai) == 0
+        tampilkan "\n📝 Belum ada todo"
+        hasil salah
+    selesai
+    
+    tampilkan "\n╔════════════════════════════════════════╗"
+    tampilkan "║            DAFTAR TODO                 ║"
+    tampilkan "╚════════════════════════════════════════╝"
+    
+    // Tampilkan todo yang belum selesai
+    jika panjang(todos) > 0
+        tampilkan "\n○ BELUM SELESAI:"
+        nomor itu 1
+        untuk setiap todo dari todos
+            tampilkan f"  {nomor}. {todo}"
+            nomor itu nomor + 1
+        selesai
+    selesai
+    
+    // Tampilkan todo yang sudah selesai
+    jika panjang(todos_selesai) > 0
+        tampilkan "\n✓ SUDAH SELESAI:"
+        nomor_selesai itu 1
+        untuk setiap todo dari todos_selesai
+            tampilkan f"  {nomor_selesai}. {todo}"
+            nomor_selesai itu nomor_selesai + 1
+        selesai
+    selesai
+    
+    hasil benar
+selesai
+
+// Fungsi untuk menandai todo selesai (berdasarkan index)
+buat fungsi tandai_selesai dengan idx
+    jika idx < 1 atau idx > panjang(todos)
+        hasil {"sukses": salah, "pesan": "Index tidak valid!"}
+    selesai
+    
+    // Ambil todo dari list
+    todo_item itu todos[idx - 1]
+    
+    // Pindahkan ke list selesai
+    tambah(todos_selesai, todo_item)
+    hapus_pada(todos, idx - 1)
+    
+    hasil {"sukses": benar, "pesan": "Todo ditandai selesai!"}
+selesai
+
+// Fungsi untuk statistik
+buat fungsi tampilkan_statistik
+    total itu panjang(todos) + panjang(todos_selesai)
+    selesai_count itu panjang(todos_selesai)
+    belum_selesai itu panjang(todos)
+    
+    persentase itu 0
+    jika total > 0
+        persentase itu (selesai_count / total) * 100
+    selesai
+    
+    tampilkan "\n╔════════════════════════════════════════╗"
+    tampilkan "║            STATISTIK                   ║"
+    tampilkan "╚════════════════════════════════════════╝"
+    tampilkan f"Total Todo      : {total}"
+    tampilkan f"Selesai         : {selesai_count}"
+    tampilkan f"Belum Selesai   : {belum_selesai}"
+    tampilkan f"Progress        : {bulat(persentase)}%"
+selesai
+
+// ============================================
+// DEMO MODE
+// ============================================
+
+tampilkan "\n=== DEMO MODE ==="
+tampilkan "Menambahkan beberapa todo contoh..."
+tampilkan ""
+
+// Tambah todo contoh
+panggil tambah_todo dengan "Belajar RenzmcLang"
+panggil tambah_todo dengan "Buat Proyek Sederhana"
+panggil tambah_todo dengan "Testing Aplikasi"
+panggil tambah_todo dengan "Deploy ke Production"
+
+tampilkan "✓ 4 todo contoh berhasil ditambahkan!"
+
+// Tampilkan semua todo
+panggil lihat_todos
+
+// Tandai todo pertama sebagai selesai
+tampilkan "\n=== MENANDAI TODO SELESAI ==="
+tampilkan "Menandai todo #1 sebagai selesai..."
+hasil1 itu panggil tandai_selesai dengan 1
+tampilkan f"✓ {hasil1['pesan']}"
+
+// Tampilkan lagi setelah update
+panggil lihat_todos
+
+// Tandai todo kedua juga (yang sekarang jadi #1)
+tampilkan "\nMenandai todo #1 sebagai selesai..."
+hasil2 itu panggil tandai_selesai dengan 1
+tampilkan f"✓ {hasil2['pesan']}"
+
+// Tampilkan lagi
+panggil lihat_todos
+
+// Tampilkan statistik
+panggil tampilkan_statistik
+
+// Selesai
+tampilkan "\n╔════════════════════════════════════════╗"
+tampilkan "║     DEMO SELESAI - TODO APP v1.0       ║"
+tampilkan "╚════════════════════════════════════════╝"

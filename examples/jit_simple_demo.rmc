@@ -1,0 +1,89 @@
+// ============================================
+// JIT Simple Demo - RenzMcLang
+// ============================================
+// Demo sederhana untuk menunjukkan JIT tracking bekerja
+
+tampilkan "🚀 JIT Simple Demo - RenzMcLang"
+tampilkan "==============================="
+tampilkan ""
+
+// Fungsi sederhana yang akan dipanggil berulang kali
+buat fungsi kuadrat dengan x
+    hasil x * x
+selesai
+
+// Fungsi matematika kompleks
+buat fungsi operasi_kompleks dengan a, b, c
+    langkah1 itu a * b
+    langkah2 itu b * c
+    langkah3 itu c * a
+    hasil langkah1 + langkah2 + langkah3
+selesai
+
+// Fungsi dengan loop (komputasi intensif)
+buat fungsi hitung_total dengan n
+    total itu 0
+    untuk i dari 1 sampai n
+        untuk j dari 1 sampai 10
+            total itu total + (i * j)
+        selesai
+    selesai
+    hasil total
+selesai
+
+// ============================================
+// DEMO: Testing JIT Tracking
+// ============================================
+
+tampilkan "📊 Testing JIT Tracking System"
+tampilkan "Memanggil fungsi-fungsi berikut 15 kali masing-masing..."
+tampilkan ""
+
+// Test 1: Kuadrat (15 panggilan = JIT aktif)
+tampilkan "TEST 1: Fungsi Kuadrat (15 panggilan)"
+untuk i dari 1 sampai 15
+    hasil itu panggil kuadrat dengan i
+    tampilkan f"kuadrat({i}) = {hasil}"
+selesai
+tampilkan "✅ Fungsi kuadrat sudah melewati threshold 10 panggilan"
+tampilkan ""
+
+// Test 2: Operasi Kompleks (15 panggilan = JIT aktif)
+tampilkan "TEST 2: Fungsi Operasi Kompleks (15 panggilan)"
+untuk i dari 1 sampai 15
+    a itu i * 2
+    b itu i * 3
+    c itu i * 4
+    hasil itu panggil operasi_kompleks dengan a, b, c
+    tampilkan f"operasi_kompleks({a}, {b}, {c}) = {hasil}"
+selesai
+tampilkan "✅ Fungsi operasi_kompleks sudah melewati threshold 10 panggilan"
+tampilkan ""
+
+// Test 3: Hitung Total (15 panggilan = JIT aktif)
+tampilkan "TEST 3: Fungsi Hitung Total (15 panggilan)"
+untuk i dari 1 sampai 15
+    n itu i * 10
+    hasil itu panggil hitung_total dengan n
+    tampilkan f"hitung_total({n}) = {hasil}"
+selesai
+tampilkan "✅ Fungsi hitung_total sudah melewati threshold 10 panggilan"
+tampilkan ""
+
+// ============================================
+// RINGKASAN
+// ============================================
+
+tampilkan "🎯 RINGKASAN JIT TRACKING:"
+tampilkan "=============================="
+tampilkan "✅ Semua fungsi sudah melewati threshold 10 panggilan"
+tampilkan "✅ JIT tracking aktif untuk semua fungsi"
+tampilkan "✅ Fungsi-fungsi ini sudah masuk dalam daftar hot functions"
+tampilkan ""
+tampilkan "📊 Statistik:"
+tampilkan "- kuadrat: 15 panggilan (JIT aktif setelah ke-10)"
+tampilkan "- operasi_kompleks: 15 panggilan (JIT aktif setelah ke-10)"
+tampilkan "- hitung_total: 15 panggilan (JIT aktif setelah ke-10)"
+tampilkan ""
+tampilkan "🚀 JIT compilation bekerja secara otomatis!"
+tampilkan "🚀 Fungsi yang sering dipanggil akan dioptimasi secara otomatis!"

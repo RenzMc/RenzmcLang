@@ -1,0 +1,55 @@
+// ============================================
+// Contoh 4: Nama Tipe dalam Bahasa Indonesia
+// ============================================
+// Demonstrasi penggunaan nama tipe dalam Bahasa Indonesia
+
+tampilkan "=== Nama Tipe Bahasa Indonesia ==="
+tampilkan ""
+
+// Type system mendukung nama dalam Bahasa Indonesia!
+tampilkan "1. Bilangan (Integer):"
+jumlah: Bilangan itu 100
+tampilkan "jumlah = " + ke_teks(jumlah)
+
+tampilkan ""
+tampilkan "2. Teks (String):"
+pesan: Teks itu "Halo Dunia!"
+tampilkan "pesan = " + pesan
+
+tampilkan ""
+tampilkan "3. Desimal (Float):"
+harga: Desimal itu 99.99
+tampilkan "harga = " + ke_teks(harga)
+
+tampilkan ""
+tampilkan "4. Boolean (Boolean):"
+aktif: Boolean itu benar
+tampilkan "aktif = " + ke_teks(aktif)
+
+tampilkan ""
+tampilkan "5. Daftar (List):"
+item: Daftar itu ["apel", "jeruk", "mangga"]
+tampilkan "item = " + ke_teks(item)
+
+tampilkan ""
+tampilkan "6. Kamus (Dict):"
+data: Kamus itu {"nama": "Budi", "umur": 25}
+tampilkan "data = " + ke_teks(data)
+
+tampilkan ""
+tampilkan "7. Fungsi dengan nama tipe Indonesia:"
+fungsi hitung_total(harga: Desimal, jumlah: Bilangan):
+    total itu harga * jumlah
+    hasil total
+selesai
+
+total_bayar itu hitung_total(10.5, 3)
+tampilkan "Total bayar (10.5 x 3): " + ke_teks(total_bayar)
+
+tampilkan ""
+tampilkan "=== Nama Tipe Bahasa Indonesia Berhasil! ==="
+tampilkan ""
+tampilkan "CATATAN: Type system mendukung nama dalam:"
+tampilkan "  - Bahasa Indonesia: Bilangan, Teks, Desimal, Daftar, Kamus"
+tampilkan "  - Bahasa Inggris: Integer, String, Float, List, Dict"
+tampilkan "  - Keduanya dapat digunakan secara bergantian!"

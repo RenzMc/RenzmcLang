@@ -1,0 +1,110 @@
+// ============================================
+// Contoh: Sistem Login Sederhana (Demo)
+// ============================================
+
+tampilkan "=== SISTEM LOGIN ==="
+tampilkan ""
+
+// Database user (dictionary)
+users itu {
+    "admin": {
+        "password": "admin123",
+        "nama": "Administrator",
+        "role": "admin"
+    },
+    "user1": {
+        "password": "pass123",
+        "nama": "User Satu",
+        "role": "user"
+    }
+}
+
+// Fungsi untuk login
+buat fungsi login dengan username, password
+    // Cek apakah username ada
+    user_keys itu kunci(users)
+    username_ada itu salah
+    
+    untuk setiap key dari user_keys
+        jika key == username
+            username_ada itu benar
+        selesai
+    selesai
+    
+    jika username_ada == benar
+        user_data itu users[username]
+        
+        jika user_data['password'] == password
+            hasil {'sukses': benar, 'data': user_data}
+        kalau tidak
+            hasil {'sukses': salah, 'pesan': 'Password salah!'}
+        selesai
+    kalau tidak
+        hasil {'sukses': salah, 'pesan': 'Username tidak ditemukan!'}
+    selesai
+selesai
+
+// ============================================
+// DEMO MODE
+// ============================================
+
+tampilkan "\n=== DEMO 1: Login Berhasil ==="
+username1 itu "admin"
+password1 itu "admin123"
+
+tampilkan f"Username: {username1}"
+tampilkan f"Password: {'*' * panjang(password1)}"
+
+hasil_login1 itu panggil login dengan username1, password1
+
+jika hasil_login1['sukses'] == benar
+    user_data itu hasil_login1['data']
+    nama_user itu user_data['nama']
+    role_user itu user_data['role']
+    tampilkan f"\n✓ Login berhasil!"
+    tampilkan f"Selamat datang, {nama_user}!"
+    tampilkan f"Role: {role_user}"
+kalau tidak
+    pesan_error itu hasil_login1['pesan']
+    tampilkan f"\n✗ {pesan_error}"
+selesai
+
+tampilkan "\n=== DEMO 2: Login Gagal (Password Salah) ==="
+username2 itu "admin"
+password2 itu "salah123"
+
+tampilkan f"Username: {username2}"
+tampilkan f"Password: {'*' * panjang(password2)}"
+
+hasil_login2 itu panggil login dengan username2, password2
+
+jika hasil_login2['sukses'] == benar
+    user_data2 itu hasil_login2['data']
+    nama_user2 itu user_data2['nama']
+    tampilkan f"\n✓ Login berhasil!"
+    tampilkan f"Selamat datang, {nama_user2}!"
+kalau tidak
+    pesan_error2 itu hasil_login2['pesan']
+    tampilkan f"\n✗ {pesan_error2}"
+selesai
+
+tampilkan "\n=== DEMO 3: Login Gagal (Username Tidak Ada) ==="
+username3 itu "unknown"
+password3 itu "pass123"
+
+tampilkan f"Username: {username3}"
+tampilkan f"Password: {'*' * panjang(password3)}"
+
+hasil_login3 itu panggil login dengan username3, password3
+
+jika hasil_login3['sukses'] == benar
+    user_data3 itu hasil_login3['data']
+    nama_user3 itu user_data3['nama']
+    tampilkan f"\n✓ Login berhasil!"
+    tampilkan f"Selamat datang, {nama_user3}!"
+kalau tidak
+    pesan_error3 itu hasil_login3['pesan']
+    tampilkan f"\n✗ {pesan_error3}"
+selesai
+
+tampilkan "\n=== DEMO SELESAI ==="

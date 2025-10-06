@@ -1,0 +1,25 @@
+// ============================================
+// Contoh 3: Cek Bilangan Genap/Ganjil
+// ============================================
+
+tampilkan "=== CEK BILANGAN GENAP/GANJIL ==="
+tampilkan ""
+
+// Contoh dengan nilai tetap
+angka itu 10
+
+jika angka % 2 == 0
+    tampilkan f"{angka} adalah bilangan GENAP"
+kalau tidak
+    tampilkan f"{angka} adalah bilangan GANJIL"
+selesai
+
+// Cek positif/negatif
+tampilkan ""
+jika angka > 0
+    tampilkan f"{angka} adalah bilangan POSITIF"
+kalau tidak jika angka < 0
+    tampilkan f"{angka} adalah bilangan NEGATIF"
+kalau tidak
+    tampilkan f"{angka} adalah NOL"
+selesai

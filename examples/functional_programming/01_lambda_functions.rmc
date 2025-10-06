@@ -1,0 +1,318 @@
+# ===================================
+# Lambda Functions (Fungsi Lambda)
+# ===================================
+# Lambda adalah fungsi anonim (tanpa nama) yang dapat dibuat dengan cepat
+# Sintaks: lambda dengan parameter -> ekspresi
+# Catatan: Saat ini lambda hanya mendukung 1 parameter
+
+tampilkan "=== Lambda Functions Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Lambda Dasar
+# ===================================
+tampilkan "1. Lambda Dasar:"
+
+# Lambda sederhana untuk menambah 10
+tambah_10 itu lambda dengan x -> x + 10
+tampilkan "tambah_10(5) = " + ke_teks(tambah_10(5))
+tampilkan "tambah_10(15) = " + ke_teks(tambah_10(15))
+tampilkan "tambah_10(100) = " + ke_teks(tambah_10(100))
+
+# Lambda untuk menghitung kuadrat
+kuadrat itu lambda dengan x -> x * x
+tampilkan "kuadrat(7) = " + ke_teks(kuadrat(7))
+tampilkan "kuadrat(12) = " + ke_teks(kuadrat(12))
+tampilkan "kuadrat(25) = " + ke_teks(kuadrat(25))
+
+# Lambda untuk menghitung kubik
+kubik itu lambda dengan x -> x * x * x
+tampilkan "kubik(3) = " + ke_teks(kubik(3))
+tampilkan "kubik(5) = " + ke_teks(kubik(5))
+tampilkan "kubik(10) = " + ke_teks(kubik(10))
+
+tampilkan ""
+
+# ===================================
+# 2. Lambda untuk Operasi Matematika
+# ===================================
+tampilkan "2. Lambda untuk Operasi Matematika:"
+
+# Lambda untuk menghitung luas lingkaran
+luas_lingkaran itu lambda dengan r -> 3.14159 * r * r
+tampilkan "Luas lingkaran r=5: " + ke_teks(luas_lingkaran(5))
+tampilkan "Luas lingkaran r=10: " + ke_teks(luas_lingkaran(10))
+
+# Lambda untuk konversi Celsius ke Fahrenheit
+celsius_ke_fahrenheit itu lambda dengan c -> (c * 9 / 5) + 32
+tampilkan "0°C = " + ke_teks(celsius_ke_fahrenheit(0)) + "°F"
+tampilkan "25°C = " + ke_teks(celsius_ke_fahrenheit(25)) + "°F"
+tampilkan "100°C = " + ke_teks(celsius_ke_fahrenheit(100)) + "°F"
+
+# Lambda untuk konversi kilometer ke mil
+km_ke_mil itu lambda dengan km -> km * 0.621371
+tampilkan "10 km = " + ke_teks(km_ke_mil(10)) + " mil"
+tampilkan "100 km = " + ke_teks(km_ke_mil(100)) + " mil"
+
+tampilkan ""
+
+# ===================================
+# 3. Lambda dengan Kondisi (Ternary)
+# ===================================
+tampilkan "3. Lambda dengan Kondisi:"
+
+# Lambda untuk nilai absolut
+abs_lambda itu lambda dengan x -> x jika x >= 0 kalau tidak -x
+tampilkan "abs_lambda(-5) = " + ke_teks(abs_lambda(-5))
+tampilkan "abs_lambda(5) = " + ke_teks(abs_lambda(5))
+tampilkan "abs_lambda(-10) = " + ke_teks(abs_lambda(-10))
+tampilkan "abs_lambda(0) = " + ke_teks(abs_lambda(0))
+
+# Lambda untuk max antara x dan 0
+max_zero itu lambda dengan x -> x jika x > 0 kalau tidak 0
+tampilkan "max_zero(5) = " + ke_teks(max_zero(5))
+tampilkan "max_zero(-3) = " + ke_teks(max_zero(-3))
+tampilkan "max_zero(0) = " + ke_teks(max_zero(0))
+
+# Lambda untuk kategori nilai
+kategori itu lambda dengan x -> "Lulus" jika x >= 60 kalau tidak "Tidak Lulus"
+tampilkan "kategori(75) = " + kategori(75)
+tampilkan "kategori(45) = " + kategori(45)
+tampilkan "kategori(60) = " + kategori(60)
+
+# Lambda untuk diskon
+hitung_diskon itu lambda dengan harga -> harga * 0.9 jika harga > 100 kalau tidak harga
+tampilkan "hitung_diskon(150) = " + ke_teks(hitung_diskon(150))
+tampilkan "hitung_diskon(50) = " + ke_teks(hitung_diskon(50))
+
+tampilkan ""
+
+# ===================================
+# 4. Lambda untuk Validasi
+# ===================================
+tampilkan "4. Lambda untuk Validasi:"
+
+# Validasi angka positif
+adalah_positif itu lambda dengan x -> x > 0
+tampilkan "adalah_positif(5): " + ke_teks(adalah_positif(5))
+tampilkan "adalah_positif(-3): " + ke_teks(adalah_positif(-3))
+tampilkan "adalah_positif(0): " + ke_teks(adalah_positif(0))
+
+# Validasi angka genap
+adalah_genap itu lambda dengan x -> x % 2 == 0
+tampilkan "adalah_genap(4): " + ke_teks(adalah_genap(4))
+tampilkan "adalah_genap(7): " + ke_teks(adalah_genap(7))
+tampilkan "adalah_genap(0): " + ke_teks(adalah_genap(0))
+
+# Validasi angka dalam range
+dalam_range itu lambda dengan x -> x >= 1 dan x <= 100
+tampilkan "dalam_range(50): " + ke_teks(dalam_range(50))
+tampilkan "dalam_range(150): " + ke_teks(dalam_range(150))
+tampilkan "dalam_range(0): " + ke_teks(dalam_range(0))
+
+tampilkan ""
+
+# ===================================
+# 5. Lambda untuk String Operations
+# ===================================
+tampilkan "5. Lambda untuk String Operations:"
+
+# Lambda untuk uppercase
+ke_upper itu lambda dengan s -> s.upper()
+tampilkan "ke_upper('hello') = " + ke_upper("hello")
+tampilkan "ke_upper('world') = " + ke_upper("world")
+
+# Lambda untuk capitalize
+ke_kapital itu lambda dengan s -> s.capitalize()
+tampilkan "ke_kapital('budi') = " + ke_kapital("budi")
+tampilkan "ke_kapital('ani') = " + ke_kapital("ani")
+
+# Lambda untuk menambah prefix
+tambah_prefix itu lambda dengan nama -> "Mr. " + nama
+tampilkan "tambah_prefix('John') = " + tambah_prefix("John")
+tampilkan "tambah_prefix('Doe') = " + tambah_prefix("Doe")
+
+# Lambda untuk cek panjang string
+panjang_cukup itu lambda dengan s -> panjang(s) >= 5
+tampilkan "panjang_cukup('hello'): " + ke_teks(panjang_cukup("hello"))
+tampilkan "panjang_cukup('hi'): " + ke_teks(panjang_cukup("hi"))
+
+tampilkan ""
+
+# ===================================
+# 6. Lambda untuk Perhitungan Bisnis
+# ===================================
+tampilkan "6. Lambda untuk Perhitungan Bisnis:"
+
+# Lambda untuk hitung pajak
+hitung_pajak itu lambda dengan harga -> harga * 1.1
+tampilkan "Harga 100 + pajak 10%: " + ke_teks(hitung_pajak(100))
+tampilkan "Harga 500 + pajak 10%: " + ke_teks(hitung_pajak(500))
+
+# Lambda untuk hitung total dengan diskon
+total_diskon itu lambda dengan harga -> harga * 0.85
+tampilkan "Harga 200 dengan diskon 15%: " + ke_teks(total_diskon(200))
+tampilkan "Harga 1000 dengan diskon 15%: " + ke_teks(total_diskon(1000))
+
+# Lambda untuk hitung komisi
+hitung_komisi itu lambda dengan penjualan -> penjualan * 0.05
+tampilkan "Komisi dari penjualan 1000: " + ke_teks(hitung_komisi(1000))
+tampilkan "Komisi dari penjualan 5000: " + ke_teks(hitung_komisi(5000))
+
+tampilkan ""
+
+# ===================================
+# 7. Lambda untuk Berbagai Operasi
+# ===================================
+tampilkan "7. Lambda untuk Berbagai Operasi:"
+
+# Buat beberapa lambda untuk operasi berbeda
+tambah_10_func itu lambda dengan x -> x + 10
+kali_2_func itu lambda dengan x -> x * 2
+kuadrat_func itu lambda dengan x -> x * x
+bagi_2_func itu lambda dengan x -> x / 2
+
+nilai itu 20
+tampilkan "Nilai awal: " + ke_teks(nilai)
+tampilkan "Tambah 10: " + ke_teks(tambah_10_func(nilai))
+tampilkan "Kali 2: " + ke_teks(kali_2_func(nilai))
+tampilkan "Kuadrat: " + ke_teks(kuadrat_func(nilai))
+tampilkan "Bagi 2: " + ke_teks(bagi_2_func(nilai))
+
+tampilkan ""
+
+# ===================================
+# 8. Lambda untuk Transformasi Data
+# ===================================
+tampilkan "8. Lambda untuk Transformasi Data:"
+
+# Lambda untuk normalisasi (0-1)
+normalisasi itu lambda dengan x -> x / 100
+tampilkan "normalisasi(50) = " + ke_teks(normalisasi(50))
+tampilkan "normalisasi(75) = " + ke_teks(normalisasi(75))
+tampilkan "normalisasi(100) = " + ke_teks(normalisasi(100))
+
+# Lambda untuk scaling
+scale_10x itu lambda dengan x -> x * 10
+tampilkan "scale_10x(5) = " + ke_teks(scale_10x(5))
+tampilkan "scale_10x(12.5) = " + ke_teks(scale_10x(12.5))
+
+# Lambda untuk persentase
+ke_persen itu lambda dengan x -> x * 100
+tampilkan "ke_persen(0.5) = " + ke_teks(ke_persen(0.5)) + "%"
+tampilkan "ke_persen(0.75) = " + ke_teks(ke_persen(0.75)) + "%"
+
+tampilkan ""
+
+# ===================================
+# 9. Lambda dengan Loop Manual
+# ===================================
+tampilkan "9. Lambda dengan Loop Manual:"
+
+# Gunakan lambda dalam loop
+kuadrat_func itu lambda dengan x -> x * x
+
+tampilkan "Kuadrat dari 1-10:"
+untuk x dari 1 sampai 10
+    hasil itu kuadrat_func(x)
+    tampilkan "  " + ke_teks(x) + "² = " + ke_teks(hasil)
+selesai
+
+tampilkan ""
+
+# Gunakan lambda untuk filter manual
+adalah_ganjil itu lambda dengan x -> x % 2 != 0
+
+tampilkan "Angka ganjil dari 1-20:"
+untuk x dari 1 sampai 20
+    jika adalah_ganjil(x)
+        tampilkan "  " + ke_teks(x)
+    selesai
+selesai
+
+tampilkan ""
+
+# ===================================
+# 10. Lambda untuk Sorting Key
+# ===================================
+tampilkan "10. Lambda untuk Sorting Key:"
+
+# Data untuk sorting
+data itu [[3, "Ceri"], [1, "Apel"], [2, "Pisang"]]
+tampilkan "Data asli: " + ke_teks(data)
+
+# Sort berdasarkan angka (elemen pertama)
+ambil_angka itu lambda dengan x -> x[0]
+data_sorted itu sorted(data, key=ambil_angka)
+tampilkan "Sort by angka: " + ke_teks(data_sorted)
+
+# Data siswa
+siswa itu [
+    {"nama": "Budi", "nilai": 85},
+    {"nama": "Ani", "nilai": 92},
+    {"nama": "Citra", "nilai": 78}
+]
+
+tampilkan ""
+tampilkan "Data siswa:"
+untuk setiap s dari siswa
+    tampilkan "  " + s["nama"] + ": " + ke_teks(s["nilai"])
+selesai
+
+# Sort berdasarkan nilai
+ambil_nilai itu lambda dengan x -> x["nilai"]
+siswa_sorted itu sorted(siswa, key=ambil_nilai, reverse=benar)
+
+tampilkan ""
+tampilkan "Siswa sorted by nilai (tertinggi):"
+untuk setiap s dari siswa_sorted
+    tampilkan "  " + s["nama"] + ": " + ke_teks(s["nilai"])
+selesai
+
+tampilkan ""
+
+# ===================================
+# 11. Lambda Praktis dengan Loop
+# ===================================
+tampilkan "11. Lambda Praktis dengan Loop:"
+
+# Filter angka genap menggunakan loop
+cek_genap itu lambda dengan x -> x % 2 == 0
+angka_list itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+tampilkan "Angka asli: " + ke_teks(angka_list)
+tampilkan "Angka genap:"
+untuk setiap num dari angka_list
+    jika cek_genap(num)
+        tampilkan "  " + ke_teks(num)
+    selesai
+selesai
+
+# Filter angka besar
+cek_besar itu lambda dengan x -> x > 50
+nilai_list itu [25, 60, 45, 80, 30, 90, 55]
+
+tampilkan ""
+tampilkan "Nilai asli: " + ke_teks(nilai_list)
+tampilkan "Nilai > 50:"
+untuk setiap val dari nilai_list
+    jika cek_besar(val)
+        tampilkan "  " + ke_teks(val)
+    selesai
+selesai
+
+tampilkan ""
+
+# ===================================
+# 12. Praktik Terbaik Lambda
+# ===================================
+tampilkan "12. Praktik Terbaik Lambda:"
+tampilkan "✓ Gunakan lambda untuk operasi sederhana"
+tampilkan "✓ Lambda bagus untuk filter, sorted dengan key"
+tampilkan "✓ Lambda membuat kode lebih ringkas"
+tampilkan "✓ Untuk logika kompleks, gunakan fungsi biasa"
+tampilkan "✓ Lambda saat ini mendukung 1 parameter"
+tampilkan "✓ Lambda dapat dikombinasikan (higher-order functions)"
+
+tampilkan ""
+tampilkan "=== Lambda Functions Examples Complete ==="

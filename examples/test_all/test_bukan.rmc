@@ -1,0 +1,6 @@
+# Test bukan operator
+x itu [1, 2, 3]
+z itu [1, 2, 3]
+jika x bukan z maka
+    tampilkan "Benar"
+selesai

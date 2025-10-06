@@ -1,0 +1,3 @@
+response itu ambil_http("https://jsonplaceholder.typicode.com/users/1")
+data itu response.json()
+tampilkan data

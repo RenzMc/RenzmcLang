@@ -1,0 +1,149 @@
+// ============================================
+// Built-in Functions: Iteration & Functional
+// ============================================
+// Comprehensive examples for iteration functions
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║     ITERATION FUNCTIONS COMPLETE      ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// 1. ZIP - Combine multiple lists
+// ============================================
+tampilkan "=== 1. ZIP - Combine Lists ==="
+tampilkan ""
+
+nama_list itu ["Alice", "Bob", "Charlie"]
+umur_list itu [25, 30, 35]
+kota_list itu ["Jakarta", "Bandung", "Surabaya"]
+
+// zip - Combine lists into tuples
+hasil_zip itu zip(nama_list, umur_list, kota_list)
+tampilkan f"✓ zip({nama_list}, {umur_list}, {kota_list})"
+tampilkan f"  Result: {hasil_zip}"
+tampilkan ""
+
+// Iterate through zipped data
+tampilkan "Iterating through zipped data:"
+untuk setiap item dari hasil_zip
+    tampilkan f"  - {item[0]}, {item[1]} tahun, dari {item[2]}"
+selesai
+
+tampilkan ""
+
+// ============================================
+// 2. ENUMERATE - Add index to iteration
+// ============================================
+tampilkan "=== 2. ENUMERATE - Add Index ==="
+tampilkan ""
+
+buah_list itu ["Apel", "Jeruk", "Mangga", "Pisang"]
+
+// enumerate - Add index to list
+hasil_enum itu enumerate(buah_list)
+tampilkan f"✓ enumerate({buah_list})"
+tampilkan "  Result with indices:"
+
+untuk setiap item dari hasil_enum
+    tampilkan f"    [{item[0]}] {item[1]}"
+selesai
+
+tampilkan ""
+
+// ============================================
+// 3. ALL / SEMUA - Check if all true
+// ============================================
+tampilkan "=== 3. ALL / SEMUA - Check All True ==="
+tampilkan ""
+
+semua_benar itu [benar, benar, benar]
+ada_salah itu [benar, salah, benar]
+
+// all / semua - Check if all elements are true
+cek1 itu all(semua_benar)
+cek2 itu all(ada_salah)
+
+tampilkan f"✓ all({semua_benar}) = {cek1}"
+tampilkan f"✓ all({ada_salah}) = {cek2}"
+
+tampilkan ""
+
+// ============================================
+// 4. ANY / ADA - Check if any true
+// ============================================
+tampilkan "=== 4. ANY / ADA - Check Any True ==="
+tampilkan ""
+
+semua_salah itu [salah, salah, salah]
+ada_benar itu [salah, benar, salah]
+
+// any / ada - Check if any element is true
+cek3 itu any(semua_salah)
+cek4 itu any(ada_benar)
+
+tampilkan f"✓ any({semua_salah}) = {cek3}"
+tampilkan f"✓ any({ada_benar}) = {cek4}"
+
+tampilkan ""
+
+// ============================================
+// 5. SORTED / TERURUT - Sort list
+// ============================================
+tampilkan "=== 5. SORTED / TERURUT - Sort List ==="
+tampilkan ""
+
+acak_list itu [5, 2, 8, 1, 9, 3, 7, 4, 6]
+
+// sorted / terurut - Sort list (returns new list)
+urut_asc itu terurut(acak_list)
+tampilkan f"✓ terurut({acak_list})"
+tampilkan f"  Ascending: {urut_asc}"
+
+// Sort descending (reverse)
+urut_desc itu terurut(acak_list)
+balikkan(urut_desc)
+tampilkan f"  Descending: {urut_desc}"
+
+tampilkan ""
+
+// ============================================
+// 6. PRACTICAL EXAMPLES
+// ============================================
+tampilkan "=== 6. PRACTICAL EXAMPLES ==="
+tampilkan ""
+
+// Example 1: Process student data
+tampilkan "Example 1: Student Grade Processing"
+nama_siswa itu ["Alice", "Bob", "Charlie", "Diana"]
+nilai_siswa itu [85, 92, 78, 95]
+
+// Combine names and grades using zip
+data_siswa itu zip(nama_siswa, nilai_siswa)
+
+tampilkan "Data siswa (nama, nilai):"
+untuk setiap siswa dari data_siswa
+    tampilkan f"  - {siswa[0]}: {siswa[1]}"
+selesai
+
+tampilkan ""
+
+// Example 2: Enumerate with processing
+tampilkan "Example 2: Numbered List"
+tugas_list itu ["Belajar RenzMcLang", "Buat project", "Testing", "Deploy"]
+
+tugas_enum itu enumerate(tugas_list)
+
+tampilkan "Daftar Tugas:"
+untuk setiap item dari tugas_enum
+    nomor itu item[0] + 1
+    tugas itu item[1]
+    tampilkan f"  {nomor}. {tugas}"
+selesai
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  Iteration Functions Complete! ✅      ║"
+tampilkan "║                                        ║"
+tampilkan "║  Total Functions Demonstrated: 7       ║"
+tampilkan "╚════════════════════════════════════════╝"

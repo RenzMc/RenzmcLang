@@ -1,0 +1,283 @@
+# ===================================
+# Compound Assignment Operators
+# ===================================
+# Compound assignment operators menggabungkan operasi dan assignment
+# Lebih ringkas dari x = x + y
+
+tampilkan "=== Compound Assignment Operators Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Arithmetic Compound Assignment
+# ===================================
+tampilkan "1. Arithmetic Compound Assignment:"
+
+# += (tambah sama dengan)
+x itu 10
+tampilkan "x awal: " + ke_teks(x)
+x += 5
+tampilkan "x += 5: " + ke_teks(x)
+
+# -= (kurang sama dengan)
+y itu 20
+tampilkan ""
+tampilkan "y awal: " + ke_teks(y)
+y -= 7
+tampilkan "y -= 7: " + ke_teks(y)
+
+# *= (kali sama dengan)
+z itu 5
+tampilkan ""
+tampilkan "z awal: " + ke_teks(z)
+z *= 3
+tampilkan "z *= 3: " + ke_teks(z)
+
+# /= (bagi sama dengan)
+a itu 100
+tampilkan ""
+tampilkan "a awal: " + ke_teks(a)
+a /= 4
+tampilkan "a /= 4: " + ke_teks(a)
+
+# %= (sisa bagi sama dengan)
+b itu 17
+tampilkan ""
+tampilkan "b awal: " + ke_teks(b)
+b %= 5
+tampilkan "b %= 5: " + ke_teks(b)
+
+# **= (pangkat sama dengan)
+c itu 2
+tampilkan ""
+tampilkan "c awal: " + ke_teks(c)
+c **= 3
+tampilkan "c **= 3: " + ke_teks(c)
+
+# //= (pembagian bulat sama dengan)
+d itu 17
+tampilkan ""
+tampilkan "d awal: " + ke_teks(d)
+d //= 3
+tampilkan "d //= 3: " + ke_teks(d)
+
+tampilkan ""
+
+# ===================================
+# 2. Bitwise Compound Assignment
+# ===================================
+tampilkan "2. Bitwise Compound Assignment:"
+
+# &= (AND sama dengan)
+bit1 itu 12  # 1100 in binary
+tampilkan "bit1 awal: " + ke_teks(bit1) + " (binary: 1100)"
+bit1 &= 10   # 1010 in binary
+tampilkan "bit1 &= 10: " + ke_teks(bit1) + " (binary: 1000)"
+
+# |= (OR sama dengan)
+bit2 itu 12  # 1100
+tampilkan ""
+tampilkan "bit2 awal: " + ke_teks(bit2) + " (binary: 1100)"
+bit2 |= 10   # 1010
+tampilkan "bit2 |= 10: " + ke_teks(bit2) + " (binary: 1110)"
+
+# ^= (XOR sama dengan)
+bit3 itu 12  # 1100
+tampilkan ""
+tampilkan "bit3 awal: " + ke_teks(bit3) + " (binary: 1100)"
+bit3 ^= 10   # 1010
+tampilkan "bit3 ^= 10: " + ke_teks(bit3) + " (binary: 0110)"
+
+# <<= (shift left sama dengan)
+bit4 itu 5   # 101
+tampilkan ""
+tampilkan "bit4 awal: " + ke_teks(bit4) + " (binary: 101)"
+bit4 <<= 2
+tampilkan "bit4 <<= 2: " + ke_teks(bit4) + " (binary: 10100)"
+
+# >>= (shift right sama dengan)
+bit5 itu 20  # 10100
+tampilkan ""
+tampilkan "bit5 awal: " + ke_teks(bit5) + " (binary: 10100)"
+bit5 >>= 2
+tampilkan "bit5 >>= 2: " + ke_teks(bit5) + " (binary: 101)"
+
+tampilkan ""
+
+# ===================================
+# 3. Compound Assignment dalam Loop
+# ===================================
+tampilkan "3. Compound Assignment dalam Loop:"
+
+# Hitung total dengan +=
+total itu 0
+angka itu [10, 20, 30, 40, 50]
+tampilkan "Angka: " + ke_teks(angka)
+
+untuk setiap num dari angka
+    total += num
+selesai
+tampilkan "Total (dengan +=): " + ke_teks(total)
+
+# Hitung faktorial dengan *=
+faktorial itu 1
+n itu 5
+tampilkan ""
+tampilkan "Hitung faktorial " + ke_teks(n) + "!"
+untuk i dari 1 sampai n
+    faktorial *= i
+selesai
+tampilkan "Faktorial: " + ke_teks(faktorial)
+
+tampilkan ""
+
+# ===================================
+# 4. Compound Assignment untuk Counter
+# ===================================
+tampilkan "4. Compound Assignment untuk Counter:"
+
+# Counter dengan +=
+counter itu 0
+tampilkan "Counter awal: " + ke_teks(counter)
+
+untuk i dari 1 sampai 5
+    counter += 1
+    tampilkan "  Iterasi " + ke_teks(i) + ", counter: " + ke_teks(counter)
+selesai
+
+# Countdown dengan -=
+countdown itu 10
+tampilkan ""
+tampilkan "Countdown dari " + ke_teks(countdown) + ":"
+selama countdown > 0
+    tampilkan "  " + ke_teks(countdown)
+    countdown -= 1
+selesai
+tampilkan "  Blast off!"
+
+tampilkan ""
+
+# ===================================
+# 5. Compound Assignment untuk Akumulasi
+# ===================================
+tampilkan "5. Compound Assignment untuk Akumulasi:"
+
+# Akumulasi string
+pesan itu "Hello"
+tampilkan "Pesan awal: '" + pesan + "'"
+pesan += " World"
+tampilkan "Setelah += ' World': '" + pesan + "'"
+pesan += "!"
+tampilkan "Setelah += '!': '" + pesan + "'"
+
+# Akumulasi list
+daftar itu [1, 2, 3]
+tampilkan ""
+tampilkan "Daftar awal: " + ke_teks(daftar)
+daftar += [4, 5]
+tampilkan "Setelah += [4, 5]: " + ke_teks(daftar)
+
+tampilkan ""
+
+# ===================================
+# 6. Compound Assignment untuk Perhitungan
+# ===================================
+tampilkan "6. Compound Assignment untuk Perhitungan:"
+
+# Hitung rata-rata dengan compound
+nilai_list itu [85, 90, 78, 92, 88]
+tampilkan "Nilai: " + ke_teks(nilai_list)
+
+sum_nilai itu 0
+untuk setiap nilai dari nilai_list
+    sum_nilai += nilai
+selesai
+
+rata_rata itu sum_nilai / panjang(nilai_list)
+tampilkan "Total: " + ke_teks(sum_nilai)
+tampilkan "Rata-rata: " + ke_teks(rata_rata)
+
+tampilkan ""
+
+# ===================================
+# 7. Compound Assignment untuk Diskon
+# ===================================
+tampilkan "7. Compound Assignment untuk Diskon:"
+
+harga itu 100000
+tampilkan "Harga awal: Rp " + ke_teks(harga)
+
+# Diskon 10%
+harga *= 0.9
+tampilkan "Setelah diskon 10%: Rp " + ke_teks(harga)
+
+# Tambah pajak 10%
+harga *= 1.1
+tampilkan "Setelah pajak 10%: Rp " + ke_teks(harga)
+
+tampilkan ""
+
+# ===================================
+# 8. Compound Assignment untuk Scaling
+# ===================================
+tampilkan "8. Compound Assignment untuk Scaling:"
+
+# Scale up
+nilai itu 10
+tampilkan "Nilai awal: " + ke_teks(nilai)
+
+nilai *= 2
+tampilkan "Scale 2x: " + ke_teks(nilai)
+
+nilai *= 2
+tampilkan "Scale 2x lagi: " + ke_teks(nilai)
+
+# Scale down
+nilai //= 4
+tampilkan "Scale down //= 4: " + ke_teks(nilai)
+
+tampilkan ""
+
+# ===================================
+# 9. Compound Assignment untuk Bit Manipulation
+# ===================================
+tampilkan "9. Compound Assignment untuk Bit Manipulation:"
+
+# Set bit dengan |=
+flags itu 0
+tampilkan "Flags awal: " + ke_teks(flags)
+
+flags |= 1  # Set bit 0
+tampilkan "Set bit 0 (|= 1): " + ke_teks(flags)
+
+flags |= 4  # Set bit 2
+tampilkan "Set bit 2 (|= 4): " + ke_teks(flags)
+
+# Clear bit dengan &=
+flags &= ~1  # Clear bit 0
+tampilkan "Clear bit 0 (&= ~1): " + ke_teks(flags)
+
+tampilkan ""
+
+# ===================================
+# 10. Compound Assignment Best Practices
+# ===================================
+tampilkan "10. Compound Assignment Best Practices:"
+
+tampilkan "✓ Gunakan compound assignment untuk kode yang lebih ringkas"
+tampilkan "✓ x += 1 lebih baik dari x = x + 1"
+tampilkan "✓ Lebih efisien dan mudah dibaca"
+tampilkan "✓ Tersedia untuk semua operator aritmatika"
+tampilkan "✓ Tersedia untuk operator bitwise"
+tampilkan "✓ Gunakan untuk counter, akumulasi, dan scaling"
+
+# Comparison
+tampilkan ""
+tampilkan "Perbandingan:"
+tampilkan "  Tanpa compound: x = x + 5"
+tampilkan "  Dengan compound: x += 5"
+tampilkan ""
+tampilkan "  Tanpa compound: total = total + nilai"
+tampilkan "  Dengan compound: total += nilai"
+
+tampilkan ""
+tampilkan "=== Compound Assignment Operators Examples Complete ==="

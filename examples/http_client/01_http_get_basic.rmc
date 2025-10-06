@@ -1,0 +1,72 @@
+// ============================================================================
+// HTTP Client - Basic GET Request
+// Demonstrasi penggunaan built-in HTTP client tanpa perlu import
+// ============================================================================
+
+tampilkan "=== HTTP Client - Basic GET Request ==="
+tampilkan ""
+
+// 1. Simple GET request
+tampilkan "[1] Simple GET Request"
+coba
+    response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
+    tampilkan f"Status: {response.status_code}"
+    tampilkan f"URL: {response.url}"
+    
+    data itu response.json()
+    tampilkan f"Title: {data['title']}"
+    body_text itu data['body']
+    body_preview itu potong(body_text, 0, 50)
+    tampilkan f"Body: {body_preview}..."
+    tampilkan ""
+tangkap e
+    tampilkan f"Error: {e}"
+selesai
+
+// 2. GET with query parameters
+tampilkan "[2] GET with Query Parameters"
+coba
+    params itu {"userId": 1}
+    response itu http_get("https://jsonplaceholder.typicode.com/posts", params=params)
+    
+    data itu response.json()
+    tampilkan f"Found {panjang(data)} posts for user 1"
+    tampilkan f"First post: {data[0]['title']}"
+    tampilkan ""
+tangkap e
+    tampilkan f"Error: {e}"
+selesai
+
+// 3. Check response status
+tampilkan "[3] Check Response Status"
+coba
+    response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
+    
+    is_ok itu response.ok()
+    jika is_ok
+        tampilkan "✓ Request successful!"
+        tampilkan f"Status code: {response.status_code}"
+    kalau tidak
+        tampilkan "✗ Request failed!"
+    selesai
+tangkap e
+    tampilkan f"Error: {e}"
+selesai
+tampilkan ""
+
+// 4. Using Indonesian alias
+tampilkan "[4] Using Indonesian Alias (ambil_http)"
+coba
+    response itu ambil_http("https://jsonplaceholder.typicode.com/users/1")
+    data itu response.json()
+    
+    tampilkan f"Name: {data['name']}"
+    tampilkan f"Email: {data['email']}"
+    address itu data['address']
+    tampilkan f"City: {address['city']}"
+    tampilkan ""
+tangkap e
+    tampilkan f"Error: {e}"
+selesai
+
+tampilkan "✓ HTTP GET examples completed!"

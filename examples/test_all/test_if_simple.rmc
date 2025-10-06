@@ -1,0 +1,5 @@
+# Simple if test
+x itu 5
+jika x adalah 5 maka
+    tampilkan "Benar"
+selesai

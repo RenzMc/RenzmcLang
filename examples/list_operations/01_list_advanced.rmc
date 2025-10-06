@@ -1,0 +1,210 @@
+# ===================================
+# List Operations Advanced
+# ===================================
+# Operasi list lanjutan untuk manipulasi data
+
+tampilkan "=== List Operations Advanced Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. List Creation
+# ===================================
+tampilkan "1. List Creation:"
+
+# Empty list
+list1 itu []
+tampilkan "Empty list: " + ke_teks(list1)
+
+# List dengan berbagai tipe
+list2 itu [1, "dua", 3.0, benar, [5, 6]]
+tampilkan "Mixed list: " + ke_teks(list2)
+
+# List dengan comprehension
+list3 itu [x * 2 untuk setiap x dari [1, 2, 3, 4, 5]]
+tampilkan "Comprehension: " + ke_teks(list3)
+
+tampilkan ""
+
+# ===================================
+# 2. List Indexing & Slicing
+# ===================================
+tampilkan "2. List Indexing & Slicing:"
+
+angka itu [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+tampilkan "List: " + ke_teks(angka)
+
+tampilkan "Index 0: " + ke_teks(angka[0])
+tampilkan "Index 5: " + ke_teks(angka[5])
+tampilkan "Index -1: " + ke_teks(angka[-1])
+tampilkan "Index -2: " + ke_teks(angka[-2])
+
+tampilkan ""
+
+# ===================================
+# 3. List Concatenation
+# ===================================
+tampilkan "3. List Concatenation:"
+
+list_a itu [1, 2, 3]
+list_b itu [4, 5, 6]
+tampilkan "List A: " + ke_teks(list_a)
+tampilkan "List B: " + ke_teks(list_b)
+
+list_gabung itu list_a + list_b
+tampilkan "A + B: " + ke_teks(list_gabung)
+
+tampilkan ""
+
+# ===================================
+# 4. List Repetition
+# ===================================
+tampilkan "4. List Repetition:"
+
+list_repeat itu [1, 2, 3]
+tampilkan "List: " + ke_teks(list_repeat)
+
+list_2x itu list_repeat * 2
+tampilkan "List * 2: " + ke_teks(list_2x)
+
+list_3x itu list_repeat * 3
+tampilkan "List * 3: " + ke_teks(list_3x)
+
+tampilkan ""
+
+# ===================================
+# 5. List Membership
+# ===================================
+tampilkan "5. List Membership:"
+
+buah itu ["apel", "jeruk", "mangga", "pisang"]
+tampilkan "Buah: " + ke_teks(buah)
+
+tampilkan "'apel' dalam list: " + ke_teks("apel" dalam buah)
+tampilkan "'durian' dalam list: " + ke_teks("durian" dalam buah)
+tampilkan "'mangga' dalam list: " + ke_teks("mangga" dalam buah)
+
+tampilkan ""
+
+# ===================================
+# 6. List Length & Count
+# ===================================
+tampilkan "6. List Length & Count:"
+
+angka_list itu [1, 2, 3, 2, 4, 2, 5]
+tampilkan "List: " + ke_teks(angka_list)
+tampilkan "Panjang: " + ke_teks(panjang(angka_list))
+tampilkan "Count 2: " + ke_teks(angka_list.count(2))
+tampilkan "Count 5: " + ke_teks(angka_list.count(5))
+
+tampilkan ""
+
+# ===================================
+# 7. List Sorting
+# ===================================
+tampilkan "7. List Sorting:"
+
+angka_acak itu [5, 2, 8, 1, 9, 3]
+tampilkan "List acak: " + ke_teks(angka_acak)
+
+angka_sorted itu sorted(angka_acak)
+tampilkan "Sorted (asc): " + ke_teks(angka_sorted)
+
+angka_sorted_desc itu sorted(angka_acak, reverse=benar)
+tampilkan "Sorted (desc): " + ke_teks(angka_sorted_desc)
+
+tampilkan ""
+
+# ===================================
+# 8. List Reversal (Manual)
+# ===================================
+tampilkan "8. List Reversal (Manual):"
+
+list_rev itu [1, 2, 3, 4, 5]
+tampilkan "List asli: " + ke_teks(list_rev)
+
+# Reverse manually with comprehension
+indices itu [4, 3, 2, 1, 0]
+list_reversed itu [list_rev[i] untuk setiap i dari indices]
+tampilkan "Reversed: " + ke_teks(list_reversed)
+
+tampilkan ""
+
+# ===================================
+# 9. List Min & Max (Manual)
+# ===================================
+tampilkan "9. List Min & Max (Manual):"
+
+nilai_list itu [85, 92, 78, 95, 88, 76, 90]
+tampilkan "Nilai: " + ke_teks(nilai_list)
+
+# Find min
+min_val itu nilai_list[0]
+untuk setiap val dari nilai_list
+    jika val < min_val
+        min_val itu val
+    selesai
+selesai
+
+# Find max
+max_val itu nilai_list[0]
+untuk setiap val dari nilai_list
+    jika val > max_val
+        max_val itu val
+    selesai
+selesai
+
+tampilkan "Min: " + ke_teks(min_val)
+tampilkan "Max: " + ke_teks(max_val)
+
+tampilkan ""
+
+# ===================================
+# 10. List Praktis: Filter
+# ===================================
+tampilkan "10. List Praktis: Filter:"
+
+angka_all itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+tampilkan "Angka: " + ke_teks(angka_all)
+
+# Filter genap
+genap itu [x untuk setiap x dari angka_all jika x % 2 == 0]
+tampilkan "Genap: " + ke_teks(genap)
+
+# Filter > 5
+besar itu [x untuk setiap x dari angka_all jika x > 5]
+tampilkan "Lebih dari 5: " + ke_teks(besar)
+
+tampilkan ""
+
+# ===================================
+# 11. List Praktis: Transform
+# ===================================
+tampilkan "11. List Praktis: Transform:"
+
+harga itu [100, 200, 300, 400, 500]
+tampilkan "Harga: " + ke_teks(harga)
+
+# Tambah pajak 10%
+harga_pajak itu [h * 1.1 untuk setiap h dari harga]
+tampilkan "Harga + pajak: " + ke_teks(harga_pajak)
+
+# Diskon 20%
+harga_diskon itu [h * 0.8 untuk setiap h dari harga]
+tampilkan "Harga diskon: " + ke_teks(harga_diskon)
+
+tampilkan ""
+
+# ===================================
+# 12. List Best Practices
+# ===================================
+tampilkan "12. List Best Practices:"
+tampilkan "✓ List adalah mutable (bisa diubah)"
+tampilkan "✓ Gunakan comprehension untuk transformasi"
+tampilkan "✓ Gunakan sorted() untuk sorting (return new list)"
+tampilkan "✓ Gunakan slicing untuk subset"
+tampilkan "✓ Gunakan + untuk concatenation"
+tampilkan "✓ Gunakan * untuk repetition"
+tampilkan "✓ Gunakan 'dalam' untuk membership test"
+
+tampilkan ""
+tampilkan "=== List Operations Advanced Examples Complete ==="

@@ -1,0 +1,214 @@
+// ============================================
+// DEMO LENGKAP: Advanced Type System (Phase 2 & 3)
+// ============================================
+// Demonstrasi semua fitur advanced type system
+
+tampilkan "╔════════════════════════════════════════════════════════╗"
+tampilkan "║   DEMO LENGKAP: Advanced Type System Phase 2 & 3     ║"
+tampilkan "╚════════════════════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// PHASE 2: UNION TYPES
+// ============================================
+tampilkan "═══ PHASE 2: UNION TYPES ═══"
+tampilkan ""
+
+// Union type - variabel bisa multiple types
+id: Integer | String itu 12345
+tampilkan "✓ id (Integer | String) = " + ke_teks(id)
+
+id itu "USER-12345"
+tampilkan "✓ id sekarang = " + id
+
+// Fungsi dengan union type parameter
+fungsi format_id(identifier: Integer | String):
+    hasil "ID: " + ke_teks(identifier)
+selesai
+
+formatted1 itu format_id(999)
+formatted2 itu format_id("CUSTOM-999")
+tampilkan "✓ format_id(999) = " + formatted1
+tampilkan "✓ format_id('CUSTOM-999') = " + formatted2
+
+tampilkan ""
+
+// ============================================
+// PHASE 2: OPTIONAL TYPES
+// ============================================
+tampilkan "═══ PHASE 2: OPTIONAL TYPES ═══"
+tampilkan ""
+
+// Optional type - bisa None
+email: String? itu "user@example.com"
+tampilkan "✓ email (String?) = " + email
+
+email itu kosong
+tampilkan "✓ email sekarang = None"
+
+// Fungsi dengan optional parameter
+fungsi kirim_notifikasi(pesan: String, email: String?):
+    jika email == kosong
+        tampilkan "  Notifikasi: " + pesan + " (tanpa email)"
+    kalau_tidak
+        tampilkan "  Email ke " + email + ": " + pesan
+    selesai
+selesai
+
+kirim_notifikasi("Selamat datang!", "user@example.com")
+kirim_notifikasi("Pesan umum", kosong)
+
+tampilkan ""
+
+// ============================================
+// PHASE 2: GENERIC TYPES
+// ============================================
+tampilkan "═══ PHASE 2: GENERIC TYPES ═══"
+tampilkan ""
+
+// List dengan tipe elemen spesifik
+scores: List[Integer] itu [85, 90, 78, 92, 88]
+tampilkan "✓ scores (List[Integer]) = " + ke_teks(scores)
+
+names: List[String] itu ["Alice", "Bob", "Charlie"]
+tampilkan "✓ names (List[String]) = " + ke_teks(names)
+
+// Dict dengan tipe key dan value spesifik
+grades: Dict[String, Integer] itu {
+    "Math": 90,
+    "Physics": 85,
+    "Chemistry": 88
+}
+tampilkan "✓ grades (Dict[String, Integer]) = " + ke_teks(grades)
+
+// Fungsi dengan generic type
+fungsi hitung_rata_rata(nilai: List[Integer]):
+    total itu 0
+    untuk setiap n dari nilai
+        total += n
+    selesai
+    hasil total / panjang(nilai)
+selesai
+
+rata_rata itu hitung_rata_rata(scores)
+tampilkan "✓ Rata-rata scores = " + ke_teks(rata_rata)
+
+tampilkan ""
+
+// ============================================
+// PHASE 3: TYPE INFERENCE
+// ============================================
+tampilkan "═══ PHASE 3: TYPE INFERENCE ═══"
+tampilkan ""
+
+// Tanpa type hints - tipe di-infer otomatis
+auto_int itu 42
+auto_str itu "Hello"
+auto_float itu 3.14
+auto_list itu [1, 2, 3, 4, 5]
+
+tampilkan "✓ auto_int = " + ke_teks(auto_int) + " (inferred: Integer)"
+tampilkan "✓ auto_str = " + auto_str + " (inferred: String)"
+tampilkan "✓ auto_float = " + ke_teks(auto_float) + " (inferred: Float)"
+tampilkan "✓ auto_list = " + ke_teks(auto_list) + " (inferred: List[Integer])"
+
+// Fungsi tanpa type hints - type inference bekerja otomatis
+fungsi smart_add(a, b):
+    hasil a + b
+selesai
+
+result1 itu smart_add(10, 20)
+result2 itu smart_add("Hello ", "World")
+tampilkan "✓ smart_add(10, 20) = " + ke_teks(result1)
+tampilkan "✓ smart_add('Hello ', 'World') = " + result2
+tampilkan "  (Type inference: fungsi bekerja dengan Integer dan String)"
+
+tampilkan ""
+
+// ============================================
+// KOMBINASI ADVANCED FEATURES
+// ============================================
+tampilkan "═══ KOMBINASI ADVANCED FEATURES ═══"
+tampilkan ""
+
+// Union + Optional + Generic
+fungsi proses_data_advanced(data: List[Integer] | Dict[String, Integer], mode: String?):
+    tampilkan "  Processing data..."
+    total itu 0
+    
+    // Simple processing - just sum values
+    untuk setiap item dari data
+        total += item
+    selesai
+    
+    tampilkan "  Total: " + ke_teks(total)
+    
+    jika mode != kosong
+        tampilkan "  Mode: " + mode
+    selesai
+selesai
+
+data_list itu [10, 20, 30, 40]
+data_dict_values itu [10, 20, 30]
+
+proses_data_advanced(data_list, "list_mode")
+proses_data_advanced(data_dict_values, kosong)
+
+tampilkan ""
+
+// ============================================
+// CONTOH PRAKTIS: SISTEM MANAJEMEN USER
+// ============================================
+tampilkan "═══ CONTOH PRAKTIS: SISTEM MANAJEMEN USER ═══"
+tampilkan ""
+
+fungsi buat_user(id: Integer | String, nama: String, email: String?, roles: List[String]):
+    user itu {
+        "id": id,
+        "nama": nama,
+        "email": email,
+        "roles": roles
+    }
+    hasil user
+selesai
+
+fungsi tampilkan_user(user: Dict):
+    tampilkan "  User ID: " + ke_teks(user["id"])
+    tampilkan "  Nama: " + user["nama"]
+    
+    jika user["email"] != kosong
+        tampilkan "  Email: " + user["email"]
+    kalau_tidak
+        tampilkan "  Email: (tidak ada)"
+    selesai
+    
+    tampilkan "  Roles: " + ke_teks(user["roles"])
+selesai
+
+// Buat beberapa user
+user1 itu buat_user(1, "Admin User", "admin@example.com", ["admin", "user"])
+user2 itu buat_user("GUEST-001", "Guest User", kosong, ["guest"])
+
+tampilkan "User 1:"
+tampilkan_user(user1)
+tampilkan ""
+tampilkan "User 2:"
+tampilkan_user(user2)
+
+tampilkan ""
+
+// ============================================
+// KESIMPULAN
+// ============================================
+tampilkan "╔════════════════════════════════════════════════════════╗"
+tampilkan "║         ADVANCED TYPE SYSTEM - SEMUA BERHASIL!        ║"
+tampilkan "╚════════════════════════════════════════════════════════╝"
+tampilkan ""
+tampilkan "✅ Phase 2: Union Types (Integer | String)"
+tampilkan "✅ Phase 2: Optional Types (String?)"
+tampilkan "✅ Phase 2: Generic Types (List[Integer], Dict[String, Integer])"
+tampilkan "✅ Phase 3: Type Inference (otomatis)"
+tampilkan "✅ Phase 3: Smart Type Checking"
+tampilkan "✅ Kombinasi semua fitur advanced"
+tampilkan ""
+tampilkan "🎉 Full Type System Implementation - SUKSES!"

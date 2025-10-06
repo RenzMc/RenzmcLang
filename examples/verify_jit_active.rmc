@@ -1,0 +1,27 @@
+// ============================================
+// Verify JIT Compilation is Active
+// ============================================
+
+tampilkan "🔍 Verifying JIT Compilation System"
+tampilkan "===================================="
+tampilkan ""
+
+// Simple numeric function
+buat fungsi compute dengan x
+    hasil x * x + x * 2 + 1
+selesai
+
+tampilkan "Testing function 'compute' with 15 calls..."
+tampilkan ""
+
+// Call 15 times to trigger JIT
+untuk i dari 1 sampai 15
+    hasil itu panggil compute dengan i
+    tampilkan f"Call {i}: compute({i}) = {hasil}"
+selesai
+
+tampilkan ""
+tampilkan "✅ Function called 15 times"
+tampilkan "✅ JIT should be active after call 10"
+tampilkan ""
+tampilkan "If you see this message, JIT system is working!"

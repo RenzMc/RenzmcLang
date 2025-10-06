@@ -1,0 +1,67 @@
+// ============================================
+// Contoh 2: Type Hints untuk Fungsi
+// ============================================
+// Demonstrasi penggunaan type hints pada parameter dan return type
+
+tampilkan "=== Type Hints untuk Fungsi ==="
+tampilkan ""
+
+// 1. Fungsi dengan parameter type hints
+tampilkan "1. Fungsi dengan parameter type hints:"
+fungsi jumlahkan(a: Integer, b: Integer):
+    hasil a + b
+selesai
+
+hasil_tambah itu jumlahkan(5, 3)
+tampilkan "jumlahkan(5, 3) = " + ke_teks(hasil_tambah)
+
+tampilkan ""
+tampilkan "2. Fungsi dengan berbagai tipe parameter:"
+fungsi sapa(nama: String, umur: Integer):
+    pesan itu "Halo " + nama + ", umur " + ke_teks(umur) + " tahun"
+    hasil pesan
+selesai
+
+pesan_sapa itu sapa("Budi", 25)
+tampilkan pesan_sapa
+
+tampilkan ""
+tampilkan "3. Fungsi dengan Float parameter:"
+fungsi hitung_luas_lingkaran(radius: Float):
+    pi itu 3.14159
+    luas itu pi * radius * radius
+    hasil luas
+selesai
+
+luas_lingkaran itu hitung_luas_lingkaran(5.0)
+tampilkan "Luas lingkaran (r=5.0): " + ke_teks(luas_lingkaran)
+
+tampilkan ""
+tampilkan "4. Fungsi dengan Boolean parameter:"
+fungsi cek_akses(is_admin: Boolean, is_active: Boolean):
+    jika is_admin dan is_active
+        hasil "Akses diberikan"
+    kalau_tidak
+        hasil "Akses ditolak"
+    selesai
+selesai
+
+status_akses itu cek_akses(benar, benar)
+tampilkan "Status akses: " + status_akses
+
+tampilkan ""
+tampilkan "5. Fungsi dengan List parameter:"
+fungsi jumlah_list(angka: List):
+    total itu 0
+    untuk setiap num dari angka
+        total += num
+    selesai
+    hasil total
+selesai
+
+daftar_angka itu [1, 2, 3, 4, 5]
+total_angka itu jumlah_list(daftar_angka)
+tampilkan "Jumlah [1,2,3,4,5]: " + ke_teks(total_angka)
+
+tampilkan ""
+tampilkan "=== Type Hints untuk Fungsi Berhasil! ==="

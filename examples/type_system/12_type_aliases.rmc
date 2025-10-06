@@ -1,0 +1,47 @@
+tampilkan "=== Type Aliases Demo ==="
+tampilkan ""
+
+tampilkan "1. Basic Type Aliases:"
+tipe UserId = Integer
+tipe Username = String
+tipe Email = String
+
+user_id: UserId itu 12345
+username: Username itu "budi_santoso"
+email: Email itu "budi@example.com"
+
+tampilkan "User ID: " + ke_teks(user_id)
+tampilkan "Username: " + username
+tampilkan "Email: " + email
+
+tampilkan ""
+tampilkan "2. Complex Type Aliases:"
+tipe UserData = Dict[String, Integer | String]
+
+user: UserData itu {
+    "id": 12345,
+    "nama": "Budi Santoso",
+    "email": "budi@example.com",
+    "umur": 25
+}
+
+tampilkan "User Data: "
+tampilkan user
+
+tampilkan ""
+tampilkan "3. Type Aliases in Functions:"
+fungsi get_user_by_id(id: UserId) -> UserData:
+    hasil {
+        "id": id,
+        "nama": "User " + ke_teks(id),
+        "email": "user" + ke_teks(id) + "@example.com",
+        "umur": 20
+    }
+selesai
+
+data_user itu get_user_by_id(999)
+tampilkan "Retrieved User: "
+tampilkan data_user
+
+tampilkan ""
+tampilkan "=== Type Aliases Demo Selesai! ==="

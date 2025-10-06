@@ -1,0 +1,92 @@
+// ============================================
+// Phase 3: Type Inference
+// ============================================
+// Demonstrasi type inference otomatis
+
+tampilkan "=== TYPE INFERENCE (Phase 3) ==="
+tampilkan ""
+
+// Type inference mendeteksi tipe secara otomatis
+tampilkan "1. Inference untuk Variabel Sederhana:"
+
+// Tanpa type hint, tipe di-infer otomatis
+x itu 42
+tampilkan "x = " + ke_teks(x) + " (inferred: Integer)"
+
+y itu "Hello"
+tampilkan "y = " + y + " (inferred: String)"
+
+z itu 3.14
+tampilkan "z = " + ke_teks(z) + " (inferred: Float)"
+
+tampilkan ""
+tampilkan "2. Inference untuk List:"
+
+// List homogen - semua elemen tipe sama
+angka_list itu [1, 2, 3, 4, 5]
+tampilkan "angka_list = " + ke_teks(angka_list) + " (inferred: List[Integer])"
+
+teks_list itu ["a", "b", "c"]
+tampilkan "teks_list = " + ke_teks(teks_list) + " (inferred: List[String])"
+
+// List heterogen - tipe campuran
+campuran itu [1, "dua", 3.0]
+tampilkan "campuran = " + ke_teks(campuran) + " (inferred: List)"
+
+tampilkan ""
+tampilkan "3. Inference untuk Dict:"
+
+// Dict dengan tipe konsisten
+data_siswa itu {
+    "Budi": 85,
+    "Ani": 90,
+    "Citra": 88
+}
+tampilkan "data_siswa (inferred: Dict[String, Integer])"
+
+// Dict dengan tipe campuran
+data_campuran itu {
+    "nama": "Budi",
+    "umur": 25,
+    "tinggi": 175.5
+}
+tampilkan "data_campuran (inferred: Dict[String, Any])"
+
+tampilkan ""
+tampilkan "4. Inference dalam Fungsi:"
+
+// Fungsi tanpa type hints - tipe di-infer dari penggunaan
+fungsi tambah_auto(a, b):
+    hasil a + b
+selesai
+
+hasil1 itu tambah_auto(5, 3)
+tampilkan "tambah_auto(5, 3) = " + ke_teks(hasil1)
+
+hasil2 itu tambah_auto("Hello ", "World")
+tampilkan "tambah_auto('Hello ', 'World') = " + hasil2
+
+tampilkan ""
+tampilkan "5. Smart Type Checking:"
+
+// Type inference membantu validasi
+fungsi proses_data(data):
+    // Tipe data di-infer dari operasi
+    jika tipe(data) == "list"
+        tampilkan "Processing list dengan " + ke_teks(panjang(data)) + " elemen"
+    kalau_tidak_jika tipe(data) == "dict"
+        tampilkan "Processing dict dengan " + ke_teks(panjang(data)) + " keys"
+    kalau_tidak
+        tampilkan "Processing " + tipe(data)
+    selesai
+selesai
+
+proses_data([1, 2, 3])
+proses_data({"a": 1, "b": 2})
+proses_data("string")
+
+tampilkan ""
+tampilkan "=== Type Inference Berhasil! ==="
+tampilkan ""
+tampilkan "CATATAN: Type inference bekerja otomatis di background"
+tampilkan "untuk membantu validasi tipe tanpa perlu type hints eksplisit."

@@ -1,0 +1,25 @@
+// ============================================
+// Test Database Examples
+// ============================================
+// Script untuk menguji semua contoh database
+
+tampilkan "=== Testing Database Examples ==="
+tampilkan ""
+
+tampilkan "[1] Testing SQLite Basic Operations..."
+tampilkan "Running: examples/database/01_sqlite_basic.rmc"
+tampilkan "-" * 80
+tampilkan ""
+
+// Test akan dijalankan secara manual
+// Uncomment baris berikut untuk menjalankan test:
+// eksekusi "python -m renzmc examples/database/01_sqlite_basic.rmc"
+
+tampilkan "✓ Test script siap"
+tampilkan ""
+tampilkan "Untuk menjalankan test, gunakan:"
+tampilkan "  python -m renzmc examples/database/01_sqlite_basic.rmc"
+tampilkan "  python -m renzmc examples/database/02_sqlite_advanced.rmc"
+tampilkan "  python -m renzmc examples/database/03_database_wrapper.rmc"
+tampilkan ""
+tampilkan "=== Selesai ==="

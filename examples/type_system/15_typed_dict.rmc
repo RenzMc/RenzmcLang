@@ -1,0 +1,60 @@
+tampilkan "=== TypedDict Demo ==="
+tampilkan ""
+
+tampilkan "1. Basic TypedDict:"
+tipe Person = TypedDict["nama": String, "umur": Integer, "kota": String]
+
+person: Person itu {
+    "nama": "Budi",
+    "umur": 25,
+    "kota": "Jakarta"
+}
+
+tampilkan "Person: "
+tampilkan person
+
+tampilkan ""
+tampilkan "2. TypedDict with Functions:"
+fungsi buat_person(nama: String, umur: Integer, kota: String) -> Person:
+    hasil {
+        "nama": nama,
+        "umur": umur,
+        "kota": kota
+    }
+selesai
+
+person2 itu buat_person("Ani", 23, "Bandung")
+tampilkan "Person 2: "
+tampilkan person2
+
+tampilkan ""
+tampilkan "3. Complex TypedDict:"
+tipe Product = TypedDict["id": Integer, "nama": String, "harga": Float, "stok": Integer]
+
+product: Product itu {
+    "id": 101,
+    "nama": "Laptop",
+    "harga": 5000000.0,
+    "stok": 10
+}
+
+tampilkan "Product: "
+tampilkan product
+
+tampilkan ""
+tampilkan "4. TypedDict in Function Parameters:"
+fungsi tampilkan_person(p: Person):
+    tampilkan "Nama: " + p["nama"]
+    tampilkan "Umur: " + ke_teks(p["umur"])
+    tampilkan "Kota: " + p["kota"]
+selesai
+
+tampilkan "Menampilkan Person 1:"
+tampilkan_person(person)
+
+tampilkan ""
+tampilkan "Menampilkan Person 2:"
+tampilkan_person(person2)
+
+tampilkan ""
+tampilkan "=== TypedDict Demo Selesai! ==="

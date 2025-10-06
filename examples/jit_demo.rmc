@@ -1,0 +1,167 @@
+// ============================================
+// JIT Compilation Demo - RenzMcLang
+// ============================================
+// Contoh demonstrasi performa JIT compilation
+// Fungsi yang dipanggil berulang kali akan dioptimasi otomatis
+
+tampilkan "🚀 JIT Compilation Demo - RenzMcLang"
+tampilkan "======================================"
+tampilkan ""
+
+// Fungsi 1: Fibonacci (akan menjadi hot function karena dipanggil 20 kali)
+buat fungsi fibonacci dengan n
+    jika n <= 1
+        hasil n
+    kalau tidak
+        a itu 0
+        b itu 1
+        untuk i dari 2 sampai n
+            temp itu a + b
+            a itu b
+            b itu temp
+        selesai
+        hasil b
+    selesai
+selesai
+
+// Fungsi 2: Faktorial (juga akan menjadi hot function)
+buat fungsi faktorial dengan n
+    hasil itu 1
+    untuk i dari 2 sampai n
+        hasil itu hasil * i
+    selesai
+    hasil hasil
+selesai
+
+// Fungsi 3: Pangkat (fungsi matematika kompleks)
+buat fungsi pangkat dengan basis, eksponen
+    hasil itu 1
+    untuk i dari 1 sampai eksponen
+        hasil itu hasil * basis
+    selesai
+    hasil hasil
+selesai
+
+// Fungsi 4: Prima check (algoritma komputasi)
+buat fungsi adalah_prima dengan n
+    jika n <= 1
+        hasil salah
+    selesai
+    jika n <= 3
+        hasil benar
+    selesai
+    jika n % 2 == 0 atau n % 3 == 0
+        hasil salah
+    selesai
+    i itu 5
+    selama i * i <= n
+        jika n % i == 0 atau n % (i + 2) == 0
+            hasil salah
+        selesai
+        i itu i + 6
+    selesai
+    hasil benar
+selesai
+
+// ============================================
+// DEMO 1: Fibonacci (20 panggilan = JIT aktif)
+// ============================================
+
+tampilkan "📊 DEMO 1: Fibonacci Sequence"
+tampilkan "Memanggil fungsi fibonacci 20 kali... (akan trigger JIT setelah 10x)"
+tampilkan ""
+
+untuk i dari 1 sampai 20
+    hasil itu panggil fibonacci dengan i
+    tampilkan f"fibonacci({i}) = {hasil}"
+selesai
+
+tampilkan ""
+tampilkan "✅ Fungsi fibonacci sudah melewati threshold 10 panggilan"
+tampilkan "✅ JIT seharusnya sudah aktif untuk panggilan ke-11 sampai 20"
+tampilkan ""
+
+// ============================================
+// DEMO 2: Faktorial (15 panggilan = JIT aktif)
+// ============================================
+
+tampilkan "📊 DEMO 2: Faktorial Calculation"
+tampilkan "Memanggil fungsi faktorial 15 kali... (akan trigger JIT setelah 10x)"
+tampilkan ""
+
+untuk i dari 1 sampai 15
+    hasil itu panggil faktorial dengan i
+    tampilkan f"{i}! = {hasil}"
+selesai
+
+tampilkan ""
+tampilkan "✅ Fungsi faktorial sudah melewati threshold 10 panggilan"
+tampilkan ""
+
+// ============================================
+// DEMO 3: Pangkat (12 panggilan = JIT aktif)
+// ============================================
+
+tampilkan "📊 DEMO 3: Power Calculation"
+tampilkan "Memanggil fungsi pangkat 12 kali dengan basis berbeda..."
+tampilkan ""
+
+basis_list itu [2, 3, 5, 10]
+eksponen_list itu [3, 4, 5, 6]
+
+untuk i dari 0 sampai 3
+    basis itu basis_list[i]
+    eksponen itu eksponen_list[i]
+    hasil itu panggil pangkat dengan basis, eksponen
+    tampilkan f"{basis}^{eksponen} = {hasil}"
+selesai
+
+// Loop tambahan untuk pastikan JIT aktif
+untuk i dari 1 sampai 8
+    hasil itu panggil pangkat dengan 2, i
+    tampilkan f"2^{i} = {hasil}"
+selesai
+
+tampilkan ""
+tampilkan "✅ Fungsi pangkat sudah melewati threshold 10+ panggilan"
+tampilkan ""
+
+// ============================================
+// DEMO 4: Prime Check (25 panggilan = JIT aktif)
+// ============================================
+
+tampilkan "📊 DEMO 4: Prime Number Check"
+tampilkan "Memanggil fungsi adalah_prima 25 kali... (akan trigger JIT setelah 10x)"
+tampilkan ""
+
+bilangan_list itu [2, 3, 4, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89]
+
+untuk i dari 0 sampai 24
+    n itu bilangan_list[i]
+    prima itu panggil adalah_prima dengan n
+    status itu "prima" jika prima kalau tidak "bukan prima"
+    tampilkan f"{n} adalah {status}"
+selesai
+
+tampilkan ""
+tampilkan "✅ Fungsi adalah_prima sudah melewati threshold 10+ panggilan"
+tampilkan ""
+
+// ============================================
+// RINGKASAN
+// ============================================
+
+tampilkan "🎯 RINGKASAN JIT COMPILATION:"
+tampilkan "======================================"
+tampilkan "✅ Semua fungsi sudah melewati threshold 10 panggilan"
+tampilkan "✅ JIT compilation seharusnya sudah aktif untuk semua fungsi"
+tampilkan "✅ Panggilan berikutnya ke fungsi-fungsi ini akan lebih cepat!"
+tampilkan ""
+tampilkan "📈 Statistik:"
+tampilkan "- fibonacci: 20 panggilan (JIT aktif setelah ke-10)"
+tampilkan "- faktorial: 15 panggilan (JIT aktif setelah ke-10)"
+tampilkan "- pangkat: 12 panggilan (JIT aktif setelah ke-10)"
+tampilkan "- adalah_prima: 25 panggilan (JIT aktif setelah ke-10)"
+tampilkan ""
+tampilkan "🚀 JIT compilation bekerja secara otomatis tanpa perubahan kode!"
+tampilkan "🚀 Semua fungsi yang sering dipanggil akan dioptimasi secara otomatis!"

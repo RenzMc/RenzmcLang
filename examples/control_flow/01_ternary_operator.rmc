@@ -1,0 +1,276 @@
+# ===================================
+# Ternary Operator (Operator Kondisi)
+# ===================================
+# Ternary operator adalah cara singkat untuk menulis if-else
+# Sintaks: nilai_jika_benar jika kondisi kalau tidak nilai_jika_salah
+
+tampilkan "=== Ternary Operator Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Ternary Operator Dasar
+# ===================================
+tampilkan "1. Ternary Operator Dasar:"
+
+# Contoh sederhana
+umur itu 20
+status itu "Dewasa" jika umur >= 18 kalau tidak "Anak-anak"
+tampilkan "Umur: " + ke_teks(umur)
+tampilkan "Status: " + status
+
+# Contoh dengan angka
+nilai itu 85
+hasil itu "Lulus" jika nilai >= 60 kalau tidak "Tidak Lulus"
+tampilkan ""
+tampilkan "Nilai: " + ke_teks(nilai)
+tampilkan "Hasil: " + hasil
+
+# Contoh dengan boolean
+is_member itu benar
+diskon itu 20 jika is_member kalau tidak 0
+tampilkan ""
+tampilkan "Member: " + ke_teks(is_member)
+tampilkan "Diskon: " + ke_teks(diskon) + "%"
+
+tampilkan ""
+
+# ===================================
+# 2. Ternary dengan Operasi Matematika
+# ===================================
+tampilkan "2. Ternary dengan Operasi Matematika:"
+
+# Nilai absolut
+x itu -5
+abs_x itu x jika x >= 0 kalau tidak -x
+tampilkan "x = " + ke_teks(x)
+tampilkan "abs(x) = " + ke_teks(abs_x)
+
+# Max antara dua nilai
+a itu 10
+b itu 20
+max_val itu a jika a > b kalau tidak b
+tampilkan ""
+tampilkan "a = " + ke_teks(a) + ", b = " + ke_teks(b)
+tampilkan "max = " + ke_teks(max_val)
+
+# Min antara dua nilai
+min_val itu a jika a < b kalau tidak b
+tampilkan "min = " + ke_teks(min_val)
+
+# Pembatasan nilai (clamp)
+nilai_input itu 150
+max_limit itu 100
+nilai_terbatas itu nilai_input jika nilai_input <= max_limit kalau tidak max_limit
+tampilkan ""
+tampilkan "Input: " + ke_teks(nilai_input)
+tampilkan "Max limit: " + ke_teks(max_limit)
+tampilkan "Nilai terbatas: " + ke_teks(nilai_terbatas)
+
+tampilkan ""
+
+# ===================================
+# 3. Ternary dengan String
+# ===================================
+tampilkan "3. Ternary dengan String:"
+
+# Greeting berdasarkan waktu
+jam itu 14
+greeting itu ("Selamat Pagi" jika jam < 12 kalau tidak ("Selamat Siang" jika jam < 18 kalau tidak "Selamat Malam"))
+tampilkan "Jam: " + ke_teks(jam) + ":00"
+tampilkan "Greeting: " + greeting
+
+# Status online
+is_online itu salah
+status_text itu "Online" jika is_online kalau tidak "Offline"
+tampilkan ""
+tampilkan "Status: " + status_text
+
+# Gender
+gender itu "L"
+title itu "Bapak" jika gender == "L" kalau tidak "Ibu"
+tampilkan ""
+tampilkan "Gender: " + gender
+tampilkan "Title: " + title
+
+tampilkan ""
+
+# ===================================
+# 4. Ternary Bersarang (Nested) - 2 Level
+# ===================================
+tampilkan "4. Ternary Bersarang (2 Level):"
+
+# Grade berdasarkan nilai (2 level)
+nilai_siswa itu 85
+grade itu "A" jika nilai_siswa >= 90 kalau tidak ("B" jika nilai_siswa >= 70 kalau tidak "C")
+tampilkan "Nilai: " + ke_teks(nilai_siswa)
+tampilkan "Grade: " + grade
+
+# Kategori umur (2 level)
+umur_orang itu 25
+kategori_umur itu "Anak" jika umur_orang < 18 kalau tidak ("Dewasa" jika umur_orang < 60 kalau tidak "Lansia")
+tampilkan ""
+tampilkan "Umur: " + ke_teks(umur_orang)
+tampilkan "Kategori: " + kategori_umur
+
+# Kategori BMI (2 level)
+bmi itu 22.5
+kategori_bmi itu "Kurus" jika bmi < 18.5 kalau tidak ("Normal" jika bmi < 25 kalau tidak "Gemuk")
+tampilkan ""
+tampilkan "BMI: " + ke_teks(bmi)
+tampilkan "Kategori: " + kategori_bmi
+
+# Catatan: Untuk nested lebih dari 2 level, gunakan if-else biasa
+tampilkan ""
+tampilkan "Catatan: Nested ternary dibatasi 2 level untuk readability"
+
+tampilkan ""
+
+# ===================================
+# 5. Ternary dalam List
+# ===================================
+tampilkan "5. Ternary dalam List:"
+
+# Buat list dengan ternary
+angka itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+tampilkan "Angka: " + ke_teks(angka)
+
+# Klasifikasi genap/ganjil
+klasifikasi itu ["Genap" jika x % 2 == 0 kalau tidak "Ganjil" untuk setiap x dari angka]
+tampilkan "Klasifikasi: " + ke_teks(klasifikasi)
+
+# Positif/Negatif
+angka_campuran itu [-5, -2, 3, 7]
+tanda itu ["Negatif" jika x < 0 kalau tidak "Positif" untuk setiap x dari angka_campuran]
+tampilkan ""
+tampilkan "Angka: " + ke_teks(angka_campuran)
+tampilkan "Tanda: " + ke_teks(tanda)
+
+tampilkan ""
+
+# ===================================
+# 6. Ternary untuk Validasi
+# ===================================
+tampilkan "6. Ternary untuk Validasi:"
+
+# Validasi password
+password itu "abc123"
+panjang_password itu panjang(password)
+validasi_password itu "Valid" jika panjang_password >= 8 kalau tidak "Terlalu Pendek"
+tampilkan "Password: " + password
+tampilkan "Panjang: " + ke_teks(panjang_password)
+tampilkan "Validasi: " + validasi_password
+
+# Validasi email sederhana
+email itu "user@example.com"
+validasi_email itu "Valid" jika "@" dalam email dan "." dalam email kalau tidak "Invalid"
+tampilkan ""
+tampilkan "Email: " + email
+tampilkan "Validasi: " + validasi_email
+
+# Validasi umur
+umur_input itu 25
+validasi_umur itu "Valid" jika umur_input >= 0 dan umur_input <= 150 kalau tidak "Invalid"
+tampilkan ""
+tampilkan "Umur: " + ke_teks(umur_input)
+tampilkan "Validasi: " + validasi_umur
+
+tampilkan ""
+
+# ===================================
+# 7. Ternary untuk Perhitungan Bisnis
+# ===================================
+tampilkan "7. Ternary untuk Perhitungan Bisnis:"
+
+# Hitung diskon
+total_belanja itu 150000
+diskon_persen itu 20 jika total_belanja > 100000 kalau tidak (10 jika total_belanja > 50000 kalau tidak 0)
+total_diskon itu total_belanja * diskon_persen / 100
+total_bayar itu total_belanja - total_diskon
+
+tampilkan "Total belanja: Rp " + ke_teks(total_belanja)
+tampilkan "Diskon: " + ke_teks(diskon_persen) + "%"
+tampilkan "Total diskon: Rp " + ke_teks(total_diskon)
+tampilkan "Total bayar: Rp " + ke_teks(total_bayar)
+
+# Hitung ongkir
+jarak itu 15
+ongkir itu 10000 jika jarak <= 5 kalau tidak (15000 jika jarak <= 10 kalau tidak 20000)
+tampilkan ""
+tampilkan "Jarak: " + ke_teks(jarak) + " km"
+tampilkan "Ongkir: Rp " + ke_teks(ongkir)
+
+# Hitung komisi
+penjualan itu 5000000
+komisi_persen itu 10 jika penjualan >= 5000000 kalau tidak (7 jika penjualan >= 3000000 kalau tidak 5)
+komisi itu penjualan * komisi_persen / 100
+tampilkan ""
+tampilkan "Penjualan: Rp " + ke_teks(penjualan)
+tampilkan "Komisi: " + ke_teks(komisi_persen) + "% = Rp " + ke_teks(komisi)
+
+tampilkan ""
+
+# ===================================
+# 8. Ternary dengan Dict
+# ===================================
+tampilkan "8. Ternary dengan Dict:"
+
+# Buat dict dengan ternary
+siswa_list itu [
+    {"nama": "Budi", "nilai": 85},
+    {"nama": "Ani", "nilai": 92},
+    {"nama": "Citra", "nilai": 65}
+]
+
+tampilkan "Data siswa:"
+untuk setiap s dari siswa_list
+    status_lulus itu "Lulus" jika s["nilai"] >= 70 kalau tidak "Tidak Lulus"
+    tampilkan "  " + s["nama"] + ": " + ke_teks(s["nilai"]) + " - " + status_lulus
+selesai
+
+# Dict dengan ternary value
+status_dict itu {s["nama"]: "Lulus" jika s["nilai"] >= 70 kalau tidak "Tidak Lulus" untuk setiap s dari siswa_list}
+tampilkan ""
+tampilkan "Status dict: " + ke_teks(status_dict)
+
+tampilkan ""
+
+# ===================================
+# 9. Ternary untuk Default Values
+# ===================================
+tampilkan "9. Ternary untuk Default Values:"
+
+# Default value untuk None
+nama_user itu kosong
+nama_tampil itu nama_user jika nama_user != kosong kalau tidak "Guest"
+tampilkan "Nama user: " + ke_teks(nama_user)
+tampilkan "Nama tampil: " + nama_tampil
+
+# Default value untuk empty string
+input_text itu ""
+output_text itu input_text jika panjang(input_text) > 0 kalau tidak "No input"
+tampilkan ""
+tampilkan "Input: '" + input_text + "'"
+tampilkan "Output: " + output_text
+
+# Default value untuk angka
+nilai_config itu 0
+nilai_final itu nilai_config jika nilai_config > 0 kalau tidak 100
+tampilkan ""
+tampilkan "Config: " + ke_teks(nilai_config)
+tampilkan "Final: " + ke_teks(nilai_final)
+
+tampilkan ""
+
+# ===================================
+# 10. Praktik Terbaik
+# ===================================
+tampilkan "10. Praktik Terbaik Ternary Operator:"
+tampilkan "✓ Gunakan untuk kondisi sederhana"
+tampilkan "✓ Hindari nested terlalu dalam (max 2-3 level)"
+tampilkan "✓ Untuk logika kompleks, gunakan if-else biasa"
+tampilkan "✓ Ternary membuat kode lebih ringkas"
+tampilkan "✓ Pastikan readable dan mudah dipahami"
+tampilkan "✓ Sintaks: nilai_benar jika kondisi kalau tidak nilai_salah"
+
+tampilkan ""
+tampilkan "=== Ternary Operator Examples Complete ==="

@@ -1,0 +1,154 @@
+// ============================================
+// Data Structure: Queue (Antrian)
+// ============================================
+// Queue adalah struktur data FIFO (First In First Out)
+// Elemen pertama yang masuk adalah yang pertama keluar
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║      IMPLEMENTASI QUEUE (ANTRIAN)     ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// Buat Queue
+buat fungsi buat_queue
+    queue itu []
+    hasil queue
+selesai
+
+// Enqueue: Tambah elemen ke belakang queue
+buat fungsi enqueue dengan queue, item
+    tambah(queue, item)
+    tampilkan f"✓ Enqueue: {item} ditambahkan ke queue"
+selesai
+
+// Dequeue: Ambil dan hapus elemen depan
+buat fungsi dequeue dengan queue
+    jika panjang(queue) == 0
+        tampilkan "✗ Queue kosong! Tidak bisa dequeue"
+        hasil tidak_ada
+    selesai
+    
+    item itu queue[0]
+    hapus_pada(queue, 0)
+    tampilkan f"✓ Dequeue: {item} diambil dari queue"
+    hasil item
+selesai
+
+// Front: Lihat elemen depan tanpa menghapus
+buat fungsi front dengan queue
+    jika panjang(queue) == 0
+        tampilkan "✗ Queue kosong!"
+        hasil tidak_ada
+    selesai
+    
+    hasil queue[0]
+selesai
+
+// Rear: Lihat elemen belakang
+buat fungsi rear dengan queue
+    jika panjang(queue) == 0
+        tampilkan "✗ Queue kosong!"
+        hasil tidak_ada
+    selesai
+    
+    hasil queue[panjang(queue) - 1]
+selesai
+
+// Is Empty
+buat fungsi is_empty_queue dengan queue
+    hasil panjang(queue) == 0
+selesai
+
+// Size
+buat fungsi size_queue dengan queue
+    hasil panjang(queue)
+selesai
+
+// Tampilkan queue
+buat fungsi tampilkan_queue dengan queue
+    jika panjang(queue) == 0
+        tampilkan "  Queue: [] (kosong)"
+    kalau tidak
+        tampilkan f"  Queue: {queue}"
+        tampilkan f"  Front -> {queue[0]}, Rear -> {queue[panjang(queue) - 1]}"
+    selesai
+selesai
+
+// ============================================
+// DEMO QUEUE
+// ============================================
+
+tampilkan "=== DEMO 1: Operasi Dasar Queue ==="
+tampilkan ""
+
+// Buat queue baru
+my_queue itu panggil buat_queue
+tampilkan "Queue dibuat!"
+panggil tampilkan_queue dengan my_queue
+tampilkan ""
+
+// Enqueue beberapa elemen
+tampilkan "--- Enqueue Operations ---"
+panggil enqueue dengan my_queue, "Alice"
+panggil enqueue dengan my_queue, "Bob"
+panggil enqueue dengan my_queue, "Charlie"
+panggil enqueue dengan my_queue, "Diana"
+tampilkan ""
+panggil tampilkan_queue dengan my_queue
+tampilkan ""
+
+// Front dan Rear
+tampilkan "--- Front & Rear ---"
+depan itu panggil front dengan my_queue
+belakang itu panggil rear dengan my_queue
+tampilkan f"✓ Front: {depan}"
+tampilkan f"✓ Rear: {belakang}"
+tampilkan ""
+
+// Dequeue beberapa elemen
+tampilkan "--- Dequeue Operations ---"
+panggil dequeue dengan my_queue
+panggil dequeue dengan my_queue
+tampilkan ""
+panggil tampilkan_queue dengan my_queue
+tampilkan ""
+
+ukuran itu panggil size_queue dengan my_queue
+tampilkan f"✓ Ukuran queue: {ukuran}"
+tampilkan ""
+
+// ============================================
+// DEMO 2: Simulasi Antrian Bank
+// ============================================
+
+tampilkan "=== DEMO 2: Simulasi Antrian Bank ==="
+tampilkan ""
+
+antrian_bank itu panggil buat_queue
+
+tampilkan "--- Pelanggan Datang ---"
+panggil enqueue dengan antrian_bank, "Nasabah #1"
+panggil enqueue dengan antrian_bank, "Nasabah #2"
+panggil enqueue dengan antrian_bank, "Nasabah #3"
+panggil enqueue dengan antrian_bank, "Nasabah #4"
+panggil enqueue dengan antrian_bank, "Nasabah #5"
+tampilkan ""
+
+tampilkan "--- Status Antrian ---"
+panggil tampilkan_queue dengan antrian_bank
+tampilkan ""
+
+tampilkan "--- Teller Melayani ---"
+untuk i dari 1 sampai 3
+    tampilkan f"Teller melayani pelanggan ke-{i}:"
+    panggil dequeue dengan antrian_bank
+    tampilkan ""
+selesai
+
+tampilkan "--- Sisa Antrian ---"
+panggil tampilkan_queue dengan antrian_bank
+tampilkan ""
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  Queue Implementation Complete! ✅     ║"
+tampilkan "╚════════════════════════════════════════╝"

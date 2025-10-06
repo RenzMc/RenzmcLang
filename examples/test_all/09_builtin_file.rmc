@@ -1,0 +1,33 @@
+// Test 9: Built-in File Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 9: Built-in File Functions                          ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[9.1] File Operations"
+
+// tulis_file
+tulis_file("test_file.txt", "Hello from RenzmcLang!")
+tampilkan "✓ tulis_file: File created"
+
+// baca_file
+isi itu baca_file("test_file.txt")
+tampilkan f"✓ baca_file: {isi}"
+
+// tambah_file
+tambah_file("test_file.txt", "\nLine 2")
+isi2 itu baca_file("test_file.txt")
+tampilkan f"✓ tambah_file: {isi2}"
+
+// file_exists
+ada itu file_exists("test_file.txt")
+tampilkan f"✓ file_exists: {ada}"
+
+// hapus_file
+hapus_file("test_file.txt")
+tampilkan "✓ hapus_file: File deleted"
+
+// Verify deletion
+ada2 itu file_exists("test_file.txt")
+tampilkan f"✓ Verify deletion: {ada2}"
+
+tampilkan "\n✅ Test 9 PASSED: All file functions working!"

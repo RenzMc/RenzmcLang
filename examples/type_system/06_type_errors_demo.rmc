@@ -1,0 +1,35 @@
+// ============================================
+// Contoh 6: Demonstrasi Type Errors
+// ============================================
+// Contoh yang akan menghasilkan error validasi tipe
+
+tampilkan "=== Demonstrasi Type Errors ==="
+tampilkan ""
+tampilkan "CATATAN: Contoh ini akan menghasilkan error untuk demonstrasi"
+tampilkan ""
+
+// Uncomment salah satu contoh di bawah untuk melihat error:
+
+// ERROR 1: String diberikan ke variabel Integer
+// angka: Integer itu "bukan angka"
+
+// ERROR 2: Integer diberikan ke parameter String
+// fungsi sapa(nama: String):
+//     tampilkan "Halo " + nama
+// selesai
+// sapa(123)
+
+// ERROR 3: String diberikan ke parameter Integer
+// fungsi tambah_angka(x: Integer, y: Integer):
+//     hasil x + y
+// selesai
+// tambah_angka("5", 3)
+
+// ERROR 4: List diberikan ke parameter String
+// fungsi cetak_teks(teks: String):
+//     tampilkan teks
+// selesai
+// cetak_teks(["bukan", "string"])
+
+tampilkan "Untuk melihat error, uncomment salah satu contoh di atas"
+tampilkan "dan jalankan ulang program ini."

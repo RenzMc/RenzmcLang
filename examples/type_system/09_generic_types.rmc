@@ -1,0 +1,91 @@
+// ============================================
+// Phase 2: Generic Types
+// ============================================
+// Demonstrasi penggunaan Generic types (List[Integer], Dict[String, Integer])
+
+tampilkan "=== GENERIC TYPES (Phase 2) ==="
+tampilkan ""
+
+// Generic type menentukan tipe elemen dalam koleksi
+tampilkan "1. List dengan Generic Type:"
+
+// List yang hanya berisi Integer
+angka: List[Integer] itu [1, 2, 3, 4, 5]
+tampilkan "angka (List[Integer]) = " + ke_teks(angka)
+
+// List yang hanya berisi String
+nama_list: List[String] itu ["Budi", "Ani", "Citra"]
+tampilkan "nama_list (List[String]) = " + ke_teks(nama_list)
+
+tampilkan ""
+tampilkan "2. Dict dengan Generic Type:"
+
+// Dict dengan key String dan value Integer
+nilai_siswa: Dict[String, Integer] itu {
+    "Budi": 85,
+    "Ani": 90,
+    "Citra": 88
+}
+tampilkan "nilai_siswa (Dict[String, Integer]) = " + ke_teks(nilai_siswa)
+
+// Dict dengan key String dan value String
+kontak: Dict[String, String] itu {
+    "Budi": "081234567890",
+    "Ani": "081234567891"
+}
+tampilkan "kontak (Dict[String, String]) = " + ke_teks(kontak)
+
+tampilkan ""
+tampilkan "3. Fungsi dengan Generic Type:"
+
+// Fungsi yang menerima List[Integer]
+fungsi jumlah_angka(data: List[Integer]):
+    total itu 0
+    untuk setiap num dari data
+        total += num
+    selesai
+    hasil total
+selesai
+
+data_angka itu [10, 20, 30, 40, 50]
+total itu jumlah_angka(data_angka)
+tampilkan "Total dari " + ke_teks(data_angka) + " = " + ke_teks(total)
+
+tampilkan ""
+tampilkan "4. Fungsi dengan Dict Generic:"
+
+// Fungsi yang menerima Dict[String, Float]
+fungsi rata_rata_nilai(nilai: Dict[String, Float]):
+    total itu 0.0
+    jumlah itu 0
+    
+    untuk setiap nama dari nilai.keys()
+        total += nilai[nama]
+        jumlah += 1
+    selesai
+    
+    jika jumlah > 0
+        hasil total / jumlah
+    kalau_tidak
+        hasil 0.0
+    selesai
+selesai
+
+nilai_ujian itu {
+    "Matematika": 85.5,
+    "Fisika": 90.0,
+    "Kimia": 87.5
+}
+
+rata itu rata_rata_nilai(nilai_ujian)
+tampilkan "Rata-rata nilai: " + ke_teks(rata)
+
+tampilkan ""
+tampilkan "5. List[Float] dengan konversi otomatis:"
+
+// Integer bisa otomatis dikonversi ke Float
+desimal: List[Float] itu [1.5, 2.0, 3, 4.5, 5]  // 3 dan 5 adalah Integer
+tampilkan "desimal (List[Float]) = " + ke_teks(desimal)
+
+tampilkan ""
+tampilkan "=== Generic Types Berhasil! ==="

@@ -1,0 +1,15 @@
+// ============================================
+// Contoh 1: Hello World
+// ============================================
+// Program pertama dalam RenzmcLang
+
+tampilkan "Hello, World!"
+tampilkan "Selamat datang di RenzmcLang!"
+
+// Dengan variabel
+pesan itu "Hello dari RenzmcLang!"
+tampilkan pesan
+
+// Dengan f-string
+nama itu "Programmer"
+tampilkan f"Halo, {nama}!"

@@ -1,0 +1,19 @@
+// ============================================
+// Contoh 4: Tabel Perkalian
+// ============================================
+
+tampilkan "=== TABEL PERKALIAN ==="
+tampilkan ""
+
+// Contoh dengan nilai tetap
+angka itu 7
+
+tampilkan f"\nTabel Perkalian {angka}:"
+tampilkan "=============================="
+
+untuk i dari 1 sampai 10
+    hasil_kali itu angka * i
+    tampilkan f"{angka} × {i} = {hasil_kali}"
+selesai
+
+tampilkan "=============================="

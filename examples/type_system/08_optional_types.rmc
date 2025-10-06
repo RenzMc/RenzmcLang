@@ -1,0 +1,69 @@
+// ============================================
+// Phase 2: Optional Types
+// ============================================
+// Demonstrasi penggunaan Optional types (String?)
+
+tampilkan "=== OPTIONAL TYPES (Phase 2) ==="
+tampilkan ""
+
+// Optional type memungkinkan nilai None/kosong
+tampilkan "1. Optional Type Dasar:"
+
+// Variabel yang bisa String atau None
+nama: String? itu "Budi"
+tampilkan "nama (String?) = " + nama
+
+// Bisa diset ke None
+nama itu kosong
+tampilkan "nama sekarang = kosong"
+
+tampilkan ""
+tampilkan "2. Optional Type dengan Fungsi:"
+
+// Fungsi yang menerima parameter optional
+fungsi sapa_optional(nama: String?):
+    jika nama == kosong
+        hasil "Halo, Tamu!"
+    kalau_tidak
+        hasil "Halo, " + nama + "!"
+    selesai
+selesai
+
+salam1 itu sapa_optional("Budi")
+tampilkan salam1
+
+salam2 itu sapa_optional(kosong)
+tampilkan salam2
+
+tampilkan ""
+tampilkan "3. Optional Integer:"
+
+// Integer yang bisa None
+umur: Integer? itu 25
+tampilkan "umur (Integer?) = " + ke_teks(umur)
+
+umur itu kosong
+tampilkan "umur sekarang = kosong"
+
+tampilkan ""
+tampilkan "4. Optional dengan Default Value:"
+
+fungsi hitung_diskon(harga: Float, diskon: Float?):
+    // Jika diskon None, gunakan 0
+    persen_diskon itu diskon
+    jika persen_diskon == kosong
+        persen_diskon itu 0.0
+    selesai
+    
+    potongan itu harga * persen_diskon / 100
+    hasil harga - potongan
+selesai
+
+harga1 itu hitung_diskon(100.0, 10.0)
+tampilkan "Harga dengan diskon 10%: " + ke_teks(harga1)
+
+harga2 itu hitung_diskon(100.0, kosong)
+tampilkan "Harga tanpa diskon: " + ke_teks(harga2)
+
+tampilkan ""
+tampilkan "=== Optional Types Berhasil! ==="

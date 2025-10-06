@@ -1,0 +1,61 @@
+// ============================================
+// Contoh 5: Backward Compatibility
+// ============================================
+// Demonstrasi bahwa kode tanpa type hints tetap berfungsi
+
+tampilkan "=== Backward Compatibility ==="
+tampilkan ""
+
+// Kode TANPA type hints - tetap berfungsi!
+tampilkan "1. Variabel tanpa type hints:"
+nama itu "Budi"
+umur itu 25
+tinggi itu 175.5
+is_active itu benar
+
+tampilkan "nama = " + nama
+tampilkan "umur = " + ke_teks(umur)
+tampilkan "tinggi = " + ke_teks(tinggi)
+tampilkan "is_active = " + ke_teks(is_active)
+
+tampilkan ""
+tampilkan "2. Fungsi tanpa type hints:"
+fungsi jumlah_tanpa_type(a, b):
+    hasil a + b
+selesai
+
+hasil1 itu jumlah_tanpa_type(5, 3)
+tampilkan "jumlah_tanpa_type(5, 3) = " + ke_teks(hasil1)
+
+tampilkan ""
+tampilkan "3. Mixing - sebagian dengan type hints, sebagian tanpa:"
+fungsi hitung_diskon(harga: Float, persen):
+    diskon itu harga * persen / 100
+    hasil harga - diskon
+selesai
+
+harga_akhir itu hitung_diskon(100.0, 10)
+tampilkan "Harga setelah diskon 10%: " + ke_teks(harga_akhir)
+
+tampilkan ""
+tampilkan "4. Kode lama tetap berfungsi:"
+// Ini adalah kode style lama tanpa type hints
+fungsi faktorial(n):
+    jika n <= 1
+        hasil 1
+    kalau_tidak
+        hasil n * faktorial(n - 1)
+    selesai
+selesai
+
+fakt5 itu faktorial(5)
+tampilkan "faktorial(5) = " + ke_teks(fakt5)
+
+tampilkan ""
+tampilkan "=== Backward Compatibility Terjaga! ==="
+tampilkan ""
+tampilkan "KESIMPULAN:"
+tampilkan "  ✓ Kode tanpa type hints tetap berfungsi"
+tampilkan "  ✓ Type hints bersifat OPSIONAL"
+tampilkan "  ✓ Dapat mixing kode lama dan baru"
+tampilkan "  ✓ Tidak ada breaking changes!"

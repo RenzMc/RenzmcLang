@@ -1,0 +1,99 @@
+tampilkan "=== Complete Advanced JIT Features Demo ==="
+tampilkan ""
+
+tampilkan "1. Manual JIT Compilation:"
+tampilkan "   Using @jit_compile decorator to force compilation"
+tampilkan ""
+
+@jit_compile
+buat fungsi factorial dengan n
+    jika n <= 1
+        hasil 1
+    selesai
+    hasil n * panggil factorial dengan n - 1
+selesai
+
+hasil itu panggil factorial dengan 10
+tampilkan "factorial(10) = " + ke_teks(hasil)
+
+tampilkan ""
+tampilkan "2. Profiling for Optimization:"
+tampilkan "   Using @profile to analyze performance"
+tampilkan ""
+
+@profile
+buat fungsi compute_sum dengan n
+    total itu 0
+    untuk i dari 1 sampai n
+        total itu total + i
+    selesai
+    hasil total
+selesai
+
+hasil itu panggil compute_sum dengan 10000
+tampilkan "Sum result: " + ke_teks(hasil)
+
+tampilkan ""
+tampilkan "3. Parallel Execution:"
+tampilkan "   Using @parallel for multi-threaded processing"
+tampilkan ""
+
+@parallel
+buat fungsi process_number dengan num
+    hasil itu 0
+    untuk i dari 1 sampai 100
+        hasil itu hasil + (num * i)
+    selesai
+    hasil hasil
+selesai
+
+numbers itu [1, 2, 3, 4, 5]
+hasil itu panggil process_number dengan numbers
+tampilkan "Parallel results:"
+tampilkan hasil
+
+tampilkan ""
+tampilkan "4. JIT Compilation:"
+tampilkan "   Using @jit_compile for optimization"
+tampilkan ""
+
+@jit_compile
+buat fungsi jit_function dengan x, y
+    total itu 0
+    untuk i dari 1 sampai 1000
+        untuk j dari 1 sampai 10
+            total itu total + (i * j * x) + y
+        selesai
+    selesai
+    hasil total
+selesai
+
+hasil itu panggil jit_function dengan 2, 3
+tampilkan "JIT result: " + ke_teks(hasil)
+
+tampilkan ""
+tampilkan "5. GPU Acceleration (if available):"
+tampilkan "   Using @gpu for CUDA acceleration"
+tampilkan ""
+
+@gpu
+buat fungsi gpu_function dengan n
+    total itu 0
+    untuk i dari 1 sampai n
+        total itu total + (i * i)
+    selesai
+    hasil total
+selesai
+
+hasil itu panggil gpu_function dengan 100
+tampilkan "GPU result: " + ke_teks(hasil)
+
+tampilkan ""
+tampilkan "=== Complete Advanced JIT Features Demo Selesai! ==="
+tampilkan ""
+tampilkan "Summary of Features:"
+tampilkan "  ✓ Manual JIT Compilation (@jit_compile, @jit_force)"
+tampilkan "  ✓ Profile-Guided Optimization (@profile)"
+tampilkan "  ✓ Parallel Execution (@parallel)"
+tampilkan "  ✓ GPU Acceleration (@gpu)"
+tampilkan "  ✓ All decorators work independently"

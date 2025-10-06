@@ -1,0 +1,50 @@
+# Test Iteration Functions
+tampilkan "=== Test Iteration Functions ==="
+
+# Test zip
+tampilkan ""
+tampilkan "Test zip():"
+nama itu ["Alice", "Bob", "Charlie"]
+umur itu [25, 30, 35]
+hasil_zip itu zip(nama, umur)
+tampilkan hasil_zip
+
+# Test enumerate
+tampilkan ""
+tampilkan "Test enumerate():"
+buah itu ["apel", "jeruk", "mangga"]
+hasil_enum itu enumerate(buah)
+tampilkan hasil_enum
+
+# Test all
+tampilkan ""
+tampilkan "Test all():"
+semua_benar itu all([benar, benar, benar])
+tampilkan "Semua benar:"
+tampilkan semua_benar
+
+ada_salah itu all([benar, salah, benar])
+tampilkan "Ada salah:"
+tampilkan ada_salah
+
+# Test any
+tampilkan ""
+tampilkan "Test any():"
+ada_benar itu any([salah, salah, benar])
+tampilkan "Ada benar:"
+tampilkan ada_benar
+
+semua_salah itu any([salah, salah, salah])
+tampilkan "Semua salah:"
+tampilkan semua_salah
+
+# Test sorted
+tampilkan ""
+tampilkan "Test sorted():"
+angka itu [3, 1, 4, 1, 5, 9, 2, 6]
+terurut_angka itu sorted(angka)
+tampilkan "Terurut:"
+tampilkan terurut_angka
+
+tampilkan ""
+tampilkan "=== All Tests Completed ==="

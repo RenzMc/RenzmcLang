@@ -1,0 +1,123 @@
+// ============================================
+// Algorithm: Binary Search (Pencarian Biner)
+// ============================================
+// Binary Search adalah algoritma pencarian efisien
+// untuk data yang sudah terurut dengan kompleksitas O(log n)
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║        BINARY SEARCH ALGORITHM        ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// Implementasi Binary Search
+buat fungsi binary_search dengan arr, target
+    left itu 0
+    right itu panjang(arr) - 1
+    iterasi itu 0
+    
+    selama left <= right
+        iterasi itu iterasi + 1
+        mid itu (left + right) // 2
+        mid_value itu arr[mid]
+        
+        tampilkan f"  Iterasi {iterasi}: left={left}, mid={mid}, right={right}, mid_value={mid_value}"
+        
+        jika mid_value == target
+            tampilkan f"  ✓ Target {target} ditemukan di index {mid}!"
+            hasil mid
+        kalau tidak jika mid_value < target
+            left itu mid + 1
+        kalau tidak
+            right itu mid - 1
+        selesai
+    selesai
+    
+    tampilkan f"  ✗ Target {target} tidak ditemukan"
+    hasil -1
+selesai
+
+// Linear Search untuk perbandingan
+buat fungsi linear_search dengan arr, target
+    iterasi itu 0
+    
+    untuk i dari 0 sampai panjang(arr) - 1
+        iterasi itu iterasi + 1
+        jika arr[i] == target
+            tampilkan f"  ✓ Target {target} ditemukan di index {i} setelah {iterasi} iterasi"
+            hasil i
+        selesai
+    selesai
+    
+    tampilkan f"  ✗ Target {target} tidak ditemukan setelah {iterasi} iterasi"
+    hasil -1
+selesai
+
+// ============================================
+// DEMO 1: Binary Search
+// ============================================
+
+tampilkan "=== DEMO 1: Binary Search pada Array Terurut ==="
+tampilkan ""
+
+data itu [2, 5, 8, 12, 16, 23, 38, 45, 56, 67, 78]
+tampilkan f"Data: {data}"
+tampilkan ""
+
+// Cari angka yang ada
+tampilkan "--- Mencari angka 23 ---"
+hasil1 itu panggil binary_search dengan data, 23
+tampilkan ""
+
+// Cari angka yang tidak ada
+tampilkan "--- Mencari angka 50 ---"
+hasil2 itu panggil binary_search dengan data, 50
+tampilkan ""
+
+// ============================================
+// DEMO 2: Perbandingan Binary vs Linear Search
+// ============================================
+
+tampilkan "=== DEMO 2: Perbandingan Binary vs Linear Search ==="
+tampilkan ""
+
+data_besar itu [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39]
+target itu 37
+
+tampilkan f"Data: {data_besar}"
+tampilkan f"Target: {target}"
+tampilkan ""
+
+tampilkan "--- Linear Search ---"
+panggil linear_search dengan data_besar, target
+tampilkan ""
+
+tampilkan "--- Binary Search ---"
+panggil binary_search dengan data_besar, target
+tampilkan ""
+
+// ============================================
+// DEMO 3: Binary Search pada Data String
+// ============================================
+
+tampilkan "=== DEMO 3: Binary Search pada Data String ==="
+tampilkan ""
+
+nama_terurut itu ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace"]
+tampilkan f"Data: {nama_terurut}"
+tampilkan ""
+
+tampilkan "--- Mencari 'Diana' ---"
+panggil binary_search dengan nama_terurut, "Diana"
+tampilkan ""
+
+tampilkan "--- Mencari 'Zara' ---"
+panggil binary_search dengan nama_terurut, "Zara"
+tampilkan ""
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  Binary Search Complete! ✅            ║"
+tampilkan "║                                        ║"
+tampilkan "║  Kompleksitas:                         ║"
+tampilkan "║  - Binary Search: O(log n)             ║"
+tampilkan "║  - Linear Search: O(n)                 ║"
+tampilkan "╚════════════════════════════════════════╝"

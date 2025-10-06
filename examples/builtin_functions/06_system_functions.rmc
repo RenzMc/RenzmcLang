@@ -1,0 +1,213 @@
+// ============================================
+// Built-in Functions: System Functions
+// ============================================
+// Comprehensive examples for system functions
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║        SYSTEM FUNCTIONS COMPLETE      ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// 1. TIME & DATE FUNCTIONS
+// ============================================
+tampilkan "=== 1. TIME & DATE FUNCTIONS ==="
+tampilkan ""
+
+// waktu - Get current timestamp
+waktu_sekarang itu waktu()
+tampilkan f"✓ waktu() = {waktu_sekarang}"
+
+// tanggal - Get current date/time
+tanggal_sekarang itu tanggal()
+tampilkan f"✓ tanggal() = {tanggal_sekarang}"
+
+tampilkan ""
+
+// ============================================
+// 2. RANDOM FUNCTIONS
+// ============================================
+tampilkan "=== 2. RANDOM FUNCTIONS ==="
+tampilkan ""
+
+// acak - Generate random number
+tampilkan "✓ acak() - Random numbers:"
+untuk i dari 1 sampai 5
+    angka_acak itu acak()
+    tampilkan f"  Random {i}: {angka_acak}"
+selesai
+
+tampilkan ""
+
+// ============================================
+// 3. FILE OPERATIONS
+// ============================================
+tampilkan "=== 3. FILE OPERATIONS ==="
+tampilkan ""
+
+test_file itu "system_test.txt"
+content itu "Hello from RenzMcLang System Functions!"
+
+// tulis_file - Write to file
+tulis_file(test_file, content)
+tampilkan f"✓ tulis_file('{test_file}', content) - File created"
+
+// baca_file - Read from file
+isi_file itu baca_file(test_file)
+tampilkan f"✓ baca_file('{test_file}'):"
+tampilkan f"  Content: {isi_file}"
+
+// tambah_file - Append to file
+tambah_file(test_file, "\nLine 2: Appended content")
+tampilkan f"✓ tambah_file('{test_file}', ...) - Content appended"
+
+// Read again to verify
+isi_baru itu baca_file(test_file)
+tampilkan f"✓ File content after append:"
+tampilkan isi_baru
+
+// hapus_file - Delete file
+hapus_file(test_file)
+tampilkan f"✓ hapus_file('{test_file}') - File deleted"
+
+tampilkan ""
+
+// ============================================
+// 4. SLEEP FUNCTION
+// ============================================
+tampilkan "=== 4. SLEEP FUNCTION ==="
+tampilkan ""
+
+tampilkan "✓ tidur(1) - Sleeping for 1 second..."
+tidur(1)
+tampilkan "✓ Awake! Sleep completed"
+
+tampilkan ""
+
+// ============================================
+// 5. TYPE CHECKING
+// ============================================
+tampilkan "=== 5. TYPE CHECKING ==="
+tampilkan ""
+
+// jenis - Get type of variable
+angka itu 42
+teks itu "Hello"
+daftar itu [1, 2, 3]
+dict itu {"key": "value"}
+boolean itu benar
+
+tampilkan "✓ jenis() - Type checking:"
+tampilkan f"  jenis(42) = {jenis(angka)}"
+tampilkan f"  jenis('Hello') = {jenis(teks)}"
+tampilkan f"  jenis([1,2,3]) = {jenis(daftar)}"
+tampilkan f"  jenis({{'key':'value'}}) = {jenis(dict)}"
+tampilkan f"  jenis(benar) = {jenis(boolean)}"
+
+tampilkan ""
+
+// ============================================
+// 6. PRACTICAL EXAMPLES
+// ============================================
+tampilkan "=== 6. PRACTICAL EXAMPLES ==="
+tampilkan ""
+
+// Example 1: Logger
+tampilkan "Example 1: Simple Logger"
+
+buat fungsi log_message dengan level, message
+    timestamp itu tanggal()
+    log_entry itu f"[{timestamp}] [{level}] {message}\n"
+    tambah_file("app.log", log_entry)
+    tampilkan f"  {level}: {message}"
+selesai
+
+panggil log_message dengan "INFO", "Application started"
+panggil log_message dengan "DEBUG", "Loading configuration"
+panggil log_message dengan "INFO", "Configuration loaded successfully"
+panggil log_message dengan "WARNING", "Low memory detected"
+
+tampilkan ""
+tampilkan "✓ Log file created: app.log"
+log_content itu baca_file("app.log")
+tampilkan "Log contents:"
+tampilkan log_content
+
+// Cleanup
+hapus_file("app.log")
+tampilkan ""
+
+// Example 2: Random Number Generator
+tampilkan "Example 2: Random Number in Range"
+
+buat fungsi acak_range dengan min_val, max_val
+    random_float itu acak()
+    range_size itu max_val - min_val
+    hasil min_val + bulat(random_float * range_size)
+selesai
+
+tampilkan "Random numbers between 1 and 100:"
+untuk i dari 1 sampai 5
+    num itu panggil acak_range dengan 1, 100
+    tampilkan f"  Random {i}: {num}"
+selesai
+
+tampilkan ""
+
+// Example 3: Benchmark Timer
+tampilkan "Example 3: Simple Benchmark"
+
+buat fungsi benchmark dengan nama_fungsi
+    start_time itu waktu()
+    
+    tampilkan f"  Running {nama_fungsi}..."
+    
+    // Simulate work
+    total itu 0
+    untuk i dari 1 sampai 1000
+        total itu total + i
+    selesai
+    
+    end_time itu waktu()
+    duration itu end_time - start_time
+    
+    tampilkan f"  ✓ {nama_fungsi} completed in {duration} seconds"
+    tampilkan f"  Result: {total}"
+selesai
+
+panggil benchmark dengan "Sum 1-1000"
+
+tampilkan ""
+
+// Example 4: Type-safe function
+tampilkan "Example 4: Type Validation"
+
+buat fungsi tambah_angka_aman dengan a, b
+    tipe_a itu jenis(a)
+    tipe_b itu jenis(b)
+    
+    jika tipe_a != "int" dan tipe_a != "float"
+        tampilkan f"  ✗ Error: {a} is not a number (type: {tipe_a})"
+        hasil kosong
+    selesai
+    
+    jika tipe_b != "int" dan tipe_b != "float"
+        tampilkan f"  ✗ Error: {b} is not a number (type: {tipe_b})"
+        hasil kosong
+    selesai
+    
+    hasil a + b
+selesai
+
+hasil1 itu panggil tambah_angka_aman dengan 10, 20
+tampilkan f"  ✓ tambah_angka_aman(10, 20) = {hasil1}"
+
+hasil2 itu panggil tambah_angka_aman dengan 10, "20"
+tampilkan f"  Result: {hasil2}"
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  System Functions Complete! ✅         ║"
+tampilkan "║                                        ║"
+tampilkan "║  Total Functions Demonstrated: 11      ║"
+tampilkan "╚════════════════════════════════════════╝"

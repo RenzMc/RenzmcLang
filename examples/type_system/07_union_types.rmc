@@ -1,0 +1,55 @@
+// ============================================
+// Phase 2: Union Types
+// ============================================
+// Demonstrasi penggunaan Union types (Integer | String)
+
+tampilkan "=== UNION TYPES (Phase 2) ==="
+tampilkan ""
+
+// Union type memungkinkan variabel menerima beberapa tipe
+tampilkan "1. Union Type Dasar:"
+
+// Variabel yang bisa Integer atau String
+nilai: Integer | String itu 42
+tampilkan "nilai (Integer | String) = " + ke_teks(nilai)
+
+// Bisa diubah ke String
+nilai itu "empat puluh dua"
+tampilkan "nilai sekarang = " + nilai
+
+tampilkan ""
+tampilkan "2. Union Type dengan Fungsi:"
+
+// Fungsi yang menerima Integer atau String
+fungsi format_nilai(x: Integer | String):
+    hasil "Nilai: " + ke_teks(x)
+selesai
+
+hasil1 itu format_nilai(100)
+tampilkan hasil1
+
+hasil2 itu format_nilai("seratus")
+tampilkan hasil2
+
+tampilkan ""
+tampilkan "3. Union Type dengan Lebih dari 2 Tipe:"
+
+// Union dengan 3 tipe
+data: Integer | String | Boolean itu benar
+tampilkan "data (Integer | String | Boolean) = " + ke_teks(data)
+
+data itu 123
+tampilkan "data sekarang = " + ke_teks(data)
+
+data itu "teks"
+tampilkan "data sekarang = " + data
+
+tampilkan ""
+tampilkan "4. Union Type dengan List:"
+
+// List yang bisa berisi Integer atau String
+campuran: List itu [1, "dua", 3, "empat", 5]
+tampilkan "campuran = " + ke_teks(campuran)
+
+tampilkan ""
+tampilkan "=== Union Types Berhasil! ==="

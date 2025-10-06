@@ -1,0 +1,182 @@
+// ============================================
+// Socket Programming - Client & Server
+// ============================================
+// Contoh komunikasi client-server dengan socket
+
+tampilkan "=== Socket Programming Example ==="
+tampilkan ""
+
+impor_python "socket"
+impor_python "threading"
+impor_python "time"
+
+// ============================================
+// SERVER
+// ============================================
+
+tampilkan "[A] Socket Server"
+tampilkan ""
+
+fungsi jalankan_server(host, port):
+    tampilkan f"[Server] Memulai server di {host}:{port}..."
+    
+    coba
+        // Buat socket
+        server_socket itu panggil_python socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        // Set socket options
+        panggil_python server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        
+        // Bind ke address
+        panggil_python server_socket.bind([host, port])
+        
+        // Listen untuk koneksi
+        panggil_python server_socket.listen(5)
+        tampilkan f"[Server] ✓ Server listening di {host}:{port}"
+        tampilkan "[Server] Menunggu koneksi client..."
+        tampilkan ""
+        
+        selama benar
+            // Accept koneksi
+            client_socket, address itu panggil_python server_socket.accept()
+            tampilkan f"[Server] ✓ Client terhubung dari {address}"
+            
+            // Handle client di thread terpisah
+client_thread itu panggil_python threading.Thread( target=handle_client, args=[client_socket, address] )
+            panggil_python client_thread.start()
+        selesai
+        
+    tangkap Exception sebagai e
+        tampilkan f"[Server] ✗ Error: {e}"
+    akhirnya
+        panggil_python server_socket.close()
+        tampilkan "[Server] Socket ditutup"
+    selesai
+selesai
+
+fungsi handle_client(client_socket, address):
+    coba
+        selama benar
+            // Terima data dari client
+            data itu panggil_python client_socket.recv(1024)
+            
+            jika bukan data
+                keluar
+            selesai
+            
+            pesan itu panggil_python data.decode("utf-8")
+            tampilkan f"[Server] Menerima dari {address}: {pesan}"
+            
+            // Kirim response
+            response itu f"Server menerima: {pesan}"
+            panggil_python client_socket.send(panggil_python response.encode("utf-8"))
+            
+            // Jika client kirim "bye", tutup koneksi
+            jika pesan.lower() == "bye"
+                tampilkan f"[Server] Client {address} disconnect"
+                keluar
+            selesai
+        selesai
+        
+    tangkap Exception sebagai e
+        tampilkan f"[Server] Error handling client: {e}"
+    akhirnya
+        panggil_python client_socket.close()
+    selesai
+selesai
+
+// ============================================
+// CLIENT
+// ============================================
+
+tampilkan "[B] Socket Client"
+tampilkan ""
+
+fungsi jalankan_client(host, port):
+    tampilkan f"[Client] Menghubungkan ke {host}:{port}..."
+    
+    coba
+        // Buat socket
+        client_socket itu panggil_python socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        
+        // Connect ke server
+        panggil_python client_socket.connect([host, port])
+        tampilkan f"[Client] ✓ Terhubung ke server"
+        tampilkan ""
+        
+        // Kirim beberapa pesan
+        pesan_list itu [
+            "Hello Server!",
+            "Ini pesan dari client",
+            "Testing socket communication",
+            "bye"
+        ]
+        
+        untuk setiap pesan dari pesan_list
+            // Kirim pesan
+            tampilkan f"[Client] Mengirim: {pesan}"
+            panggil_python client_socket.send(panggil_python pesan.encode("utf-8"))
+            
+            // Terima response
+            response itu panggil_python client_socket.recv(1024)
+            response_text itu panggil_python response.decode("utf-8")
+            tampilkan f"[Client] Menerima: {response_text}"
+            tampilkan ""
+            
+            // Tunggu sebentar
+            panggil_python time.sleep(1)
+        selesai
+        
+    tangkap Exception sebagai e
+        tampilkan f"[Client] ✗ Error: {e}"
+    akhirnya
+        panggil_python client_socket.close()
+        tampilkan "[Client] Socket ditutup"
+    selesai
+selesai
+
+// ============================================
+// DEMONSTRASI
+// ============================================
+
+tampilkan "[C] Demonstrasi Socket Communication"
+tampilkan ""
+
+HOST itu "127.0.0.1"
+PORT itu 9999
+
+tampilkan "Konfigurasi:"
+tampilkan f"  Host: {HOST}"
+tampilkan f"  Port: {PORT}"
+tampilkan ""
+
+tampilkan "Untuk menjalankan contoh ini:"
+tampilkan ""
+tampilkan "1. Jalankan server di terminal pertama:"
+tampilkan "   Uncomment: jalankan_server(HOST, PORT)"
+tampilkan ""
+tampilkan "2. Jalankan client di terminal kedua:"
+tampilkan "   Uncomment: jalankan_client(HOST, PORT)"
+tampilkan ""
+
+// Uncomment salah satu untuk menjalankan
+// jalankan_server(HOST, PORT)  // Jalankan sebagai server
+// jalankan_client(HOST, PORT)  // Jalankan sebagai client
+
+tampilkan "[D] Contoh Output yang Diharapkan:"
+tampilkan ""
+tampilkan "Server:"
+tampilkan "  [Server] Memulai server di 127.0.0.1:9999..."
+tampilkan "  [Server] ✓ Server listening di 127.0.0.1:9999"
+tampilkan "  [Server] Menunggu koneksi client..."
+tampilkan "  [Server] ✓ Client terhubung dari ('127.0.0.1', 54321)"
+tampilkan "  [Server] Menerima dari ('127.0.0.1', 54321): Hello Server!"
+tampilkan ""
+tampilkan "Client:"
+tampilkan "  [Client] Menghubungkan ke 127.0.0.1:9999..."
+tampilkan "  [Client] ✓ Terhubung ke server"
+tampilkan "  [Client] Mengirim: Hello Server!"
+tampilkan "  [Client] Menerima: Server menerima: Hello Server!"
+tampilkan ""
+
+tampilkan "=== Selesai ==="

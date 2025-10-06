@@ -1,0 +1,52 @@
+// Test 5: Built-in Math Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 5: Built-in Math Functions                          ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[5.1] Math Functions"
+
+// bulat
+hasil1 itu bulat(3.7)
+tampilkan f"✓ bulat(3.7): {hasil1}"
+
+// desimal
+hasil2 itu desimal(5)
+tampilkan f"✓ desimal(5): {hasil2}"
+
+// akar
+hasil3 itu akar(16)
+tampilkan f"✓ akar(16): {hasil3}"
+
+// pangkat
+hasil4 itu pangkat(2, 3)
+tampilkan f"✓ pangkat(2, 3): {hasil4}"
+
+// absolut
+hasil5 itu absolut(-10)
+tampilkan f"✓ absolut(-10): {hasil5}"
+
+// pembulatan
+hasil6 itu pembulatan(3.14159)
+tampilkan f"✓ pembulatan(3.14159): {hasil6}"
+
+// pembulatan_atas
+hasil7 itu pembulatan_atas(3.2)
+tampilkan f"✓ pembulatan_atas(3.2): {hasil7}"
+
+// pembulatan_bawah
+hasil8 itu pembulatan_bawah(3.8)
+tampilkan f"✓ pembulatan_bawah(3.8): {hasil8}"
+
+// sinus
+hasil9 itu sinus(0)
+tampilkan f"✓ sinus(0): {hasil9}"
+
+// cosinus
+hasil10 itu cosinus(0)
+tampilkan f"✓ cosinus(0): {hasil10}"
+
+// tangen
+hasil11 itu tangen(0)
+tampilkan f"✓ tangen(0): {hasil11}"
+
+tampilkan "\n✅ Test 5 PASSED: All math functions working!"

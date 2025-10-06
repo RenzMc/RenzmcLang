@@ -1,0 +1,65 @@
+# Test Switch/Case Statement (Phase 5)
+
+tampilkan "=== Testing Switch/Case Statement ==="
+
+# Test 1: Basic switch with numbers
+tampilkan ""
+tampilkan "Test 1: Basic switch with numbers"
+nilai itu 2
+
+cocok nilai
+    kasus 1:
+        tampilkan "Satu"
+    kasus 2:
+        tampilkan "Dua"
+    kasus 3:
+        tampilkan "Tiga"
+    bawaan:
+        tampilkan "Lainnya"
+selesai
+
+# Test 2: Switch with strings
+tampilkan ""
+tampilkan "Test 2: Switch with strings"
+hari itu "Senin"
+
+cocok hari
+    kasus "Senin":
+        tampilkan "Hari pertama kerja"
+    kasus "Jumat":
+        tampilkan "Hari terakhir kerja"
+    kasus "Sabtu", "Minggu":
+        tampilkan "Akhir pekan"
+    bawaan:
+        tampilkan "Hari kerja biasa"
+selesai
+
+# Test 3: Switch with default case
+tampilkan ""
+tampilkan "Test 3: Switch with default case"
+angka itu 100
+
+cocok angka
+    kasus 1:
+        tampilkan "Satu"
+    kasus 2:
+        tampilkan "Dua"
+    bawaan:
+        tampilkan "Angka lain: " + ke_teks(angka)
+selesai
+
+# Test 4: Switch without default
+tampilkan ""
+tampilkan "Test 4: Switch without default (no match)"
+x itu 999
+
+cocok x
+    kasus 1:
+        tampilkan "Satu"
+    kasus 2:
+        tampilkan "Dua"
+selesai
+tampilkan "Selesai switch tanpa match"
+
+tampilkan ""
+tampilkan "=== All Switch/Case Tests Complete ==="

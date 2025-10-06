@@ -1,0 +1,48 @@
+tampilkan "=== Literal Types Demo ==="
+tampilkan ""
+
+tampilkan "1. String Literal Types:"
+tipe Status = Literal["aktif", "nonaktif", "pending"]
+
+status: Status itu "aktif"
+tampilkan "Status: " + status
+
+status itu "pending"
+tampilkan "Status Updated: " + status
+
+tampilkan ""
+tampilkan "2. Integer Literal Types:"
+tipe Level = Literal[1, 2, 3, 4, 5]
+
+level: Level itu 1
+tampilkan "Level: " + ke_teks(level)
+
+level itu 5
+tampilkan "Level Updated: " + ke_teks(level)
+
+tampilkan ""
+tampilkan "3. Literal Types in Functions:"
+tipe Mode = Literal["baca", "tulis", "eksekusi"]
+
+fungsi set_file_mode(filename: String, mode: Mode) -> String:
+    hasil "File '" + filename + "' mode: " + mode
+selesai
+
+result1 itu set_file_mode("data.txt", "baca")
+tampilkan result1
+
+result2 itu set_file_mode("script.sh", "eksekusi")
+tampilkan result2
+
+tampilkan ""
+tampilkan "4. Mixed Literal Types:"
+tipe Priority = Literal["rendah", "sedang", "tinggi", 1, 2, 3]
+
+priority1: Priority itu "tinggi"
+tampilkan "Priority (string): " + priority1
+
+priority2: Priority itu 1
+tampilkan "Priority (number): " + ke_teks(priority2)
+
+tampilkan ""
+tampilkan "=== Literal Types Demo Selesai! ==="

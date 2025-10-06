@@ -1,0 +1,200 @@
+# ===================================
+# Set Operations (Basic)
+# ===================================
+# Set adalah collection yang tidak berurutan dan tidak memiliki duplikat
+# Sintaks: {| element1, element2, ... |}
+# Note: Set operations kompleks (union, intersection) memiliki keterbatasan
+
+tampilkan "=== Set Operations Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Membuat Set
+# ===================================
+tampilkan "1. Membuat Set:"
+
+# Set dengan angka
+set1 itu {| 1, 2, 3, 4, 5 |}
+tampilkan "Set angka: " + ke_teks(set1)
+
+# Set dengan string
+set2 itu {| "apel", "jeruk", "mangga" |}
+tampilkan "Set string: " + ke_teks(set2)
+
+# Set dengan duplikat (otomatis dihapus)
+set3 itu {| 1, 2, 2, 3, 3, 3, 4 |}
+tampilkan "Set dengan duplikat: " + ke_teks(set3)
+tampilkan "Duplikat otomatis dihapus!"
+
+# Set kosong
+set_kosong itu {| |}
+tampilkan "Set kosong: " + ke_teks(set_kosong)
+
+tampilkan ""
+
+# ===================================
+# 2. Set Properties
+# ===================================
+tampilkan "2. Set Properties:"
+
+# Set tidak berurutan
+set_order itu {| 5, 1, 3, 2, 4 |}
+tampilkan "Set (tidak berurutan): " + ke_teks(set_order)
+
+# Set unique elements
+set_unique itu {| 1, 1, 2, 2, 3, 3 |}
+tampilkan "Set unique: " + ke_teks(set_unique)
+
+tampilkan ""
+
+# ===================================
+# 3. Set Length
+# ===================================
+tampilkan "3. Set Length:"
+
+set_test itu {| 1, 2, 3, 4, 5 |}
+tampilkan "Set: " + ke_teks(set_test)
+tampilkan "Panjang: " + ke_teks(panjang(set_test))
+
+tampilkan ""
+
+# ===================================
+# 4. Set Membership Test
+# ===================================
+tampilkan "4. Set Membership Test:"
+
+buah_set itu {| "apel", "jeruk", "mangga", "pisang" |}
+tampilkan "Set buah: " + ke_teks(buah_set)
+
+tampilkan "'apel' dalam set: " + ke_teks("apel" dalam buah_set)
+tampilkan "'durian' dalam set: " + ke_teks("durian" dalam buah_set)
+tampilkan "'jeruk' dalam set: " + ke_teks("jeruk" dalam buah_set)
+
+tampilkan ""
+
+# ===================================
+# 5. Set Comparison
+# ===================================
+tampilkan "5. Set Comparison:"
+
+set_a itu {| 1, 2, 3 |}
+set_b itu {| 1, 2, 3 |}
+set_c itu {| 1, 2, 4 |}
+
+tampilkan "Set A: " + ke_teks(set_a)
+tampilkan "Set B: " + ke_teks(set_b)
+tampilkan "Set C: " + ke_teks(set_c)
+
+tampilkan "A == B: " + ke_teks(set_a == set_b)
+tampilkan "A == C: " + ke_teks(set_a == set_c)
+
+tampilkan ""
+
+# ===================================
+# 6. Set Iteration
+# ===================================
+tampilkan "6. Set Iteration:"
+
+angka_set itu {| 1, 2, 3, 4, 5 |}
+tampilkan "Set: " + ke_teks(angka_set)
+tampilkan "Iterasi:"
+
+untuk setiap num dari angka_set
+    tampilkan "  " + ke_teks(num)
+selesai
+
+tampilkan ""
+
+# ===================================
+# 7. Set Praktis: Remove Duplicates
+# ===================================
+tampilkan "7. Set Praktis: Remove Duplicates:"
+
+# Fungsi untuk remove duplicates
+fungsi remove_duplicates(lst):
+    # Buat set baru
+    result_set itu {| |}
+    result_list itu []
+    
+    untuk setiap item dari lst
+        # Check if not in result
+        jika tidak (item dalam result_list)
+            result_list itu result_list + [item]
+        selesai
+    selesai
+    
+    hasil result_list
+selesai
+
+data_duplikat itu [1, 2, 3, 2, 4, 3, 5, 1, 6]
+tampilkan "Data dengan duplikat: " + ke_teks(data_duplikat)
+tampilkan "Panjang: " + ke_teks(panjang(data_duplikat))
+
+data_unik itu remove_duplicates(data_duplikat)
+tampilkan "Data unik: " + ke_teks(data_unik)
+tampilkan "Panjang: " + ke_teks(panjang(data_unik))
+
+tampilkan ""
+
+# ===================================
+# 8. Set Praktis: Unique Counter
+# ===================================
+tampilkan "8. Set Praktis: Unique Counter:"
+
+# Count unique elements
+words itu ["hello", "world", "hello", "python", "world"]
+tampilkan "Words: " + ke_teks(words)
+
+# Manual unique count
+unique_words itu []
+untuk setiap word dari words
+    jika tidak (word dalam unique_words)
+        unique_words itu unique_words + [word]
+    selesai
+selesai
+
+tampilkan "Unique words: " + ke_teks(unique_words)
+tampilkan "Total words: " + ke_teks(panjang(words))
+tampilkan "Unique count: " + ke_teks(panjang(unique_words))
+
+tampilkan ""
+
+# ===================================
+# 9. Set Praktis: Membership Testing
+# ===================================
+tampilkan "9. Set Praktis: Fast Membership Testing:"
+
+# Set lebih cepat untuk membership test
+allowed_users itu {| "admin", "user1", "user2", "user3" |}
+tampilkan "Allowed users: " + ke_teks(allowed_users)
+
+# Test users
+test_users itu ["admin", "guest", "user1", "hacker"]
+tampilkan "Test users: " + ke_teks(test_users)
+
+tampilkan "Access check:"
+untuk setiap user dari test_users
+    status itu "ALLOWED" jika user dalam allowed_users kalau tidak "DENIED"
+    tampilkan "  " + user + ": " + status
+selesai
+
+tampilkan ""
+
+# ===================================
+# 10. Set Best Practices
+# ===================================
+tampilkan "10. Set Best Practices:"
+tampilkan "✓ Gunakan set untuk menghapus duplikat"
+tampilkan "✓ Set lebih cepat untuk membership test"
+tampilkan "✓ Set tidak berurutan (unordered)"
+tampilkan "✓ Set tidak bisa memiliki elemen duplikat"
+tampilkan "✓ Sintaks: {| element1, element2, ... |}"
+tampilkan "✓ Gunakan untuk tracking unique items"
+tampilkan "✓ Ideal untuk fast lookups"
+
+tampilkan ""
+tampilkan "Note: Set operations kompleks (union |, intersection &)"
+tampilkan "memiliki keterbatasan dalam implementasi saat ini."
+
+tampilkan ""
+tampilkan "=== Set Operations Examples Complete ==="

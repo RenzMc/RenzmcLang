@@ -1,0 +1,70 @@
+// ============================================
+// Game: Tebak Angka
+// ============================================
+// Game sederhana menebak angka acak
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║          GAME TEBAK ANGKA             ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+tampilkan "🎮 Selamat datang di Game Tebak Angka!"
+tampilkan "📝 Aturan:"
+tampilkan "   - Komputer memilih angka antara 1-100"
+tampilkan "   - Anda punya 7 kesempatan untuk menebak"
+tampilkan "   - Komputer akan memberi petunjuk"
+tampilkan ""
+
+// Import random dari Python
+impor_python "random"
+
+// Generate angka acak
+angka_rahasia itu panggil_python random.randint(1, 100)
+max_tebakan itu 7
+tebakan_ke itu 0
+menang itu salah
+
+tampilkan "🎯 Angka sudah dipilih! (1-100)"
+tampilkan f"💪 Anda punya {max_tebakan} kesempatan"
+tampilkan ""
+
+// Simulasi game dengan tebakan otomatis
+// Dalam implementasi nyata, ini akan menggunakan input dari user
+tebakan_list itu [50, 75, 62, 68, 71, 69, 70]
+
+untuk setiap tebakan dari tebakan_list
+    tebakan_ke itu tebakan_ke + 1
+    
+    jika tebakan_ke > max_tebakan
+        berhenti
+    selesai
+    
+    tampilkan f"Tebakan #{tebakan_ke}: {tebakan}"
+    
+    jika tebakan == angka_rahasia
+        tampilkan "🎉 BENAR! Selamat, Anda menang!"
+        tampilkan f"✨ Anda menebak dengan benar dalam {tebakan_ke} percobaan!"
+        menang itu benar
+        berhenti
+    kalau tidak jika tebakan < angka_rahasia
+        tampilkan "📈 Terlalu kecil! Coba angka yang lebih besar"
+    kalau tidak
+        tampilkan "📉 Terlalu besar! Coba angka yang lebih kecil"
+    selesai
+    
+    sisa itu max_tebakan - tebakan_ke
+    jika sisa > 0
+        tampilkan f"💡 Sisa kesempatan: {sisa}"
+    selesai
+    tampilkan ""
+selesai
+
+jika menang == salah
+    tampilkan "😢 Game Over! Kesempatan habis"
+    tampilkan f"🔢 Angka yang benar adalah: {angka_rahasia}"
+selesai
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║       Terima kasih sudah bermain!     ║"
+tampilkan "╚════════════════════════════════════════╝"

@@ -1,0 +1,77 @@
+tampilkan "=== Return Type Hints Demo ==="
+tampilkan ""
+
+tampilkan "1. Basic Return Types:"
+fungsi jumlahkan(a: Integer, b: Integer) -> Integer:
+    hasil a + b
+selesai
+
+fungsi bagi(a: Float, b: Float) -> Float:
+    jika b == 0
+        hasil 0.0
+    selesai
+    hasil a / b
+selesai
+
+hasil_jumlah itu jumlahkan(10, 5)
+tampilkan "10 + 5 = " + ke_teks(hasil_jumlah)
+
+hasil_bagi itu bagi(20.0, 4.0)
+tampilkan "20.0 / 4.0 = " + ke_teks(hasil_bagi)
+
+tampilkan ""
+tampilkan "2. String Return Type:"
+fungsi get_greeting(nama: String) -> String:
+    hasil "Halo, " + nama + "!"
+selesai
+
+greeting itu get_greeting("Budi")
+tampilkan greeting
+
+tampilkan ""
+tampilkan "3. Dict Return Type:"
+fungsi get_user_info(nama: String, umur: Integer) -> Dict[String, Integer | String]:
+    hasil {
+        "nama": nama,
+        "umur": umur,
+        "status": "aktif"
+    }
+selesai
+
+user_info itu get_user_info("Ani", 23)
+tampilkan "User Info: "
+tampilkan user_info
+
+tampilkan ""
+tampilkan "4. Optional Return Type:"
+fungsi cari_user(id: Integer) -> String?:
+    jika id == 1
+        hasil "Budi"
+    kalau_tidak jika id == 2
+        hasil "Ani"
+    selesai
+    hasil kosong
+selesai
+
+user1 itu cari_user(1)
+tampilkan "User 1: " + ke_teks(user1)
+
+user3 itu cari_user(3)
+tampilkan "User 3: " + ke_teks(user3)
+
+tampilkan ""
+tampilkan "5. List Return Type:"
+fungsi get_numbers(n: Integer) -> List[Integer]:
+    numbers itu []
+    untuk i dari 1 sampai n
+        numbers itu numbers + [i]
+    selesai
+    hasil numbers
+selesai
+
+numbers itu get_numbers(5)
+tampilkan "Numbers: "
+tampilkan numbers
+
+tampilkan ""
+tampilkan "=== Return Type Hints Demo Selesai! ==="

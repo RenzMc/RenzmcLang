@@ -1,0 +1,41 @@
+// ============================================
+// Contoh 3: Validasi Tipe (Type Validation)
+// ============================================
+// Demonstrasi bagaimana type system mendeteksi kesalahan tipe
+
+tampilkan "=== Validasi Tipe ==="
+tampilkan ""
+
+// Contoh yang BENAR - tipe sesuai
+tampilkan "1. Contoh BENAR - tipe sesuai:"
+angka: Integer itu 42
+tampilkan "angka (Integer) = " + ke_teks(angka)
+
+teks: String itu "Hello"
+tampilkan "teks (String) = " + teks
+
+desimal: Float itu 3.14
+tampilkan "desimal (Float) = " + ke_teks(desimal)
+
+tampilkan ""
+tampilkan "2. Fungsi dengan tipe yang benar:"
+fungsi kalikan(x: Integer, y: Integer):
+    hasil x * y
+selesai
+
+hasil_kali itu kalikan(5, 3)
+tampilkan "kalikan(5, 3) = " + ke_teks(hasil_kali)
+
+tampilkan ""
+tampilkan "3. Integer dapat dikonversi ke Float:"
+nilai_float: Float itu 10  // Integer 10 dapat diterima sebagai Float
+tampilkan "nilai_float (Float dari Integer) = " + ke_teks(nilai_float)
+
+tampilkan ""
+tampilkan "=== Validasi Tipe Berhasil! ==="
+tampilkan ""
+tampilkan "CATATAN: Untuk melihat error validasi tipe,"
+tampilkan "coba jalankan contoh dengan tipe yang salah seperti:"
+tampilkan "  angka: Integer itu &quot;bukan angka&quot;  // Akan error!"
+tampilkan "  fungsi test(x: String): hasil x + 1 selesai"
+tampilkan "  test(123)  // Akan error karena 123 bukan String!"

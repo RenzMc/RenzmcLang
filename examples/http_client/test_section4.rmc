@@ -1,0 +1,14 @@
+// 4. Using Indonesian alias
+tampilkan "[4] Using Indonesian Alias (ambil_http)"
+coba
+    response itu ambil_http("https://jsonplaceholder.typicode.com/users/1")
+    data itu response.json()
+    
+    tampilkan f"Name: {data['name']}"
+    tampilkan f"Email: {data['email']}"
+    address itu data['address']
+    tampilkan f"City: {address['city']}"
+    tampilkan ""
+tangkap e
+    tampilkan f"Error: {e}"
+selesai

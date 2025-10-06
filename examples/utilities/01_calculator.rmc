@@ -1,0 +1,185 @@
+// ============================================
+// Utility: Kalkulator Lengkap
+// ============================================
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║        KALKULATOR LENGKAP             ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// Fungsi operasi dasar
+buat fungsi penjumlahan dengan a, b
+    hasil a + b
+selesai
+
+buat fungsi pengurangan dengan a, b
+    hasil a - b
+selesai
+
+buat fungsi perkalian dengan a, b
+    hasil a * b
+selesai
+
+buat fungsi pembagian dengan a, b
+    jika b == 0
+        tampilkan "✗ Error: Tidak bisa membagi dengan 0"
+        hasil tidak_ada
+    selesai
+    hasil a / b
+selesai
+
+buat fungsi perpangkatan dengan a, b
+    hasil a ** b
+selesai
+
+buat fungsi akar_kuadrat dengan a
+    impor_python "math"
+    hasil panggil_python math.sqrt(a)
+selesai
+
+buat fungsi sisa_bagi dengan a, b
+    hasil a % b
+selesai
+
+// Fungsi trigonometri
+buat fungsi sin dengan x
+    impor_python "math"
+    hasil panggil_python math.sin(x)
+selesai
+
+buat fungsi cos dengan x
+    impor_python "math"
+    hasil panggil_python math.cos(x)
+selesai
+
+buat fungsi tan dengan x
+    impor_python "math"
+    hasil panggil_python math.tan(x)
+selesai
+
+// Fungsi statistik
+buat fungsi rata_rata dengan numbers
+    jika panjang(numbers) == 0
+        hasil 0
+    selesai
+    
+    total itu 0
+    untuk setiap num dari numbers
+        total itu total + num
+    selesai
+    
+    hasil total / panjang(numbers)
+selesai
+
+buat fungsi maksimum dengan numbers
+    jika panjang(numbers) == 0
+        hasil tidak_ada
+    selesai
+    
+    maks itu numbers[0]
+    untuk setiap num dari numbers
+        jika num > maks
+            maks itu num
+        selesai
+    selesai
+    hasil maks
+selesai
+
+buat fungsi minimum dengan numbers
+    jika panjang(numbers) == 0
+        hasil tidak_ada
+    selesai
+    
+    min itu numbers[0]
+    untuk setiap num dari numbers
+        jika num < min
+            min itu num
+        selesai
+    selesai
+    hasil min
+selesai
+
+// ============================================
+// DEMO KALKULATOR
+// ============================================
+
+tampilkan "=== OPERASI DASAR ==="
+tampilkan ""
+
+a itu 15
+b itu 3
+
+tampilkan f"Angka: a = {a}, b = {b}"
+tampilkan ""
+
+hasil_tambah itu panggil penjumlahan dengan a, b
+tampilkan f"✓ {a} + {b} = {hasil_tambah}"
+
+hasil_kurang itu panggil pengurangan dengan a, b
+tampilkan f"✓ {a} - {b} = {hasil_kurang}"
+
+hasil_kali itu panggil perkalian dengan a, b
+tampilkan f"✓ {a} × {b} = {hasil_kali}"
+
+hasil_bagi itu panggil pembagian dengan a, b
+tampilkan f"✓ {a} ÷ {b} = {hasil_bagi}"
+
+hasil_pangkat itu panggil perpangkatan dengan a, b
+tampilkan f"✓ {a} ^ {b} = {hasil_pangkat}"
+
+hasil_mod itu panggil sisa_bagi dengan a, b
+tampilkan f"✓ {a} % {b} = {hasil_mod}"
+
+tampilkan ""
+
+// Akar kuadrat
+tampilkan "=== OPERASI AKAR ==="
+tampilkan ""
+
+angka itu 16
+hasil_akar itu panggil akar_kuadrat dengan angka
+tampilkan f"✓ √{angka} = {hasil_akar}"
+
+angka2 itu 25
+hasil_akar2 itu panggil akar_kuadrat dengan angka2
+tampilkan f"✓ √{angka2} = {hasil_akar2}"
+
+tampilkan ""
+
+// Trigonometri
+tampilkan "=== TRIGONOMETRI ==="
+tampilkan ""
+
+sudut itu 0
+hasil_sin itu panggil sin dengan sudut
+hasil_cos itu panggil cos dengan sudut
+hasil_tan itu panggil tan dengan sudut
+
+tampilkan f"Sudut: {sudut} radian"
+tampilkan f"✓ sin({sudut}) = {hasil_sin}"
+tampilkan f"✓ cos({sudut}) = {hasil_cos}"
+tampilkan f"✓ tan({sudut}) = {hasil_tan}"
+
+tampilkan ""
+
+// Statistik
+tampilkan "=== STATISTIK ==="
+tampilkan ""
+
+data itu [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+tampilkan f"Data: {data}"
+tampilkan ""
+
+rata itu panggil rata_rata dengan data
+tampilkan f"✓ Rata-rata: {rata}"
+
+maks itu panggil maksimum dengan data
+tampilkan f"✓ Maksimum: {maks}"
+
+min itu panggil minimum dengan data
+tampilkan f"✓ Minimum: {min}"
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║    Kalkulator Complete! ✅             ║"
+tampilkan "╚════════════════════════════════════════╝"

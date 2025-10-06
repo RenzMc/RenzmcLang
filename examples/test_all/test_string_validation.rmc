@@ -1,0 +1,48 @@
+# Test String Validation Functions (Phase 3)
+
+tampilkan "=== Testing String Validation Functions ==="
+
+# Test is_alpha
+tampilkan ""
+tampilkan "Test is_alpha():"
+tampilkan is_alpha("Hello")           # True
+tampilkan is_alpha("Hello123")        # False
+tampilkan is_alpha("HelloWorld")      # True
+
+# Test is_digit
+tampilkan ""
+tampilkan "Test is_digit():"
+tampilkan is_digit("12345")           # True
+tampilkan is_digit("123.45")          # False
+tampilkan is_digit("123abc")          # False
+
+# Test is_alnum
+tampilkan ""
+tampilkan "Test is_alnum():"
+tampilkan is_alnum("Hello123")        # True
+tampilkan is_alnum("Hello 123")       # False
+tampilkan is_alnum("abc123xyz")       # True
+
+# Test is_lower
+tampilkan ""
+tampilkan "Test is_lower():"
+tampilkan is_lower("hello")           # True
+tampilkan is_lower("Hello")           # False
+tampilkan is_lower("hello123")        # True
+
+# Test is_upper
+tampilkan ""
+tampilkan "Test is_upper():"
+tampilkan is_upper("HELLO")           # True
+tampilkan is_upper("Hello")           # False
+tampilkan is_upper("HELLO123")        # True
+
+# Test is_space
+tampilkan ""
+tampilkan "Test is_space():"
+tampilkan is_space("   ")             # True
+tampilkan is_space(" a ")             # False
+tampilkan is_space("    ")            # True
+
+tampilkan ""
+tampilkan "=== All String Validation Tests Complete ==="

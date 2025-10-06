@@ -1,0 +1,71 @@
+// ============================================
+// Command Line Tools - CLI Arguments
+// ============================================
+// Membuat CLI tools dengan argument parsing
+
+tampilkan "=== Command Line Tools ==="
+tampilkan ""
+
+impor_python "sys"
+impor_python "argparse"
+
+// ============================================
+// 1. BASIC COMMAND LINE ARGUMENTS
+// ============================================
+
+tampilkan "[1] Basic Command Line Arguments..."
+tampilkan ""
+
+// Akses command line arguments
+args itu sys.argv
+tampilkan f"Script name: {args[0]}"
+tampilkan f"Total arguments: {panjang(args)}"
+
+jika panjang(args) > 1
+    tampilkan "Arguments:"
+    total_args itu panjang(args)
+    untuk i dari 1 sampai total_args - 1
+        tampilkan f"  {i}. {args[i]}"
+    selesai
+kalau tidak
+    tampilkan "No arguments provided"
+selesai
+tampilkan ""
+
+// ============================================
+// 2. ARGPARSE - ADVANCED ARGUMENT PARSING
+// ============================================
+
+tampilkan "[2] ArgParse - Advanced Argument Parsing..."
+tampilkan ""
+
+// Buat parser - tanpa named arguments
+parser itu panggil_python argparse.ArgumentParser()
+
+// Tambah arguments - hanya positional arguments
+panggil_python parser.add_argument("input")
+panggil_python parser.add_argument("-o", "--output")
+panggil_python parser.add_argument("-v", "--verbose")
+panggil_python parser.add_argument("-c", "--count")
+
+tampilkan "✓ Parser created with arguments"
+tampilkan ""
+
+// ============================================
+// 3. EXAMPLE USAGE
+// ============================================
+
+tampilkan "[3] Example Usage..."
+tampilkan ""
+
+tampilkan "Contoh penggunaan:"
+tampilkan "  python script.rmc input.txt -o output.txt -v -c 5"
+tampilkan ""
+tampilkan "Arguments yang didukung:"
+tampilkan "  input          : Input file path (positional)"
+tampilkan "  -o, --output   : Output file path (optional)"
+tampilkan "  -v, --verbose  : Enable verbose mode (flag)"
+tampilkan "  -c, --count    : Number of iterations (optional)"
+tampilkan ""
+
+tampilkan "✓ CLI Tools example completed!"

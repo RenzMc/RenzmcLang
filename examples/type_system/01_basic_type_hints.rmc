@@ -1,0 +1,44 @@
+// ============================================
+// Contoh 1: Type Hints Dasar untuk Variabel
+// ============================================
+// Demonstrasi penggunaan type hints pada variabel
+
+tampilkan "=== Type Hints Dasar untuk Variabel ==="
+tampilkan ""
+
+// 1. Type hints untuk tipe dasar
+tampilkan "1. Type hints untuk Integer:"
+umur: Integer itu 25
+tampilkan "umur = " + ke_teks(umur)
+
+tampilkan ""
+tampilkan "2. Type hints untuk String:"
+nama: String itu "Budi"
+tampilkan "nama = " + nama
+
+tampilkan ""
+tampilkan "3. Type hints untuk Float:"
+tinggi: Float itu 175.5
+tampilkan "tinggi = " + ke_teks(tinggi)
+
+tampilkan ""
+tampilkan "4. Type hints untuk Boolean:"
+is_student: Boolean itu benar
+tampilkan "is_student = " + ke_teks(is_student)
+
+tampilkan ""
+tampilkan "5. Type hints untuk List:"
+hobi: List itu ["membaca", "coding", "gaming"]
+tampilkan "hobi = " + ke_teks(hobi)
+
+tampilkan ""
+tampilkan "6. Type hints untuk Dict:"
+profil: Dict itu {
+    "nama": "Budi",
+    "umur": 25,
+    "kota": "Jakarta"
+}
+tampilkan "profil = " + ke_teks(profil)
+
+tampilkan ""
+tampilkan "=== Type Hints Dasar Berhasil! ==="

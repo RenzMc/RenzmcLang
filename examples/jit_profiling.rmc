@@ -1,0 +1,56 @@
+tampilkan "=== Profile-Guided Optimization Demo ==="
+tampilkan ""
+
+tampilkan "1. Profiling Simple Function:"
+
+@profile
+buat fungsi hitung_total dengan n
+    total itu 0
+    untuk i dari 1 sampai n
+        total itu total + i
+    selesai
+    hasil total
+selesai
+
+tampilkan "Menjalankan fungsi dengan profiling..."
+hasil itu panggil hitung_total dengan 10000
+tampilkan "Hasil: " + ke_teks(hasil)
+
+tampilkan ""
+tampilkan "2. Profiling Complex Function:"
+
+@profile
+buat fungsi matrix_operation dengan size
+    total itu 0
+    untuk i dari 1 sampai size
+        untuk j dari 1 sampai size
+            total itu total + (i * j)
+        selesai
+    selesai
+    hasil total
+selesai
+
+tampilkan "Menjalankan operasi matrix dengan profiling..."
+hasil itu panggil matrix_operation dengan 100
+tampilkan "Hasil: " + ke_teks(hasil)
+
+tampilkan ""
+tampilkan "3. Profiling Numeric Function:"
+
+@profile
+buat fungsi numeric_computation dengan n
+    total itu 0
+    untuk i dari 1 sampai n
+        untuk j dari 1 sampai 100
+            total itu total + (i * j)
+        selesai
+    selesai
+    hasil total
+selesai
+
+tampilkan "Menjalankan fungsi numeric dengan profiling..."
+hasil itu panggil numeric_computation dengan 1000
+tampilkan "Hasil: " + ke_teks(hasil)
+
+tampilkan ""
+tampilkan "=== Profile-Guided Optimization Demo Selesai! ==="

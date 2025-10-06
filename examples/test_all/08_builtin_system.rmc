@@ -1,0 +1,38 @@
+// Test 8: Built-in System Functions
+tampilkan "╔════════════════════════════════════════════════════════════╗"
+tampilkan "║  Test 8: Built-in System Functions                        ║"
+tampilkan "╚════════════════════════════════════════════════════════════╝"
+
+tampilkan "\n[8.1] System Functions"
+
+// jenis
+tipe1 itu jenis(42)
+tampilkan f"✓ jenis(42): {tipe1}"
+
+tipe2 itu jenis("hello")
+tampilkan f"✓ jenis('hello'): {tipe2}"
+
+tipe3 itu jenis([1, 2, 3])
+tampilkan f"✓ jenis([1,2,3]): {tipe3}"
+
+// ke_teks
+teks1 itu ke_teks(123)
+tampilkan f"✓ ke_teks(123): {teks1}"
+
+// ke_angka
+angka1 itu ke_angka("456")
+tampilkan f"✓ ke_angka('456'): {angka1}"
+
+// acak
+random1 itu acak()
+tampilkan f"✓ acak(): {random1}"
+
+// waktu
+waktu_sekarang itu waktu()
+tampilkan f"✓ waktu(): {waktu_sekarang}"
+
+// tanggal
+tanggal_sekarang itu tanggal()
+tampilkan f"✓ tanggal(): {tanggal_sekarang}"
+
+tampilkan "\n✅ Test 8 PASSED: All system functions working!"

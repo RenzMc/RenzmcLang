@@ -1,0 +1,370 @@
+// ============================================
+// Multiprocessing - Parallel Processing
+// ============================================
+// Contoh penggunaan multiprocessing untuk CPU-bound tasks
+
+tampilkan "=== Multiprocessing Examples ==="
+tampilkan ""
+
+impor_python "multiprocessing"
+impor_python "time"
+impor_python "os"
+
+// ============================================
+// 1. BASIC MULTIPROCESSING
+// ============================================
+
+tampilkan "[1] Basic Multiprocessing..."
+tampilkan ""
+
+fungsi worker(nama, durasi):
+    // Worker function yang akan dijalankan di process terpisah
+    pid itu panggil_python os.getpid()
+    tampilkan f"[{nama}] Process ID: {pid} - Mulai bekerja"
+    panggil_python time.sleep(durasi)
+    tampilkan f"[{nama}] Process ID: {pid} - Selesai setelah {durasi} detik"
+selesai
+
+tampilkan "Contoh kode multiprocessing:"
+tampilkan ""
+
+kode_basic itu """
+import multiprocessing
+import time
+import os
+
+def worker(nama, durasi):
+    pid = os.getpid()
+    print(f"[{nama}] Process ID: {pid} - Mulai bekerja")
+    time.sleep(durasi)
+    print(f"[{nama}] Process ID: {pid} - Selesai")
+
+if __name__ == '__main__':
+    # Buat processes
+    processes = []
+    
+    for i in range(4):
+        p = multiprocessing.Process(
+            target=worker, 
+            args=(f"Process-{i+1}", i+1)
+        )
+        processes.append(p)
+        p.start()
+    
+    # Tunggu semua selesai
+    for p in processes:
+        p.join()
+    
+    print("✓ Semua processes selesai")
+"""
+
+tampilkan kode_basic
+tampilkan ""
+
+// ============================================
+// 2. PROCESS POOL
+// ============================================
+
+tampilkan "[2] Process Pool Example..."
+tampilkan ""
+
+kode_pool itu """
+import multiprocessing
+import time
+
+def hitung_kuadrat(angka):
+    '''Hitung kuadrat dengan delay'''
+    time.sleep(0.5)
+    return angka * angka
+
+if __name__ == '__main__':
+    angka_list = list(range(1, 11))
+    
+    print("Sequential processing:")
+    start = time.time()
+    hasil_seq = [hitung_kuadrat(x) for x in angka_list]
+    waktu_seq = time.time() - start
+    print(f"Hasil: {hasil_seq}")
+    print(f"Waktu: {waktu_seq:.2f} detik")
+    print()
+    
+    print("Parallel processing dengan Pool:")
+    start = time.time()
+    with multiprocessing.Pool(processes=4) as pool:
+        hasil_par = pool.map(hitung_kuadrat, angka_list)
+    waktu_par = time.time() - start
+    print(f"Hasil: {hasil_par}")
+    print(f"Waktu: {waktu_par:.2f} detik")
+    print(f"Speedup: {waktu_seq/waktu_par:.2f}x")
+"""
+
+tampilkan kode_pool
+tampilkan ""
+
+// ============================================
+// 3. SHARED MEMORY
+// ============================================
+
+tampilkan "[3] Shared Memory Example..."
+tampilkan ""
+
+kode_shared itu """
+import multiprocessing
+import time
+
+def increment_counter(counter, lock):
+    '''Increment shared counter'''
+    for i in range(1000):
+        with lock:
+            counter.value += 1
+
+if __name__ == '__main__':
+    # Buat shared counter
+    counter = multiprocessing.Value('i', 0)
+    lock = multiprocessing.Lock()
+    
+    # Buat processes
+    processes = []
+    for i in range(5):
+        p = multiprocessing.Process(
+            target=increment_counter,
+            args=(counter, lock)
+        )
+        processes.append(p)
+        p.start()
+    
+    # Tunggu semua selesai
+    for p in processes:
+        p.join()
+    
+    print(f"Counter final: {counter.value}")
+    print(f"Expected: {5 * 1000}")
+"""
+
+tampilkan kode_shared
+tampilkan ""
+
+// ============================================
+// 4. QUEUE COMMUNICATION
+// ============================================
+
+tampilkan "[4] Queue Communication..."
+tampilkan ""
+
+kode_queue itu """
+import multiprocessing
+import time
+
+def producer(queue, items):
+    '''Producer yang menghasilkan data'''
+    for item in items:
+        print(f"Producing: {item}")
+        queue.put(item)
+        time.sleep(0.5)
+    queue.put(None)  # Signal selesai
+
+def consumer(queue, name):
+    '''Consumer yang memproses data'''
+    while True:
+        item = queue.get()
+        if item is None:
+            break
+        print(f"[{name}] Consuming: {item}")
+        time.sleep(1)
+
+if __name__ == '__main__':
+    queue = multiprocessing.Queue()
+    items = ['Item-1', 'Item-2', 'Item-3', 'Item-4', 'Item-5']
+    
+    # Buat producer
+    prod = multiprocessing.Process(
+        target=producer,
+        args=(queue, items)
+    )
+    
+    # Buat consumers
+    cons1 = multiprocessing.Process(
+        target=consumer,
+        args=(queue, 'Consumer-1')
+    )
+    cons2 = multiprocessing.Process(
+        target=consumer,
+        args=(queue, 'Consumer-2')
+    )
+    
+    # Start semua
+    prod.start()
+    cons1.start()
+    cons2.start()
+    
+    # Tunggu selesai
+    prod.join()
+    queue.put(None)  # Signal untuk consumer kedua
+    cons1.join()
+    cons2.join()
+    
+    print("✓ Producer-Consumer selesai")
+"""
+
+tampilkan kode_queue
+tampilkan ""
+
+// ============================================
+// 5. PARALLEL MAP
+// ============================================
+
+tampilkan "[5] Parallel Map Example..."
+tampilkan ""
+
+kode_map itu """
+import multiprocessing
+import time
+
+def process_data(data):
+    '''Proses data dengan komputasi berat'''
+    # Simulasi komputasi
+    result = sum(i*i for i in range(data))
+    return result
+
+if __name__ == '__main__':
+    data_list = [1000000, 2000000, 3000000, 4000000, 5000000]
+    
+    print("Processing dengan Pool.map:")
+    start = time.time()
+    
+    with multiprocessing.Pool(processes=4) as pool:
+        results = pool.map(process_data, data_list)
+    
+    waktu = time.time() - start
+    
+    print(f"Hasil: {results}")
+    print(f"Waktu: {waktu:.2f} detik")
+    print(f"Total: {sum(results)}")
+"""
+
+tampilkan kode_map
+tampilkan ""
+
+// ============================================
+// 6. ASYNC RESULTS
+// ============================================
+
+tampilkan "[6] Async Results Example..."
+tampilkan ""
+
+kode_async itu """
+import multiprocessing
+import time
+
+def long_task(n):
+    '''Task yang memakan waktu'''
+    time.sleep(n)
+    return n * n
+
+if __name__ == '__main__':
+    with multiprocessing.Pool(processes=4) as pool:
+        # Submit tasks asynchronously
+        results = []
+        for i in range(1, 5):
+            result = pool.apply_async(long_task, (i,))
+            results.append(result)
+        
+        # Tunggu dan ambil hasil
+        print("Menunggu hasil...")
+        for i, result in enumerate(results, 1):
+            value = result.get()  # Blocking call
+            print(f"Task {i} selesai: {value}")
+    
+    print("✓ Semua tasks selesai")
+"""
+
+tampilkan kode_async
+tampilkan ""
+
+// ============================================
+// 7. CPU-BOUND VS I/O-BOUND
+// ============================================
+
+tampilkan "[7] CPU-bound vs I/O-bound..."
+tampilkan ""
+
+kode_comparison itu """
+import multiprocessing
+import threading
+import time
+
+def cpu_bound_task(n):
+    '''CPU-intensive task'''
+    return sum(i*i for i in range(n))
+
+def io_bound_task(n):
+    '''I/O-intensive task'''
+    time.sleep(n)
+    return n
+
+if __name__ == '__main__':
+    data = [5000000] * 4
+    
+    # CPU-bound dengan multiprocessing
+    print("CPU-bound dengan multiprocessing:")
+    start = time.time()
+    with multiprocessing.Pool(4) as pool:
+        results = pool.map(cpu_bound_task, data)
+    print(f"Waktu: {time.time() - start:.2f} detik")
+    
+    # CPU-bound dengan threading (tidak efisien)
+    print("\\nCPU-bound dengan threading:")
+    start = time.time()
+    threads = []
+    for d in data:
+        t = threading.Thread(target=cpu_bound_task, args=(d,))
+        threads.append(t)
+        t.start()
+    for t in threads:
+        t.join()
+    print(f"Waktu: {time.time() - start:.2f} detik")
+    
+    print("\\nKesimpulan:")
+    print("- Multiprocessing lebih cepat untuk CPU-bound tasks")
+    print("- Threading lebih cocok untuk I/O-bound tasks")
+"""
+
+tampilkan kode_comparison
+tampilkan ""
+
+// ============================================
+// 8. BEST PRACTICES
+// ============================================
+
+tampilkan "[8] Best Practices..."
+tampilkan ""
+
+tampilkan "Multiprocessing Best Practices:"
+tampilkan ""
+tampilkan "1. Gunakan untuk CPU-bound tasks"
+tampilkan "   - Komputasi matematika"
+tampilkan "   - Image processing"
+tampilkan "   - Data analysis"
+tampilkan ""
+tampilkan "2. Gunakan Pool untuk banyak tasks"
+tampilkan "   - Lebih efisien"
+tampilkan "   - Automatic load balancing"
+tampilkan ""
+tampilkan "3. Hindari shared state"
+tampilkan "   - Gunakan Queue untuk komunikasi"
+tampilkan "   - Gunakan Manager untuk shared objects"
+tampilkan ""
+tampilkan "4. Always use if __name__ == '__main__':"
+tampilkan "   - Mencegah infinite process creation"
+tampilkan "   - Required di Windows"
+tampilkan ""
+tampilkan "5. Cleanup resources"
+tampilkan "   - Close pools"
+tampilkan "   - Join processes"
+tampilkan ""
+
+tampilkan "=== Selesai ==="
+tampilkan ""
+tampilkan "Threading vs Multiprocessing:"
+tampilkan "  Threading: I/O-bound tasks (network, file I/O)"
+tampilkan "  Multiprocessing: CPU-bound tasks (computation)"

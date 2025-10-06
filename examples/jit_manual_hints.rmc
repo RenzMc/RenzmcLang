@@ -1,0 +1,56 @@
+tampilkan "=== Manual JIT Compilation Demo ==="
+tampilkan ""
+
+tampilkan "1. Force JIT Compilation with @jit_compile:"
+
+@jit_compile
+buat fungsi hitung_faktorial dengan n
+    jika n <= 1
+        hasil 1
+    selesai
+    hasil n * panggil hitung_faktorial dengan n - 1
+selesai
+
+tampilkan "Menghitung faktorial dengan JIT..."
+untuk i dari 1 sampai 10
+    hasil itu panggil hitung_faktorial dengan i
+    tampilkan "faktorial(" + ke_teks(i) + ") = " + ke_teks(hasil)
+selesai
+
+tampilkan ""
+tampilkan "2. Force JIT with @jit_force:"
+
+@jit_force
+buat fungsi hitung_fibonacci dengan n
+    jika n <= 1
+        hasil n
+    selesai
+    hasil panggil hitung_fibonacci dengan n-1 + panggil hitung_fibonacci dengan n-2
+selesai
+
+tampilkan "Menghitung fibonacci dengan JIT force..."
+untuk i dari 1 sampai 15
+    hasil itu panggil hitung_fibonacci dengan i
+    tampilkan "fibonacci(" + ke_teks(i) + ") = " + ke_teks(hasil)
+selesai
+
+tampilkan ""
+tampilkan "3. Complex Numeric Function with JIT:"
+
+@jit_compile
+buat fungsi hitung_kompleks dengan x, y, z
+    total itu 0
+    untuk i dari 1 sampai 100
+        untuk j dari 1 sampai 10
+            total itu total + (i * j * x) + (y * z)
+        selesai
+    selesai
+    hasil total
+selesai
+
+tampilkan "Menghitung fungsi kompleks dengan JIT..."
+hasil itu panggil hitung_kompleks dengan 2, 3, 4
+tampilkan "Hasil: " + ke_teks(hasil)
+
+tampilkan ""
+tampilkan "=== Manual JIT Compilation Demo Selesai! ==="

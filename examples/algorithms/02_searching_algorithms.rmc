@@ -1,0 +1,201 @@
+# ===================================
+# Searching Algorithms
+# ===================================
+# Algoritma pencarian untuk menemukan elemen dalam data
+
+tampilkan "=== Searching Algorithms Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Linear Search
+# ===================================
+tampilkan "1. Linear Search:"
+
+fungsi linear_search(arr, target):
+    untuk i dari 0 sampai panjang(arr) - 1
+        jika arr[i] == target
+            hasil i
+        selesai
+    selesai
+    hasil -1
+selesai
+
+data itu [10, 25, 30, 45, 50, 65, 70]
+tampilkan "Data: " + ke_teks(data)
+
+target1 itu 30
+index1 itu linear_search(data, target1)
+tampilkan "Cari " + ke_teks(target1) + ": index " + ke_teks(index1)
+
+target2 itu 100
+index2 itu linear_search(data, target2)
+tampilkan "Cari " + ke_teks(target2) + ": " + ke_teks(index2) + " (not found)"
+
+tampilkan ""
+
+# ===================================
+# 2. Binary Search (Iterative)
+# ===================================
+tampilkan "2. Binary Search (Iterative):"
+
+fungsi binary_search(arr, target):
+    left itu 0
+    right itu panjang(arr) - 1
+    
+    selama left <= right
+        mid itu (left + right) // 2
+        
+        jika arr[mid] == target
+            hasil mid
+        selesai
+        
+        jika arr[mid] < target
+            left itu mid + 1
+        selesai
+        
+        jika arr[mid] > target
+            right itu mid - 1
+        selesai
+    selesai
+    
+    hasil -1
+selesai
+
+sorted_data itu [10, 20, 30, 40, 50, 60, 70, 80, 90]
+tampilkan "Sorted data: " + ke_teks(sorted_data)
+
+target3 itu 50
+index3 itu binary_search(sorted_data, target3)
+tampilkan "Binary search " + ke_teks(target3) + ": index " + ke_teks(index3)
+
+target4 itu 35
+index4 itu binary_search(sorted_data, target4)
+tampilkan "Binary search " + ke_teks(target4) + ": " + ke_teks(index4) + " (not found)"
+
+tampilkan ""
+
+# ===================================
+# 3. Find All Occurrences
+# ===================================
+tampilkan "3. Find All Occurrences:"
+
+fungsi find_all(arr, target):
+    indices itu []
+    untuk i dari 0 sampai panjang(arr) - 1
+        jika arr[i] == target
+            indices itu indices + [i]
+        selesai
+    selesai
+    hasil indices
+selesai
+
+data_dup itu [1, 2, 3, 2, 4, 2, 5]
+tampilkan "Data: " + ke_teks(data_dup)
+
+indices_2 itu find_all(data_dup, 2)
+tampilkan "Semua index dari 2: " + ke_teks(indices_2)
+
+tampilkan ""
+
+# ===================================
+# 4. Find Min & Max Index
+# ===================================
+tampilkan "4. Find Min & Max Index:"
+
+fungsi find_min_index(arr):
+    min_idx itu 0
+    min_val itu arr[0]
+    
+    untuk i dari 1 sampai panjang(arr) - 1
+        jika arr[i] < min_val
+            min_val itu arr[i]
+            min_idx itu i
+        selesai
+    selesai
+    
+    hasil min_idx
+selesai
+
+fungsi find_max_index(arr):
+    max_idx itu 0
+    max_val itu arr[0]
+    
+    untuk i dari 1 sampai panjang(arr) - 1
+        jika arr[i] > max_val
+            max_val itu arr[i]
+            max_idx itu i
+        selesai
+    selesai
+    
+    hasil max_idx
+selesai
+
+nilai itu [85, 92, 78, 95, 88]
+tampilkan "Nilai: " + ke_teks(nilai)
+
+min_idx itu find_min_index(nilai)
+max_idx itu find_max_index(nilai)
+
+tampilkan "Min index: " + ke_teks(min_idx) + " (nilai: " + ke_teks(nilai[min_idx]) + ")"
+tampilkan "Max index: " + ke_teks(max_idx) + " (nilai: " + ke_teks(nilai[max_idx]) + ")"
+
+tampilkan ""
+
+# ===================================
+# 5. Search in String List
+# ===================================
+tampilkan "5. Search in String List:"
+
+fungsi search_string(arr, query):
+    hasil_list itu []
+    untuk setiap item dari arr
+        jika query dalam item
+            hasil_list itu hasil_list + [item]
+        selesai
+    selesai
+    hasil hasil_list
+selesai
+
+names itu ["Alice", "Bob", "Charlie", "David", "Alice Smith"]
+tampilkan "Names: " + ke_teks(names)
+
+hasil_search itu search_string(names, "Alice")
+tampilkan "Search 'Alice': " + ke_teks(hasil_search)
+
+tampilkan ""
+
+# ===================================
+# 6. Search with Condition
+# ===================================
+tampilkan "6. Search with Condition:"
+
+fungsi find_first_greater(arr, threshold):
+    untuk i dari 0 sampai panjang(arr) - 1
+        jika arr[i] > threshold
+            hasil i
+        selesai
+    selesai
+    hasil -1
+selesai
+
+numbers itu [10, 20, 30, 40, 50]
+tampilkan "Numbers: " + ke_teks(numbers)
+
+idx itu find_first_greater(numbers, 25)
+tampilkan "First > 25: index " + ke_teks(idx) + " (value: " + ke_teks(numbers[idx]) + ")"
+
+tampilkan ""
+
+# ===================================
+# 7. Search Best Practices
+# ===================================
+tampilkan "7. Search Best Practices:"
+tampilkan "✓ Linear search: O(n) - untuk unsorted data"
+tampilkan "✓ Binary search: O(log n) - untuk sorted data"
+tampilkan "✓ Gunakan binary search untuk data besar yang sorted"
+tampilkan "✓ Gunakan linear search untuk data kecil"
+tampilkan "✓ Return -1 untuk not found"
+tampilkan "✓ Return index untuk found"
+
+tampilkan ""
+tampilkan "=== Searching Algorithms Examples Complete ==="

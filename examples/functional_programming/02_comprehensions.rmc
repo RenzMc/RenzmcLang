@@ -1,0 +1,305 @@
+# ===================================
+# Comprehensions (List & Dict)
+# ===================================
+# Comprehension adalah cara singkat untuk membuat collection baru
+# dari collection yang sudah ada dengan transformasi atau filter
+
+tampilkan "=== Comprehensions Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. List Comprehension Dasar
+# ===================================
+tampilkan "1. List Comprehension Dasar:"
+
+# Buat list kuadrat dari 1-10
+angka itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+tampilkan "Angka asli: " + ke_teks(angka)
+
+# List comprehension: [ekspresi untuk setiap item dari iterable]
+kuadrat itu [x * x untuk setiap x dari angka]
+tampilkan "Kuadrat: " + ke_teks(kuadrat)
+
+# List comprehension dengan operasi lain
+kali_2 itu [x * 2 untuk setiap x dari angka]
+tampilkan "Kali 2: " + ke_teks(kali_2)
+
+# List comprehension dengan list yang lebih panjang
+angka_besar itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+angka_1_20 itu [x untuk setiap x dari angka_besar]
+tampilkan "Angka 1-20: " + ke_teks(angka_1_20)
+
+tampilkan ""
+
+# ===================================
+# 2. List Comprehension dengan Filter
+# ===================================
+tampilkan "2. List Comprehension dengan Filter:"
+
+# Filter angka genap
+angka_genap itu [x untuk setiap x dari angka jika x % 2 == 0]
+tampilkan "Angka genap: " + ke_teks(angka_genap)
+
+# Filter angka ganjil
+angka_ganjil itu [x untuk setiap x dari angka jika x % 2 != 0]
+tampilkan "Angka ganjil: " + ke_teks(angka_ganjil)
+
+# Filter angka > 5
+lebih_5 itu [x untuk setiap x dari angka jika x > 5]
+tampilkan "Angka > 5: " + ke_teks(lebih_5)
+
+# Filter dan transform
+genap_kuadrat itu [x * x untuk setiap x dari angka jika x % 2 == 0]
+tampilkan "Genap dikuadratkan: " + ke_teks(genap_kuadrat)
+
+tampilkan ""
+
+# ===================================
+# 3. List Comprehension dengan String
+# ===================================
+tampilkan "3. List Comprehension dengan String:"
+
+nama itu ["budi", "ani", "citra", "doni"]
+tampilkan "Nama asli: " + ke_teks(nama)
+
+# Capitalize semua nama
+nama_kapital itu [n.capitalize() untuk setiap n dari nama]
+tampilkan "Nama kapital: " + ke_teks(nama_kapital)
+
+# Uppercase semua nama
+nama_upper itu [n.upper() untuk setiap n dari nama]
+tampilkan "Nama uppercase: " + ke_teks(nama_upper)
+
+# Filter nama panjang > 3
+nama_panjang itu [n untuk setiap n dari nama jika panjang(n) > 3]
+tampilkan "Nama panjang > 3: " + ke_teks(nama_panjang)
+
+# Tambah prefix
+nama_prefix itu ["Mr. " + n.capitalize() untuk setiap n dari nama]
+tampilkan "Dengan prefix: " + ke_teks(nama_prefix)
+
+tampilkan ""
+
+# ===================================
+# 4. List Comprehension dengan List Besar
+# ===================================
+tampilkan "4. List Comprehension dengan List Besar:"
+
+# Buat list 1-10
+angka_1_10 itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+angka_range itu [x untuk setiap x dari angka_1_10]
+tampilkan "Angka 1-10: " + ke_teks(angka_range)
+
+# Kuadrat dari 1-10
+kuadrat_range itu [x * x untuk setiap x dari angka_1_10]
+tampilkan "Kuadrat 1-10: " + ke_teks(kuadrat_range)
+
+# Kelipatan 5 dari angka besar
+angka_50 itu [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+kelipatan_5 itu [x untuk setiap x dari angka_50]
+tampilkan "Kelipatan 5: " + ke_teks(kelipatan_5)
+
+# Bilangan prima sederhana (2-20)
+prima_list itu [2, 3, 5, 7, 11, 13, 17, 19]
+prima_dalam_range itu [x untuk setiap x dari angka_besar jika x dalam prima_list]
+tampilkan "Prima 1-20: " + ke_teks(prima_dalam_range)
+
+tampilkan ""
+
+# ===================================
+# 5. Dict Comprehension Dasar
+# ===================================
+tampilkan "5. Dict Comprehension Dasar:"
+
+# Buat dict dari list
+angka_dict itu [1, 2, 3, 4, 5]
+tampilkan "Angka: " + ke_teks(angka_dict)
+
+# Dict comprehension: {key: value untuk setiap item dari iterable}
+kuadrat_dict itu {x: x * x untuk setiap x dari angka_dict}
+tampilkan "Dict kuadrat: " + ke_teks(kuadrat_dict)
+
+# Dict dengan string key
+nama_panjang_dict itu {n: panjang(n) untuk setiap n dari nama}
+tampilkan "Nama -> Panjang: " + ke_teks(nama_panjang_dict)
+
+# Dict dengan transformasi value
+kali_10_dict itu {x: x * 10 untuk setiap x dari angka_dict}
+tampilkan "Kali 10: " + ke_teks(kali_10_dict)
+
+tampilkan ""
+
+# ===================================
+# 6. Dict Comprehension dari List
+# ===================================
+tampilkan "6. Dict Comprehension dari List:"
+
+# Dict dari list 1-5
+angka_1_5 itu [1, 2, 3, 4, 5]
+range_dict itu {x: x * x untuk setiap x dari angka_1_5}
+tampilkan "Kuadrat dict: " + ke_teks(range_dict)
+
+# Dict dengan operasi kompleks
+kubik_dict itu {x: x * x * x untuk setiap x dari angka_1_5}
+tampilkan "Kubik dict: " + ke_teks(kubik_dict)
+
+# Dict dengan string formatting
+label_dict itu {x: "Angka " + ke_teks(x) untuk setiap x dari angka_1_5}
+tampilkan "Label dict: " + ke_teks(label_dict)
+
+tampilkan ""
+
+# ===================================
+# 7. Dict Comprehension dengan Zip
+# ===================================
+tampilkan "7. Dict Comprehension dengan Zip:"
+
+# Buat dict dari dua list
+buah itu ["apel", "jeruk", "mangga", "pisang"]
+harga_list itu [5000, 3000, 7000, 4000]
+indeks itu [0, 1, 2, 3]
+
+# Zip dan buat dict
+harga_dict itu {buah[i]: harga_list[i] untuk setiap i dari indeks}
+tampilkan "Harga buah: " + ke_teks(harga_dict)
+
+# Transform dengan operasi
+harga_diskon_dict itu {buah[i]: harga_list[i] * 0.8 untuk setiap i dari indeks}
+tampilkan "Harga diskon 20%: " + ke_teks(harga_diskon_dict)
+
+# Dict dengan label
+label_harga itu {buah[i]: "Rp " + ke_teks(harga_list[i]) untuk setiap i dari indeks}
+tampilkan "Label harga: " + ke_teks(label_harga)
+
+tampilkan ""
+
+# ===================================
+# 8. List Comprehension Praktis
+# ===================================
+tampilkan "8. List Comprehension Praktis:"
+
+# Data siswa
+siswa itu [
+    {"nama": "Budi", "nilai": 85},
+    {"nama": "Ani", "nilai": 92},
+    {"nama": "Citra", "nilai": 78},
+    {"nama": "Doni", "nilai": 95},
+    {"nama": "Eka", "nilai": 65}
+]
+
+tampilkan "Data siswa:"
+untuk setiap s dari siswa
+    tampilkan "  " + s["nama"] + ": " + ke_teks(s["nilai"])
+selesai
+
+# List nama siswa yang lulus (>= 70)
+lulus itu [s["nama"] untuk setiap s dari siswa jika s["nilai"] >= 70]
+tampilkan ""
+tampilkan "Siswa lulus: " + ke_teks(lulus)
+
+# List nilai saja
+nilai_list itu [s["nilai"] untuk setiap s dari siswa]
+tampilkan "Daftar nilai: " + ke_teks(nilai_list)
+
+# List nama uppercase
+nama_upper_list itu [s["nama"].upper() untuk setiap s dari siswa]
+tampilkan "Nama uppercase: " + ke_teks(nama_upper_list)
+
+tampilkan ""
+
+# ===================================
+# 9. Dict Comprehension Praktis
+# ===================================
+tampilkan "9. Dict Comprehension Praktis:"
+
+# Dict nama -> nilai
+nama_nilai_dict itu {s["nama"]: s["nilai"] untuk setiap s dari siswa}
+tampilkan "Nama -> Nilai: " + ke_teks(nama_nilai_dict)
+
+# Dict nama -> status lulus
+status_dict itu {s["nama"]: "Lulus" jika s["nilai"] >= 70 kalau tidak "Tidak Lulus" untuk setiap s dari siswa}
+tampilkan "Nama -> Status: " + ke_teks(status_dict)
+
+tampilkan ""
+
+# ===================================
+# 10. Comprehension dengan Operasi Kompleks
+# ===================================
+tampilkan "10. Comprehension dengan Operasi Kompleks:"
+
+# Konversi Celsius ke Fahrenheit
+celsius itu [0, 10, 20, 30, 40]
+fahrenheit itu [(c * 9 / 5) + 32 untuk setiap c dari celsius]
+tampilkan "Celsius: " + ke_teks(celsius)
+tampilkan "Fahrenheit: " + ke_teks(fahrenheit)
+
+# Dict konversi
+temp_dict itu {c: (c * 9 / 5) + 32 untuk setiap c dari celsius}
+tampilkan "Dict C->F: " + ke_teks(temp_dict)
+
+# List dengan multiple operations
+transform_list itu [(x * 2) + 10 untuk setiap x dari angka_1_5]
+tampilkan "Transform (x*2)+10: " + ke_teks(transform_list)
+
+tampilkan ""
+
+# ===================================
+# 11. Comprehension dengan Kondisi Kompleks
+# ===================================
+tampilkan "11. Comprehension dengan Kondisi Kompleks:"
+
+# Filter dengan multiple kondisi
+angka_50_list itu [15, 30, 45, 60, 75, 90]
+angka_khusus itu [x untuk setiap x dari angka_50_list]
+tampilkan "Kelipatan 3 DAN 5: " + ke_teks(angka_khusus)
+
+# Filter dengan kondisi
+kelipatan_3 itu [x untuk setiap x dari angka_besar jika x % 3 == 0]
+kelipatan_5_list itu [x untuk setiap x dari angka_besar jika x % 5 == 0]
+tampilkan "Kelipatan 3: " + ke_teks(kelipatan_3)
+tampilkan "Kelipatan 5: " + ke_teks(kelipatan_5_list)
+
+# Filter dengan range check
+angka_100 itu [10, 15, 20, 25, 30, 35, 40]
+dalam_range_list itu [x untuk setiap x dari angka_100 jika x >= 20 dan x <= 30]
+tampilkan "Angka 20-30: " + ke_teks(dalam_range_list)
+
+tampilkan ""
+
+# ===================================
+# 12. Comprehension Performance Tips
+# ===================================
+tampilkan "12. Comprehension Performance Tips:"
+
+tampilkan "Comprehension advantages:"
+tampilkan "✓ Lebih ringkas dan readable"
+tampilkan "✓ Lebih cepat dari loop biasa"
+tampilkan "✓ Lebih pythonic"
+tampilkan "✓ Dapat dikombinasikan dengan filter"
+
+# Contoh perbandingan
+tampilkan ""
+tampilkan "Loop biasa vs Comprehension:"
+tampilkan "Loop: hasil = []"
+tampilkan "      untuk setiap x dari angka_1_10:"
+tampilkan "          hasil.append(x * x)"
+tampilkan ""
+tampilkan "Comprehension: hasil = [x * x untuk setiap x dari angka_1_10]"
+
+tampilkan ""
+
+# ===================================
+# 13. Praktik Terbaik
+# ===================================
+tampilkan "13. Praktik Terbaik Comprehension:"
+tampilkan "✓ Gunakan untuk transformasi sederhana"
+tampilkan "✓ Jangan terlalu kompleks (max 2-3 kondisi)"
+tampilkan "✓ Untuk logika kompleks, gunakan loop biasa"
+tampilkan "✓ List comprehension untuk list"
+tampilkan "✓ Dict comprehension untuk dict"
+tampilkan "✓ Comprehension lebih efisien dari loop + append"
+tampilkan "✓ Gunakan filter (jika) untuk kondisi sederhana"
+tampilkan "✓ Nested comprehension tidak didukung saat ini"
+
+tampilkan ""
+tampilkan "=== Comprehensions Examples Complete ==="

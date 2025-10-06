@@ -1,0 +1,196 @@
+// ============================================
+// Built-in Functions: Math & Statistics
+// ============================================
+// Comprehensive examples for math and statistics functions
+
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║    MATH & STATISTICS FUNCTIONS        ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+
+// ============================================
+// 1. BASIC MATH FUNCTIONS
+// ============================================
+tampilkan "=== 1. BASIC MATH FUNCTIONS ==="
+tampilkan ""
+
+angka_desimal itu 3.7
+angka_negatif itu -15.8
+
+// bulat - Round to nearest integer
+hasil_bulat itu bulat(angka_desimal)
+tampilkan f"✓ bulat({angka_desimal}) = {hasil_bulat}"
+
+// pembulatan_atas - Ceiling (round up)
+hasil_atas itu pembulatan_atas(angka_desimal)
+tampilkan f"✓ pembulatan_atas({angka_desimal}) = {hasil_atas}"
+
+// pembulatan_bawah - Floor (round down)
+hasil_bawah itu pembulatan_bawah(angka_desimal)
+tampilkan f"✓ pembulatan_bawah({angka_desimal}) = {hasil_bawah}"
+
+// absolut - Absolute value
+hasil_absolut itu absolut(angka_negatif)
+tampilkan f"✓ absolut({angka_negatif}) = {hasil_absolut}"
+
+tampilkan ""
+
+// ============================================
+// 2. POWER & ROOT FUNCTIONS
+// ============================================
+tampilkan "=== 2. POWER & ROOT FUNCTIONS ==="
+tampilkan ""
+
+// akar - Square root
+angka itu 16
+hasil_akar itu akar(angka)
+tampilkan f"✓ akar({angka}) = {hasil_akar}"
+
+// pangkat - Power
+basis itu 2
+eksponen itu 10
+hasil_pangkat itu pangkat(basis, eksponen)
+tampilkan f"✓ pangkat({basis}, {eksponen}) = {hasil_pangkat}"
+
+tampilkan ""
+
+// ============================================
+// 3. TRIGONOMETRY FUNCTIONS
+// ============================================
+tampilkan "=== 3. TRIGONOMETRY FUNCTIONS ==="
+tampilkan ""
+
+sudut itu 0
+
+// sinus - Sine
+hasil_sin itu sinus(sudut)
+tampilkan f"✓ sinus({sudut}) = {hasil_sin}"
+
+// cosinus - Cosine
+hasil_cos itu cosinus(sudut)
+tampilkan f"✓ cosinus({sudut}) = {hasil_cos}"
+
+// tangen - Tangent
+hasil_tan itu tangen(sudut)
+tampilkan f"✓ tangen({sudut}) = {hasil_tan}"
+
+tampilkan ""
+
+// ============================================
+// 4. LIST MATH FUNCTIONS
+// ============================================
+tampilkan "=== 4. LIST MATH FUNCTIONS ==="
+tampilkan ""
+
+data itu [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+tampilkan f"Data: {data}"
+tampilkan ""
+
+// minimum - Find minimum
+nilai_min itu minimum(data)
+tampilkan f"✓ minimum({data}) = {nilai_min}"
+
+// maksimum - Find maximum
+nilai_max itu maksimum(data)
+tampilkan f"✓ maksimum({data}) = {nilai_max}"
+
+// jumlah - Sum of all elements
+total itu jumlah(data)
+tampilkan f"✓ jumlah({data}) = {total}"
+
+// rata_rata - Average/mean
+rata itu rata_rata(data)
+tampilkan f"✓ rata_rata({data}) = {rata}"
+
+tampilkan ""
+
+// ============================================
+// 5. STATISTICS FUNCTIONS
+// ============================================
+tampilkan "=== 5. STATISTICS FUNCTIONS ==="
+tampilkan ""
+
+data_stats itu [1, 2, 3, 4, 5, 5, 6, 7, 8, 9]
+tampilkan f"Data: {data_stats}"
+tampilkan ""
+
+// median / nilai_tengah - Median
+nilai_median itu nilai_tengah(data_stats)
+tampilkan f"✓ nilai_tengah({data_stats}) = {nilai_median}"
+
+// mode / nilai_modus - Mode (most frequent)
+nilai_mode itu nilai_modus(data_stats)
+tampilkan f"✓ nilai_modus({data_stats}) = {nilai_mode}"
+
+// stdev / deviasi_standar - Standard deviation
+nilai_stdev itu deviasi_standar(data_stats)
+tampilkan f"✓ deviasi_standar({data_stats}) = {nilai_stdev}"
+
+// variance / variansi - Variance
+nilai_var itu variansi(data_stats)
+tampilkan f"✓ variansi({data_stats}) = {nilai_var}"
+
+tampilkan ""
+
+// ============================================
+// 6. PRACTICAL EXAMPLES
+// ============================================
+tampilkan "=== 6. PRACTICAL EXAMPLES ==="
+tampilkan ""
+
+// Example 1: Calculate grade statistics
+buat fungsi hitung_statistik_nilai dengan nilai_list
+    rata itu rata_rata(nilai_list)
+    min_val itu minimum(nilai_list)
+    max_val itu maksimum(nilai_list)
+    median_val itu nilai_tengah(nilai_list)
+    
+    hasil {
+        "rata_rata": rata,
+        "minimum": min_val,
+        "maksimum": max_val,
+        "median": median_val
+    }
+selesai
+
+nilai_siswa itu [85, 90, 78, 92, 88, 76, 95, 82, 89, 91]
+stats itu panggil hitung_statistik_nilai dengan nilai_siswa
+
+tampilkan "Statistik Nilai Siswa:"
+tampilkan f"  Data: {nilai_siswa}"
+tampilkan f"  Rata-rata: {stats['rata_rata']}"
+tampilkan f"  Minimum: {stats['minimum']}"
+tampilkan f"  Maksimum: {stats['maksimum']}"
+tampilkan f"  Median: {stats['median']}"
+tampilkan ""
+
+// Example 2: Distance calculation
+buat fungsi hitung_jarak dengan x1, y1, x2, y2
+    dx itu x2 - x1
+    dy itu y2 - y1
+    dx_kuadrat itu pangkat(dx, 2)
+    dy_kuadrat itu pangkat(dy, 2)
+    jarak_kuadrat itu dx_kuadrat + dy_kuadrat
+    hasil akar(jarak_kuadrat)
+selesai
+
+jarak itu panggil hitung_jarak dengan 0, 0, 3, 4
+tampilkan f"Jarak dari (0,0) ke (3,4) = {jarak}"
+tampilkan ""
+
+// Example 3: Temperature conversion
+buat fungsi celsius_ke_fahrenheit dengan celsius
+    fahrenheit itu (celsius * 9 / 5) + 32
+    hasil bulat(fahrenheit)
+selesai
+
+temp_c itu 25
+temp_f itu panggil celsius_ke_fahrenheit dengan temp_c
+tampilkan f"{temp_c}°C = {temp_f}°F"
+
+tampilkan ""
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║  Math & Statistics Complete! ✅        ║"
+tampilkan "║                                        ║"
+tampilkan "║  Total Functions Demonstrated: 21      ║"
+tampilkan "╚════════════════════════════════════════╝"

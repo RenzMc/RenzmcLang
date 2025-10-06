@@ -104,7 +104,7 @@ class JITCompiler:
 
                 return jit_wrapper
 
-            except Exception as e:
+            except Exception:
                 try:
                     jit_func = numba.jit()(original_func)
 
@@ -121,7 +121,7 @@ class JITCompiler:
                 except Exception:
                     return None
 
-        except Exception as e:
+        except Exception:
             return None
 
     def _record_compilation(self, name: str, success: bool,

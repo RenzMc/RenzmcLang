@@ -1,6 +1,8 @@
 from __future__ import annotations
 from typing import Dict, Any, Optional, Set, List
-from renzmc.core.ast import *
+from renzmc.core.ast import (
+    AST, Assign, BinOp, Boolean, Break, Continue, Dict, For, ForEach, FuncCall, If, List, NoOp, Num, Return, Set, String, Tuple, UnaryOp, Var, VarDecl, While
+)
 
 
 class TypeInferenceEngine:
@@ -93,7 +95,7 @@ class TypeInferenceEngine:
             return True
 
         elif isinstance(stmt, (If, While)):
-            cond_type = self.infer_type(stmt.condition, context)
+            # # cond_type = self.infer_type(stmt.condition, context)  # Unused variable  # Unused variable
 
             body = stmt.if_body if isinstance(stmt, If) else stmt.body
             for s in body:

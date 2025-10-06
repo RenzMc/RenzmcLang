@@ -549,7 +549,7 @@ class Parser:
                     self.eat(TokenType.IDENTIFIER)
                 if self.current_token.type == TokenType.TITIK_DUA:
                     self.eat(TokenType.TITIK_DUA)
-                    type_name = self.current_token.value
+                    # # type_name = self.current_token.value  # Unused variable  # Unused variable
                     param_types[param_name] = parse_type_hint_advanced(self)
                 while self.current_token.type == TokenType.KOMA:
                     self.eat(TokenType.KOMA)
@@ -561,7 +561,7 @@ class Parser:
                         self.eat(TokenType.IDENTIFIER)
                     if self.current_token.type == TokenType.TITIK_DUA:
                         self.eat(TokenType.TITIK_DUA)
-                        type_name = self.current_token.value
+                        # # type_name = self.current_token.value  # Unused variable  # Unused variable
                         param_types[param_name] = parse_type_hint_advanced(self)
             self.eat(TokenType.KURUNG_AKHIR)
             return_type = None
@@ -609,7 +609,7 @@ class Parser:
                 self.eat(TokenType.IDENTIFIER)
             if self.current_token.type == TokenType.TITIK_DUA:
                 self.eat(TokenType.TITIK_DUA)
-                type_name = self.current_token.value
+                # # type_name = self.current_token.value  # Unused variable  # Unused variable
                 param_types[param_name] = parse_type_hint_advanced(self)
             while self.current_token.type == TokenType.KOMA:
                 self.eat(TokenType.KOMA)
@@ -621,7 +621,7 @@ class Parser:
                     self.eat(TokenType.IDENTIFIER)
                 if self.current_token.type == TokenType.TITIK_DUA:
                     self.eat(TokenType.TITIK_DUA)
-                    type_name = self.current_token.value
+                    # # type_name = self.current_token.value  # Unused variable  # Unused variable
                     param_types[param_name] = parse_type_hint_advanced(self)
         self.eat(TokenType.KURUNG_AKHIR)
         return_type = None

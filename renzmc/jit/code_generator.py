@@ -1,6 +1,8 @@
 from __future__ import annotations
 from typing import List, Dict, Any, Optional
-from renzmc.core.ast import *
+from renzmc.core.ast import (
+    AST, Assign, BinOp, Boolean, Break, Continue, Dict, For, FuncCall, If, List, NoOp, Num, Return, String, UnaryOp, Var, VarDecl, While
+)
 from renzmc.core.token import TokenType
 
 

@@ -11,6 +11,22 @@ from renzmc.core.token import TokenType
 
 from renzmc.core.type_system import TypeChecker, TypeValidator, BaseType
 from renzmc.core.type_integration import TypeIntegrationMixin
+from renzmc.core.base_visitor import NodeVisitor
+from renzmc.runtime.builtin_manager import BuiltinManager
+from renzmc.runtime.scope_manager import ScopeManager
+from renzmc.runtime.python_integration import PythonIntegration
+from renzmc.runtime.file_operations import FileOperations
+from renzmc.runtime.crypto_operations import CryptoOperations
+from renzmc.runtime.renzmc_module_system import RenzmcModuleManager
+from renzmc.runtime.advanced_features import (
+    AdvancedFeatureManager,
+    timing_decorator,
+    retry_decorator,
+    cache_decorator,
+    simple_retry_decorator,
+    universal_retry_decorator,
+)
+import renzmc.builtins as renzmc_builtins
 
 try:
     import numba
@@ -113,22 +129,6 @@ IndexError = RenzmcIndexError
 KeyError = RenzmcKeyError
 RuntimeError = RenzmcRuntimeError
 SyntaxError = RenzmcSyntaxError
-from renzmc.core.base_visitor import NodeVisitor
-from renzmc.runtime.builtin_manager import BuiltinManager
-from renzmc.runtime.scope_manager import ScopeManager
-from renzmc.runtime.python_integration import PythonIntegration
-from renzmc.runtime.file_operations import FileOperations
-from renzmc.runtime.crypto_operations import CryptoOperations
-from renzmc.runtime.renzmc_module_system import RenzmcModuleManager
-from renzmc.runtime.advanced_features import (
-    AdvancedFeatureManager,
-    timing_decorator,
-    retry_decorator,
-    cache_decorator,
-    simple_retry_decorator,
-    universal_retry_decorator,
-)
-import renzmc.builtins as renzmc_builtins
 
 try:
     from cryptography.fernet import Fernet
@@ -1298,7 +1298,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         if node.type_hint:
             try:
                 self._check_variable_type(node.var_name, value, node.type_hint)
-            except Exception as e:
+            except Exception:
                 type_name = node.type_hint.type_name
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
@@ -1865,7 +1865,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             else:
                 self.jit_compiled_functions[name] = None
 
-        except Exception as e:
+        except Exception:
             self.jit_compiled_functions[name] = None
 
     def _create_user_function_wrapper(self, name):

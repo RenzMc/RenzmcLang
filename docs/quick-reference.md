@@ -1,7 +1,7 @@
-# ⚡ Quick Reference - RenzMcLang v0.0.4
+# ⚡ Quick Reference - RenzMcLang latest version
 
 **Last Updated:** 2025-10-04  
-**Version:** 0.0.4
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
 
 ---
 
@@ -321,7 +321,7 @@ json_tulis("data.json", data)
 
 ---
 
-### HTTP Operations (NEW in v0.0.4!)
+### HTTP Operations (NEW in latest version!)
 
 ```python
 // GET request
@@ -476,7 +476,7 @@ response itu panggil_python requests.get(url)
 
 ---
 
-### REPL Commands (NEW in v0.0.4!)
+### REPL Commands (NEW in latest version!)
 
 ```bash
 # Start REPL
@@ -650,10 +650,10 @@ self, ini, diri
 
 ---
 
-**Version: 0.0.4**  
+**Version: Latest**  
 **Last Updated: 2025-10-04**
 
-**New in v0.0.4:**
+**New in latest version:**
 - ✨ REPL (Interactive Shell)
 - 🌐 Built-in HTTP Client
 - 📦 7 new HTTP functions

@@ -2,14 +2,25 @@
 // Contoh 1: Hello World
 // ============================================
 // Program pertama dalam RenzmcLang
+// Mendemonstrasikan output dasar dan penggunaan variabel
 
+// ============================================
+// 1. Output Sederhana
+// ============================================
 tampilkan "Hello, World!"
 tampilkan "Selamat datang di RenzmcLang!"
+tampilkan ""
 
-// Dengan variabel
+// ============================================
+// 2. Menggunakan Variabel
+// ============================================
 pesan itu "Hello dari RenzmcLang!"
 tampilkan pesan
+tampilkan ""
 
-// Dengan f-string
+// ============================================
+// 3. Menggunakan F-String
+// ============================================
 nama itu "Programmer"
 tampilkan f"Halo, {nama}!"
+tampilkan f"Selamat belajar, {nama}!"

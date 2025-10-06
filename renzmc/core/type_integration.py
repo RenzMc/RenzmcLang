@@ -1,5 +1,5 @@
 from renzmc.core.type_system import TypeChecker, TypeValidator, BaseType
-from renzmc.core.error import RuntimeError as RenzmcRuntimeError
+from renzmc.core.error import RenzmcRuntimeError
 
 
 class TypeIntegrationMixin:

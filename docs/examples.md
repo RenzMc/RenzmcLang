@@ -1,7 +1,7 @@
 # 📚 RenzMcLang Examples - Comprehensive Guide
 
 **Last Updated:** 2025-10-04  
-**Version:** 0.0.4  
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)  
 **Total Examples:** 99
 
 ---

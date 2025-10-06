@@ -2,9 +2,9 @@ import importlib
 import builtins as py_builtins
 import sys
 from renzmc.core.error import (
-    ImportError as RenzmcImportError,
-    TypeError as RenzmcTypeError,
-    AttributeError as RenzmcAttributeError,
+    RenzmcImportError,
+    RenzmcTypeError,
+    RenzmcAttributeError,
 )
 
 

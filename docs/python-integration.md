@@ -1,7 +1,7 @@
-# 🐍 Python Integration - RenzMcLang v0.0.4
+# 🐍 Python Integration - RenzMcLang latest version
 
 **Last Updated:** 2025-10-04  
-**Version:** 0.0.4
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
 
 ---
 
@@ -116,7 +116,7 @@ tampilkan formatted
 ### 1. Requests Library
 
 ```python
-// Note: In v0.0.4+, use built-in http_get instead
+// Note: In latest version+, use built-in http_get instead
 // But you can still use Python requests if needed
 
 impor_python "requests"
@@ -131,7 +131,7 @@ data itu panggil_python response.json()
 tampilkan data
 ```
 
-**Better Alternative (v0.0.4+):**
+**Better Alternative (latest version+):**
 ```python
 // Use built-in HTTP client (no import needed)
 response itu http_get("https://api.github.com")
@@ -481,7 +481,7 @@ cursor itu panggil_python conn.cursor()
 ### 3. Use Built-in Functions When Available
 
 ```python
-// ✅ Good - Use RenzMcLang built-ins (v0.0.4+)
+// ✅ Good - Use RenzMcLang built-ins (latest version+)
 response itu http_get("https://api.example.com")
 data itu response.json()
 
@@ -578,7 +578,7 @@ tampilkan help_text
 - **Flask** - Web framework
 - **Django** - Full-stack framework
 - **FastAPI** - Modern API framework
-- **Requests** - HTTP library (use built-in http_get in v0.0.4+)
+- **Requests** - HTTP library (use built-in http_get in latest version+)
 - **BeautifulSoup** - Web scraping
 
 ### Machine Learning
@@ -595,7 +595,7 @@ tampilkan help_text
 
 ---
 
-**Version: 0.0.4**  
+**Version: Latest**  
 **Last Updated: 2025-10-04**
 
-**Note:** In v0.0.4+, many common operations (like HTTP requests) have built-in functions. Use Python integration for specialized libraries and advanced use cases.
+**Note:** In latest version+, many common operations (like HTTP requests) have built-in functions. Use Python integration for specialized libraries and advanced use cases.

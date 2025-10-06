@@ -1,4 +1,4 @@
-from renzmc.core.error import NameError as RenzmcNameError
+from renzmc.core.error import RenzmcNameError
 
 
 class ScopeManager:

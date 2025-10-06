@@ -1,7 +1,7 @@
 # 🚀 JIT Compiler - RenzMcLang
 
 **Last Updated:** 2025-10-06  
-**Version:** 0.0.5+
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)+
 
 ---
 

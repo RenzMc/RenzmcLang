@@ -1,19 +1,30 @@
 // ============================================
 // Contoh 4: Tabel Perkalian
 // ============================================
+// Mendemonstrasikan penggunaan loop untuk
 
-tampilkan "=== TABEL PERKALIAN ==="
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║        TABEL PERKALIAN                 ║"
+tampilkan "╚════════════════════════════════════════╝"
 tampilkan ""
 
-// Contoh dengan nilai tetap
+// ============================================
+// 1. Inisialisasi Angka
+// ============================================
 angka itu 7
+tampilkan f"Membuat tabel perkalian untuk: {angka}"
+tampilkan ""
 
-tampilkan f"\nTabel Perkalian {angka}:"
-tampilkan "=============================="
+// ============================================
+// 2. Generate Tabel Perkalian
+// ============================================
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan f"║     TABEL PERKALIAN {angka}                  ║"
+tampilkan "╠════════════════════════════════════════╣"
 
 untuk i dari 1 sampai 10
     hasil_kali itu angka * i
-    tampilkan f"{angka} × {i} = {hasil_kali}"
+    tampilkan f"║  {angka} × {i:2d}  = {hasil_kali:3d}                        ║"
 selesai
 
-tampilkan "=============================="
+tampilkan "╚════════════════════════════════════════╝"

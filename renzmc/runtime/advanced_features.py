@@ -1,6 +1,6 @@
 import functools
 import contextlib
-from renzmc.core.error import RuntimeError as RenzmcRuntimeError
+from renzmc.core.error import RenzmcRuntimeError
 
 
 class RenzmcDecorator:

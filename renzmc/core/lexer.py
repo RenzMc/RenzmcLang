@@ -1,8 +1,21 @@
+"""
+RenzmcLang Lexer Module
+
+This module implements the lexical analyzer (tokenizer) for RenzmcLang.
+It converts source code text into a stream of tokens.
+"""
+
 from renzmc.core.token import TokenType, Token
 from renzmc.core.error import LexerError
 
 
 class Lexer:
+    """
+    Lexical analyzer for RenzmcLang.
+
+    The Lexer breaks down source code into tokens, handling keywords,
+    identifiers, operators, literals, and comments.
+    """
 
     def __init__(self, text):
         self.text = text

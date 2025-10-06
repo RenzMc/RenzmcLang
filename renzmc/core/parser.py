@@ -1,3 +1,10 @@
+"""
+RenzmcLang Parser Module
+
+This module implements the parser for RenzmcLang, converting tokens
+into an Abstract Syntax Tree (AST).
+"""
+
 from renzmc.core.token import TokenType, Token
 from renzmc.core.parser_type_helpers import parse_type_hint_advanced
 from renzmc.core.ast import (

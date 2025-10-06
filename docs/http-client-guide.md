@@ -1,14 +1,14 @@
-# 🌐 HTTP Client Guide - RenzMcLang v0.0.4
+# 🌐 HTTP Client Guide - RenzMcLang latest version
 
 **Last Updated:** 2025-10-04  
-**Version:** 0.0.4  
-**Feature:** NEW in v0.0.4!
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)  
+**Feature:** NEW in latest version!
 
 ---
 
 ## 🎯 Overview
 
-RenzMcLang v0.0.4 menyediakan built-in HTTP client yang powerful dan mudah digunakan. Tidak perlu import Python libraries - semua fungsi HTTP tersedia langsung!
+RenzMcLang latest version menyediakan built-in HTTP client yang powerful dan mudah digunakan. Tidak perlu import Python libraries - semua fungsi HTTP tersedia langsung!
 
 ---
 
@@ -663,7 +663,7 @@ response itu http_get(url + "?action=delete")  // Use DELETE instead
 
 ---
 
-**Version: 0.0.4**  
+**Version: Latest**  
 **Last Updated: 2025-10-04**
 
 **Built-in HTTP client makes web development easier than ever! 🚀**

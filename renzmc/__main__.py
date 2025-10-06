@@ -1,19 +1,25 @@
-import os
+"""
+RenzmcLang Main Entry Point
+
+This module provides the command-line interface for running RenzmcLang programs.
+"""
+
 import sys
 import argparse
-import readline
-import atexit
-from pathlib import Path
 from renzmc.core.lexer import Lexer
 from renzmc.core.parser import Parser
 from renzmc.core.interpreter import Interpreter
 from renzmc.core.error import format_error
 from renzmc.version import __version__
 
-HISTORY_FILE = os.path.join(os.path.expanduser("~"), ".renzmc_history")
-
 
 def run_file(filename):
+    """
+    Execute a RenzmcLang file.
+
+    Args:
+        filename: Path to the .rmc file to execute
+    """
     try:
         with open(filename, "r", encoding="utf-8") as f:
             source_code = f.read()
@@ -27,28 +33,41 @@ def run_file(filename):
 
 
 def run_code(source_code, filename="<stdin>", interpreter=None):
+    """
+    Execute RenzmcLang source code.
+
+    Args:
+        source_code: The source code string to execute
+        filename: Name of the source file (for error reporting)
+        interpreter: Optional existing interpreter instance
+
+    Returns:
+        The interpreter instance after execution
+    """
     try:
         lexer = Lexer(source_code)
         if interpreter is None:
             interpreter = Interpreter()
         parser = Parser(lexer)
         ast = parser.parse()
-        result = interpreter.visit(ast)
+        interpreter.visit(ast)
         return interpreter
     except Exception as e:
         print(format_error(e, source_code))
-        if not filename == "<stdin>":
+        if filename != "<stdin>":
             sys.exit(1)
         return interpreter
 
 
 def run_interactive():
+    """Start the interactive REPL (Read-Eval-Print Loop)."""
     from renzmc.repl import RenzmcREPL
     repl = RenzmcREPL()
     repl.run()
 
 
 def main():
+    """Main entry point for the RenzmcLang CLI."""
     parser = argparse.ArgumentParser(
         description="RenzmcLang - Bahasa pemrograman berbasis Bahasa Indonesia"
     )
@@ -58,9 +77,11 @@ def main():
     )
     parser.add_argument("-c", "--code", help="Jalankan kode RenzmcLang")
     args = parser.parse_args()
+
     if args.version:
         print(f"RenzmcLang {__version__}")
         return
+
     if args.code:
         run_code(args.code)
     elif args.file:

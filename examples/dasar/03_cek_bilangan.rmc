@@ -1,25 +1,39 @@
 // ============================================
 // Contoh 3: Cek Bilangan Genap/Ganjil
 // ============================================
+// Mendemonstrasikan penggunaan kondisi if-else
 
-tampilkan "=== CEK BILANGAN GENAP/GANJIL ==="
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║     CEK BILANGAN GENAP/GANJIL          ║"
+tampilkan "╚════════════════════════════════════════╝"
 tampilkan ""
 
-// Contoh dengan nilai tetap
+// ============================================
+// 1. Inisialisasi Angka
+// ============================================
 angka itu 10
-
-jika angka % 2 == 0
-    tampilkan f"{angka} adalah bilangan GENAP"
-kalau tidak
-    tampilkan f"{angka} adalah bilangan GANJIL"
-selesai
-
-// Cek positif/negatif
+tampilkan f"Angka yang dicek: {angka}"
 tampilkan ""
-jika angka > 0
-    tampilkan f"{angka} adalah bilangan POSITIF"
-kalau tidak jika angka < 0
-    tampilkan f"{angka} adalah bilangan NEGATIF"
+
+// ============================================
+// 2. Cek Genap/Ganjil
+// ============================================
+tampilkan "--- Cek Genap/Ganjil ---"
+jika angka % 2 == 0
+    tampilkan f"✓ {angka} adalah bilangan GENAP"
 kalau tidak
-    tampilkan f"{angka} adalah NOL"
+    tampilkan f"✓ {angka} adalah bilangan GANJIL"
+selesai
+tampilkan ""
+
+// ============================================
+// 3. Cek Positif/Negatif/Nol
+// ============================================
+tampilkan "--- Cek Positif/Negatif ---"
+jika angka > 0
+    tampilkan f"✓ {angka} adalah bilangan POSITIF"
+kalau tidak jika angka < 0
+    tampilkan f"✓ {angka} adalah bilangan NEGATIF"
+kalau tidak
+    tampilkan f"✓ {angka} adalah NOL"
 selesai

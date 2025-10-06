@@ -88,22 +88,31 @@ from renzmc.core.error import (
     LexerError,
     ParserError,
     InterpreterError,
-    NameError,
-    TypeError,
-    ValueError,
-    ImportError,
-    AttributeError,
-    IndexError,
-    KeyError,
-    RuntimeError,
+    RenzmcNameError,
+    RenzmcTypeError,
+    RenzmcValueError,
+    RenzmcImportError,
+    RenzmcAttributeError,
+    RenzmcIndexError,
+    RenzmcKeyError,
+    RenzmcRuntimeError,
     DivisionByZeroError,
     FileError,
     PythonIntegrationError,
-    SyntaxError,
+    RenzmcSyntaxError,
     TypeHintError,
     AsyncError,
 )
-from renzmc.core.error import ImportError as RenzmcImportError
+
+NameError = RenzmcNameError
+TypeError = RenzmcTypeError
+ValueError = RenzmcValueError
+ImportError = RenzmcImportError
+AttributeError = RenzmcAttributeError
+IndexError = RenzmcIndexError
+KeyError = RenzmcKeyError
+RuntimeError = RenzmcRuntimeError
+SyntaxError = RenzmcSyntaxError
 from renzmc.core.base_visitor import NodeVisitor
 from renzmc.runtime.builtin_manager import BuiltinManager
 from renzmc.runtime.scope_manager import ScopeManager

@@ -1,7 +1,7 @@
 import os
 from renzmc.core.error import (
-    ImportError as RenzmcImportError,
-    NameError as RenzmcNameError,
+    RenzmcImportError,
+    RenzmcNameError,
 )
 from renzmc.core.token import TokenType
 

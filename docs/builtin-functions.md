@@ -1,7 +1,7 @@
-# 📦 Built-in Functions - RenzMcLang v0.0.4
+# 📦 Built-in Functions - RenzMcLang latest version
 
 **Last Updated:** 2025-10-04  
-**Version:** 0.0.4  
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)  
 **Total Functions:** 184+
 
 ---
@@ -967,4 +967,4 @@ tulis_file("output.txt", hasil)
 
 **Total Functions: 184+**  
 **Categories: 10**  
-**Version: 0.0.4**
+**Version: Latest**

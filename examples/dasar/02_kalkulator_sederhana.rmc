@@ -1,27 +1,42 @@
 // ============================================
 // Contoh 2: Kalkulator Sederhana
 // ============================================
+// Mendemonstrasikan operasi matematika dasar
+// Contoh dengan nilai tetap (untuk demo)
 
-tampilkan "=== KALKULATOR SEDERHANA ==="
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║     KALKULATOR SEDERHANA               ║"
+tampilkan "╚════════════════════════════════════════╝"
 tampilkan ""
 
-// Contoh dengan nilai tetap (untuk demo)
-// Dalam penggunaan nyata, bisa menggunakan input dari user
+// ============================================
+// 1. Inisialisasi Angka
+// ============================================
 angka1 itu 10
 angka2 itu 5
 
-// Operasi matematika
-hasil_tambah itu angka1 + angka2
-hasil_kurang itu angka1 - angka2
-hasil_kali itu angka1 * angka2
-hasil_bagi itu angka1 / angka2
-hasil_pangkat itu angka1 ** angka2
-
-// Tampilkan hasil
+tampilkan f"Angka 1: {angka1}"
+tampilkan f"Angka 2: {angka2}"
 tampilkan ""
-tampilkan "=== HASIL PERHITUNGAN ==="
-tampilkan f"{angka1} + {angka2} = {hasil_tambah}"
-tampilkan f"{angka1} - {angka2} = {hasil_kurang}"
-tampilkan f"{angka1} × {angka2} = {hasil_kali}"
-tampilkan f"{angka1} ÷ {angka2} = {hasil_bagi}"
-tampilkan f"{angka1} ^ {angka2} = {hasil_pangkat}"
+
+// ============================================
+// 2. Operasi Matematika
+// ============================================
+hasil_tambah   itu angka1 + angka2
+hasil_kurang   itu angka1 - angka2
+hasil_kali     itu angka1 * angka2
+hasil_bagi     itu angka1 / angka2
+hasil_pangkat  itu angka1 ** angka2
+
+// ============================================
+// 3. Tampilkan Hasil
+// ============================================
+tampilkan "╔════════════════════════════════════════╗"
+tampilkan "║     HASIL PERHITUNGAN                  ║"
+tampilkan "╚════════════════════════════════════════╝"
+tampilkan ""
+tampilkan f"✓ {angka1} + {angka2}  = {hasil_tambah}"
+tampilkan f"✓ {angka1} - {angka2}  = {hasil_kurang}"
+tampilkan f"✓ {angka1} × {angka2}  = {hasil_kali}"
+tampilkan f"✓ {angka1} ÷ {angka2}  = {hasil_bagi}"
+tampilkan f"✓ {angka1} ^ {angka2} = {hasil_pangkat}"

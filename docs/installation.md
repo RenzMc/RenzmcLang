@@ -1,7 +1,9 @@
-# 📦 Installation Guide - RenzMcLang v0.0.4
+# 📦 Installation Guide - RenzMcLang
 
-**Last Updated:** 2025-10-04  
-**Version:** 0.0.4
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
+[![Python](https://img.shields.io/badge/python-3.8+-green.svg)](https://www.python.org/)
+
+**Last Updated:** 2025-10-04
 
 ---
 
@@ -39,7 +41,7 @@ pip install renzmc
 **Verify Installation:**
 ```bash
 rmc --version
-# Output: RenzmcLang 0.0.4
+# Output: RenzmcLang <version>
 ```
 
 ### Method 2: Install from Source
@@ -58,7 +60,7 @@ pip install -e .
 **Verify Installation:**
 ```bash
 rmc --version
-# Output: RenzmcLang 0.0.4
+# Output: RenzmcLang <version>
 ```
 
 ### Method 3: Using Installation Scripts
@@ -127,7 +129,7 @@ rmc --version
 
 **Expected Output:**
 ```
-RenzmcLang 0.0.4
+RenzmcLang <version>
 ```
 
 ### 2. Run Hello World
@@ -157,7 +159,7 @@ rmc
 ```
 ╔════════════════════════════════════════════════════════════════╗
 ║           RenzMcLang Interactive Shell (REPL)                 ║
-║                    Version 0.0.4                               ║
+║                    Version <version>                               ║
 ╚════════════════════════════════════════════════════════════════╝
 
 Selamat datang di RenzMcLang REPL!
@@ -214,7 +216,7 @@ Create `~/.renzmcrc` for custom configuration:
 # RenzMcLang Configuration
 http:
   timeout: 30
-  user_agent: "RenzMcLang/0.0.4"
+  user_agent: "RenzMcLang/latest"
 
 repl:
   history_size: 1000
@@ -291,7 +293,7 @@ Error: http_get not found
 pip install --upgrade renzmc
 
 # Check version
-rmc --version  # Should be 0.0.4 or higher
+rmc --version  # Should be latest version or higher
 ```
 
 ---
@@ -375,9 +377,9 @@ If you encounter any issues:
 
 - RenzMcLang requires Python 3.8+
 - All dependencies are automatically installed
-- REPL is available in v0.0.4+
+- REPL is available in latest version+
 - HTTP client is built-in (no imports needed)
-- Backward compatible with v0.0.3
+- Backward compatible with latest version
 
 ---
 

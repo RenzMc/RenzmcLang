@@ -1,7 +1,7 @@
-# 📖 Syntax Basics - RenzMcLang v0.0.4
+# 📖 Syntax Basics - RenzMcLang latest version
 
 **Last Updated:** 2025-10-04  
-**Version:** 0.0.4
+[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
 
 ---
 

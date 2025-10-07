@@ -103,9 +103,23 @@ class Parser:
         if self.current_token.type == token_type:
             self.current_token = self.lexer.get_next_token()
         else:
-            self.error(
-                f"Kesalahan sintaks: Diharapkan '{token_type}', tetapi ditemukan '{self.current_token.type}'"
-            )
+            # Check if we're expecting ITU but got a keyword token (common when using reserved word as variable)
+            if token_type == TokenType.ITU and self.current_token.type in [
+                TokenType.SELESAI, TokenType.JIKA, TokenType.SELAMA, TokenType.UNTUK,
+                TokenType.FUNGSI, TokenType.KELAS, TokenType.HASIL, TokenType.BERHENTI,
+                TokenType.LANJUT, TokenType.COBA, TokenType.TANGKAP, TokenType.AKHIRNYA
+            ]:
+                # Get the actual keyword text from lexer
+                keyword_text = self.current_token.value if hasattr(self.current_token, 'value') else str(self.current_token.type)
+                self.error(
+                    f"Kesalahan sintaks: Kata kunci '{keyword_text}' tidak dapat digunakan sebagai nama variabel. "
+                    f"Kata kunci ini adalah reserved keyword dalam RenzmcLang. "
+                    f"Gunakan nama variabel yang berbeda (contoh: '{keyword_text}_value', '{keyword_text}_data', dll)."
+                )
+            else:
+                self.error(
+                    f"Kesalahan sintaks: Diharapkan '{token_type}', tetapi ditemukan '{self.current_token.type}'"
+                )
 
     def parse(self):
         node = self.program()
@@ -250,12 +264,49 @@ class Parser:
             return self.decorator_statement()
         elif self.current_token.type == TokenType.TIPE:
             return self.type_alias_statement()
+        elif self.current_token.type == TokenType.SELESAI:
+            # User might be trying to use 'akhir' or 'selesai' as variable name
+            self.error(
+                "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                "Ini adalah reserved keyword dalam RenzmcLang. "
+                "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+            )
         elif self.current_token.type == TokenType.NEWLINE:
             self.eat(TokenType.NEWLINE)
             return None
         else:
             if self.current_token.type != TokenType.EOF:
-                self.error(f"Token tidak dikenal: '{self.current_token.type}'")
+                # Check if it's a reserved keyword being used incorrectly
+                reserved_keywords = {
+                    TokenType.SELESAI: 'selesai/akhir',
+                    TokenType.JIKA: 'jika',
+                    TokenType.SELAMA: 'selama',
+                    TokenType.UNTUK: 'untuk',
+                    TokenType.FUNGSI: 'fungsi',
+                    TokenType.KELAS: 'kelas',
+                    TokenType.HASIL: 'hasil',
+                    TokenType.BERHENTI: 'berhenti',
+                    TokenType.LANJUT: 'lanjut',
+                    TokenType.COBA: 'coba',
+                    TokenType.TANGKAP: 'tangkap',
+                    TokenType.AKHIRNYA: 'akhirnya',
+                    TokenType.DAN: 'dan',
+                    TokenType.ATAU: 'atau',
+                    TokenType.TIDAK: 'tidak',
+                    TokenType.DALAM: 'dalam',
+                    TokenType.DARI: 'dari',
+                    TokenType.SAMPAI: 'sampai',
+                }
+                
+                if self.current_token.type in reserved_keywords:
+                    keyword = reserved_keywords[self.current_token.type]
+                    self.error(
+                        f"Kata kunci '{keyword}' tidak dapat digunakan sebagai nama variabel. "
+                        f"Ini adalah reserved keyword dalam RenzmcLang. "
+                        f"Gunakan nama yang berbeda (contoh: '{keyword}_value', '{keyword}_data', 'my_{keyword}', dll)."
+                    )
+                else:
+                    self.error(f"Token tidak dikenal: '{self.current_token.type}'")
             return self.empty()
 
     def variable_declaration(self):
@@ -448,7 +499,18 @@ class Parser:
             while self.current_token.type == TokenType.NEWLINE:
                 self.eat(TokenType.NEWLINE)
             body = []
-            while self.current_token.type not in (TokenType.SELESAI, TokenType.EOF):
+            while True:
+                if self.current_token.type == TokenType.EOF:
+                    break
+                if self.current_token.type == TokenType.SELESAI:
+                    next_token = self.lexer.peek_token()
+                    if next_token and next_token.type == TokenType.ITU:
+                        self.error(
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                            "Ini adalah reserved keyword dalam RenzmcLang. "
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                        )
+                    break
                 stmt = self.statement()
                 if stmt is not None:
                     body.append(stmt)
@@ -464,7 +526,18 @@ class Parser:
             while self.current_token.type == TokenType.NEWLINE:
                 self.eat(TokenType.NEWLINE)
             body = []
-            while self.current_token.type not in (TokenType.SELESAI, TokenType.EOF):
+            while True:
+                if self.current_token.type == TokenType.EOF:
+                    break
+                if self.current_token.type == TokenType.SELESAI:
+                    next_token = self.lexer.peek_token()
+                    if next_token and next_token.type == TokenType.ITU:
+                        self.error(
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                            "Ini adalah reserved keyword dalam RenzmcLang. "
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                        )
+                    break
                 stmt = self.statement()
                 if stmt is not None:
                     body.append(stmt)
@@ -483,7 +556,18 @@ class Parser:
         self.eat(TokenType.SAMPAI)
         end = self.expr()
         body = []
-        while self.current_token.type not in (TokenType.SELESAI, TokenType.EOF):
+        while True:
+            if self.current_token.type == TokenType.EOF:
+                break
+            if self.current_token.type == TokenType.SELESAI:
+                next_token = self.lexer.peek_token()
+                if next_token and next_token.type == TokenType.ITU:
+                    self.error(
+                        "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                        "Ini adalah reserved keyword dalam RenzmcLang. "
+                        "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                    )
+                break
             body.append(self.statement())
         self.eat(TokenType.SELESAI)
         return For(var_name, start, end, body, token)
@@ -513,7 +597,20 @@ class Parser:
             self.eat(TokenType.SAMPAI)
             end_expr = self.expr()
             body = []
-            while self.current_token.type not in (TokenType.SELESAI, TokenType.EOF):
+            while True:
+                # Check if we've reached the end
+                if self.current_token.type == TokenType.EOF:
+                    break
+                if self.current_token.type == TokenType.SELESAI:
+                    # Check if this is actually someone trying to use 'akhir' as a variable
+                    next_token = self.lexer.peek_token()
+                    if next_token and next_token.type == TokenType.ITU:
+                        self.error(
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                            "Ini adalah reserved keyword dalam RenzmcLang. "
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                        )
+                    break
                 stmt = self.statement()
                 if stmt is not None:
                     body.append(stmt)
@@ -522,7 +619,20 @@ class Parser:
         else:
             iterable = start_expr
             body = []
-            while self.current_token.type not in (TokenType.SELESAI, TokenType.EOF):
+            while True:
+                # Check if we've reached the end
+                if self.current_token.type == TokenType.EOF:
+                    break
+                if self.current_token.type == TokenType.SELESAI:
+                    # Check if this is actually someone trying to use 'akhir' as a variable
+                    next_token = self.lexer.peek_token()
+                    if next_token and next_token.type == TokenType.ITU:
+                        self.error(
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                            "Ini adalah reserved keyword dalam RenzmcLang. "
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                        )
+                    break
                 stmt = self.statement()
                 if stmt is not None:
                     body.append(stmt)

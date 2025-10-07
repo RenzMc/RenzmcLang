@@ -207,12 +207,18 @@ def _get_error_solutions(error):
             "• Periksa penggunaan karakter khusus yang tidak didukung"
         ])
     elif isinstance(error, ParserError):
-        solutions.extend([
-            "• Periksa tanda kurung, kurung kurawal, dan kurung siku",
-            "• Pastikan setiap 'jika' memiliki 'selesai' yang sesuai",
-            "• Periksa penggunaan koma dan titik koma",
-            "• Pastikan struktur blok kode sudah benar"
-        ])
+        # Check if this is a reserved keyword error
+        error_msg = str(error.message) if hasattr(error, 'message') else str(error)
+        if "tidak dapat digunakan sebagai nama variabel" in error_msg or "reserved keyword" in error_msg.lower():
+            # This is a reserved keyword error - the message already has the solution
+            pass  # Don't add generic solutions
+        else:
+            solutions.extend([
+                "• Periksa tanda kurung, kurung kurawal, dan kurung siku",
+                "• Pastikan setiap 'jika' memiliki 'selesai' yang sesuai",
+                "• Periksa penggunaan koma dan titik koma",
+                "• Pastikan struktur blok kode sudah benar"
+            ])
     elif isinstance(error, (RenzmcNameError, type(None))):
         if isinstance(error, RenzmcNameError) or "NameError" in str(type(error)):
             solutions.extend([

@@ -234,7 +234,7 @@ tampilkan data
 
 ## 📚 Dokumentasi Lengkap
 
-Lihat folder [docs/](docs/) untuk dokumentasi lengkap:
+Lihat folder [docs/](https://renzmc-docs.vercel.app/) untuk dokumentasi lengkap:
 
 - [Panduan Instalasi](docs/installation.md)
 - [Sintaks Dasar](docs/syntax-basics.md)
@@ -246,6 +246,8 @@ Lihat folder [docs/](docs/) untuk dokumentasi lengkap:
 - [HTTP Client Guide](docs/http-client-guide.md)
 - [Quick Reference](docs/quick-reference.md)
 - [Contoh Program](docs/examples.md)
+
+atau ke website ini untuk dokumentasi lengkapnya [docs/](https://renzmc-docs.vercel.app/)
 
 ## 📖 Contoh Program
 

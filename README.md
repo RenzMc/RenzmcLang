@@ -288,99 +288,6 @@ renzmc examples/database/01_sqlite_basic.rmc
 renzmc examples/python_integration/01_web_scraping.rmc
 ```
 
-## 🎓 Tutorial
-
-### 1. Instalasi dan Setup
-
-```bash
-# Install dari PyPI
-pip install renzmc
-
-# Verifikasi instalasi
-renzmc --version
-
-# Jalankan REPL (coming soon)
-renzmc
-```
-
-### 2. Program Pertama
-
-Buat file `hello.rmc`:
-
-```python
-tampilkan "Hello, World!"
-tampilkan "Selamat datang di RenzMcLang!"
-```
-
-Jalankan:
-
-```bash
-renzmc hello.rmc
-```
-
-### 3. Program dengan Input
-
-```python
-tampilkan "Siapa nama Anda?"
-nama itu input()
-tampilkan "Halo, " + nama + "!"
-```
-
-### 4. Program Kalkulator
-
-```python
-tampilkan "=== Kalkulator Sederhana ==="
-tampilkan "Masukkan angka pertama:"
-a itu ke_angka(input())
-
-tampilkan "Masukkan angka kedua:"
-b itu ke_angka(input())
-
-tampilkan "Pilih operasi (+, -, *, /):"
-op itu input()
-
-jika op == "+"
-    hasil itu a + b
-kalau_tidak_jika op == "-"
-    hasil itu a - b
-kalau_tidak_jika op == "*"
-    hasil itu a * b
-kalau_tidak_jika op == "/"
-    hasil itu a / b
-kalau_tidak
-    tampilkan "Operasi tidak valid"
-    keluar
-selesai
-
-tampilkan f"Hasil: {hasil}"
-```
-
-## 🔧 Pengembangan
-
-### Setup Development Environment
-
-```bash
-# Clone repository
-git clone https://github.com/RenzMc/RenzmcLang.git
-cd RenzmcLang
-
-# Install dalam mode development
-pip install -e .
-
-# Install development dependencies
-pip install pytest black flake8
-```
-
-### Menjalankan Tests
-
-```bash
-# Test semua examples
-python test_examples.py
-
-# Test specific file
-renzmc examples/test_all/test_all_features.rmc
-```
-
 ## 🐛 Troubleshooting
 
 ### Import Error
@@ -411,16 +318,6 @@ dengan buka("data.txt", "r") sebagai f
     # kode
 selesai
 ```
-
-## 🤝 Kontribusi
-
-Kontribusi sangat diterima! Silakan:
-
-1. Fork repository
-2. Buat branch fitur (`git checkout -b fitur-baru`)
-3. Commit perubahan (`git commit -am 'Tambah fitur baru'`)
-4. Push ke branch (`git push origin fitur-baru`)
-5. Buat Pull Request
 
 ## 📝 License
 

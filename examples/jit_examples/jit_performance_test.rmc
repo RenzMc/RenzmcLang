@@ -8,11 +8,11 @@ tampilkan "====================================="
 tampilkan ""
 
 // Fungsi matematika kompleks untuk testing performa
-buat fungsi hitung_kompleks dengan x, y, z
+fungsi hitung_kompleks(x, y, z):
     // Operasi matematika intensif
-    hasil1 itu panggil pangkat dengan x, 3
-    hasil2 itu panggil pangkat dengan y, 2
-    hasil3 itu panggil pangkat dengan z, 4
+    hasil1 itu pangkat(x, 3)
+    hasil2 itu pangkat(y, 2)
+    hasil3 itu pangkat(z, 4)
     
     // Loop nested untuk kompleksitas tambahan
     total itu 0
@@ -27,7 +27,7 @@ buat fungsi hitung_kompleks dengan x, y, z
 selesai
 
 // Fungsi helper pangkat (akan menjadi hot function)
-buat fungsi pangkat dengan basis, eksponen
+fungsi pangkat(basis, eksponen):
     hasil itu 1
     untuk i dari 1 sampai eksponen
         hasil itu hasil * basis
@@ -43,14 +43,14 @@ tampilkan "🔥 TEST 1: Pemanasan Fungsi"
 tampilkan "Melakukan 20 iterasi untuk trigger JIT compilation..."
 tampilkan ""
 
-mulai_waktu1 itu waktu_sekarang()
+mulai_waktu1 itu waktu()
 
 untuk iterasi dari 1 sampai 20
     x itu iterasi * 2
     y itu iterasi * 3  
     z itu iterasi * 4
     
-    hasil itu panggil hitung_kompleks dengan x, y, z
+    hasil itu hitung_kompleks(x, y, z)
     
     jika iterasi <= 10
         tampilkan f"Iterasi {iterasi} (sebelum JIT): hasil = {hasil}"
@@ -59,7 +59,7 @@ untuk iterasi dari 1 sampai 20
     selesai
 selesai
 
-selesai_waktu1 itu waktu_sekarang()
+selesai_waktu1 itu waktu()
 durasi1 itu selesai_waktu1 - mulai_waktu1
 
 tampilkan ""
@@ -75,21 +75,21 @@ tampilkan "🚀 TEST 2: Performa Setelah JIT Aktif"
 tampilkan "Melakukan 50 iterasi tambahan dengan JIT aktif..."
 tampilkan ""
 
-mulai_waktu2 itu waktu_sekarang()
+mulai_waktu2 itu waktu()
 
 untuk iterasi dari 21 sampai 70
     x itu iterasi * 2
     y itu iterasi * 3
     z itu iterasi * 4
     
-    hasil itu panggil hitung_kompleks dengan x, y, z
+    hasil itu hitung_kompleks(x, y, z)
     
     jika iterasi <= 25
         tampilkan f"Iterasi {iterasi} (JIT aktif): hasil = {hasil}"
     selesai
 selesai
 
-selesai_waktu2 itu waktu_sekarang()
+selesai_waktu2 itu waktu()
 durasi2 itu selesai_waktu2 - mulai_waktu2
 
 tampilkan ""

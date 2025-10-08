@@ -50,11 +50,11 @@ RenzMcLang dilengkapi dengan **JIT (Just-In-Time) Compiler** yang menggunakan Nu
 Setiap kali fungsi dipanggil, RenzMcLang melacak jumlah pemanggilan:
 
 ```python
-buat fungsi hitung_faktorial dengan n
+fungsi hitung_faktorial(n):
     jika n <= 1
         hasil 1
     selesai
-    hasil n * panggil hitung_faktorial dengan n - 1
+    hasil n * hitung_faktorial(n) - 1
 selesai
 ```
 
@@ -86,14 +86,14 @@ Force JIT compilation tanpa menunggu threshold:
 
 ```python
 @jit_compile
-buat fungsi hitung_faktorial dengan n
+fungsi hitung_faktorial(n):
     jika n <= 1
         hasil 1
     selesai
-    hasil n * panggil hitung_faktorial dengan n - 1
+    hasil n * hitung_faktorial(n) - 1
 selesai
 
-hasil itu panggil hitung_faktorial dengan 10
+hasil itu hitung_faktorial(10)
 tampilkan hasil
 ```
 
@@ -103,14 +103,14 @@ Alias untuk @jit_compile, memaksa kompilasi JIT:
 
 ```python
 @jit_force
-buat fungsi fibonacci dengan n
+fungsi fibonacci(n):
     jika n <= 1
         hasil n
     selesai
-    hasil panggil fibonacci dengan n-1 + panggil fibonacci dengan n-2
+    hasil fibonacci(n)-1 + fibonacci(n)-2
 selesai
 
-hasil itu panggil fibonacci dengan 15
+hasil itu fibonacci(15)
 tampilkan hasil
 ```
 
@@ -131,7 +131,7 @@ Menganalisis performa fungsi untuk optimasi:
 
 ```python
 @profile
-buat fungsi hitung_total dengan n
+fungsi hitung_total(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + i
@@ -139,7 +139,7 @@ buat fungsi hitung_total dengan n
     hasil total
 selesai
 
-hasil itu panggil hitung_total dengan 10000
+hasil itu hitung_total(10000)
 ```
 
 Output:
@@ -154,7 +154,7 @@ Profile [hitung_total]:
 ```python
 @profile
 @jit_compile
-buat fungsi optimized_function dengan n
+fungsi optimized_function(n):
     total itu 0
     untuk i dari 1 sampai n
         untuk j dari 1 sampai 100
@@ -164,7 +164,7 @@ buat fungsi optimized_function dengan n
     hasil total
 selesai
 
-hasil itu panggil optimized_function dengan 1000
+hasil itu optimized_function(1000)
 ```
 
 ### Profiling Metrics
@@ -183,11 +183,11 @@ Menggunakan CUDA untuk akselerasi GPU:
 
 ```python
 @gpu
-buat fungsi vector_add dengan a, b
+fungsi vector_add(a):, b
     hasil a + b
 selesai
 
-hasil itu panggil vector_add dengan 10, 20
+hasil itu vector_add(10), 20
 tampilkan hasil
 ```
 
@@ -203,7 +203,7 @@ Jika GPU tidak tersedia, fungsi akan fallback ke CPU:
 
 ```python
 @gpu
-buat fungsi gpu_compute dengan n
+fungsi gpu_compute(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + (i * i)
@@ -217,7 +217,7 @@ selesai
 ```python
 @jit_compile
 @gpu
-buat fungsi hybrid_compute dengan x, y
+fungsi hybrid_compute(x):, y
     hasil itu 0
     untuk i dari 1 sampai 100
         hasil itu hasil + (x * i) + (y * i)
@@ -236,7 +236,7 @@ Multi-threading untuk fungsi independent:
 
 ```python
 @parallel
-buat fungsi proses_item dengan item
+fungsi proses_item(item):
     hasil itu 0
     untuk i dari 1 sampai 1000
         hasil itu hasil + (item * i)
@@ -245,7 +245,7 @@ buat fungsi proses_item dengan item
 selesai
 
 data itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-hasil itu panggil proses_item dengan data
+hasil itu proses_item(data)
 tampilkan hasil
 ```
 
@@ -272,7 +272,7 @@ tampilkan hasil
 JIT compiler menggunakan type inference engine untuk mendeteksi tipe data:
 
 ```python
-buat fungsi operasi_numerik dengan a, b, c
+fungsi operasi_numerik(a):, b, c
     langkah1 itu a * b
     langkah2 itu b * c
     langkah3 itu c * a
@@ -322,17 +322,17 @@ selesai
 #### 1. nopython Mode (Fastest)
 ```python
 @jit_compile
-buat fungsi fibonacci dengan n
+fungsi fibonacci(n):
     jika n <= 1
         hasil n
     selesai
-    hasil panggil fibonacci dengan n-1 + panggil fibonacci dengan n-2
+    hasil fibonacci(n)-1 + fibonacci(n)-2
 selesai
 ```
 
 #### 2. object Mode (Fallback)
 ```python
-buat fungsi proses_data dengan data
+fungsi proses_data(data):
     hasil itu 0
     untuk item dari data
         hasil itu hasil + item
@@ -351,7 +351,7 @@ selesai
 
 ```python
 @jit_compile
-buat fungsi kuadrat dengan x
+fungsi kuadrat(x):
     hasil x * x
 selesai
 ```
@@ -364,7 +364,7 @@ selesai
 
 ```python
 @parallel
-buat fungsi process dengan item
+fungsi process(item):
     total itu 0
     untuk i dari 1 sampai 1000
         total itu total + (item * i)
@@ -381,7 +381,7 @@ selesai
 
 ```python
 @gpu
-buat fungsi vector_op dengan n
+fungsi vector_op(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + (i * i)
@@ -404,15 +404,15 @@ selesai
 tampilkan "=== Manual JIT Demo ==="
 
 @jit_compile
-buat fungsi factorial dengan n
+fungsi factorial(n):
     jika n <= 1
         hasil 1
     selesai
-    hasil n * panggil factorial dengan n - 1
+    hasil n * factorial(n) - 1
 selesai
 
 untuk i dari 1 sampai 10
-    hasil itu panggil factorial dengan i
+    hasil itu factorial(i)
     tampilkan "factorial(" + ke_teks(i) + ") = " + ke_teks(hasil)
 selesai
 ```
@@ -423,7 +423,7 @@ selesai
 tampilkan "=== Profiling Demo ==="
 
 @profile
-buat fungsi compute_sum dengan n
+fungsi compute_sum(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + i
@@ -431,7 +431,7 @@ buat fungsi compute_sum dengan n
     hasil total
 selesai
 
-hasil itu panggil compute_sum dengan 10000
+hasil itu compute_sum(10000)
 tampilkan "Sum: " + ke_teks(hasil)
 ```
 
@@ -441,7 +441,7 @@ tampilkan "Sum: " + ke_teks(hasil)
 tampilkan "=== Parallel Demo ==="
 
 @parallel
-buat fungsi process_number dengan num
+fungsi process_number(num):
     hasil itu 0
     untuk i dari 1 sampai 100
         hasil itu hasil + (num * i)
@@ -450,7 +450,7 @@ buat fungsi process_number dengan num
 selesai
 
 numbers itu [1, 2, 3, 4, 5]
-hasil itu panggil process_number dengan numbers
+hasil itu process_number(numbers)
 tampilkan hasil
 ```
 
@@ -460,7 +460,7 @@ tampilkan hasil
 tampilkan "=== GPU Demo ==="
 
 @gpu
-buat fungsi gpu_compute dengan n
+fungsi gpu_compute(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + (i * i)
@@ -468,7 +468,7 @@ buat fungsi gpu_compute dengan n
     hasil total
 selesai
 
-hasil itu panggil gpu_compute dengan 1000
+hasil itu gpu_compute(1000)
 tampilkan "GPU Result: " + ke_teks(hasil)
 ```
 
@@ -480,7 +480,7 @@ tampilkan "=== Combined Optimizations ==="
 @profile
 @jit_compile
 @parallel
-buat fungsi optimized dengan data
+fungsi optimized(data):
     hasil itu 0
     untuk item dari data
         untuk i dari 1 sampai 100
@@ -491,7 +491,7 @@ buat fungsi optimized dengan data
 selesai
 
 data itu [1, 2, 3, 4, 5]
-hasil itu panggil optimized dengan data
+hasil itu optimized(data)
 tampilkan hasil
 ```
 
@@ -503,7 +503,7 @@ tampilkan hasil
 
 ```python
 @jit_compile
-buat fungsi hitung_rata_rata dengan data
+fungsi hitung_rata_rata(data):
     total itu 0
     untuk item dari data
         total itu total + item
@@ -512,7 +512,7 @@ buat fungsi hitung_rata_rata dengan data
 selesai
 
 @jit_compile
-buat fungsi matrix_multiply dengan a, b
+fungsi matrix_multiply(a):, b
     hasil itu []
     untuk i dari 0 sampai panjang(a)
         baris itu []
@@ -532,12 +532,12 @@ selesai
 ### ❌ DON'T: Functions Not Suitable for JIT
 
 ```python
-buat fungsi proses_teks dengan teks
+fungsi proses_teks(teks):
     hasil itu teks.upper().replace("a", "b").split()
     hasil hasil
 selesai
 
-buat fungsi fetch_data dengan url
+fungsi fetch_data(url):
     response itu http_get(url)
     hasil response.json()
 selesai
@@ -548,7 +548,7 @@ selesai
 1. **Use Manual JIT for Critical Functions**
    ```python
    @jit_compile
-   buat fungsi critical_path dengan data
+   fungsi critical_path(data):
        hasil proses_kompleks(data)
    selesai
    ```
@@ -556,7 +556,7 @@ selesai
 2. **Profile Before Optimizing**
    ```python
    @profile
-   buat fungsi test_performance dengan n
+   fungsi test_performance(n):
        hasil compute(n)
    selesai
    ```
@@ -564,7 +564,7 @@ selesai
 3. **Parallelize Independent Operations**
    ```python
    @parallel
-   buat fungsi process_batch dengan items
+   fungsi process_batch(items):
        hasil transform(items)
    selesai
    ```
@@ -572,7 +572,7 @@ selesai
 4. **Use GPU for Heavy Computations**
    ```python
    @gpu
-   buat fungsi heavy_compute dengan data
+   fungsi heavy_compute(data):
        hasil complex_math(data)
    selesai
    ```
@@ -710,19 +710,19 @@ MIN_OPERATION_COUNT = 5
 ```python
 @profile
 @jit_compile
-buat fungsi optimized dengan n
+fungsi optimized(n):
     hasil compute(n)
 selesai
 
 @parallel
 @jit_compile
-buat fungsi parallel_optimized dengan data
+fungsi parallel_optimized(data):
     hasil process(data)
 selesai
 
 @gpu
 @jit_compile
-buat fungsi gpu_optimized dengan n
+fungsi gpu_optimized(n):
     hasil heavy_compute(n)
 selesai
 ```

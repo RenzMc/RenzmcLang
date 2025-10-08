@@ -5,20 +5,18 @@ tampilkan "1. GPU Accelerated Function:"
 tampilkan "Note: Requires CUDA-capable GPU and proper Numba CUDA setup"
 tampilkan ""
 
-@gpu
-buat fungsi vector_add dengan a, b
+fungsi vector_add(a, b):
     hasil a + b
 selesai
 
 tampilkan "Testing GPU function (will fallback to CPU if GPU not available)..."
-hasil itu panggil vector_add dengan 10, 20
+hasil itu vector_add(10, 20)
 tampilkan "10 + 20 = " + ke_teks(hasil)
 
 tampilkan ""
 tampilkan "2. GPU with Complex Computation:"
 
-@gpu
-buat fungsi gpu_compute dengan n
+fungsi gpu_compute(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + (i * i)
@@ -27,14 +25,13 @@ buat fungsi gpu_compute dengan n
 selesai
 
 tampilkan "Computing on GPU (or CPU fallback)..."
-hasil itu panggil gpu_compute dengan 1000
+hasil itu gpu_compute(1000)
 tampilkan "Hasil: " + ke_teks(hasil)
 
 tampilkan ""
 tampilkan "3. GPU with Numeric Computation:"
 
-@gpu
-buat fungsi gpu_numeric dengan x, y
+fungsi gpu_numeric(x, y):
     hasil itu 0
     untuk i dari 1 sampai 100
         hasil itu hasil + (x * i) + (y * i)
@@ -43,7 +40,7 @@ buat fungsi gpu_numeric dengan x, y
 selesai
 
 tampilkan "Computing with GPU..."
-hasil itu panggil gpu_numeric dengan 5, 10
+hasil itu gpu_numeric(5, 10)
 tampilkan "Hasil: " + ke_teks(hasil)
 
 tampilkan ""

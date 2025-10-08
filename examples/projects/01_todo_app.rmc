@@ -12,7 +12,7 @@ todos itu []
 todos_selesai itu []
 
 // Fungsi untuk menambah todo
-buat fungsi tambah_todo dengan judul
+fungsi tambah_todo(judul):
     tambah(todos, judul)
     hasil {"sukses": benar, "pesan": "Todo berhasil ditambahkan!"}
 selesai
@@ -52,7 +52,7 @@ buat fungsi lihat_todos
 selesai
 
 // Fungsi untuk menandai todo selesai (berdasarkan index)
-buat fungsi tandai_selesai dengan idx
+fungsi tandai_selesai(idx):
     jika idx < 1 atau idx > panjang(todos)
         hasil {"sukses": salah, "pesan": "Index tidak valid!"}
     selesai
@@ -96,10 +96,10 @@ tampilkan "Menambahkan beberapa todo contoh..."
 tampilkan ""
 
 // Tambah todo contoh
-panggil tambah_todo dengan "Belajar RenzmcLang"
-panggil tambah_todo dengan "Buat Proyek Sederhana"
-panggil tambah_todo dengan "Testing Aplikasi"
-panggil tambah_todo dengan "Deploy ke Production"
+tambah_todo("Belajar RenzmcLang")
+tambah_todo("Buat Proyek Sederhana")
+tambah_todo("Testing Aplikasi")
+tambah_todo("Deploy ke Production")
 
 tampilkan "✓ 4 todo contoh berhasil ditambahkan!"
 
@@ -109,7 +109,7 @@ panggil lihat_todos
 // Tandai todo pertama sebagai selesai
 tampilkan "\n=== MENANDAI TODO SELESAI ==="
 tampilkan "Menandai todo #1 sebagai selesai..."
-hasil1 itu panggil tandai_selesai dengan 1
+hasil1 itu tandai_selesai(1)
 tampilkan f"✓ {hasil1['pesan']}"
 
 // Tampilkan lagi setelah update
@@ -117,7 +117,7 @@ panggil lihat_todos
 
 // Tandai todo kedua juga (yang sekarang jadi #1)
 tampilkan "\nMenandai todo #1 sebagai selesai..."
-hasil2 itu panggil tandai_selesai dengan 1
+hasil2 itu tandai_selesai(1)
 tampilkan f"✓ {hasil2['pesan']}"
 
 // Tampilkan lagi

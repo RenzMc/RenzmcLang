@@ -143,7 +143,7 @@ tampilkan ""
 // Example 1: File organizer
 tampilkan "Example 1: File Type Checker"
 
-fungsi cek_tipe_file(filename):
+buat fungsi cek_tipe_file dengan filename
     ext itu ekstensi_file(filename)
     
     jika ext == ".txt"
@@ -162,7 +162,7 @@ selesai
 files itu ["document.txt", "script.py", "program.rmc", "photo.jpg", "data.csv"]
 
 untuk setiap file dari files
-   tampilkan f"  {file:20} -> {cek_tipe_file(file)}"
+    tipe itu panggil cek_tipe_file dengan file
     tampilkan f"  {file:20} -> {tipe}"
 selesai
 
@@ -171,7 +171,7 @@ tampilkan ""
 // Example 2: Safe file operations
 tampilkan "Example 2: Safe File Writer"
 
-fungsi tulis_file_aman(filename, content):
+buat fungsi tulis_file_aman dengan filename, content
     jika file_exists(filename)
         tampilkan f"  ⚠️  File '{filename}' already exists!"
         hasil salah
@@ -182,8 +182,8 @@ fungsi tulis_file_aman(filename, content):
     hasil benar
 selesai
 
-tulis_file_aman("new_file.txt", "New content")
-tulis_file_aman("new_file.txt", "Duplicate content")
+panggil tulis_file_aman dengan "new_file.txt", "New content"
+panggil tulis_file_aman dengan "new_file.txt", "Duplicate content"
 
 tampilkan ""
 

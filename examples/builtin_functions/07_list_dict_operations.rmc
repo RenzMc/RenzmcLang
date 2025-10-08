@@ -144,7 +144,7 @@ tampilkan "Example 1: Shopping Cart Manager"
 
 cart itu []
 
-buat fungsi tambah_ke_cart dengan item, harga, jumlah
+fungsi tambah_ke_cart(item, harga, jumlah):
     cart_item itu {
         "item": item,
         "harga": harga,
@@ -163,9 +163,9 @@ buat fungsi hitung_total_cart
     hasil total
 selesai
 
-panggil tambah_ke_cart dengan "Laptop", 5000000, 1
-panggil tambah_ke_cart dengan "Mouse", 150000, 2
-panggil tambah_ke_cart dengan "Keyboard", 300000, 1
+tambah_ke_cart("Laptop", 5000000, 1)
+tambah_ke_cart("Mouse", 150000, 2)
+tambah_ke_cart("Keyboard", 300000, 1)
 
 total_belanja itu panggil hitung_total_cart
 tampilkan f"\n  Total Belanja: Rp {total_belanja}"
@@ -181,7 +181,7 @@ students itu {
     "Charlie": [92, 95, 93]
 }
 
-buat fungsi hitung_rata_rata_siswa dengan nama
+fungsi hitung_rata_rata_siswa(nama):
     grades itu students[nama]
     total itu jumlah(grades)
     rata itu total / panjang(grades)
@@ -191,7 +191,7 @@ selesai
 tampilkan "Student Averages:"
 student_names itu kunci(students)
 untuk setiap nama dari student_names
-    avg itu panggil hitung_rata_rata_siswa dengan nama
+    avg itu hitung_rata_rata_siswa(nama)
     tampilkan f"  {nama:10} -> {avg}"
 selesai
 
@@ -200,7 +200,7 @@ tampilkan ""
 // Example 3: Unique List
 tampilkan "Example 3: Remove Duplicates"
 
-buat fungsi hapus_duplikat dengan list_input
+fungsi hapus_duplikat(list_input):
     unique_list itu []
     
     untuk setiap item dari list_input
@@ -214,7 +214,7 @@ buat fungsi hapus_duplikat dengan list_input
 selesai
 
 numbers_with_dup itu [1, 2, 3, 2, 4, 1, 5, 3, 6]
-unique_numbers itu panggil hapus_duplikat dengan numbers_with_dup
+unique_numbers itu hapus_duplikat(numbers_with_dup)
 
 tampilkan f"  Original: {numbers_with_dup}"
 tampilkan f"  Unique: {unique_numbers}"
@@ -227,7 +227,7 @@ tampilkan "Example 4: Merge Dictionaries"
 dict1 itu {"a": 1, "b": 2}
 dict2 itu {"c": 3, "d": 4}
 
-buat fungsi gabung_dict dengan d1, d2
+fungsi gabung_dict(d1, d2):
     result itu salin(d1)
     
     keys_d2 itu kunci(d2)
@@ -238,7 +238,7 @@ buat fungsi gabung_dict dengan d1, d2
     hasil result
 selesai
 
-merged itu panggil gabung_dict dengan dict1, dict2
+gabung_dict(dict1, dict2)
 tampilkan f"  Dict1: {dict1}"
 tampilkan f"  Dict2: {dict2}"
 tampilkan f"  Merged: {merged}"

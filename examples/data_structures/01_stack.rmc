@@ -10,19 +10,19 @@ tampilkan "╚══════════════════════
 tampilkan ""
 
 // Buat class Stack
-buat fungsi buat_stack
+fungsi buat_stack():
     stack itu []
     hasil stack
 selesai
 
 // Push: Tambah elemen ke stack
-buat fungsi push dengan stack, item
+fungsi push(stack, item):
     tambah(stack, item)
     tampilkan f"✓ Push: {item} ditambahkan ke stack"
 selesai
 
 // Pop: Ambil dan hapus elemen teratas
-buat fungsi pop dengan stack
+fungsi pop(stack):
     jika panjang(stack) == 0
         tampilkan "✗ Stack kosong! Tidak bisa pop"
         hasil tidak_ada
@@ -35,7 +35,7 @@ buat fungsi pop dengan stack
 selesai
 
 // Peek: Lihat elemen teratas tanpa menghapus
-buat fungsi peek dengan stack
+fungsi peek(stack):
     jika panjang(stack) == 0
         tampilkan "✗ Stack kosong!"
         hasil tidak_ada
@@ -45,17 +45,17 @@ buat fungsi peek dengan stack
 selesai
 
 // Is Empty: Cek apakah stack kosong
-buat fungsi is_empty dengan stack
+fungsi is_empty(stack):
     hasil panjang(stack) == 0
 selesai
 
 // Size: Ukuran stack
-buat fungsi size dengan stack
+fungsi size(stack):
     hasil panjang(stack)
 selesai
 
 // Tampilkan stack
-buat fungsi tampilkan_stack dengan stack
+fungsi tampilkan_stack(stack):
     jika panjang(stack) == 0
         tampilkan "  Stack: [] (kosong)"
     kalau tidak
@@ -72,38 +72,38 @@ tampilkan "=== DEMO 1: Operasi Dasar Stack ==="
 tampilkan ""
 
 // Buat stack baru
-my_stack itu panggil buat_stack
+my_stack itu buat_stack()
 tampilkan "Stack dibuat!"
-panggil tampilkan_stack dengan my_stack
+tampilkan_stack(my_stack)
 tampilkan ""
 
 // Push beberapa elemen
 tampilkan "--- Push Operations ---"
-panggil push dengan my_stack, 10
-panggil push dengan my_stack, 20
-panggil push dengan my_stack, 30
-panggil push dengan my_stack, 40
+push(my_stack, 10)
+push(my_stack, 20)
+push(my_stack, 30)
+push(my_stack, 40)
 tampilkan ""
-panggil tampilkan_stack dengan my_stack
+tampilkan_stack(my_stack)
 tampilkan ""
 
 // Peek
 tampilkan "--- Peek Operation ---"
-top itu panggil peek dengan my_stack
+top itu peek(my_stack)
 tampilkan f"✓ Peek: Elemen teratas adalah {top}"
 tampilkan ""
 
 // Pop beberapa elemen
 tampilkan "--- Pop Operations ---"
-panggil pop dengan my_stack
-panggil pop dengan my_stack
+pop(my_stack)
+pop(my_stack)
 tampilkan ""
-panggil tampilkan_stack dengan my_stack
+tampilkan_stack(my_stack)
 tampilkan ""
 
 // Cek ukuran
-ukuran_stack itu panggil size dengan my_stack
-is_kosong itu panggil is_empty dengan my_stack
+ukuran_stack itu size(my_stack)
+is_kosong itu is_empty(my_stack)
 tampilkan f"✓ Ukuran stack: {ukuran_stack}"
 tampilkan f"✓ Stack kosong? {is_kosong}"
 tampilkan ""
@@ -115,18 +115,18 @@ tampilkan ""
 tampilkan "=== DEMO 2: Reverse String dengan Stack ==="
 tampilkan ""
 
-buat fungsi reverse_string dengan text
-    stack itu panggil buat_stack
+fungsi reverse_string(text):
+    stack itu buat_stack()
     
     // Push semua karakter ke stack
     untuk setiap char dari text
-        panggil push dengan stack, char
+        push(stack, char)
     selesai
     
     // Pop semua karakter untuk reverse
     result itu ""
     selama panjang(stack) > 0
-        char itu panggil pop dengan stack
+        char itu pop(stack)
         result itu result + char
     selesai
     
@@ -134,7 +134,7 @@ buat fungsi reverse_string dengan text
 selesai
 
 original itu "RENZMC"
-reversed itu panggil reverse_string dengan original
+reversed itu reverse_string(original)
 tampilkan f"Original: {original}"
 tampilkan f"Reversed: {reversed}"
 tampilkan ""
@@ -146,21 +146,21 @@ tampilkan ""
 tampilkan "=== DEMO 3: Cek Kurung Seimbang ==="
 tampilkan ""
 
-buat fungsi is_balanced dengan expression
-    stack itu panggil buat_stack
+fungsi is_balanced(expression):
+    stack itu buat_stack()
     opening itu ["(", "[", "{"]
     closing itu [")", "]", "}"]
     pairs itu {"(": ")", "[": "]", "{": "}"}
     
     untuk setiap char dari expression
         jika char dalam opening
-            panggil push dengan stack, char
+            push(stack, char)
         kalau tidak jika char dalam closing
             jika panjang(stack) == 0
                 hasil salah
             selesai
             
-            top itu panggil pop dengan stack
+            top itu pop(stack)
             jika pairs[top] != char
                 hasil salah
             selesai
@@ -180,7 +180,7 @@ test_cases itu [
 ]
 
 untuk setiap expr dari test_cases
-    balanced itu panggil is_balanced dengan expr
+    balanced itu is_balanced(expr)
     status itu "✓ Seimbang" jika balanced kalau tidak "✗ Tidak Seimbang"
     tampilkan f"{expr:15} -> {status}"
 selesai

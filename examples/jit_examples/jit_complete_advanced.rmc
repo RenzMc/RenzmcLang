@@ -5,15 +5,15 @@ tampilkan "1. Manual JIT Compilation:"
 tampilkan "   Using @jit_compile decorator to force compilation"
 tampilkan ""
 
-@jit_compile
-buat fungsi factorial dengan n
+fungsi factorial(n):
     jika n <= 1
         hasil 1
+    lainnya
+        hasil n * factorial(n - 1)
     selesai
-    hasil n * panggil factorial dengan n - 1
 selesai
 
-hasil itu panggil factorial dengan 10
+hasil itu factorial(10)
 tampilkan "factorial(10) = " + ke_teks(hasil)
 
 tampilkan ""
@@ -21,8 +21,7 @@ tampilkan "2. Profiling for Optimization:"
 tampilkan "   Using @profile to analyze performance"
 tampilkan ""
 
-@profile
-buat fungsi compute_sum dengan n
+fungsi compute_sum(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + i
@@ -30,7 +29,7 @@ buat fungsi compute_sum dengan n
     hasil total
 selesai
 
-hasil itu panggil compute_sum dengan 10000
+hasil itu compute_sum(10000)
 tampilkan "Sum result: " + ke_teks(hasil)
 
 tampilkan ""
@@ -38,8 +37,7 @@ tampilkan "3. Parallel Execution:"
 tampilkan "   Using @parallel for multi-threaded processing"
 tampilkan ""
 
-@parallel
-buat fungsi process_number dengan num
+fungsi process_number(num):
     hasil itu 0
     untuk i dari 1 sampai 100
         hasil itu hasil + (num * i)
@@ -48,17 +46,20 @@ buat fungsi process_number dengan num
 selesai
 
 numbers itu [1, 2, 3, 4, 5]
-hasil itu panggil process_number dengan numbers
+hasil_list itu []
+untuk setiap num dari numbers
+    hasil_num itu process_number(num)
+    tambah(hasil_list, hasil_num)
+selesai
 tampilkan "Parallel results:"
-tampilkan hasil
+tampilkan hasil_list
 
 tampilkan ""
 tampilkan "4. JIT Compilation:"
 tampilkan "   Using @jit_compile for optimization"
 tampilkan ""
 
-@jit_compile
-buat fungsi jit_function dengan x, y
+fungsi jit_function(x, y):
     total itu 0
     untuk i dari 1 sampai 1000
         untuk j dari 1 sampai 10
@@ -68,7 +69,7 @@ buat fungsi jit_function dengan x, y
     hasil total
 selesai
 
-hasil itu panggil jit_function dengan 2, 3
+hasil itu jit_function(2, 3)
 tampilkan "JIT result: " + ke_teks(hasil)
 
 tampilkan ""
@@ -76,8 +77,7 @@ tampilkan "5. GPU Acceleration (if available):"
 tampilkan "   Using @gpu for CUDA acceleration"
 tampilkan ""
 
-@gpu
-buat fungsi gpu_function dengan n
+fungsi gpu_function(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + (i * i)
@@ -85,7 +85,7 @@ buat fungsi gpu_function dengan n
     hasil total
 selesai
 
-hasil itu panggil gpu_function dengan 100
+hasil itu gpu_function(100)
 tampilkan "GPU result: " + ke_teks(hasil)
 
 tampilkan ""

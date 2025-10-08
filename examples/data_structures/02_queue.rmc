@@ -10,19 +10,19 @@ tampilkan "╚══════════════════════
 tampilkan ""
 
 // Buat Queue
-buat fungsi buat_queue
+fungsi buat_queue():
     queue itu []
     hasil queue
 selesai
 
 // Enqueue: Tambah elemen ke belakang queue
-buat fungsi enqueue dengan queue, item
+fungsi enqueue(queue, item):
     tambah(queue, item)
     tampilkan f"✓ Enqueue: {item} ditambahkan ke queue"
 selesai
 
 // Dequeue: Ambil dan hapus elemen depan
-buat fungsi dequeue dengan queue
+fungsi dequeue(queue):
     jika panjang(queue) == 0
         tampilkan "✗ Queue kosong! Tidak bisa dequeue"
         hasil tidak_ada
@@ -35,7 +35,7 @@ buat fungsi dequeue dengan queue
 selesai
 
 // Front: Lihat elemen depan tanpa menghapus
-buat fungsi front dengan queue
+fungsi front(queue):
     jika panjang(queue) == 0
         tampilkan "✗ Queue kosong!"
         hasil tidak_ada
@@ -45,7 +45,7 @@ buat fungsi front dengan queue
 selesai
 
 // Rear: Lihat elemen belakang
-buat fungsi rear dengan queue
+fungsi rear(queue):
     jika panjang(queue) == 0
         tampilkan "✗ Queue kosong!"
         hasil tidak_ada
@@ -55,17 +55,17 @@ buat fungsi rear dengan queue
 selesai
 
 // Is Empty
-buat fungsi is_empty_queue dengan queue
+fungsi is_empty_queue(queue):
     hasil panjang(queue) == 0
 selesai
 
 // Size
-buat fungsi size_queue dengan queue
+fungsi size_queue(queue):
     hasil panjang(queue)
 selesai
 
 // Tampilkan queue
-buat fungsi tampilkan_queue dengan queue
+fungsi tampilkan_queue(queue):
     jika panjang(queue) == 0
         tampilkan "  Queue: [] (kosong)"
     kalau tidak
@@ -82,38 +82,38 @@ tampilkan "=== DEMO 1: Operasi Dasar Queue ==="
 tampilkan ""
 
 // Buat queue baru
-my_queue itu panggil buat_queue
+my_queue itu buat_queue()
 tampilkan "Queue dibuat!"
-panggil tampilkan_queue dengan my_queue
+tampilkan_queue(my_queue)
 tampilkan ""
 
 // Enqueue beberapa elemen
 tampilkan "--- Enqueue Operations ---"
-panggil enqueue dengan my_queue, "Alice"
-panggil enqueue dengan my_queue, "Bob"
-panggil enqueue dengan my_queue, "Charlie"
-panggil enqueue dengan my_queue, "Diana"
+enqueue(my_queue, "Alice")
+enqueue(my_queue, "Bob")
+enqueue(my_queue, "Charlie")
+enqueue(my_queue, "Diana")
 tampilkan ""
-panggil tampilkan_queue dengan my_queue
+tampilkan_queue(my_queue)
 tampilkan ""
 
 // Front dan Rear
 tampilkan "--- Front & Rear ---"
-depan itu panggil front dengan my_queue
-belakang itu panggil rear dengan my_queue
+depan itu front(my_queue)
+belakang itu rear(my_queue)
 tampilkan f"✓ Front: {depan}"
 tampilkan f"✓ Rear: {belakang}"
 tampilkan ""
 
 // Dequeue beberapa elemen
 tampilkan "--- Dequeue Operations ---"
-panggil dequeue dengan my_queue
-panggil dequeue dengan my_queue
+dequeue(my_queue)
+dequeue(my_queue)
 tampilkan ""
-panggil tampilkan_queue dengan my_queue
+tampilkan_queue(my_queue)
 tampilkan ""
 
-ukuran itu panggil size_queue dengan my_queue
+ukuran itu size_queue(my_queue)
 tampilkan f"✓ Ukuran queue: {ukuran}"
 tampilkan ""
 
@@ -124,29 +124,29 @@ tampilkan ""
 tampilkan "=== DEMO 2: Simulasi Antrian Bank ==="
 tampilkan ""
 
-antrian_bank itu panggil buat_queue
+antrian_bank itu buat_queue()
 
 tampilkan "--- Pelanggan Datang ---"
-panggil enqueue dengan antrian_bank, "Nasabah #1"
-panggil enqueue dengan antrian_bank, "Nasabah #2"
-panggil enqueue dengan antrian_bank, "Nasabah #3"
-panggil enqueue dengan antrian_bank, "Nasabah #4"
-panggil enqueue dengan antrian_bank, "Nasabah #5"
+enqueue(antrian_bank, "Nasabah #1")
+enqueue(antrian_bank, "Nasabah #2")
+enqueue(antrian_bank, "Nasabah #3")
+enqueue(antrian_bank, "Nasabah #4")
+enqueue(antrian_bank, "Nasabah #5")
 tampilkan ""
 
 tampilkan "--- Status Antrian ---"
-panggil tampilkan_queue dengan antrian_bank
+tampilkan_queue(antrian_bank)
 tampilkan ""
 
 tampilkan "--- Teller Melayani ---"
 untuk i dari 1 sampai 3
     tampilkan f"Teller melayani pelanggan ke-{i}:"
-    panggil dequeue dengan antrian_bank
+    dequeue(antrian_bank)
     tampilkan ""
 selesai
 
 tampilkan "--- Sisa Antrian ---"
-panggil tampilkan_queue dengan antrian_bank
+tampilkan_queue(antrian_bank)
 tampilkan ""
 
 tampilkan "╔════════════════════════════════════════╗"

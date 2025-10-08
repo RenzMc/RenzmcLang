@@ -648,6 +648,7 @@ class Parser:
         self.eat(TokenType.IDENTIFIER)
         params = []
         param_types = {}
+        return_type = None  # Initialize to avoid UnboundLocal error
         if self.current_token.type == TokenType.KURUNG_AWAL:
             self.eat(TokenType.KURUNG_AWAL)
             if self.current_token.type in (TokenType.IDENTIFIER, TokenType.SELF):

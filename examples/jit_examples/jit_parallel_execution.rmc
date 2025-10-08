@@ -3,8 +3,7 @@ tampilkan ""
 
 tampilkan "1. Parallel Processing with @parallel:"
 
-@parallel
-buat fungsi proses_item dengan item
+fungsi proses_item(item):
     hasil itu 0
     untuk i dari 1 sampai 1000
         hasil itu hasil + (item * i)
@@ -14,15 +13,18 @@ selesai
 
 tampilkan "Memproses data secara parallel..."
 data itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-hasil itu panggil proses_item dengan data
+hasil_list itu []
+untuk setiap item dari data
+    hasil_item itu proses_item(item)
+    tambah(hasil_list, hasil_item)
+selesai
 tampilkan "Hasil parallel processing:"
-tampilkan hasil
+tampilkan hasil_list
 
 tampilkan ""
 tampilkan "2. Parallel with Complex Computation:"
 
-@parallel
-buat fungsi hitung_kuadrat dengan n
+fungsi hitung_kuadrat(n):
     total itu 0
     untuk i dari 1 sampai n
         total itu total + (i * i)
@@ -32,9 +34,13 @@ selesai
 
 tampilkan "Menghitung kuadrat secara parallel..."
 numbers itu [10, 20, 30, 40, 50]
-hasil itu panggil hitung_kuadrat dengan numbers
+hasil_list2 itu []
+untuk setiap num dari numbers
+    hasil_num itu hitung_kuadrat(num)
+    tambah(hasil_list2, hasil_num)
+selesai
 tampilkan "Hasil:"
-tampilkan hasil
+tampilkan hasil_list2
 
 tampilkan ""
 tampilkan "=== Parallel Execution Demo Selesai! ==="

@@ -1631,9 +1631,6 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         self.global_scope[name] = renzmc_function
 
     def visit_FuncCall(self, node):
-        # Initialize return_type to avoid UnboundLocal error
-        return_type = None
-        
         if hasattr(node, "func_expr") and node.func_expr is not None:
             try:
                 func = self.visit(node.func_expr)

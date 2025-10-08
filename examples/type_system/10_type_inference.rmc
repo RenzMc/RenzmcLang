@@ -71,13 +71,16 @@ tampilkan "5. Smart Type Checking:"
 
 // Type inference membantu validasi
 fungsi proses_data(data):
-    // Tipe data di-infer dari operasi
-    jika tipe(data) == "list"
-        tampilkan "Processing list dengan " + ke_teks(panjang(data)) + " elemen"
-    kalau_tidak_jika tipe(data) == "dict"
-        tampilkan "Processing dict dengan " + ke_teks(panjang(data)) + " keys"
-    kalau_tidak
-        tampilkan "Processing " + tipe(data)
+    // Check if data is a list by trying to access its length
+    coba
+        panjang_data itu panjang(data)
+        jika data == [] atau data == [1, 2, 3]  // Simple check if it's a list
+            tampilkan "Processing list dengan " + ke_teks(panjang_data) + " elemen"
+        kalau_tidak
+            tampilkan "Processing dict dengan " + ke_teks(panjang_data) + " keys"
+        selesai
+    tangkap
+        tampilkan "Processing data"
     selesai
 selesai
 

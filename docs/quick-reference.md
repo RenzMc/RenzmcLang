@@ -1,67 +1,67 @@
-# ⚡ Quick Reference - RenzMcLang latest version
+# ⚡ Referensi Cepat - RenzMcLang versi terbaru
 
-**Last Updated:** 2025-10-04  
-[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
+**Terakhir Diperbarui:** 2025-10-08  
+[![Versi PyPI](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
 
 ---
 
-## 🎯 Cheat Sheet
+## 🎯 Lembar Contekan
 
-### Variables & Data Types
+### Variabel & Tipe Data
 
 ```python
-// Variables
+// Variabel
 nama itu "Budi"
 umur itu 25
 tinggi itu 175.5
 is_student itu benar
 
-// Lists
+// List
 angka itu [1, 2, 3, 4, 5]
 nama itu ["Budi", "Ani", "Citra"]
 
-// Dictionaries
+// Dictionary
 mahasiswa itu {
     "nama": "Budi",
     "umur": 25,
     "nim": "12345"
 }
 
-// Sets
+// Set
 unique itu {1, 2, 3, 4, 5}
 
-// Tuples
+// Tuple
 koordinat itu (10, 20)
 ```
 
 ---
 
-### Operators
+### Operator
 
 ```python
-// Arithmetic
-10 + 5    // Addition
-10 - 5    // Subtraction
-10 * 5    // Multiplication
-10 / 5    // Division
-10 // 3   // Floor division
+// Aritmatika
+10 + 5    // Penjumlahan
+10 - 5    // Pengurangan
+10 * 5    // Perkalian
+10 / 5    // Pembagian
+10 // 3   // Pembagian lantai
 10 % 3    // Modulus
-2 ** 3    // Exponentiation
+2 ** 3    // Perpangkatan
 
-// Comparison
-5 == 5    // Equal
-5 != 3    // Not equal
-5 > 3     // Greater than
-5 < 3     // Less than
-5 >= 5    // Greater or equal
-5 <= 3    // Less or equal
+// Perbandingan
+5 == 5    // Sama dengan
+5 != 3    // Tidak sama dengan
+5 > 3     // Lebih besar dari
+5 < 3     // Kurang dari
+5 >= 5    // Lebih besar atau sama dengan
+5 <= 3    // Kurang dari atau sama dengan
 
-// Logical
+// Logika
 benar dan benar    // AND
 benar atau salah   // OR
 tidak benar        // NOT
 
-// Membership
+// Keanggotaan
 "a" dalam ["a", "b"]      // in
 "d" tidak dalam ["a", "b"] // not in
 
@@ -70,31 +70,31 @@ tidak benar        // NOT
 5 | 3     // OR
 5 ^ 3     // XOR
 ~5        // NOT
-5 << 1    // Left shift
-5 >> 1    // Right shift
+5 << 1    // Geser kiri
+5 >> 1    // Geser kanan
 ```
 
 ---
 
-### Control Flow
+### Alur Kontrol
 
 ```python
-// If-else (both syntaxes supported)
+// If-else (kedua sintaks didukung)
 jika kondisi
-    // code
-lainnya jika kondisi2  // Using underscore
-    // code
-lainnya  // Using underscore
-    // code
+    // kode
+lainnya jika kondisi2  // Menggunakan garis bawah
+    // kode
+lainnya  // Menggunakan garis bawah
+    // kode
 selesai
 
-// Or using space
+// Atau menggunakan spasi
 jika kondisi
-    // code
-kalau tidak jika kondisi2  // Using space
-    // code
-kalau tidak  // Using space
-    // code
+    // kode
+kalau tidak jika kondisi2  // Menggunakan spasi
+    // kode
+kalau tidak  // Menggunakan spasi
+    // kode
 selesai
 
 // Ternary
@@ -103,17 +103,17 @@ hasil itu "A" jika nilai >= 90 kalau tidak "B"
 // Switch/case
 cocok nilai
     kasus 1:
-        // code
+        // kode
     kasus 2:
-        // code
+        // kode
     bawaan:
-        // code
+        // kode
 selesai
 ```
 
 ---
 
-### Loops
+### Perulangan
 
 ```python
 // For loop (range)
@@ -128,7 +128,7 @@ selesai
 
 // While loop
 selama kondisi
-    // code
+    // kode
 selesai
 
 // Break & Continue
@@ -145,20 +145,20 @@ selesai
 
 ---
 
-### Functions
+### Fungsi
 
 ```python
-// Basic function
+// Fungsi dasar
 fungsi sapa(nama):
     tampilkan f"Hello, {nama}!"
 selesai
 
-// Function with return
+// Fungsi dengan pengembalian
 fungsi tambah(a, b):
     hasil a + b
 selesai
 
-// Default parameters
+// Parameter default
 fungsi sapa(nama, sapaan="Halo"):
     tampilkan f"{sapaan}, {nama}!"
 selesai
@@ -170,10 +170,10 @@ tambah itu lambda dengan a, b -> a + b
 
 ---
 
-### Classes (OOP)
+### Kelas (OOP)
 
 ```python
-// Basic class
+// Kelas dasar
 kelas Mahasiswa:
     konstruktor(nama, nim):
         diri.nama itu nama
@@ -185,7 +185,7 @@ kelas Mahasiswa:
     selesai
 selesai
 
-// Inheritance
+// Pewarisan
 kelas MahasiswaS1 warisi Mahasiswa:
     konstruktor(nama, nim, jurusan):
         super().__init__(nama, nim)
@@ -193,64 +193,64 @@ kelas MahasiswaS1 warisi Mahasiswa:
     selesai
 selesai
 
-// Create instance
+// Buat instance
 mhs itu Mahasiswa("Budi", "12345")
 mhs.info()
 ```
 
 ---
 
-### String Operations
+### Operasi String
 
 ```python
-// Basic
-panjang(teks)              // Length
-huruf_besar(teks)          // Uppercase
-huruf_kecil(teks)          // Lowercase
-huruf_kapital(teks)        // Capitalize
+// Dasar
+panjang(teks)              // Panjang
+huruf_besar(teks)          // Huruf besar
+huruf_kecil(teks)          // Huruf kecil
+huruf_kapital(teks)        // Kapitalisasi
 
-// Manipulation
-potong(teks, 0, 5)         // Slice
-ganti(teks, "old", "new")  // Replace
-pisah(teks, ",")           // Split
-gabung("-", list)          // Join
-hapus_spasi(teks)          // Strip
+// Manipulasi
+potong(teks, 0, 5)         // Potong
+ganti(teks, "old", "new")  // Ganti
+pisah(teks, ",")           // Pisah
+gabung("-", list)          // Gabung
+hapus_spasi(teks)          // Hapus spasi
 
-// Search
-cari(teks, "sub")          // Find
-mulai_dengan(teks, "pre")  // Startswith
-akhiri_dengan(teks, "suf") // Endswith
+// Pencarian
+cari(teks, "sub")          // Cari
+mulai_dengan(teks, "pre")  // Mulai dengan
+akhiri_dengan(teks, "suf") // Akhiri dengan
 
-// Validation
-adalah_angka(teks)         // Is digit
-adalah_huruf(teks)         // Is alpha
-adalah_alfanumerik(teks)   // Is alnum
+// Validasi
+adalah_angka(teks)         // Apakah angka
+adalah_huruf(teks)         // Apakah huruf
+adalah_alfanumerik(teks)   // Apakah alfanumerik
 
-// F-strings
+// F-string
 pesan itu f"Nama: {nama}, Umur: {umur}"
 ```
 
 ---
 
-### List Operations
+### Operasi List
 
 ```python
-// Basic
-panjang(list)              // Length
-tambah(list, item)         // Append
-hapus(list, item)          // Remove
-masukkan(list, idx, item)  // Insert
+// Dasar
+panjang(list)              // Panjang
+tambah(list, item)         // Tambah
+hapus(list, item)          // Hapus
+masukkan(list, idx, item)  // Sisipkan
 
-// Sorting
-urutkan(list, terbalik)    // Sort in-place
-sorted(list, reverse)      // Return sorted copy
-balikkan(list)             // Reverse in-place
-terbalik(list)             // Return reversed copy
+// Pengurutan
+urutkan(list, terbalik)    // Urutkan di tempat
+sorted(list, reverse)      // Kembalikan salinan terurut
+balikkan(list)             // Balikkan di tempat
+terbalik(list)             // Kembalikan salinan terbalik
 
-// Aggregation
-jumlah(list)               // Sum
+// Agregasi
+jumlah(list)               // Jumlah
 min(list)                  // Minimum
-max(list)                  // Maximum
+max(list)                  // Maksimum
 
 // Comprehension
 [x * 2 untuk setiap x dari list]
@@ -259,24 +259,24 @@ max(list)                  // Maximum
 
 ---
 
-### Dict Operations
+### Operasi Dict
 
 ```python
-// Access
+// Akses
 nilai itu dict["key"]
 nilai itu dict.get("key", default)
 
-// Modify
+// Modifikasi
 dict["key"] itu "value"
 perbarui(dict, other_dict)
 
-// Keys & Values
-kunci(dict)                // Keys
-nilai(dict)                // Values
-items(dict)                // Items
+// Kunci & Nilai
+kunci(dict)                // Kunci
+nilai(dict)                // Nilai
+items(dict)                // Item
 
-// Check
-"key" dalam dict           // Has key
+// Periksa
+"key" dalam dict           // Memiliki kunci
 
 // Comprehension
 {k: v * 2 untuk setiap k, v dari dict.items()}
@@ -284,22 +284,22 @@ items(dict)                // Items
 
 ---
 
-### File Operations
+### Operasi File
 
 ```python
-// Read
+// Baca
 content itu baca_file("file.txt")
 lines itu baca_baris("file.txt")
 
-// Write
+// Tulis
 tulis_file("file.txt", content)
 tambah_file("file.txt", content)
 
-// Check & Delete
+// Periksa & Hapus
 ada_file("file.txt")
 hapus_file("file.txt")
 
-// Context manager
+// Manajer konteks
 dengan buka("file.txt", "r") sebagai f
     content itu f.baca()
 selesai
@@ -307,7 +307,7 @@ selesai
 
 ---
 
-### JSON Operations
+### Operasi JSON
 
 ```python
 // Parse
@@ -323,33 +323,33 @@ json_tulis("data.json", data)
 
 ---
 
-### HTTP Operations (NEW in latest version!)
+### Operasi HTTP (BARU di versi terbaru!)
 
 ```python
-// GET request
+// Permintaan GET
 response itu http_get("https://api.example.com/users")
 tampilkan response.status_code
 data itu response.json()
 
-// POST request
+// Permintaan POST
 payload itu {"nama": "Budi", "email": "budi@example.com"}
 response itu http_post("https://api.example.com/users", json=payload)
 
-// PUT request
+// Permintaan PUT
 response itu http_put("https://api.example.com/users/1", json=data)
 
-// DELETE request
+// Permintaan DELETE
 response itu http_delete("https://api.example.com/users/1")
 
-// With parameters
+// Dengan parameter
 params itu {"page": 1, "limit": 10}
 response itu http_get("https://api.example.com/users", params=params)
 
-// With headers
+// Dengan header
 headers itu {"Authorization": "Bearer token123"}
 response itu http_get("https://api.example.com/data", headers=headers)
 
-// Indonesian aliases
+// Alias bahasa Indonesia
 response itu ambil_http(url)      // GET
 response itu kirim_http(url, ...)  // POST
 response itu perbarui_http(url, ...) // PUT
@@ -358,53 +358,53 @@ response itu hapus_http(url)       // DELETE
 
 ---
 
-### Math Operations
+### Operasi Matematika
 
 ```python
-// Basic
-absolut(x)                 // Absolute value
-bulat(x, digits)           // Round
-pembulatan_atas(x)         // Ceil
-pembulatan_bawah(x)        // Floor
-pangkat(base, exp)         // Power
-akar(x)                    // Square root
+// Dasar
+absolut(x)                 // Nilai absolut
+bulat(x, digits)           // Bulatkan
+pembulatan_atas(x)         // Pembulatan ke atas
+pembulatan_bawah(x)        // Pembulatan ke bawah
+pangkat(base, exp)         // Pangkat
+akar(x)                    // Akar kuadrat
 
-// Trigonometry
+// Trigonometri
 sinus(x)                   // Sin
 cosinus(x)                 // Cos
 tangen(x)                  // Tan
 
-// Statistics
-rata_rata(list)            // Mean
+// Statistik
+rata_rata(list)            // Rata-rata
 nilai_tengah(list)         // Median
-modus(list)                // Mode
-deviasi_standar(list)      // Std dev
-variansi(list)             // Variance
+modus(list)                // Modus
+deviasi_standar(list)      // Deviasi standar
+variansi(list)             // Variansi
 
-// Random
-acak()                     // Random 0-1
-acak_bulat(min, max)       // Random int
-pilih_acak(list)           // Random choice
+// Acak
+acak()                     // Acak 0-1
+acak_bulat(min, max)       // Bilangan bulat acak
+pilih_acak(list)           // Pilihan acak
 ```
 
 ---
 
-### Error Handling
+### Penanganan Kesalahan
 
 ```python
 // Try-catch
 coba
-    // code that might fail
+    // kode yang mungkin gagal
 tangkap ErrorType sebagai e
-    // handle error
+    // tangani kesalahan
 akhirnya
-    // cleanup
+    // pembersihan
 selesai
 
 // Raise error
-raise Exception("Error message")
+raise Exception("Pesan kesalahan")
 
-// Custom exception
+// Pengecualian kustom
 kelas CustomError warisi Exception:
     konstruktor(message):
         diri.message itu message
@@ -417,13 +417,13 @@ selesai
 ### Async/Await
 
 ```python
-// Async function
+// Fungsi async
 async fungsi fetch_data(url):
     response itu await http_get(url)
     hasil response.json()
 selesai
 
-// Call async
+// Panggil async
 data itu await fetch_data("https://api.example.com")
 
 // Multiple async
@@ -451,77 +451,77 @@ await main()
 // Set comprehension
 {x * 2 untuk setiap x dari list}
 
-// Nested
+// Bersarang
 [[i * j untuk setiap j dari range(3)] untuk setiap i dari range(3)]
 ```
 
 ---
 
-### Python Integration
+### Integrasi Python
 
 ```python
-// Import module
+// Impor modul
 impor_python "math"
 impor_python "numpy" sebagai np
 
-// Import specific
+// Impor spesifik
 dari_python "math" impor sqrt, pi
 
-// Call Python function
+// Panggil fungsi Python
 hasil itu panggil_python math.sqrt(16)
 array itu panggil_python np.array([1, 2, 3])
 
-// Use Python library
+// Gunakan library Python
 impor_python "requests"
 response itu panggil_python requests.get(url)
 ```
 
 ---
 
-### REPL Commands (NEW in latest version!)
+### Perintah REPL (BARU di versi terbaru!)
 
 ```bash
-# Start REPL
+# Mulai REPL
 rmc
 
-# REPL commands
->>> bantuan      # Show help
->>> keluar       # Exit REPL
->>> bersih       # Clear screen
->>> riwayat      # Show history
+# Perintah REPL
+>>> bantuan      # Tampilkan bantuan
+>>> keluar       # Keluar dari REPL
+>>> bersih       # Bersihkan layar
+>>> riwayat      # Tampilkan riwayat
 >>> reset        # Reset interpreter
->>> variabel     # Show all variables
+>>> variabel     # Tampilkan semua variabel
 ```
 
 ---
 
-### Type Conversion
+### Konversi Tipe
 
 ```python
-// To string
+// Ke string
 ke_teks(value)
 str(value)
 
-// To number
+// Ke angka
 ke_angka(value)
 float(value)
 
-// To integer
+// Ke integer
 ke_bulat(value)
 int(value)
 
-// To boolean
+// Ke boolean
 ke_boolean(value)
 bool(value)
 
-// To list
+// Ke list
 ke_list(value)
 list(value)
 ```
 
 ---
 
-### Iteration Functions
+### Fungsi Iterasi
 
 ```python
 // Map
@@ -547,9 +547,9 @@ range(0, 20, 2)
 
 ---
 
-### Common Patterns
+### Pola Umum
 
-#### 1. Read and Process File
+#### 1. Baca dan Proses File
 ```python
 dengan buka("data.txt", "r") sebagai f
     untuk setiap line dari f
@@ -559,33 +559,33 @@ dengan buka("data.txt", "r") sebagai f
 selesai
 ```
 
-#### 2. API Request with Error Handling
+#### 2. Permintaan API dengan Penanganan Kesalahan
 ```python
 coba
     response itu http_get("https://api.example.com/data")
     jika response.ok()
         data itu response.json()
-        // process data
+        // proses data
     lainnya
         tampilkan f"Error: {response.status_code}"
     selesai
 tangkap Exception sebagai e
-    tampilkan f"Request failed: {e}"
+    tampilkan f"Permintaan gagal: {e}"
 selesai
 ```
 
-#### 3. List Processing
+#### 3. Pemrosesan List
 ```python
-// Filter and transform
+// Filter dan transformasi
 angka itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 genap itu [x untuk setiap x dari angka jika x % 2 == 0]
 kuadrat itu [x ** 2 untuk setiap x dari genap]
 tampilkan kuadrat  // [4, 16, 36, 64, 100]
 ```
 
-#### 4. Dictionary Manipulation
+#### 4. Manipulasi Dictionary
 ```python
-// Merge dictionaries
+// Gabungkan dictionary
 dict1 itu {"a": 1, "b": 2}
 dict2 itu {"c": 3, "d": 4}
 merged itu {**dict1, **dict2}
@@ -594,7 +594,7 @@ merged itu {**dict1, **dict2}
 filtered itu {k: v untuk setiap k, v dari dict.items() jika v > 10}
 ```
 
-#### 5. Class with Properties
+#### 5. Kelas dengan Properti
 ```python
 kelas User:
     konstruktor(nama):
@@ -615,7 +615,7 @@ selesai
 
 ---
 
-## 🔑 Keywords
+## 🔑 Kata Kunci
 
 ```
 jika, kalau, maka, tidak, lainnya, selesai, akhir
@@ -641,22 +641,22 @@ self, ini, diri
 
 ---
 
-## 📚 Quick Links
+## 📚 Tautan Cepat
 
-- [Installation](installation.md)
-- [Syntax Basics](syntax-basics.md)
-- [Built-in Functions](builtin-functions.md)
-- [Advanced Features](advanced-features.md)
-- [Python Integration](python-integration.md)
-- [Examples](examples.md)
+- [Instalasi](installation.md)
+- [Dasar-dasar Sintaks](syntax-basics.md)
+- [Fungsi Bawaan](builtin-functions.md)
+- [Fitur Lanjutan](advanced-features.md)
+- [Integrasi Python](python-integration.md)
+- [Contoh](examples.md)
 
 ---
 
-**Version: Latest**  
-**Last Updated: 2025-10-04**
+**Versi: Terbaru**  
+**Terakhir Diperbarui: 2025-10-08**
 
-**New in latest version:**
-- ✨ REPL (Interactive Shell)
-- 🌐 Built-in HTTP Client
-- 📦 7 new HTTP functions
-- 🚀 No imports needed for HTTP!
+**Baru di versi terbaru:**
+- ✨ REPL (Shell Interaktif)
+- 🌐 HTTP Client Bawaan
+- 📦 7 fungsi HTTP baru
+- 🚀 Tidak perlu impor untuk HTTP!

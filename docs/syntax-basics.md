@@ -1,39 +1,39 @@
-# 📖 Syntax Basics - RenzMcLang latest version
+# 📖 Dasar-dasar Sintaks - RenzMcLang versi terbaru
 
-**Last Updated:** 2025-10-04  
-[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
+**Terakhir Diperbarui:** 2025-10-08  
+[![Versi PyPI](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
 
 ---
 
-## 🎯 Overview
+## 🎯 Ikhtisar
 
 RenzMcLang menggunakan sintaks Bahasa Indonesia yang intuitif dan mudah dipahami. Panduan ini mencakup semua dasar sintaks yang perlu Anda ketahui.
 
 ---
 
-## 📋 Table of Contents
+## 📋 Daftar Isi
 
-1. [Comments](#comments)
-2. [Variables](#variables)
-3. [Data Types](#data-types)
-4. [Operators](#operators)
-5. [Control Flow](#control-flow)
-6. [Loops](#loops)
-7. [Functions](#functions)
+1. [Komentar](#komentar)
+2. [Variabel](#variabel)
+3. [Tipe Data](#tipe-data)
+4. [Operator](#operator)
+5. [Alur Kontrol](#alur-kontrol)
+6. [Perulangan](#perulangan)
+7. [Fungsi](#fungsi)
 8. [Input/Output](#inputoutput)
-9. [Multiline Support](#multiline-support)
+9. [Dukungan Multi-baris](#dukungan-multi-baris)
 
 ---
 
-## Comments
+## Komentar
 
-### Single Line Comments
+### Komentar Satu Baris
 ```python
 // Ini adalah komentar satu baris
 tampilkan "Hello"  // Komentar di akhir baris
 ```
 
-### Multi-line Comments
+### Komentar Multi-baris
 ```python
 /*
 Ini adalah komentar
@@ -43,9 +43,9 @@ multi-baris
 
 ---
 
-## Variables
+## Variabel
 
-### Variable Declaration
+### Deklarasi Variabel
 
 ```python
 // Menggunakan keyword 'itu'
@@ -59,7 +59,7 @@ x adalah 10
 y adalah 20
 ```
 
-### Variable Naming Rules
+### Aturan Penamaan Variabel
 
 ✅ **Valid:**
 ```python
@@ -69,23 +69,23 @@ umur_2024 itu 25
 _private itu "secret"
 ```
 
-❌ **Invalid:**
+❌ **Tidak Valid:**
 ```python
 2nama itu "Budi"      // Tidak boleh dimulai dengan angka
 nama-lengkap itu "X"  // Tidak boleh menggunakan dash
 jika itu "test"       // Tidak boleh menggunakan keyword
 ```
 
-### Variable Assignment
+### Penugasan Variabel
 
 ```python
-// Simple assignment
+// Penugasan sederhana
 x itu 10
 
-// Multiple assignment
+// Penugasan ganda
 a itu b itu c itu 0
 
-// Swap values
+// Tukar nilai
 x itu 5
 y itu 10
 temp itu x
@@ -95,9 +95,9 @@ y itu temp
 
 ---
 
-## Data Types
+## Tipe Data
 
-### 1. Numbers
+### 1. Angka
 
 #### Integer (Bilangan Bulat)
 ```python
@@ -113,17 +113,17 @@ suhu itu -5.5
 tinggi itu 175.8
 ```
 
-### 2. Strings (Teks)
+### 2. String (Teks)
 
-#### String Declaration
+#### Deklarasi String
 ```python
-// Single quotes
+// Tanda kutip tunggal
 nama itu 'Budi'
 
-// Double quotes
+// Tanda kutip ganda
 pesan itu "Hello, World!"
 
-// Multi-line string
+// String multi-baris
 alamat itu """
 Jalan Merdeka No. 123
 Jakarta Pusat
@@ -131,27 +131,27 @@ Indonesia
 """
 ```
 
-#### String Operations
+#### Operasi String
 ```python
-// Concatenation
+// Penggabungan
 nama_depan itu "Budi"
 nama_belakang itu "Santoso"
 nama_lengkap itu nama_depan + " " + nama_belakang
 
-// String repetition
+// Pengulangan string
 garis itu "=" * 50
 
-// String indexing
+// Pengindeksan string
 teks itu "Hello"
 huruf_pertama itu teks[0]  // "H"
 huruf_terakhir itu teks[-1]  // "o"
 
-// String slicing
+// Pemotongan string
 kata itu "Programming"
 bagian itu kata[0:4]  // "Prog"
 ```
 
-#### F-Strings (String Interpolation)
+#### F-String (Interpolasi String)
 ```python
 nama itu "Budi"
 umur itu 25
@@ -160,155 +160,155 @@ umur itu 25
 pesan itu f"Nama saya {nama}, umur {umur} tahun"
 tampilkan pesan  // Output: Nama saya Budi, umur 25 tahun
 
-// With expressions
+// Dengan ekspresi
 harga itu 100000
 pajak itu 0.1
 total itu f"Total: Rp {harga * (1 + pajak)}"
 ```
 
-### 3. Booleans
+### 3. Boolean
 
 ```python
-// Boolean values
+// Nilai boolean
 benar_value itu benar
 salah_value itu salah
 
-// Boolean from comparison
+// Boolean dari perbandingan
 is_adult itu umur >= 18
 is_student itu benar
 has_license itu salah
 ```
 
-### 4. Lists (Daftar)
+### 4. List (Daftar)
 
 ```python
-// Empty list
+// List kosong
 daftar_kosong itu []
 
-// List with values
+// List dengan nilai
 angka itu [1, 2, 3, 4, 5]
 nama itu ["Budi", "Ani", "Citra"]
 campuran itu [1, "dua", 3.0, benar]
 
-// List operations
-angka.tambah(6)           // Add element
-angka.hapus(3)            // Remove element
-panjang itu panjang(angka)  // Get length
-pertama itu angka[0]      // Access element
-terakhir itu angka[-1]    // Last element
+// Operasi list
+angka.tambah(6)           // Tambah elemen
+angka.hapus(3)            // Hapus elemen
+panjang itu panjang(angka)  // Dapatkan panjang
+pertama itu angka[0]      // Akses elemen
+terakhir itu angka[-1]    // Elemen terakhir
 ```
 
-### 5. Dictionaries (Kamus)
+### 5. Dictionary (Kamus)
 
 ```python
-// Empty dictionary
+// Kamus kosong
 kamus_kosong itu {}
 
-// Dictionary with values
+// Kamus dengan nilai
 mahasiswa itu {
     "nama": "Budi",
     "umur": 25,
     "jurusan": "Informatika"
 }
 
-// Access values
+// Akses nilai
 nama itu mahasiswa["nama"]
 umur itu mahasiswa["umur"]
 
-// Add/update values
+// Tambah/perbarui nilai
 mahasiswa["email"] itu "budi@example.com"
 mahasiswa["umur"] itu 26
 
-// Check key existence
+// Periksa keberadaan kunci
 jika "nama" dalam mahasiswa
     tampilkan "Nama ada"
 selesai
 ```
 
-### 6. Sets (Himpunan)
+### 6. Set (Himpunan)
 
 ```python
-// Empty set
+// Set kosong
 himpunan_kosong itu set()
 
-// Set with values
+// Set dengan nilai
 angka itu {1, 2, 3, 4, 5}
 huruf itu {"a", "b", "c"}
 
-// Set operations
-angka.tambah(6)           // Add element
-angka.hapus(3)            // Remove element
-panjang itu panjang(angka)  // Get length
+// Operasi set
+angka.tambah(6)           // Tambah elemen
+angka.hapus(3)            // Hapus elemen
+panjang itu panjang(angka)  // Dapatkan panjang
 ```
 
-### 7. Tuples
+### 7. Tuple
 
 ```python
-// Tuple declaration
+// Deklarasi tuple
 koordinat itu (10, 20)
 rgb itu (255, 128, 0)
 
-// Tuple unpacking
+// Pembongkaran tuple
 x, y itu koordinat
 r, g, b itu rgb
 
-// Access elements
+// Akses elemen
 pertama itu koordinat[0]
 kedua itu koordinat[1]
 ```
 
 ---
 
-## Operators
+## Operator
 
-### 1. Arithmetic Operators
+### 1. Operator Aritmatika
 
 ```python
-// Addition
+// Penjumlahan
 hasil itu 10 + 5  // 15
 
-// Subtraction
+// Pengurangan
 hasil itu 10 - 5  // 5
 
-// Multiplication
+// Perkalian
 hasil itu 10 * 5  // 50
 
-// Division
+// Pembagian
 hasil itu 10 / 5  // 2.0
 
-// Floor Division
+// Pembagian Lantai
 hasil itu 10 // 3  // 3
 
 // Modulus
 hasil itu 10 % 3  // 1
 
-// Exponentiation
+// Perpangkatan
 hasil itu 2 ** 3  // 8
 ```
 
-### 2. Comparison Operators
+### 2. Operator Perbandingan
 
 ```python
-// Equal to
+// Sama dengan
 hasil itu 5 == 5  // benar
 
-// Not equal to
+// Tidak sama dengan
 hasil itu 5 != 3  // benar
 
-// Greater than
+// Lebih besar dari
 hasil itu 5 > 3  // benar
 
-// Less than
+// Kurang dari
 hasil itu 5 < 3  // salah
 
-// Greater than or equal
+// Lebih besar dari atau sama dengan
 hasil itu 5 >= 5  // benar
 
-// Less than or equal
+// Kurang dari atau sama dengan
 hasil itu 5 <= 3  // salah
 ```
 
-### 3. Logical Operators
+### 3. Operator Logika
 
 ```python
 // AND
@@ -324,13 +324,13 @@ hasil itu tidak benar  // salah
 hasil itu tidak salah  // benar
 ```
 
-### 4. Assignment Operators
+### 4. Operator Penugasan
 
 ```python
-// Simple assignment
+// Penugasan sederhana
 x itu 10
 
-// Compound assignment
+// Penugasan gabungan
 x += 5   // x = x + 5
 x -= 3   // x = x - 3
 x *= 2   // x = x * 2
@@ -339,7 +339,7 @@ x %= 3   // x = x % 3
 x **= 2  // x = x ** 2
 ```
 
-### 5. Membership Operators
+### 5. Operator Keanggotaan
 
 ```python
 // in
@@ -350,7 +350,7 @@ hasil itu 5 dalam [1, 2, 3]          // salah
 hasil itu "d" tidak dalam ["a", "b", "c"]  // benar
 ```
 
-### 6. Bitwise Operators
+### 6. Operator Bitwise
 
 ```python
 // AND
@@ -374,12 +374,12 @@ hasil itu 5 >> 1  // 2
 
 ---
 
-## Control Flow
+## Alur Kontrol
 
-### 1. If Statement
+### 1. Pernyataan If
 
 ```python
-// Simple if
+// If sederhana
 jika umur >= 18
     tampilkan "Dewasa"
 selesai
@@ -403,17 +403,17 @@ lainnya
 selesai
 ```
 
-### 2. Ternary Operator
+### 2. Operator Ternary
 
 ```python
-// Inline if-else
+// If-else inline
 status itu "Lulus" jika nilai >= 60 kalau tidak "Tidak Lulus"
 
-// With expressions
+// Dengan ekspresi
 max_value itu a jika a > b kalau tidak b
 ```
 
-### 3. Switch/Case Statement
+### 3. Pernyataan Switch/Case
 
 ```python
 cocok nilai
@@ -430,49 +430,49 @@ selesai
 
 ---
 
-## Loops
+## Perulangan
 
-### 1. For Loop
+### 1. Perulangan For
 
-#### Range-based For Loop
+#### Perulangan For Berbasis Rentang
 ```python
-// Loop from 1 to 10
+// Perulangan dari 1 sampai 10
 untuk x dari 1 sampai 10
     tampilkan x
 selesai
 
-// Loop with step
+// Perulangan dengan langkah
 untuk x dari 0 sampai 20 dengan langkah 2
     tampilkan x
 selesai
 ```
 
-#### For Each Loop
+#### Perulangan For Each
 ```python
-// Iterate over list
+// Iterasi melalui list
 buah itu ["apel", "jeruk", "mangga"]
 untuk setiap item dari buah
     tampilkan item
 selesai
 
-// Iterate over dictionary
+// Iterasi melalui dictionary
 mahasiswa itu {"nama": "Budi", "umur": 25}
 untuk setiap key dari mahasiswa
     tampilkan f"{key}: {mahasiswa[key]}"
 selesai
 ```
 
-### 2. While Loop
+### 2. Perulangan While
 
 ```python
-// Simple while loop
+// Perulangan while sederhana
 counter itu 0
 selama counter < 5
     tampilkan counter
     counter += 1
 selesai
 
-// While with condition
+// While dengan kondisi
 input_valid itu salah
 selama tidak input_valid
     nilai itu input("Masukkan angka: ")
@@ -482,11 +482,11 @@ selama tidak input_valid
 selesai
 ```
 
-### 3. Loop Control
+### 3. Kontrol Perulangan
 
 #### Break
 ```python
-// Exit loop early
+// Keluar dari perulangan lebih awal
 untuk x dari 1 sampai 10
     jika x == 5
         berhenti
@@ -497,81 +497,81 @@ selesai
 
 #### Continue
 ```python
-// Skip iteration
+// Lewati iterasi
 untuk x dari 1 sampai 10
     jika x % 2 == 0
         lanjut
     selesai
-    tampilkan x  // Only odd numbers
+    tampilkan x  // Hanya angka ganjil
 selesai
 ```
 
 ---
 
-## Functions
+## Fungsi
 
-### 1. Function Declaration
+### 1. Deklarasi Fungsi
 
 ```python
-// Simple function
+// Fungsi sederhana
 fungsi sapa():
     tampilkan "Hello!"
 selesai
 
-// Call function
+// Panggil fungsi
 sapa()
 ```
 
-### 2. Function with Parameters
+### 2. Fungsi dengan Parameter
 
 ```python
-// Function with parameters
+// Fungsi dengan parameter
 fungsi sapa(nama):
     tampilkan f"Hello, {nama}!"
 selesai
 
-// Call with argument
+// Panggil dengan argumen
 sapa("Budi")
 ```
 
-### 3. Function with Return Value
+### 3. Fungsi dengan Nilai Pengembalian
 
 ```python
-// Function with return
+// Fungsi dengan pengembalian
 fungsi tambah(a, b):
     hasil a + b
 selesai
 
-// Use return value
+// Gunakan nilai pengembalian
 total itu tambah(5, 3)
 tampilkan total  // 8
 ```
 
-### 4. Function with Default Parameters
+### 4. Fungsi dengan Parameter Default
 
 ```python
-// Default parameters
+// Parameter default
 fungsi sapa(nama, sapaan="Halo"):
     tampilkan f"{sapaan}, {nama}!"
 selesai
 
-// Call with default
+// Panggil dengan default
 sapa("Budi")  // Output: Halo, Budi!
 
-// Call with custom
+// Panggil dengan kustom
 sapa("Budi", "Selamat pagi")  // Output: Selamat pagi, Budi!
 ```
 
-### 5. Lambda Functions
+### 5. Fungsi Lambda
 
 ```python
-// Lambda function
+// Fungsi lambda
 kuadrat itu lambda dengan x -> x * x
 
-// Use lambda
+// Gunakan lambda
 hasil itu kuadrat(5)  // 25
 
-// Lambda with multiple parameters
+// Lambda dengan beberapa parameter
 tambah itu lambda dengan a, b -> a + b
 total itu tambah(3, 4)  // 7
 ```
@@ -580,54 +580,54 @@ total itu tambah(3, 4)  // 7
 
 ## Input/Output
 
-### 1. Output (Print)
+### 1. Output (Tampilkan)
 
 ```python
-// Simple print
+// Tampilkan sederhana
 tampilkan "Hello, World!"
 
-// Print multiple values
+// Tampilkan beberapa nilai
 tampilkan "Nama:", nama, "Umur:", umur
 
-// Print with f-string
+// Tampilkan dengan f-string
 tampilkan f"Nama: {nama}, Umur: {umur}"
 
-// Multiline print with parentheses
+// Tampilkan multi-baris dengan tanda kurung
 tampilkan(
-    "This is a",
-    "multiline",
-    "print statement"
+    "Ini adalah",
+    "pernyataan tampilkan",
+    "multi-baris"
 )
 ```
 
 ### 2. Input
 
 ```python
-// Get user input
+// Dapatkan input pengguna
 nama itu input("Masukkan nama: ")
 
-// Convert to number
+// Konversi ke angka
 umur itu ke_angka(input("Masukkan umur: "))
 
-// Convert to integer
+// Konversi ke integer
 nilai itu ke_bulat(input("Masukkan nilai: "))
 ```
 
 ### 3. File I/O
 
 ```python
-// Write to file
+// Tulis ke file
 dengan buka("data.txt", "w") sebagai f
     f.tulis("Hello, World!")
 selesai
 
-// Read from file
+// Baca dari file
 dengan buka("data.txt", "r") sebagai f
     content itu f.baca()
     tampilkan content
 selesai
 
-// Append to file
+// Tambahkan ke file
 dengan buka("data.txt", "a") sebagai f
     f.tulis("\nBaris baru")
 selesai
@@ -635,42 +635,42 @@ selesai
 
 ---
 
-## Multiline Support
+## Dukungan Multi-baris
 
-RenzMcLang supports multiline syntax for better code readability, especially when dealing with long function calls or complex data structures.
+RenzMcLang mendukung sintaks multi-baris untuk keterbacaan kode yang lebih baik, terutama ketika berurusan dengan pemanggilan fungsi yang panjang atau struktur data yang kompleks.
 
-### 1. Multiline Function Calls
+### 1. Pemanggilan Fungsi Multi-baris
 
 ```python
-// Function calls can span multiple lines
+// Pemanggilan fungsi dapat mencakup beberapa baris
 text itu "hello world"
 hasil itu text.replace(
     "world",
     "python"
 )
 
-// Python integration with multiline
+// Integrasi Python dengan multi-baris
 impor_python "builtins"
 hasil2 itu panggil_python builtins.str(
     "hello world"
 )
 ```
 
-### 2. Multiline Print Statements
+### 2. Pernyataan Tampilkan Multi-baris
 
 ```python
-// Print with parentheses for multiline
+// Tampilkan dengan tanda kurung untuk multi-baris
 tampilkan(
-    "Line 1",
-    "Line 2",
-    "Line 3"
+    "Baris 1",
+    "Baris 2",
+    "Baris 3"
 )
 ```
 
-### 3. Multiline Data Structures
+### 3. Struktur Data Multi-baris
 
 ```python
-// Multiline lists
+// List multi-baris
 items itu [
     "item1",
     "item2",
@@ -678,7 +678,7 @@ items itu [
     "item4"
 ]
 
-// Multiline dictionaries
+// Dictionary multi-baris
 person itu {
     "name": "John",
     "age": 30,
@@ -686,7 +686,7 @@ person itu {
     "email": "john@example.com"
 }
 
-// Multiline sets
+// Set multi-baris
 numbers itu {
     1,
     2,
@@ -696,35 +696,35 @@ numbers itu {
 }
 ```
 
-### 4. Else Clause Variations
+### 4. Variasi Klausa Else
 
 ```python
-// Both syntaxes are supported
+// Kedua sintaks didukung
 jika nilai >= 60
     tampilkan "Lulus"
-lainnya  // Using underscore
+lainnya  // Menggunakan garis bawah
     tampilkan "Tidak Lulus"
 selesai
 
-// Or using two words
+// Atau menggunakan dua kata
 jika nilai >= 60
     tampilkan "Lulus"
-kalau tidak  // Using space
+kalau tidak  // Menggunakan spasi
     tampilkan "Tidak Lulus"
 selesai
 ```
 
-### 5. Best Practices for Multiline
+### 5. Praktik Terbaik untuk Multi-baris
 
 ```python
-// ✅ Good - Clear and readable
+// ✅ Baik - Jelas dan mudah dibaca
 hasil itu text.format(
     title="Document",
     content="Content here",
     author="John Doe"
 )
 
-// ✅ Good - Consistent indentation
+// ✅ Baik - Indentasi konsisten
 data itu {
     "user": {
         "name": "John",
@@ -736,33 +736,33 @@ data itu {
     }
 }
 
-// ❌ Bad - Inconsistent formatting
+// ❌ Buruk - Pemformatan tidak konsisten
 hasil itu text.format(title="Document",
 content="Content",author="John")
 ```
 
 ---
 
-## 💡 Best Practices
+## 💡 Praktik Terbaik
 
-### 1. Naming Conventions
+### 1. Konvensi Penamaan
 
 ```python
-// ✅ Good
+// ✅ Baik
 nama_lengkap itu "Budi Santoso"
 total_harga itu 100000
 is_valid itu benar
 
-// ❌ Bad
+// ❌ Buruk
 n itu "Budi"
 x itu 100000
 flag itu benar
 ```
 
-### 2. Code Organization
+### 2. Organisasi Kode
 
 ```python
-// ✅ Good - Clear and organized
+// ✅ Baik - Jelas dan terorganisir
 fungsi hitung_total(harga, pajak):
     subtotal itu harga
     pajak_amount itu harga * pajak
@@ -770,35 +770,35 @@ fungsi hitung_total(harga, pajak):
     hasil total
 selesai
 
-// ❌ Bad - Unclear
+// ❌ Buruk - Tidak jelas
 fungsi h(x, y):
     hasil x + x * y
 selesai
 ```
 
-### 3. Comments
+### 3. Komentar
 
 ```python
-// ✅ Good - Helpful comments
+// ✅ Baik - Komentar yang membantu
 // Hitung total harga dengan pajak 10%
 total itu harga * 1.1
 
-// ❌ Bad - Obvious comments
+// ❌ Buruk - Komentar yang jelas
 // Tambah 1 ke x
 x itu x + 1
 ```
 
 ---
 
-## 📚 Next Steps
+## 📚 Langkah Selanjutnya
 
-After learning the basics:
+Setelah mempelajari dasar-dasar:
 
-1. **Advanced Features:** Learn [Advanced Features](advanced-features.md)
-2. **Built-in Functions:** Explore [Built-in Functions](builtin-functions.md)
-3. **Examples:** Try [Examples](examples.md)
-4. **Python Integration:** See [Python Integration](python-integration.md)
+1. **Fitur Lanjutan:** Pelajari [Fitur Lanjutan](advanced-features.md)
+2. **Fungsi Bawaan:** Jelajahi [Fungsi Bawaan](builtin-functions.md)
+3. **Contoh:** Coba [Contoh](examples.md)
+4. **Integrasi Python:** Lihat [Integrasi Python](python-integration.md)
 
 ---
 
-**Happy Coding! 🚀**
+**Selamat Coding! 🚀**

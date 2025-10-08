@@ -4,13 +4,21 @@
 // Binary Search adalah algoritma pencarian efisien
 // untuk data yang sudah terurut dengan kompleksitas O(log n)
 
-tampilkan "╔════════════════════════════════════════╗"
+tampilkan "╔══════════════════════════════════╗"
 tampilkan "║        BINARY SEARCH ALGORITHM        ║"
-tampilkan "╚════════════════════════════════════════╝"
+tampilkan "╚══════════════════════════════════╝"
 tampilkan ""
+
+// Global variables to track search results
+binary_search_found itu salah
+binary_search_index itu -1
 
 // Implementasi Binary Search
 buat fungsi binary_search dengan arr, target
+    // Reset global variables
+    binary_search_found itu salah
+    binary_search_index itu -1
+    
     left itu 0
     right itu panjang(arr) - 1
     iterasi itu 0
@@ -24,32 +32,52 @@ buat fungsi binary_search dengan arr, target
         
         jika mid_value == target
             tampilkan f"  ✓ Target {target} ditemukan di index {mid}!"
+            binary_search_found itu benar
+            binary_search_index itu mid
             hasil mid
-        kalau tidak jika mid_value < target
+        selesai
+        
+        jika mid_value < target
             left itu mid + 1
         kalau tidak
             right itu mid - 1
         selesai
     selesai
     
-    tampilkan f"  ✗ Target {target} tidak ditemukan"
-    hasil -1
+    jika tidak binary_search_found
+        tampilkan f"  ✗ Target {target} tidak ditemukan"
+    selesai
+    
+    hasil binary_search_index
 selesai
+
+// Global variables to track linear search results
+linear_search_found itu salah
+linear_search_index itu -1
 
 // Linear Search untuk perbandingan
 buat fungsi linear_search dengan arr, target
+    // Reset global variables
+    linear_search_found itu salah
+    linear_search_index itu -1
+    
     iterasi itu 0
     
     untuk i dari 0 sampai panjang(arr) - 1
         iterasi itu iterasi + 1
         jika arr[i] == target
             tampilkan f"  ✓ Target {target} ditemukan di index {i} setelah {iterasi} iterasi"
+            linear_search_found itu benar
+            linear_search_index itu i
             hasil i
         selesai
     selesai
     
-    tampilkan f"  ✗ Target {target} tidak ditemukan setelah {iterasi} iterasi"
-    hasil -1
+    jika tidak linear_search_found
+        tampilkan f"  ✗ Target {target} tidak ditemukan setelah {iterasi} iterasi"
+    selesai
+    
+    hasil linear_search_index
 selesai
 
 // ============================================
@@ -66,11 +94,13 @@ tampilkan ""
 // Cari angka yang ada
 tampilkan "--- Mencari angka 23 ---"
 hasil1 itu panggil binary_search dengan data, 23
+tampilkan f"  Hasil pencarian 23: {binary_search_index} (Found: {binary_search_found})"
 tampilkan ""
 
 // Cari angka yang tidak ada
 tampilkan "--- Mencari angka 50 ---"
 hasil2 itu panggil binary_search dengan data, 50
+tampilkan f"  Hasil pencarian 50: {binary_search_index} (Found: {binary_search_found})"
 tampilkan ""
 
 // ============================================
@@ -88,11 +118,13 @@ tampilkan f"Target: {target}"
 tampilkan ""
 
 tampilkan "--- Linear Search ---"
-panggil linear_search dengan data_besar, target
+hasil_linear itu panggil linear_search dengan data_besar, target
+tampilkan f"  Hasil linear search: {linear_search_index} (Found: {linear_search_found})"
 tampilkan ""
 
 tampilkan "--- Binary Search ---"
-panggil binary_search dengan data_besar, target
+hasil_binary itu panggil binary_search dengan data_besar, target
+tampilkan f"  Hasil binary search: {binary_search_index} (Found: {binary_search_found})"
 tampilkan ""
 
 // ============================================
@@ -107,17 +139,19 @@ tampilkan f"Data: {nama_terurut}"
 tampilkan ""
 
 tampilkan "--- Mencari 'Diana' ---"
-panggil binary_search dengan nama_terurut, "Diana"
+hasil_diana itu panggil binary_search dengan nama_terurut, "Diana"
+tampilkan f"  Hasil pencarian 'Diana': {binary_search_index} (Found: {binary_search_found})"
 tampilkan ""
 
 tampilkan "--- Mencari 'Zara' ---"
-panggil binary_search dengan nama_terurut, "Zara"
+hasil_zara itu panggil binary_search dengan nama_terurut, "Zara"
+tampilkan f"  Hasil pencarian 'Zara': {binary_search_index} (Found: {binary_search_found})"
 tampilkan ""
 
-tampilkan "╔════════════════════════════════════════╗"
+tampilkan "╔══════════════════════════════════╗"
 tampilkan "║  Binary Search Complete! ✅            ║"
 tampilkan "║                                        ║"
 tampilkan "║  Kompleksitas:                         ║"
 tampilkan "║  - Binary Search: O(log n)             ║"
 tampilkan "║  - Linear Search: O(n)                 ║"
-tampilkan "╚════════════════════════════════════════╝"
+tampilkan "╚══════════════════════════════════╝"

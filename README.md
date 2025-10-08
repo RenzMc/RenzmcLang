@@ -256,6 +256,13 @@ Lihat folder [docs/](docs/) untuk dokumentasi lengkap:
 - [🌐 HTTP Client Guide](docs/http-client-guide.md) - HTTP client built-in untuk API calls
 - [📝 Contoh Program](docs/examples.md) - 80+ contoh program siap pakai
 
+**⚠️ PENTING:** Dokumentasi telah diperbarui dengan informasi yang akurat. Pastikan menggunakan:
+- `lainnya` bukan `kalau_tidak`
+- `lainnya jika` bukan `kalau_tidak_jika`
+- `masukkan()` bukan `sisipkan()`
+- `balikkan()` untuk in-place reverse, `terbalik()` untuk copy
+- `urutkan()` untuk in-place sort, `sorted()` untuk copy
+
 ## 📖 Contoh Program
 
 Lihat folder [examples/](examples/) untuk 80+ contoh program yang mencakup:

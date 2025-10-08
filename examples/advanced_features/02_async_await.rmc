@@ -117,19 +117,27 @@ tampilkan ""
 
 async buat fungsi cek_nilai(nilai):
     tampilkan "   Checking score: " + ke_teks(nilai)
+    
+    # Using a variable to store the result
+    grade itu "F - Fail"  # Default value
+    
     jika nilai >= 90
-        hasil "A - Excellent"
+        grade itu "A - Excellent"
     selesai
-    jika nilai >= 80
-        hasil "B - Good"
+    
+    jika nilai >= 80 dan nilai < 90
+        grade itu "B - Good"
     selesai
-    jika nilai >= 70
-        hasil "C - Average"
+    
+    jika nilai >= 70 dan nilai < 80
+        grade itu "C - Average"
     selesai
-    jika nilai >= 60
-        hasil "D - Pass"
+    
+    jika nilai >= 60 dan nilai < 70
+        grade itu "D - Pass"
     selesai
-    hasil "F - Fail"
+    
+    hasil grade
 selesai
 
 grade1 itu tunggu panggil cek_nilai dengan 95
@@ -152,9 +160,10 @@ async buat fungsi validasi_email(email):
     tampilkan "   Validating email: " + email
     # Simple validation
     jika berisi(email, "@") dan berisi(email, ".")
-        hasil benar
+        hasil "benar"
+    kalau_tidak
+        hasil "salah"
     selesai
-    hasil salah
 selesai
 
 email1 itu "user@example.com"

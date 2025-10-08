@@ -284,7 +284,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         Returns:
             bool: True if validation passes, False otherwise
         """
-        from renzmc.utils.type_helpers import check_parameter_type
+        # Using imported check_parameter_type
         return check_parameter_type(
             param_value, type_name, param_name,
             self.type_registry, function_name
@@ -302,7 +302,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         Returns:
             bool: True if validation passes, False otherwise
         """
-        from renzmc.utils.type_helpers import check_return_type
+        # Using imported check_return_type
         return check_return_type(
             return_value, type_name,
             self.type_registry, function_name
@@ -318,7 +318,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         Returns:
             The type object if found, None otherwise
         """
-        from renzmc.utils.type_helpers import get_type_from_registry
+        # Using imported get_type_from_registry
         return get_type_from_registry(type_name, self.type_registry)
     
     def _safe_import_module(self, module_name, operation="module import"):
@@ -332,7 +332,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         Returns:
             The imported module or None if not available
         """
-        from renzmc.utils.module_helpers import require_module
+        # Using imported require_module
         return require_module(module_name, operation, raise_on_missing=False)
     
     def _safe_import_submodule(self, parent_module, submodule_name, operation="submodule import"):
@@ -347,7 +347,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         Returns:
             The submodule or None if not available
         """
-        from renzmc.utils.module_helpers import import_submodule
+        # Using imported import_submodule
         return import_submodule(parent_module, submodule_name, operation)
     
     def _safe_isinstance(self, obj, type_obj):
@@ -2194,7 +2194,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     submodule = importlib.import_module(submodule_name)
                     setattr(obj, attr, submodule)
                     return submodule
-                except ImportError as e:
+                except ImportError:
                     # Module not available - continuing without it
                     handle_import_error("module", "import operation", "Continuing without module")
             raise AttributeError(

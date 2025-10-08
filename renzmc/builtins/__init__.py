@@ -666,14 +666,14 @@ def jalankan_perintah(command, sandbox=None, working_dir=None, timeout=None):
             )
             try:
                 resource.setrlimit(resource.RLIMIT_NPROC, (10, 10))
-            except (ValueError, AttributeError) as e:
+            except (ValueError, AttributeError):
                 # Resource limit not supported on this platform - safe to ignore
                 handle_resource_limit_error("process limits", "command execution")
             try:
                 resource.setrlimit(
                     resource.RLIMIT_AS, (500 * 1024 * 1024, 500 * 1024 * 1024)
                 )
-            except (ValueError, AttributeError) as e:
+            except (ValueError, AttributeError):
                 # Resource limit not supported on this platform - safe to ignore
                 handle_resource_limit_error("process limits", "command execution")
 
@@ -722,7 +722,7 @@ def jalankan_perintah(command, sandbox=None, working_dir=None, timeout=None):
                 process.kill()
                 try:
                     process.wait(timeout=2)
-                except subprocess.TimeoutExpired as e:
+                except subprocess.TimeoutExpired:
                     # Process wait timeout - continuing with cleanup
                     handle_timeout_error("process wait", 2, "Proceeding with force kill")
             try:

@@ -137,7 +137,7 @@ def check_return_type(return_value: Any, type_name: str, type_registry: dict,
     Returns:
         True if type matches, False otherwise
     """
-    operation = f"return type check"
+    operation = "return type check"
     if function_name:
         operation += f" for function '{function_name}'"
     

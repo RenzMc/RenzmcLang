@@ -1,5 +1,8 @@
 from __future__ import annotations
-from typing import Dict, Any, Optional, Set, List
+from typing import Any, Optional
+from typing import Dict as PyDict
+from typing import List as PyList
+from typing import Set as PySet
 from renzmc.core.ast import (
     AST, Assign, BinOp, Boolean, Break, Continue, Dict, For, ForEach, FuncCall, If, List, NoOp, Num, Return, Set, String, Tuple, UnaryOp, Var, VarDecl, While
 )

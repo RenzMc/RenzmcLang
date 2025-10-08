@@ -26,7 +26,7 @@ def require_module(module_name: str, operation: str = "module operation",
     """
     try:
         return importlib.import_module(module_name)
-    except ImportError as e:
+    except ImportError:
         handle_import_error(
             module_name,
             operation,
@@ -69,7 +69,7 @@ def get_module_attribute(module: Any, attr_name: str,
     """
     try:
         return getattr(module, attr_name, default)
-    except AttributeError as e:
+    except AttributeError:
         logger.debug(
             f"Attribute '{attr_name}' not found in module "
             f"'{getattr(module, '__name__', 'unknown')}'"
@@ -94,7 +94,7 @@ def import_submodule(parent_module: Any, submodule_name: str,
         parent_name = getattr(parent_module, '__name__', '')
         full_name = f"{parent_name}.{submodule_name}" if parent_name else submodule_name
         return importlib.import_module(full_name)
-    except ImportError as e:
+    except ImportError:
         handle_import_error(
             f"{parent_name}.{submodule_name}",
             operation,

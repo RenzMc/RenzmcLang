@@ -20,6 +20,12 @@ import shutil
 from pathlib import Path
 import statistics
 
+# Import error handling utilities
+from renzmc.utils.error_handler import (
+    log_exception, handle_resource_limit_error,
+    handle_timeout_error, handle_import_error
+)
+
 try:
     from renzmc.core.error import RenzmcError
 except ImportError:
@@ -660,14 +666,16 @@ def jalankan_perintah(command, sandbox=None, working_dir=None, timeout=None):
             )
             try:
                 resource.setrlimit(resource.RLIMIT_NPROC, (10, 10))
-            except (ValueError, AttributeError):
-                pass
+            except (ValueError, AttributeError) as e:
+                # Resource limit not supported on this platform - safe to ignore
+                handle_resource_limit_error("process limits", "command execution")
             try:
                 resource.setrlimit(
                     resource.RLIMIT_AS, (500 * 1024 * 1024, 500 * 1024 * 1024)
                 )
-            except (ValueError, AttributeError):
-                pass
+            except (ValueError, AttributeError) as e:
+                # Resource limit not supported on this platform - safe to ignore
+                handle_resource_limit_error("process limits", "command execution")
 
         process = subprocess.Popen(
             cmd_args,
@@ -714,16 +722,18 @@ def jalankan_perintah(command, sandbox=None, working_dir=None, timeout=None):
                 process.kill()
                 try:
                     process.wait(timeout=2)
-                except subprocess.TimeoutExpired:
-                    pass
+                except subprocess.TimeoutExpired as e:
+                    # Process wait timeout - continuing with cleanup
+                    handle_timeout_error("process wait", 2, "Proceeding with force kill")
             try:
                 import psutil
 
                 parent = psutil.Process(process.pid)
                 for child in parent.children(recursive=True):
                     child.kill()
-            except (ImportError, psutil.NoSuchProcess, psutil.AccessDenied):
-                pass
+            except (ImportError, psutil.NoSuchProcess, psutil.AccessDenied) as e:
+                # psutil not available or process cleanup failed - acceptable
+                log_exception("process cleanup", e, level="debug")
             raise SecurityError(
                 f"Perintah '{command}' melebihi batas waktu ({command_timeout} detik)"
             )

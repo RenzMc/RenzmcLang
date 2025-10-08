@@ -28,6 +28,18 @@ from renzmc.runtime.advanced_features import (
 )
 import renzmc.builtins as renzmc_builtins
 
+# Import error handling utilities
+from renzmc.utils.error_handler import (
+    log_exception, handle_type_error, handle_import_error,
+    handle_attribute_error, ErrorContext
+)
+from renzmc.utils.type_helpers import (
+    validate_type, check_parameter_type, check_return_type,
+    get_type_from_registry
+)
+from renzmc.utils.module_helpers import require_module, import_submodule
+
+
 try:
     import numba
     from renzmc.jit import JITCompiler
@@ -254,6 +266,111 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         self._setup_compatibility_adapters()
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)
+
+    # ========================================================================
+    # HELPER METHODS - Added to reduce code duplication
+    # ========================================================================
+    
+    def _validate_parameter_type(self, param_value, type_name, param_name, function_name=""):
+        """
+        Validate parameter type with proper error handling
+        
+        Args:
+            param_value: The parameter value to check
+            type_name: Expected type name
+            param_name: Name of the parameter
+            function_name: Name of the function (for error messages)
+            
+        Returns:
+            bool: True if validation passes, False otherwise
+        """
+        from renzmc.utils.type_helpers import check_parameter_type
+        return check_parameter_type(
+            param_value, type_name, param_name,
+            self.type_registry, function_name
+        )
+    
+    def _validate_return_type(self, return_value, type_name, function_name=""):
+        """
+        Validate return type with proper error handling
+        
+        Args:
+            return_value: The return value to check
+            type_name: Expected type name
+            function_name: Name of the function (for error messages)
+            
+        Returns:
+            bool: True if validation passes, False otherwise
+        """
+        from renzmc.utils.type_helpers import check_return_type
+        return check_return_type(
+            return_value, type_name,
+            self.type_registry, function_name
+        )
+    
+    def _get_type_from_registry(self, type_name):
+        """
+        Get a type from the registry or builtins
+        
+        Args:
+            type_name: Name of the type to retrieve
+            
+        Returns:
+            The type object if found, None otherwise
+        """
+        from renzmc.utils.type_helpers import get_type_from_registry
+        return get_type_from_registry(type_name, self.type_registry)
+    
+    def _safe_import_module(self, module_name, operation="module import"):
+        """
+        Safely import a module with proper error handling
+        
+        Args:
+            module_name: Name of the module to import
+            operation: Description of the operation
+            
+        Returns:
+            The imported module or None if not available
+        """
+        from renzmc.utils.module_helpers import require_module
+        return require_module(module_name, operation, raise_on_missing=False)
+    
+    def _safe_import_submodule(self, parent_module, submodule_name, operation="submodule import"):
+        """
+        Safely import a submodule with proper error handling
+        
+        Args:
+            parent_module: The parent module object
+            submodule_name: Name of the submodule
+            operation: Description of the operation
+            
+        Returns:
+            The submodule or None if not available
+        """
+        from renzmc.utils.module_helpers import import_submodule
+        return import_submodule(parent_module, submodule_name, operation)
+    
+    def _safe_isinstance(self, obj, type_obj):
+        """
+        Safely check isinstance with proper error handling
+        
+        Args:
+            obj: Object to check
+            type_obj: Type to check against
+            
+        Returns:
+            bool: True if isinstance check passes, False on error
+        """
+        try:
+            return isinstance(obj, type_obj)
+        except TypeError as e:
+            log_exception("isinstance check", e, level="debug")
+            return False
+    
+    # ========================================================================
+    # END OF HELPER METHODS
+    # ========================================================================
+
 
     def _call_magic_method(self, obj, method_name, *args):
         if hasattr(obj, method_name):
@@ -752,16 +869,18 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 expected_type = self.type_registry[type_name]
                 if isinstance(expected_type, type):
                     return isinstance(obj, expected_type)
-            except TypeError:
-                pass
+            except TypeError as e:
+                # Type checking failed - this is expected for non-type objects
+                log_exception("type validation", e, level="debug")
             return False
         elif hasattr(py_builtins, type_name):
             try:
                 expected_type = getattr(py_builtins, type_name)
                 if isinstance(expected_type, type):
                     return isinstance(obj, expected_type)
-            except TypeError:
-                pass
+            except TypeError as e:
+                # Type checking failed - this is expected for non-type objects
+                log_exception("type validation", e, level="debug")
             return False
         elif type_name.lower() == "string" or type_name.lower() == "str":
             return isinstance(obj, str)
@@ -1305,15 +1424,17 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     try:
                         if isinstance(expected_type, type) and not isinstance(value, expected_type):
                             raise TypeHintError(f"Nilai '{value}' bukan tipe '{type_name}'")
-                    except TypeError:
-                        pass
+                    except TypeError as e:
+                        # Type checking failed - this is expected for non-type objects
+                        log_exception("type validation", e, level="debug")
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
                         if isinstance(expected_type, type) and not isinstance(value, expected_type):
                             raise TypeHintError(f"Nilai '{value}' bukan tipe '{type_name}'")
-                    except TypeError:
-                        pass
+                    except TypeError as e:
+                        # Type checking failed - this is expected for non-type objects
+                        log_exception("type validation", e, level="debug")
 
         return self.set_variable(node.var_name, value)
 
@@ -1703,8 +1824,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             return lambda_func(*args, **kwargs)
                         except Exception as e:
                             raise RuntimeError(f"Error dalam lambda '{name}': {str(e)}")
-                except NameError:
-                    pass
+                except NameError as e:
+                    # Name not found - this is expected in some contexts
+                    log_exception("name lookup", e, level="debug")
             if (
                 hasattr(self, "_decorated_functions")
                 and name in self._decorated_functions
@@ -1777,8 +1899,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             if compiled_func is not None:
                 try:
                     return compiled_func(*args, **kwargs)
-                except Exception:
-                    pass
+                except Exception as e:
+                    # Unexpected exception - logging for debugging
+                    log_exception("operation", e, level="warning")
 
         start_time = time.time()
         param_values = {}
@@ -1815,8 +1938,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 raise TypeHintError(
                                     f"Parameter '{param_name}' harus bertipe '{type_name}'"
                                 )
-                        except TypeError:
-                            pass
+                        except TypeError as e:
+                            # Type checking failed - this is expected for non-type objects
+                            log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
@@ -1824,8 +1948,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 raise TypeHintError(
                                     f"Parameter '{param_name}' harus bertipe '{type_name}'"
                                 )
-                        except TypeError:
-                            pass
+                        except TypeError as e:
+                            # Type checking failed - this is expected for non-type objects
+                            log_exception("type validation", e, level="debug")
         old_local_scope = self.local_scope.copy()
         self.local_scope = {}
         for param_name, value in param_values.items():
@@ -1856,8 +1981,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             raise TypeHintError(
                                 f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                             )
-                    except TypeError:
-                        pass
+                    except TypeError as e:
+                        # Type checking failed - this is expected for non-type objects
+                        log_exception("type validation", e, level="debug")
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
@@ -1865,8 +1991,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             raise TypeHintError(
                                 f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                             )
-                    except TypeError:
-                        pass
+                    except TypeError as e:
+                        # Type checking failed - this is expected for non-type objects
+                        log_exception("type validation", e, level="debug")
             else:
                 from renzmc.core.advanced_types import TypeParser, AdvancedTypeValidator
                 if isinstance(return_type, str):
@@ -2067,8 +2194,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     submodule = importlib.import_module(submodule_name)
                     setattr(obj, attr, submodule)
                     return submodule
-                except ImportError:
-                    pass
+                except ImportError as e:
+                    # Module not available - continuing without it
+                    handle_import_error("module", "import operation", "Continuing without module")
             raise AttributeError(
                 f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
             )
@@ -2121,8 +2249,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                         raise TypeHintError(
                                             f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
                                         )
-                                except TypeError:
-                                    pass
+                                except TypeError as e:
+                                    # Type checking failed - this is expected for non-type objects
+                                    log_exception("type validation", e, level="debug")
                             elif hasattr(py_builtins, type_name):
                                 expected_type = getattr(py_builtins, type_name)
                                 try:
@@ -2130,8 +2259,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                         raise TypeHintError(
                                             f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
                                         )
-                                except TypeError:
-                                    pass
+                                except TypeError as e:
+                                    # Type checking failed - this is expected for non-type objects
+                                    log_exception("type validation", e, level="debug")
                     for i, param_name in enumerate(params[start_param_idx:]):
                         self.local_scope[param_name] = args[i]
                 elif len(args) != 0:
@@ -2150,8 +2280,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 raise TypeHintError(
                                     f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
                                 )
-                        except TypeError:
-                            pass
+                        except TypeError as e:
+                            # Type checking failed - this is expected for non-type objects
+                            log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
@@ -2159,8 +2290,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 raise TypeHintError(
                                     f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
                                 )
-                        except TypeError:
-                            pass
+                        except TypeError as e:
+                            # Type checking failed - this is expected for non-type objects
+                            log_exception("type validation", e, level="debug")
                 self.current_instance = old_instance
                 self.local_scope = old_local_scope
                 self.return_value = None
@@ -2506,8 +2638,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 raise TypeHintError(
                                     f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
                                 )
-                        except TypeError:
-                            pass
+                        except TypeError as e:
+                            # Type checking failed - this is expected for non-type objects
+                            log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
@@ -2515,8 +2648,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 raise TypeHintError(
                                     f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
                                 )
-                        except TypeError:
-                            pass
+                        except TypeError as e:
+                            # Type checking failed - this is expected for non-type objects
+                            log_exception("type validation", e, level="debug")
             old_local_scope = self.local_scope.copy()
             self.local_scope = {}
             for i in range(len(params)):
@@ -2531,8 +2665,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             raise TypeHintError(
                                 f"Nilai kembali lambda harus bertipe '{type_name}'"
                             )
-                    except TypeError:
-                        pass
+                    except TypeError as e:
+                        # Type checking failed - this is expected for non-type objects
+                        log_exception("type validation", e, level="debug")
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
@@ -2540,8 +2675,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             raise TypeHintError(
                                 f"Nilai kembali lambda harus bertipe '{type_name}'"
                             )
-                    except TypeError:
-                        pass
+                    except TypeError as e:
+                        # Type checking failed - this is expected for non-type objects
+                        log_exception("type validation", e, level="debug")
             self.local_scope = old_local_scope
             return result
 

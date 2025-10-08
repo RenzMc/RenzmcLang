@@ -130,7 +130,7 @@ class TypeInferenceEngine:
 
         return False
 
-    def analyze_function_complexity(self, body: List[AST]) -> Dict[str, Any]:
+    def analyze_function_complexity(self, body: List[AST], func_name: str = None) -> Dict[str, Any]:
         analysis = {
             'has_loops': False,
             'loop_depth': 0,
@@ -151,6 +151,22 @@ class TypeInferenceEngine:
             elif isinstance(node, FuncCall):
                 analysis['has_function_calls'] = True
                 analysis['operation_count'] += 1
+                
+                # Check for recursion - check both direct name and func_expr
+                if func_name:
+                    # Check direct name attribute
+                    if hasattr(node, 'name') and node.name and node.name == func_name:
+                        analysis['has_recursion'] = True
+                    # Check func_expr (which is a Var node for 'panggil' syntax)
+                    elif hasattr(node, 'func_expr') and node.func_expr:
+                        # If func_expr is a Var node with the function name
+                        if hasattr(node.func_expr, 'name') and node.func_expr.name == func_name:
+                            analysis['has_recursion'] = True
+                
+                # Recursively analyze function call arguments
+                if hasattr(node, 'args'):
+                    for arg in node.args:
+                        analyze_node(arg, depth)
 
             elif isinstance(node, BinOp):
                 analysis['operation_count'] += 1
@@ -167,6 +183,10 @@ class TypeInferenceEngine:
                 if node.else_body:
                     for stmt in node.else_body:
                         analyze_node(stmt, depth)
+            
+            elif isinstance(node, Return):
+                if hasattr(node, 'value') and node.value:
+                    analyze_node(node.value, depth)
 
         for stmt in body:
             analyze_node(stmt)

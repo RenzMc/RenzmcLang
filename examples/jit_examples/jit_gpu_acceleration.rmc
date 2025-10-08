@@ -1,22 +1,31 @@
+// ============================================
+// GPU Acceleration Demo - RenzMcLang
+// ============================================
+// Demonstrasi penggunaan @gpu decorator untuk akselerasi GPU
+
 tampilkan "=== GPU Acceleration Demo ==="
 tampilkan ""
 
-tampilkan "1. GPU Accelerated Function:"
-tampilkan "Note: Requires CUDA-capable GPU and proper Numba CUDA setup"
+tampilkan "1. Basic GPU Computation:"
 tampilkan ""
 
-fungsi vector_add(a, b):
-    hasil a + b
+// Decorator @gpu menggunakan CUDA untuk akselerasi GPU
+// Jika GPU tidak tersedia, akan fallback ke CPU
+@gpu
+buat fungsi gpu_vector_add dengan x, y
+    hasil x + y
 selesai
 
-tampilkan "Testing GPU function (will fallback to CPU if GPU not available)..."
-hasil itu vector_add(10, 20)
-tampilkan "10 + 20 = " + ke_teks(hasil)
-
+tampilkan "GPU Vector Addition..."
+hasil itu panggil gpu_vector_add dengan 100, 200
+tampilkan "Result: " + ke_teks(hasil)
 tampilkan ""
-tampilkan "2. GPU with Complex Computation:"
 
-fungsi gpu_compute(n):
+tampilkan "2. GPU Matrix Operations:"
+tampilkan ""
+
+@gpu
+buat fungsi gpu_compute dengan n
     total itu 0
     untuk i dari 1 sampai n
         total itu total + (i * i)
@@ -24,30 +33,33 @@ fungsi gpu_compute(n):
     hasil total
 selesai
 
-tampilkan "Computing on GPU (or CPU fallback)..."
-hasil itu gpu_compute(1000)
-tampilkan "Hasil: " + ke_teks(hasil)
-
+tampilkan "GPU Matrix Computation..."
+hasil itu panggil gpu_compute dengan 1000
+tampilkan "GPU Result: " + ke_teks(hasil)
 tampilkan ""
-tampilkan "3. GPU with Numeric Computation:"
 
-fungsi gpu_numeric(x, y):
-    hasil itu 0
+tampilkan "3. GPU Heavy Computation:"
+tampilkan ""
+
+@gpu
+buat fungsi gpu_heavy dengan x, y, z
+    total itu 0
     untuk i dari 1 sampai 100
-        hasil itu hasil + (x * i) + (y * i)
+        total itu total + (x * i) + (y * i) + (z * i)
     selesai
-    hasil hasil
+    hasil total
 selesai
 
-tampilkan "Computing with GPU..."
-hasil itu gpu_numeric(5, 10)
-tampilkan "Hasil: " + ke_teks(hasil)
-
+tampilkan "GPU Heavy Computation..."
+hasil itu panggil gpu_heavy dengan 2, 3, 4
+tampilkan "Result: " + ke_teks(hasil)
 tampilkan ""
+
 tampilkan "=== GPU Acceleration Demo Selesai! ==="
 tampilkan ""
-tampilkan "Note: GPU features require:"
-tampilkan "  - CUDA-capable NVIDIA GPU"
-tampilkan "  - CUDA Toolkit installed"
-tampilkan "  - Numba with CUDA support"
-tampilkan "  - If not available, functions will run on CPU"
+tampilkan "✓ @gpu menggunakan CUDA untuk akselerasi GPU"
+tampilkan "✓ Automatic fallback ke CPU jika GPU tidak tersedia"
+tampilkan "✓ Cocok untuk komputasi paralel dan operasi vektor"
+tampilkan ""
+tampilkan "NOTE: GPU acceleration memerlukan CUDA-capable GPU"
+tampilkan "      Jika tidak tersedia, fungsi akan berjalan di CPU"

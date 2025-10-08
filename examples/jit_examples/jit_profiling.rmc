@@ -1,10 +1,17 @@
-tampilkan "=== Profile-Guided Optimization Demo ==="
+// ============================================
+// JIT Profiling Demo - RenzMcLang
+// ============================================
+// Demonstrasi penggunaan @profile decorator untuk analisis performa
+
+tampilkan "=== JIT Profiling Demo ==="
 tampilkan ""
 
-tampilkan "1. Profiling Simple Function:"
+tampilkan "1. Basic Profiling with @profile:"
+tampilkan ""
 
+// Decorator @profile mengukur waktu eksekusi dan penggunaan memori
 @profile
-buat fungsi hitung_total dengan n
+buat fungsi hitung_sum dengan n
     total itu 0
     untuk i dari 1 sampai n
         total itu total + i
@@ -12,33 +19,37 @@ buat fungsi hitung_total dengan n
     hasil total
 selesai
 
-tampilkan "Menjalankan fungsi dengan profiling..."
-hasil itu panggil hitung_total dengan 10000
-tampilkan "Hasil: " + ke_teks(hasil)
-
+tampilkan "Menghitung sum dengan profiling..."
+hasil itu panggil hitung_sum dengan 10000
+tampilkan "Sum(10000) = " + ke_teks(hasil)
 tampilkan ""
-tampilkan "2. Profiling Complex Function:"
+
+tampilkan "2. Profiling Complex Operations:"
+tampilkan ""
 
 @profile
-buat fungsi matrix_operation dengan size
+buat fungsi matrix_multiply dengan n
     total itu 0
-    untuk i dari 1 sampai size
-        untuk j dari 1 sampai size
-            total itu total + (i * j)
+    untuk i dari 1 sampai n
+        untuk j dari 1 sampai n
+            untuk k dari 1 sampai n
+                total itu total + (i * j * k)
+            selesai
         selesai
     selesai
     hasil total
 selesai
 
-tampilkan "Menjalankan operasi matrix dengan profiling..."
-hasil itu panggil matrix_operation dengan 100
-tampilkan "Hasil: " + ke_teks(hasil)
-
+tampilkan "Menghitung matrix multiply dengan profiling..."
+hasil itu panggil matrix_multiply dengan 50
+tampilkan "Matrix Multiply Result: " + ke_teks(hasil)
 tampilkan ""
-tampilkan "3. Profiling Numeric Function:"
 
-@profile
-buat fungsi numeric_computation dengan n
+tampilkan "3. Profiling with JIT-optimized Function:"
+tampilkan ""
+
+@jit_compile
+buat fungsi optimized_computation dengan n
     total itu 0
     untuk i dari 1 sampai n
         untuk j dari 1 sampai 100
@@ -48,9 +59,13 @@ buat fungsi numeric_computation dengan n
     hasil total
 selesai
 
-tampilkan "Menjalankan fungsi numeric dengan profiling..."
-hasil itu panggil numeric_computation dengan 1000
-tampilkan "Hasil: " + ke_teks(hasil)
-
+tampilkan "Menghitung dengan JIT optimization..."
+hasil itu panggil optimized_computation dengan 1000
+tampilkan "Optimized Result: " + ke_teks(hasil)
 tampilkan ""
-tampilkan "=== Profile-Guided Optimization Demo Selesai! ==="
+
+tampilkan "=== Profiling Demo Selesai! ==="
+tampilkan ""
+tampilkan "✓ @profile memberikan informasi waktu eksekusi dan memori"
+tampilkan "✓ @jit_compile mengoptimasi performa fungsi numerik"
+tampilkan "✓ Berguna untuk mengidentifikasi bottleneck performa"

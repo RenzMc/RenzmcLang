@@ -27,7 +27,11 @@ class JITCompiler:
 
         is_numeric = self.type_inference.is_numeric_function(params, body)
 
-        complexity = self.type_inference.analyze_function_complexity(body)
+        complexity = self.type_inference.analyze_function_complexity(body, name)
+        
+        # Skip recursive functions for now - they cause issues with JIT compilation
+        if complexity['has_recursion']:
+            return False
 
         should_compile = (
             is_numeric and
@@ -148,6 +152,12 @@ class JITCompiler:
             return self.compiled_cache[name]
 
         try:
+            # Check for recursion even in force compile
+            complexity = self.type_inference.analyze_function_complexity(body, name)
+            if complexity['has_recursion']:
+                self._record_compilation(name, success=False, reason="recursive_function_not_supported")
+                return None
+            
             python_code = self.code_generator.generate_function(name, params, body)
 
             if not python_code or python_code.strip() == "":

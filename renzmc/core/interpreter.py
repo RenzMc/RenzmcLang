@@ -1617,9 +1617,16 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         param_types = node.param_types
         self.functions[name] = (params, body, return_type, param_types)
 
+        # Only enable JIT tracking if function doesn't have manual JIT decorators
+        # Manual decorators handle compilation themselves
         if JIT_AVAILABLE:
-            self.jit_call_counts[name] = 0
-            self.jit_execution_times[name] = 0.0
+            has_manual_jit = (
+                (hasattr(self, '_jit_hints') and name in self._jit_hints) or
+                (hasattr(self, '_jit_force') and name in self._jit_force)
+            )
+            if not has_manual_jit:
+                self.jit_call_counts[name] = 0
+                self.jit_execution_times[name] = 0.0
 
         def renzmc_function(*args, **kwargs):
             return self._execute_user_function(
@@ -1629,6 +1636,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         renzmc_function.__name__ = name
         renzmc_function.__renzmc_function__ = True
         self.global_scope[name] = renzmc_function
+        
+        # Return the function so decorators can work with it
+        return renzmc_function
 
     def visit_FuncCall(self, node):
         # Initialize return_type to avoid UnboundLocal error
@@ -1699,13 +1709,37 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 hasattr(self, "_decorated_functions")
                 and name in self._decorated_functions
             ):
-                raw_decorator_func, original_func = self._decorated_functions[name]
-                try:
-                    return raw_decorator_func(original_func, *args, **kwargs)
-                except Exception as e:
-                    raise RuntimeError(
-                        f"Error dalam fungsi terdekorasi '{name}': {str(e)}"
-                    )
+                decorator_data = self._decorated_functions[name]
+                
+                # Check if this is a wrapped function (new style) or decorator+func tuple (old style)
+                if callable(decorator_data):
+                    # New style: decorator_data is the already-wrapped function
+                    try:
+                        return decorator_data(*args, **kwargs)
+                    except Exception as e:
+                        raise RuntimeError(
+                            f"Error dalam fungsi terdekorasi '{name}': {str(e)}"
+                        )
+                else:
+                    # Old style: tuple of (decorator_func, original_func)
+                    raw_decorator_func, original_func = decorator_data
+                    try:
+                        # Check if this is a marker decorator (JIT, GPU, parallel)
+                        marker_decorators = {'jit_compile_decorator', 'jit_force_decorator', 
+                                           'gpu_decorator', 'parallel_decorator'}
+                        decorator_name = getattr(raw_decorator_func, '__name__', '')
+                        
+                        if decorator_name in marker_decorators:
+                            # For marker decorators, just call the original function
+                            # The decorator has already set the necessary attributes
+                            return original_func(*args, **kwargs)
+                        else:
+                            # For wrapper decorators, call the decorator with function and args
+                            return raw_decorator_func(original_func, *args, **kwargs)
+                    except Exception as e:
+                        raise RuntimeError(
+                            f"Error dalam fungsi terdekorasi '{name}': {str(e)}"
+                        )
             if name not in self.functions:
                 raise NameError(f"Fungsi '{name}' tidak ditemukan")
             function_data = self.functions[name]
@@ -1727,6 +1761,17 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     def _execute_user_function(
         self, name, params, body, return_type, param_types, args, kwargs
     ):
+        # Check if function should be force-compiled with JIT
+        # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip
+        if JIT_AVAILABLE and hasattr(self, '_jit_force') and name in self._jit_force:
+            if name not in self.jit_compiled_functions:
+                self._compile_function_with_jit(name, params, body, force=True)
+        
+        # Check if function has JIT hint and should be compiled
+        if JIT_AVAILABLE and hasattr(self, '_jit_hints') and name in self._jit_hints:
+            if name not in self.jit_compiled_functions:
+                self._compile_function_with_jit(name, params, body, force=True)
+        
         if JIT_AVAILABLE and name in self.jit_compiled_functions:
             compiled_func = self.jit_compiled_functions[name]
             if compiled_func is not None:
@@ -1842,11 +1887,16 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
 
             if (self.jit_call_counts[name] >= self.jit_threshold and
                 name not in self.jit_compiled_functions):
-                self._compile_function_with_jit(name, params, body)
+                # Check if function is recursive before auto-compiling
+                from renzmc.jit.type_inference import TypeInferenceEngine
+                type_inference = TypeInferenceEngine()
+                complexity = type_inference.analyze_function_complexity(body, name)
+                if not complexity['has_recursion']:
+                    self._compile_function_with_jit(name, params, body)
 
         return return_value
 
-    def _compile_function_with_jit(self, name, params, body):
+    def _compile_function_with_jit(self, name, params, body, force=False):
         if not self.jit_compiler:
             self.jit_compiled_functions[name] = None
             return
@@ -1858,9 +1908,15 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 self.jit_compiled_functions[name] = None
                 return
 
-            compiled_func = self.jit_compiler.compile_function(
-                name, params, body, interpreter_func
-            )
+            # Use force_compile if force flag is set
+            if force:
+                compiled_func = self.jit_compiler.force_compile(
+                    name, params, body, interpreter_func
+                )
+            else:
+                compiled_func = self.jit_compiler.compile_function(
+                    name, params, body, interpreter_func
+                )
 
             if compiled_func:
                 self.jit_compiled_functions[name] = compiled_func
@@ -2600,8 +2656,46 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
 
                 decorator_instance = RenzmcDecorator(raw_decorator_func, args)
                 decorated_function = decorator_instance(decorated)
+                
+                # Check if this is a marker decorator
+                marker_decorators = {'jit_compile', 'jit_force', 'gpu', 'parallel'}
+                
                 if hasattr(node.decorated, "name"):
                     func_name = node.decorated.name
+                    
+                    # For marker decorators, just set attributes on the function metadata
+                    if name in marker_decorators:
+                        # Store decorator hints in function metadata
+                        if not hasattr(self, '_function_decorators'):
+                            self._function_decorators = {}
+                        if func_name not in self._function_decorators:
+                            self._function_decorators[func_name] = []
+                        self._function_decorators[func_name].append(name)
+                        
+                        # Set attributes directly on the function if it exists
+                        if func_name in self.functions:
+                            # Mark the function with JIT hints
+                            if name == 'jit_compile':
+                                if not hasattr(self, '_jit_hints'):
+                                    self._jit_hints = set()
+                                self._jit_hints.add(func_name)
+                            elif name == 'jit_force':
+                                if not hasattr(self, '_jit_force'):
+                                    self._jit_force = set()
+                                self._jit_force.add(func_name)
+                            elif name == 'gpu':
+                                if not hasattr(self, '_gpu_functions'):
+                                    self._gpu_functions = set()
+                                self._gpu_functions.add(func_name)
+                            elif name == 'parallel':
+                                if not hasattr(self, '_parallel_functions'):
+                                    self._parallel_functions = set()
+                                self._parallel_functions.add(func_name)
+                        
+                        # Don't add to _decorated_functions for marker decorators
+                        return decorated_function
+                    
+                    # For wrapper decorators (like @profile), store the wrapped function
                     self._decorated_functions = getattr(
                         self, "_decorated_functions", {}
                     )
@@ -2626,17 +2720,12 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             )
 
                     original_func_callable.__name__ = func_name
-                    if args:
-                        actual_decorator = decorator_instance.actual_decorator
-                        self._decorated_functions[func_name] = (
-                            actual_decorator,
-                            original_func_callable,
-                        )
-                    else:
-                        self._decorated_functions[func_name] = (
-                            raw_decorator_func,
-                            original_func_callable,
-                        )
+                    
+                    # Apply the decorator to get the wrapped function
+                    wrapped_function = raw_decorator_func(original_func_callable)
+                    
+                    # Store the wrapped function directly
+                    self._decorated_functions[func_name] = wrapped_function
                 return decorated_function
             except Exception as e:
                 raise RuntimeError(f"Error dalam dekorator '{name}': {str(e)}")

@@ -27,21 +27,33 @@ class RenzmcDecorator:
             self.actual_decorator = self.decorator_func
 
     def __call__(self, func):
+        # Marker decorators that just set attributes on the function
         marker_decorators = {'jit_compile_decorator', 'jit_force_decorator', 'gpu_decorator', 'parallel_decorator'}
         
+        # Wrapper decorators that wrap the function execution
+        wrapper_decorators = {'profile_decorator', 'timing_decorator', 'cache_decorator'}
+        
         if self.name in marker_decorators:
+            # For marker decorators, just call them with the function
             result = self.actual_decorator(func)
             return result if result is not None else func
+        
+        if self.name in wrapper_decorators:
+            # For wrapper decorators, they return a wrapped function
+            try:
+                wrapped = self.actual_decorator(func)
+                return wrapped if wrapped is not None else func
+            except Exception as e:
+                raise RenzmcRuntimeError(
+                    f"Error dalam decorator '{self.name}': {str(e)}"
+                )
 
+        # For other decorators, use the old behavior
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             try:
                 return self.actual_decorator(func, *args, **kwargs)
             except Exception as e:
-                import sys
-                print(f"DEBUG: Decorator name: {self.name}", file=sys.stderr)
-                print(f"DEBUG: Is marker: {self.name in marker_decorators}", file=sys.stderr)
-                print(f"DEBUG: Error: {e}", file=sys.stderr)
                 raise RenzmcRuntimeError(
                     f"Error dalam decorator '{self.name}': {str(e)}"
                 )
@@ -424,52 +436,63 @@ def get_cache_stats():
 
 
 def jit_compile_decorator(func):
+    """Marker decorator for JIT compilation hint"""
     if callable(func):
         func.__jit_hint__ = True
+        func.__jit_compile__ = True
     return func
 
 
 def jit_force_decorator(func):
+    """Marker decorator to force JIT compilation"""
     if callable(func):
         func.__jit_force__ = True
+        func.__jit_compile__ = True
     return func
 
 
 def parallel_decorator(func):
+    """Marker decorator for parallel execution"""
     if callable(func):
         func.__parallel__ = True
     return func
 
 
 def gpu_decorator(func):
+    """Marker decorator for GPU acceleration"""
     if callable(func):
         func.__gpu__ = True
     return func
 
 
-def profile_decorator(func, *args, **kwargs):
+def profile_decorator(func):
+    """Profiling decorator that wraps function execution"""
     import time
     import tracemalloc
     
-    tracemalloc.start()
-    start_time = time.perf_counter()
-    start_memory = tracemalloc.get_traced_memory()[0]
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        tracemalloc.start()
+        start_time = time.perf_counter()
+        start_memory = tracemalloc.get_traced_memory()[0]
+        
+        result = func(*args, **kwargs)
+        
+        end_time = time.perf_counter()
+        end_memory = tracemalloc.get_traced_memory()[0]
+        tracemalloc.stop()
+        
+        execution_time = end_time - start_time
+        memory_used = (end_memory - start_memory) / 1024 / 1024
+        
+        func_name = getattr(func, '__name__', 'anonymous')
+        print(f"Profile [{func_name}]:")
+        print(f"  Execution Time: {execution_time:.6f} seconds")
+        print(f"  Memory Used: {memory_used:.2f} MB")
+        
+        return result
     
-    result = func(*args, **kwargs)
-    
-    end_time = time.perf_counter()
-    end_memory = tracemalloc.get_traced_memory()[0]
-    tracemalloc.stop()
-    
-    execution_time = end_time - start_time
-    memory_used = (end_memory - start_memory) / 1024 / 1024
-    
-    func_name = getattr(func, '__name__', 'anonymous')
-    print(f"Profile [{func_name}]:")
-    print(f"  Execution Time: {execution_time:.6f} seconds")
-    print(f"  Memory Used: {memory_used:.2f} MB")
-    
-    return result
+    return wrapper
 
 
 __all__ = [

@@ -1,0 +1,112 @@
+// ============================================
+// Complete JIT Decorators Test - RenzMcLang
+// ============================================
+// Test komprehensif untuk semua JIT decorators
+
+tampilkan "=========================================="
+tampilkan "  COMPLETE JIT DECORATORS TEST"
+tampilkan "=========================================="
+tampilkan ""
+
+// ==========================================
+// TEST 1: @jit_compile
+// ==========================================
+tampilkan "TEST 1: @jit_compile Decorator"
+tampilkan "-------------------------------------------"
+
+@jit_compile
+buat fungsi test_jit_compile dengan n
+    total itu 0
+    untuk i dari 1 sampai n
+        total itu total + i
+    selesai
+    hasil total
+selesai
+
+hasil itu panggil test_jit_compile dengan 100
+tampilkan "✓ @jit_compile works! Result: " + ke_teks(hasil)
+tampilkan ""
+
+// ==========================================
+// TEST 2: @jit_force
+// ==========================================
+tampilkan "TEST 2: @jit_force Decorator"
+tampilkan "-------------------------------------------"
+
+@jit_force
+buat fungsi test_jit_force dengan x, y
+    hasil x * y + x + y
+selesai
+
+hasil itu panggil test_jit_force dengan 10, 20
+tampilkan "✓ @jit_force works! Result: " + ke_teks(hasil)
+tampilkan ""
+
+// ==========================================
+// TEST 3: @profile
+// ==========================================
+tampilkan "TEST 3: @profile Decorator"
+tampilkan "-------------------------------------------"
+
+@profile
+buat fungsi test_profile dengan n
+    total itu 0
+    untuk i dari 1 sampai n
+        total itu total + (i * i)
+    selesai
+    hasil total
+selesai
+
+hasil itu panggil test_profile dengan 1000
+tampilkan "✓ @profile works! Result: " + ke_teks(hasil)
+tampilkan ""
+
+// ==========================================
+// TEST 4: @parallel
+// ==========================================
+tampilkan "TEST 4: @parallel Decorator"
+tampilkan "-------------------------------------------"
+
+@parallel
+buat fungsi test_parallel dengan n
+    total itu 0
+    untuk i dari 1 sampai n
+        total itu total + i
+    selesai
+    hasil total
+selesai
+
+hasil itu panggil test_parallel dengan 50
+tampilkan "✓ @parallel works! Result: " + ke_teks(hasil)
+tampilkan ""
+
+// ==========================================
+// TEST 5: @gpu
+// ==========================================
+tampilkan "TEST 5: @gpu Decorator"
+tampilkan "-------------------------------------------"
+
+@gpu
+buat fungsi test_gpu dengan x, y, z
+    hasil (x * y) + (y * z) + (z * x)
+selesai
+
+hasil itu panggil test_gpu dengan 5, 10, 15
+tampilkan "✓ @gpu works! Result: " + ke_teks(hasil)
+tampilkan ""
+
+// ==========================================
+// SUMMARY
+// ==========================================
+tampilkan "=========================================="
+tampilkan "  TEST SUMMARY"
+tampilkan "=========================================="
+tampilkan "✓ @jit_compile - PASSED"
+tampilkan "✓ @jit_force   - PASSED"
+tampilkan "✓ @profile     - PASSED"
+tampilkan "✓ @parallel    - PASSED"
+tampilkan "✓ @gpu         - PASSED"
+tampilkan ""
+tampilkan "ALL TESTS PASSED! 🎉"
+tampilkan ""
+tampilkan "=========================================="

@@ -82,9 +82,9 @@ tidak benar        // NOT
 // If-else (both syntaxes supported)
 jika kondisi
     // code
-kalau_tidak_jika kondisi2  // Using underscore
+lainnya jika kondisi2  // Using underscore
     // code
-kalau_tidak  // Using underscore
+lainnya  // Using underscore
     // code
 selesai
 
@@ -239,11 +239,13 @@ pesan itu f"Nama: {nama}, Umur: {umur}"
 panjang(list)              // Length
 tambah(list, item)         // Append
 hapus(list, item)          // Remove
-sisipkan(list, idx, item)  // Insert
+masukkan(list, idx, item)  // Insert
 
 // Sorting
-urutkan(list)              // Sort
-balik(list)                // Reverse
+urutkan(list, terbalik)    // Sort in-place
+sorted(list, reverse)      // Return sorted copy
+balikkan(list)             // Reverse in-place
+terbalik(list)             // Return reversed copy
 
 // Aggregation
 jumlah(list)               // Sum
@@ -564,7 +566,7 @@ coba
     jika response.ok()
         data itu response.json()
         // process data
-    kalau_tidak
+    lainnya
         tampilkan f"Error: {response.status_code}"
     selesai
 tangkap Exception sebagai e

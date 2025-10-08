@@ -234,20 +234,34 @@ tampilkan data
 
 ## 📚 Dokumentasi Lengkap
 
-Lihat folder [docs/](https://renzmc-docs.vercel.app/) untuk dokumentasi lengkap:
+### 📖 Dokumentasi Online
+Kunjungi [renzmc-docs.vercel.app](https://renzmc-docs.vercel.app/) untuk dokumentasi lengkap dan interaktif.
 
-- [Panduan Instalasi](docs/installation.md)
-- [Sintaks Dasar](docs/syntax-basics.md)
-- [Built-in Functions](docs/builtin-functions.md)
-- [OOP dan Advanced Features](docs/advanced-features.md)
-- [JIT Compiler](docs/jit-compiler.md) - **NEW!** 🚀
-- [Type System](docs/type-system.md) - **NEW!** 💎
-- [Integrasi Python](docs/python-integration.md)
-- [HTTP Client Guide](docs/http-client-guide.md)
-- [Quick Reference](docs/quick-reference.md)
-- [Contoh Program](docs/examples.md)
+### 📁 Dokumentasi Lokal
+Lihat folder [docs/](docs/) untuk dokumentasi lengkap:
 
-atau ke website ini untuk dokumentasi lengkapnya [docs/](https://renzmc-docs.vercel.app/)
+#### Panduan Dasar
+- [📥 Panduan Instalasi](docs/installation.md) - Cara install dan setup RenzmcLang
+- [📖 Sintaks Dasar](docs/syntax-basics.md) - Pelajari sintaks dasar bahasa
+- [⚡ Quick Reference](docs/quick-reference.md) - Cheat sheet untuk referensi cepat
+
+#### Fitur & Fungsi
+- [📦 Built-in Functions](docs/builtin-functions.md) - 184+ fungsi built-in lengkap
+- [🎨 Advanced Features](docs/advanced-features.md) - OOP, async/await, decorators, dll
+- [🚀 JIT Compiler](docs/jit-compiler.md) - Kompilasi JIT untuk performa maksimal
+- [💎 Type System](docs/type-system.md) - Sistem tipe opsional dengan validasi runtime
+
+#### Integrasi & Tools
+- [🐍 Integrasi Python](docs/python-integration.md) - Gunakan library Python di RenzmcLang
+- [🌐 HTTP Client Guide](docs/http-client-guide.md) - HTTP client built-in untuk API calls
+- [📝 Contoh Program](docs/examples.md) - 80+ contoh program siap pakai
+
+**⚠️ PENTING:** Dokumentasi telah diperbarui dengan informasi yang akurat. Pastikan menggunakan:
+- `lainnya` bukan `kalau_tidak`
+- `lainnya jika` bukan `kalau_tidak_jika`
+- `masukkan()` bukan `sisipkan()`
+- `balikkan()` untuk in-place reverse, `terbalik()` untuk copy
+- `urutkan()` untuk in-place sort, `sorted()` untuk copy
 
 ## 📖 Contoh Program
 

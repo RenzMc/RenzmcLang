@@ -387,18 +387,18 @@ selesai
 // If-else
 jika nilai >= 60
     tampilkan "Lulus"
-kalau_tidak
+lainnya
     tampilkan "Tidak Lulus"
 selesai
 
 // If-elif-else
 jika nilai >= 90
     tampilkan "A"
-kalau_tidak_jika nilai >= 80
+lainnya jika nilai >= 80
     tampilkan "B"
-kalau_tidak_jika nilai >= 70
+lainnya jika nilai >= 70
     tampilkan "C"
-kalau_tidak
+lainnya
     tampilkan "D"
 selesai
 ```
@@ -702,7 +702,7 @@ numbers itu {
 // Both syntaxes are supported
 jika nilai >= 60
     tampilkan "Lulus"
-kalau_tidak  // Using underscore
+lainnya  // Using underscore
     tampilkan "Tidak Lulus"
 selesai
 

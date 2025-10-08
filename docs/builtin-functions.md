@@ -389,28 +389,60 @@ data itu [1, 2, 3, 4]
 hapus(data, 3)  // [1, 2, 4]
 ```
 
-#### `sisipkan(list, index, item)` / `insert(list, index, item)`
+#### `masukkan(list, index, item)` / `insert(list, index, item)`
 Menyisipkan item di index tertentu.
 
 ```python
 data itu [1, 2, 4]
-sisipkan(data, 2, 3)  // [1, 2, 3, 4]
+masukkan(data, 2, 3)  // [1, 2, 3, 4]
+tampilkan data  // [1, 2, 3, 4]
 ```
 
-#### `urutkan(list)` / `sort(list)`
-Mengurutkan list.
+#### `urutkan(list, terbalik=salah)`
+Mengurutkan list secara in-place (mengubah list asli).
 
 ```python
 data itu [3, 1, 4, 2]
-urutkan(data)  // [1, 2, 3, 4]
+urutkan(data)  // Mengubah data menjadi [1, 2, 3, 4]
+tampilkan data  // [1, 2, 3, 4]
+
+// Urutkan descending
+data2 itu [3, 1, 4, 2]
+urutkan(data2, terbalik=benar)
+tampilkan data2  // [4, 3, 2, 1]
 ```
 
-#### `balik(list)` / `reverse(list)`
-Membalik urutan list.
+#### `sorted(list, reverse=salah)`
+Mengembalikan list baru yang terurut (tidak mengubah list asli).
+
+```python
+data itu [3, 1, 4, 2]
+hasil itu sorted(data)  // [1, 2, 3, 4]
+tampilkan data   // [3, 1, 4, 2] - list asli tidak berubah
+tampilkan hasil  // [1, 2, 3, 4]
+
+// Sorted descending
+hasil_desc itu sorted(data, reverse=benar)
+tampilkan hasil_desc  // [4, 3, 2, 1]
+```
+
+#### `balikkan(list)`
+Membalik urutan list secara in-place (mengubah list asli).
 
 ```python
 data itu [1, 2, 3, 4]
-balik(data)  // [4, 3, 2, 1]
+balikkan(data)  // Mengubah data menjadi [4, 3, 2, 1]
+tampilkan data  // [4, 3, 2, 1]
+```
+
+#### `terbalik(list)` / `reversed(list)`
+Mengembalikan list baru dengan urutan terbalik (tidak mengubah list asli).
+
+```python
+data itu [1, 2, 3, 4]
+hasil itu terbalik(data)  // [4, 3, 2, 1]
+tampilkan data   // [1, 2, 3, 4] - list asli tidak berubah
+tampilkan hasil  // [4, 3, 2, 1]
 ```
 
 #### `jumlah(list)` / `sum(list)`
@@ -811,50 +843,80 @@ chars itu ke_list(teks)  // ["h", "e", "l", "l", "o"]
 
 ## Iteration Functions
 
-#### `map(function, list)` / `petakan(function, list)`
-Menerapkan fungsi ke setiap elemen.
+**PENTING:** `map`, `filter`, dan `reduce` adalah keywords di RenzmcLang. Gunakan alias Indonesia atau list comprehension sebagai alternatif.
+
+#### `zip(list1, list2, ...)`
+Menggabungkan beberapa list menjadi list of tuples.
 
 ```python
-angka itu [1, 2, 3, 4]
-kuadrat itu map(lambda dengan x -> x * x, angka)
-// [1, 4, 9, 16]
+nama itu ["Alice", "Bob", "Charlie"]
+umur itu [25, 30, 35]
+kota itu ["Jakarta", "Bandung", "Surabaya"]
+
+hasil itu zip(nama, umur, kota)
+tampilkan hasil
+// [("Alice", 25, "Jakarta"), ("Bob", 30, "Bandung"), ("Charlie", 35, "Surabaya")]
 ```
 
-#### `filter(function, list)` / `saring(function, list)`
-Menyaring elemen berdasarkan kondisi.
+#### `enumerate(list)`
+Menambahkan index ke setiap elemen list.
 
 ```python
-angka itu [1, 2, 3, 4, 5]
-genap itu filter(lambda dengan x -> x % 2 == 0, angka)
-// [2, 4]
-```
-
-#### `reduce(function, list)` / `reduksi(function, list)`
-Mereduksi list menjadi satu nilai.
-
-```python
-angka itu [1, 2, 3, 4]
-total itu reduce(lambda dengan a, b -> a + b, angka)
-// 10
-```
-
-#### `zip(list1, list2)` / `gabung_list(list1, list2)`
-Menggabungkan dua list.
-
-```python
-nama itu ["a", "b", "c"]
-nilai itu [1, 2, 3]
-pairs itu zip(nama, nilai)
-// [("a", 1), ("b", 2), ("c", 3)]
-```
-
-#### `enumerate(list)` / `enumerasi(list)`
-Menambahkan index ke list.
-
-```python
-items itu ["a", "b", "c"]
+items itu ["apel", "jeruk", "mangga"]
 indexed itu enumerate(items)
-// [(0, "a"), (1, "b"), (2, "c")]
+tampilkan indexed
+// [(0, "apel"), (1, "jeruk"), (2, "mangga")]
+
+// Iterasi dengan enumerate
+untuk setiap item dari indexed
+    tampilkan f"Index {item[0]}: {item[1]}"
+selesai
+```
+
+#### `range(start, stop, step)`
+Menghasilkan sequence angka.
+
+```python
+// range(stop) - dari 0 sampai stop-1
+untuk setiap i dari range(5)
+    tampilkan i  // 0, 1, 2, 3, 4
+selesai
+
+// range(start, stop) - dari start sampai stop-1
+untuk setiap i dari range(2, 8)
+    tampilkan i  // 2, 3, 4, 5, 6, 7
+selesai
+
+// range(start, stop, step) - dengan step
+untuk setiap i dari range(0, 10, 2)
+    tampilkan i  // 0, 2, 4, 6, 8
+selesai
+
+// Membuat list dari range
+angka itu list(range(5))
+tampilkan angka  // [0, 1, 2, 3, 4]
+```
+
+#### List Comprehension (Alternatif untuk map/filter)
+Gunakan list comprehension untuk transformasi dan filtering.
+
+```python
+// Map alternative - transformasi
+angka itu [1, 2, 3, 4, 5]
+kuadrat itu [x * x untuk setiap x dari angka]
+tampilkan kuadrat  // [1, 4, 9, 16, 25]
+
+// Filter alternative - filtering
+genap itu [x untuk setiap x dari angka jika x % 2 == 0]
+tampilkan genap  // [2, 4]
+
+// Kombinasi transformasi dan filtering
+genap_kuadrat itu [x * x untuk setiap x dari angka jika x % 2 == 0]
+tampilkan genap_kuadrat  // [4, 16]
+
+// Dengan range
+kuadrat_10 itu [x * x untuk setiap x dari range(1, 11)]
+tampilkan kuadrat_10  // [1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
 ```
 
 ---

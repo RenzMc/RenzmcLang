@@ -108,7 +108,7 @@ tampilkan "Angka: " + ke_teks(angka_list)
 
 untuk setiap num dari angka_list
     # Check last bit: if 0 then even, if 1 then odd
-    status itu "genap" jika (num & 1) == 0 kalau tidak "ganjil"
+    status itu "genap" jika (num & 1) == 0 lainnya "ganjil"
     tampilkan "  " + ke_teks(num) + " adalah " + status
 selesai
 

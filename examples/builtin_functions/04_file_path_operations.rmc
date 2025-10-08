@@ -148,13 +148,13 @@ fungsi cek_tipe_file(filename):
     
     jika ext == ".txt"
         hasil "Text File"
-    kalau tidak jika ext == ".py"
+    lainnya jika ext == ".py"
         hasil "Python File"
-    kalau tidak jika ext == ".rmc"
+    lainnya jika ext == ".rmc"
         hasil "RenzMcLang File"
-    kalau tidak jika ext == ".jpg"
+    lainnya jika ext == ".jpg"
         hasil "Image File"
-    kalau tidak
+    lainnya
         hasil "Unknown Type"
     selesai
 selesai

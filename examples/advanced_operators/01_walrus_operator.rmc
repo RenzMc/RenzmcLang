@@ -59,7 +59,7 @@ input_nilai itu 75
 
 jika (validated := input_nilai) >= 0 dan validated <= 100
     tampilkan "Input valid: " + ke_teks(validated)
-    grade itu "A" jika validated >= 90 kalau tidak ("B" jika validated >= 80 kalau tidak "C")
+    grade itu "A" jika validated >= 90 lainnya ("B" jika validated >= 80 lainnya "C")
     tampilkan "Grade: " + grade
 selesai
 

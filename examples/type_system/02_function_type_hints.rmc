@@ -41,7 +41,7 @@ tampilkan "4. Fungsi dengan Boolean parameter:"
 fungsi cek_akses(is_admin: Boolean, is_active: Boolean):
     jika is_admin dan is_active
         hasil "Akses diberikan"
-    kalau_tidak
+    lainnya
         hasil "Akses ditolak"
     selesai
 selesai

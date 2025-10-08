@@ -46,9 +46,9 @@ untuk setiap tebakan dari tebakan_list
         tampilkan f"✨ Anda menebak dengan benar dalam {tebakan_ke} percobaan!"
         menang itu benar
         berhenti
-    kalau tidak jika tebakan < angka_rahasia
+    lainnya jika tebakan < angka_rahasia
         tampilkan "📈 Terlalu kecil! Coba angka yang lebih besar"
-    kalau tidak
+    lainnya
         tampilkan "📉 Terlalu besar! Coba angka yang lebih kecil"
     selesai
     

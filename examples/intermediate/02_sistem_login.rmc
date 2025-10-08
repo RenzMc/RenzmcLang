@@ -36,10 +36,10 @@ buat fungsi login dengan username, password
         
         jika user_data['password'] == password
             hasil {'sukses': benar, 'data': user_data}
-        kalau tidak
+        lainnya
             hasil {'sukses': salah, 'pesan': 'Password salah!'}
         selesai
-    kalau tidak
+    lainnya
         hasil {'sukses': salah, 'pesan': 'Username tidak ditemukan!'}
     selesai
 selesai
@@ -64,7 +64,7 @@ jika hasil_login1['sukses'] == benar
     tampilkan f"\n✓ Login berhasil!"
     tampilkan f"Selamat datang, {nama_user}!"
     tampilkan f"Role: {role_user}"
-kalau tidak
+lainnya
     pesan_error itu hasil_login1['pesan']
     tampilkan f"\n✗ {pesan_error}"
 selesai
@@ -83,7 +83,7 @@ jika hasil_login2['sukses'] == benar
     nama_user2 itu user_data2['nama']
     tampilkan f"\n✓ Login berhasil!"
     tampilkan f"Selamat datang, {nama_user2}!"
-kalau tidak
+lainnya
     pesan_error2 itu hasil_login2['pesan']
     tampilkan f"\n✗ {pesan_error2}"
 selesai
@@ -102,7 +102,7 @@ jika hasil_login3['sukses'] == benar
     nama_user3 itu user_data3['nama']
     tampilkan f"\n✓ Login berhasil!"
     tampilkan f"Selamat datang, {nama_user3}!"
-kalau tidak
+lainnya
     pesan_error3 itu hasil_login3['pesan']
     tampilkan f"\n✗ {pesan_error3}"
 selesai

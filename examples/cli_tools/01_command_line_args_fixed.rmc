@@ -27,7 +27,7 @@ jika panjang(args) > 1
     untuk i dari 1 sampai total_args - 1
         tampilkan f"  {i}. {args[i]}"
     selesai
-kalau tidak
+lainnya
     tampilkan "No arguments provided"
 selesai
 tampilkan ""

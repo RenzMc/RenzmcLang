@@ -12,7 +12,7 @@ selesai
 
 jika x < 5
     tampilkan "✗ Should not print"
-kalau tidak
+lainnya
     tampilkan "✓ Else statement works"
 selesai
 
@@ -22,7 +22,7 @@ nilai itu 85
 jika nilai >= 80
     jika nilai >= 90
         tampilkan "✓ Grade: A"
-    kalau tidak
+    lainnya
         tampilkan "✓ Grade: B"
     selesai
 selesai

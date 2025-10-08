@@ -148,7 +148,7 @@ fungsi login_user(username, password):
     jika username == "admin" dan password == "secret"
         panggil_python logger.info(f"Login successful: {username}")
         hasil benar
-    kalau tidak
+    lainnya
         panggil_python logger.warning(f"Login failed: {username} - Invalid credentials")
         hasil salah
     selesai

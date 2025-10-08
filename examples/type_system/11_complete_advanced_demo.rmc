@@ -50,7 +50,7 @@ tampilkan "✓ email sekarang = None"
 fungsi kirim_notifikasi(pesan: String, email: String?):
     jika email == kosong
         tampilkan "  Notifikasi: " + pesan + " (tanpa email)"
-    kalau_tidak
+    lainnya
         tampilkan "  Email ke " + email + ": " + pesan
     selesai
 selesai
@@ -178,7 +178,7 @@ fungsi tampilkan_user(user: Dict):
     
     jika user["email"] != kosong
         tampilkan "  Email: " + user["email"]
-    kalau_tidak
+    lainnya
         tampilkan "  Email: (tidak ada)"
     selesai
     

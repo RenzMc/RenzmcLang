@@ -47,7 +47,7 @@ tampilkan "4. Optional Return Type:"
 fungsi cari_user(id: Integer) -> String?:
     jika id == 1
         hasil "Budi"
-    kalau_tidak jika id == 2
+    lainnya jika id == 2
         hasil "Ani"
     selesai
     hasil kosong

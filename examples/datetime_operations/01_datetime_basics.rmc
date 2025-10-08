@@ -160,7 +160,7 @@ tampilkan ""
 // Cek akhir pekan
 jika hari_index >= 5
     tampilkan "✓ Hari ini adalah akhir pekan!"
-kalau tidak
+lainnya
     tampilkan "✓ Hari ini adalah hari kerja"
 selesai
 tampilkan ""
@@ -239,7 +239,7 @@ jika sisa_hari <= 1
     tampilkan "⚠ URGENT: Deadline kurang dari 2 hari!"
 lainnya_jika sisa_hari <= 3
     tampilkan "⚠ WARNING: Deadline kurang dari 4 hari"
-kalau tidak
+lainnya
     tampilkan "✓ Masih ada waktu"
 selesai
 tampilkan ""

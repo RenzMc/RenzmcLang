@@ -62,26 +62,26 @@ tampilkan ""
 tampilkan "3. Lambda dengan Kondisi:"
 
 # Lambda untuk nilai absolut
-abs_lambda itu lambda dengan x -> x jika x >= 0 kalau tidak -x
+abs_lambda itu lambda dengan x -> x jika x >= 0 lainnya -x
 tampilkan "abs_lambda(-5) = " + ke_teks(abs_lambda(-5))
 tampilkan "abs_lambda(5) = " + ke_teks(abs_lambda(5))
 tampilkan "abs_lambda(-10) = " + ke_teks(abs_lambda(-10))
 tampilkan "abs_lambda(0) = " + ke_teks(abs_lambda(0))
 
 # Lambda untuk max antara x dan 0
-max_zero itu lambda dengan x -> x jika x > 0 kalau tidak 0
+max_zero itu lambda dengan x -> x jika x > 0 lainnya 0
 tampilkan "max_zero(5) = " + ke_teks(max_zero(5))
 tampilkan "max_zero(-3) = " + ke_teks(max_zero(-3))
 tampilkan "max_zero(0) = " + ke_teks(max_zero(0))
 
 # Lambda untuk kategori nilai
-kategori itu lambda dengan x -> "Lulus" jika x >= 60 kalau tidak "Tidak Lulus"
+kategori itu lambda dengan x -> "Lulus" jika x >= 60 lainnya "Tidak Lulus"
 tampilkan "kategori(75) = " + kategori(75)
 tampilkan "kategori(45) = " + kategori(45)
 tampilkan "kategori(60) = " + kategori(60)
 
 # Lambda untuk diskon
-hitung_diskon itu lambda dengan harga -> harga * 0.9 jika harga > 100 kalau tidak harga
+hitung_diskon itu lambda dengan harga -> harga * 0.9 jika harga > 100 lainnya harga
 tampilkan "hitung_diskon(150) = " + ke_teks(hitung_diskon(150))
 tampilkan "hitung_diskon(50) = " + ke_teks(hitung_diskon(50))
 

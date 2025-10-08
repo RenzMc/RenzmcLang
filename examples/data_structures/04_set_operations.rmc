@@ -174,7 +174,7 @@ tampilkan "Test users: " + ke_teks(test_users)
 
 tampilkan "Access check:"
 untuk setiap user dari test_users
-    status itu "ALLOWED" jika user dalam allowed_users kalau tidak "DENIED"
+    status itu "ALLOWED" jika user dalam allowed_users lainnya "DENIED"
     tampilkan "  " + user + ": " + status
 selesai
 

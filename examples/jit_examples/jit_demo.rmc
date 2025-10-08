@@ -12,7 +12,7 @@ tampilkan ""
 buat fungsi fibonacci dengan n
     jika n <= 1
         hasil n
-    kalau tidak
+    lainnya
         a itu 0
         b itu 1
         untuk i dari 2 sampai n
@@ -139,7 +139,7 @@ bilangan_list itu [2, 3, 4, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53
 untuk i dari 0 sampai 24
     n itu bilangan_list[i]
     prima itu panggil adalah_prima dengan n
-    status itu "prima" jika prima kalau tidak "bukan prima"
+    status itu "prima" jika prima lainnya "bukan prima"
     tampilkan f"{n} adalah {status}"
 selesai
 

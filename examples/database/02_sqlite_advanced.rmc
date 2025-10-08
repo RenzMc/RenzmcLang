@@ -143,7 +143,7 @@ fungsi pinjam_buku(buku_id, anggota_id, tanggal_pinjam):
             
             conn.commit()
             hasil "berhasil"
-        kalau tidak
+        lainnya
             conn.rollback()
             hasil "stok habis"
         selesai

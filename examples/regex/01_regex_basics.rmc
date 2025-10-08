@@ -22,7 +22,7 @@ pattern itu "budi"
 match itu panggil_python re.search(pattern, teks)
 jika match
     tampilkan f"✓ Pattern '{pattern}' ditemukan di posisi {match.start()}"
-kalau tidak
+lainnya
     tampilkan f"✗ Pattern '{pattern}' tidak ditemukan"
 selesai
 tampilkan ""

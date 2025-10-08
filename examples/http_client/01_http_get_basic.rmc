@@ -46,7 +46,7 @@ coba
     jika is_ok
         tampilkan "✓ Request successful!"
         tampilkan f"Status code: {response.status_code}"
-    kalau tidak
+    lainnya
         tampilkan "✗ Request failed!"
     selesai
 tangkap e

@@ -89,7 +89,7 @@ untuk i dari 1 sampai 15
     hasil itu panggil fibonacci dengan i
     jika i <= 10
         tampilkan f"fibonacci({i}) = {hasil} (warming up)"
-    kalau tidak
+    lainnya
         tampilkan f"fibonacci({i}) = {hasil} (JIT aktif)"
     selesai
 selesai
@@ -105,7 +105,7 @@ untuk i dari 1 sampai 15
     hasil itu panggil faktorial dengan i
     jika i <= 10
         tampilkan f"faktorial({i}) = {hasil} (warming up)"
-    kalau tidak
+    lainnya
         tampilkan f"faktorial({i}) = {hasil} (JIT aktif)"
     selesai
 selesai

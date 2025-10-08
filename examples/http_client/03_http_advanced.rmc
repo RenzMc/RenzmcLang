@@ -54,7 +54,7 @@ coba
     
     jika response.ok()
         tampilkan "✓ Success"
-    kalau tidak
+    lainnya
         tampilkan f"✗ Error: Status {response.status_code}"
     selesai
     tampilkan ""

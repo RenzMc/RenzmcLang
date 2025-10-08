@@ -24,7 +24,7 @@ tampilkan "2. Optional Type dengan Fungsi:"
 fungsi sapa_optional(nama: String?):
     jika nama == kosong
         hasil "Halo, Tamu!"
-    kalau_tidak
+    lainnya
         hasil "Halo, " + nama + "!"
     selesai
 selesai

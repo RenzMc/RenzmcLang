@@ -58,7 +58,7 @@ selesai
 fungsi tampilkan_stack(stack):
     jika panjang(stack) == 0
         tampilkan "  Stack: [] (kosong)"
-    kalau tidak
+    lainnya
         tampilkan f"  Stack: {stack}"
         tampilkan f"  Top -> {stack[panjang(stack) - 1]}"
     selesai
@@ -155,7 +155,7 @@ fungsi is_balanced(expression):
     untuk setiap char dari expression
         jika char dalam opening
             push(stack, char)
-        kalau tidak jika char dalam closing
+        lainnya jika char dalam closing
             jika panjang(stack) == 0
                 hasil salah
             selesai
@@ -181,7 +181,7 @@ test_cases itu [
 
 untuk setiap expr dari test_cases
     balanced itu is_balanced(expr)
-    status itu "✓ Seimbang" jika balanced kalau tidak "✗ Tidak Seimbang"
+    status itu "✓ Seimbang" jika balanced lainnya "✗ Tidak Seimbang"
     tampilkan f"{expr:15} -> {status}"
 selesai
 

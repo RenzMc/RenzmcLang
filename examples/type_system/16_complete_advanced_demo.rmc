@@ -74,7 +74,7 @@ found_user itu find_user_by_id(all_users, 1)
 jika found_user != kosong
     tampilkan "Found user: "
     tampilkan found_user
-kalau_tidak
+lainnya
     tampilkan "User not found"
 selesai
 

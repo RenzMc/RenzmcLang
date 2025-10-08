@@ -43,7 +43,7 @@ tampilkan "4. Kode lama tetap berfungsi:"
 fungsi faktorial(n):
     jika n <= 1
         hasil 1
-    kalau_tidak
+    lainnya
         hasil n * faktorial(n - 1)
     selesai
 selesai

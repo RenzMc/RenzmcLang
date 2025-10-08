@@ -75,7 +75,7 @@ tampilkan f"  Rata-rata waktu per call (JIT):    {rata_jit:.6f} detik"
 jika rata_warmup > rata_jit
     improvement itu ((rata_warmup - rata_jit) / rata_warmup) * 100
     tampilkan f"  🚀 Peningkatan performa: {improvement:.2f}%"
-kalau tidak
+lainnya
     tampilkan "  ℹ️  Performa stabil"
 selesai
 

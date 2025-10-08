@@ -168,7 +168,7 @@ buat fungsi info_student dengan student
     jika panjang(student["nilai"]) > 0
         ipk itu panggil hitung_ipk dengan student
         tampilkan f"  IPK: {ipk}"
-    kalau tidak
+    lainnya
         tampilkan "  IPK: Belum ada nilai"
     selesai
 selesai

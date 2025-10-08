@@ -5,23 +5,23 @@ tampilkan "║  RenzMcLang v0.0.4 - Improvements Test Suite          ║"
 tampilkan "╚════════════════════════════════════════════════════════╝"
 tampilkan ""
 
-// Test 1: kalau_tidak with underscore
-tampilkan "Test 1: kalau_tidak (underscore) support"
+// Test 1: lainnya with underscore
+tampilkan "Test 1: lainnya (underscore) support"
 nilai itu 75
 jika nilai >= 80
     tampilkan "  ✓ Grade: A"
-kalau_tidak
-    tampilkan "  ✓ Grade: B (kalau_tidak works!)"
+lainnya
+    tampilkan "  ✓ Grade: B (lainnya works!)"
 selesai
 tampilkan ""
 
-// Test 2: kalau tidak with space
-tampilkan "Test 2: kalau tidak (space) support"
+// Test 2: lainnya with space
+tampilkan "Test 2: lainnya (space) support"
 umur itu 16
 jika umur >= 18
     tampilkan "  ✓ Adult"
-kalau tidak
-    tampilkan "  ✓ Minor (kalau tidak works!)"
+lainnya
+    tampilkan "  ✓ Minor (lainnya works!)"
 selesai
 tampilkan ""
 
@@ -78,13 +78,13 @@ tampilkan "  ✓ Users count: " + ke_teks(data["count"])
 tampilkan ""
 
 // Test 8: HTTP client (from fixed test_section3.rmc)
-tampilkan "Test 8: HTTP client with kalau_tidak"
+tampilkan "Test 8: HTTP client with lainnya"
 coba
     response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
     is_ok itu response.ok()
     jika is_ok
         tampilkan "  ✓ HTTP request successful!"
-    kalau_tidak
+    lainnya
         tampilkan "  ✗ HTTP request failed"
     selesai
 tangkap e

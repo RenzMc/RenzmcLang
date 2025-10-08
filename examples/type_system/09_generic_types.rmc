@@ -66,7 +66,7 @@ fungsi rata_rata_nilai(nilai: Dict[String, Float]):
     
     jika jumlah > 0
         hasil total / jumlah
-    kalau_tidak
+    lainnya
         hasil 0.0
     selesai
 selesai

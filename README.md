@@ -132,7 +132,7 @@ profil itu {
 # If-else
 jika umur >= 18
     tampilkan "Dewasa"
-kalau_tidak
+lainnya
     tampilkan "Anak-anak"
 selesai
 
@@ -147,7 +147,7 @@ cocok nilai
 selesai
 
 # Ternary operator
-status itu "Lulus" jika nilai >= 60 kalau tidak "Tidak Lulus"
+status itu "Lulus" jika nilai >= 60 lainnya "Tidak Lulus"
 ```
 
 ### Loops
@@ -265,7 +265,7 @@ Lihat folder [docs/](docs/) untuk dokumentasi lengkap:
 
 ## 📖 Contoh Program
 
-Lihat folder [examples/](examples/) untuk 80+ contoh program yang mencakup:
+Lihat folder [examples/](examples/) untuk 130+ contoh program yang mencakup:
 
 - **Dasar** - Hello World, kalkulator, loops
 - **Intermediate** - Sorting algorithms, sistem login

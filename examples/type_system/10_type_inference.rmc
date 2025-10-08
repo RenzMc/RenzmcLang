@@ -76,7 +76,7 @@ fungsi proses_data(data):
         panjang_data itu panjang(data)
         jika data == [] atau data == [1, 2, 3]  // Simple check if it's a list
             tampilkan "Processing list dengan " + ke_teks(panjang_data) + " elemen"
-        kalau_tidak
+        lainnya
             tampilkan "Processing dict dengan " + ke_teks(panjang_data) + " keys"
         selesai
     tangkap

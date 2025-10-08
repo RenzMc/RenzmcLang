@@ -39,7 +39,7 @@ buat fungsi binary_search dengan arr, target
         
         jika mid_value < target
             left itu mid + 1
-        kalau tidak
+        lainnya
             right itu mid - 1
         selesai
     selesai

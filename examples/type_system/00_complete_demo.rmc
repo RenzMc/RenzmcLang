@@ -176,13 +176,13 @@ selesai
 fungsi tentukan_grade(nilai: Float):
     jika nilai >= 85
         hasil "A"
-    kalau_tidak_jika nilai >= 70
+    lainnya_jika nilai >= 70
         hasil "B"
-    kalau_tidak_jika nilai >= 60
+    lainnya_jika nilai >= 60
         hasil "C"
-    kalau_tidak_jika nilai >= 50
+    lainnya_jika nilai >= 50
         hasil "D"
-    kalau_tidak
+    lainnya
         hasil "E"
     selesai
 selesai

@@ -161,7 +161,7 @@ async buat fungsi validasi_email(email):
     # Simple validation
     jika berisi(email, "@") dan berisi(email, ".")
         hasil "benar"
-    kalau_tidak
+    lainnya
         hasil "salah"
     selesai
 selesai

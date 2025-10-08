@@ -217,7 +217,7 @@ nama_nilai_dict itu {s["nama"]: s["nilai"] untuk setiap s dari siswa}
 tampilkan "Nama -> Nilai: " + ke_teks(nama_nilai_dict)
 
 # Dict nama -> status lulus
-status_dict itu {s["nama"]: "Lulus" jika s["nilai"] >= 70 kalau tidak "Tidak Lulus" untuk setiap s dari siswa}
+status_dict itu {s["nama"]: "Lulus" jika s["nilai"] >= 70 lainnya "Tidak Lulus" untuk setiap s dari siswa}
 tampilkan "Nama -> Status: " + ke_teks(status_dict)
 
 tampilkan ""

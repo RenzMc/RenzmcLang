@@ -68,7 +68,7 @@ selesai
 fungsi tampilkan_queue(queue):
     jika panjang(queue) == 0
         tampilkan "  Queue: [] (kosong)"
-    kalau tidak
+    lainnya
         tampilkan f"  Queue: {queue}"
         tampilkan f"  Front -> {queue[0]}, Rear -> {queue[panjang(queue) - 1]}"
     selesai

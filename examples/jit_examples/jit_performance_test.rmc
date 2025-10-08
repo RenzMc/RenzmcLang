@@ -54,7 +54,7 @@ untuk iterasi dari 1 sampai 20
     
     jika iterasi <= 10
         tampilkan f"Iterasi {iterasi} (sebelum JIT): hasil = {hasil}"
-    kalau tidak
+    lainnya
         tampilkan f"Iterasi {iterasi} (setelah JIT): hasil = {hasil}"
     selesai
 selesai

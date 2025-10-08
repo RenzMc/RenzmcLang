@@ -176,7 +176,7 @@ emails itu ["user@example.com", "invalid", "test@test.co", "a@b"]
 
 untuk setiap email dari emails
     valid itu validasi_email_lengkap(email)
-    status itu "VALID" jika valid kalau tidak "INVALID"
+    status itu "VALID" jika valid lainnya "INVALID"
     tampilkan email + ": " + status
 selesai
 

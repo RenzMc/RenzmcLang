@@ -21,7 +21,7 @@ tampilkan ""
 tampilkan "--- Cek Genap/Ganjil ---"
 jika angka % 2 == 0
     tampilkan f"✓ {angka} adalah bilangan GENAP"
-kalau tidak
+lainnya
     tampilkan f"✓ {angka} adalah bilangan GANJIL"
 selesai
 tampilkan ""
@@ -32,8 +32,8 @@ tampilkan ""
 tampilkan "--- Cek Positif/Negatif ---"
 jika angka > 0
     tampilkan f"✓ {angka} adalah bilangan POSITIF"
-kalau tidak jika angka < 0
+lainnya jika angka < 0
     tampilkan f"✓ {angka} adalah bilangan NEGATIF"
-kalau tidak
+lainnya
     tampilkan f"✓ {angka} adalah NOL"
 selesai

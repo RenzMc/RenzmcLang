@@ -1,86 +1,94 @@
-# OOP Import System Examples
+# Contoh Sistem Import OOP
 
-This directory contains comprehensive examples demonstrating RenzMcLang's Python-like import system for classes and functions across different folders.
+Direktori ini berisi contoh lengkap yang menunjukkan sistem import bergaya Python milik RenzMcLang untuk kelas dan fungsi yang tersebar di berbagai folder.
 
-## Directory Structure
+## Struktur Direktori
 
 ```
 oop_imports/
 ├── Ren/
-│   └── renz.rmc          # Module with Person, Calculator, BankAccount classes
+│   └── renz.rmc          # Modul dengan kelas Person, Calculator, BankAccount
 ├── Utils/
-│   └── helpers.rmc       # Module with Logger, Validator classes and utility functions
-├── 01_basic_import.rmc   # Basic single and multiple class imports
-├── 02_multiple_imports.rmc  # Importing from multiple modules
-├── 03_import_with_alias.rmc # Using aliases with imports
-└── 04_complex_example.rmc   # Real-world application example
+│   └── helpers.rmc       # Modul dengan kelas Logger, Validator dan fungsi utilitas
+├── 01_basic_import.rmc   # Import dasar tunggal dan multiple
+├── 02_multiple_imports.rmc  # Import dari beberapa modul
+├── 03_import_with_alias.rmc # Menggunakan alias pada import
+└── 04_complex_example.rmc   # Contoh aplikasi dunia nyata
 
 ```
 
-## Import Syntax
+## Sintaks Import
 
-### Basic Import
+### Import Dasar
+
 ```python
-dari Ren.renz impor buat_Person, Person_perkenalan
+from Ren.renz import buat_Person, Person_perkenalan
 ```
 
-### Import with Alias
+### Import dengan Alias
+
 ```python
-dari Ren.renz impor buat_Person sebagai create_person
+from Ren.renz import buat_Person as create_person
 ```
 
-### Multiple Imports
+### Import Banyak Sekaligus
+
 ```python
-dari Ren.renz impor buat_Person, buat_Calculator, buat_BankAccount
+from Ren.renz import buat_Person, buat_Calculator, buat_BankAccount
 ```
 
-### Import from Nested Modules
+### Import dari Modul Nested
+
 ```python
-dari Utils.helpers impor format_currency, buat_Logger
+from Utils.helpers import format_currency, buat_Logger
 ```
 
-## Running Examples
+## Menjalankan Contoh
 
 ```bash
-# Run basic import example
+# Jalankan contoh import dasar
 renzmc examples/oop_imports/01_basic_import.rmc
 
-# Run multiple imports example
+# Jalankan contoh multiple imports
 renzmc examples/oop_imports/02_multiple_imports.rmc
 
-# Run import with alias example
+# Jalankan contoh import dengan alias
 renzmc examples/oop_imports/03_import_with_alias.rmc
 
-# Run complex application example
+# Jalankan contoh aplikasi kompleks
 renzmc examples/oop_imports/04_complex_example.rmc
 ```
 
-## Features Demonstrated
+## Fitur yang Ditunjukkan
 
-1. **Cross-folder imports**: Import classes from different directories
-2. **Nested module paths**: Use dot notation (e.g., `Ren.renz`)
-3. **Multiple imports**: Import multiple items in one statement
-4. **Import aliases**: Rename imports to avoid conflicts
-5. **Real-world patterns**: Complete application with multiple modules
+1. **Import lintas-folder**: Mengimpor kelas dari direktori yang berbeda.
+2. **Path modul bertingkat (nested)**: Menggunakan notasi titik (mis. `Ren.renz`).
+3. **Import banyak sekaligus**: Mengimpor beberapa item dalam satu pernyataan.
+4. **Alias untuk import**: Mengganti nama import untuk menghindari konflik.
+5. **Polapola dunia nyata**: Aplikasi lengkap yang memakai beberapa modul.
 
-## Module Structure
+## Struktur Modul
 
 ### Ren/renz.rmc
-Contains:
-- `Person` class (constructor, methods)
-- `Calculator` class (arithmetic operations)
-- `BankAccount` class (banking operations)
-- Utility functions
+
+Berisi:
+
+* Kelas `Person` (konstruktor, metode)
+* Kelas `Calculator` (operasi aritmetika)
+* Kelas `BankAccount` (operasi perbankan)
+* Fungsi utilitas
 
 ### Utils/helpers.rmc
-Contains:
-- `Logger` class (logging functionality)
-- `Validator` class (validation methods)
-- Formatting utility functions
 
-## Notes
+Berisi:
 
-- All class constructors follow the `buat_ClassName` naming convention
-- All methods follow the `ClassName_methodName` naming convention
-- This pattern allows for clean OOP-style programming in RenzMcLang
-- The import system supports both `.rmc` and `.renzmc` file extensions
+* Kelas `Logger` (fungsi logging)
+* Kelas `Validator` (metode validasi)
+* Fungsi utilitas formatting
+
+## Catatan
+
+* Semua konstruktor kelas mengikuti konvensi penamaan `buat_ClassName`.
+* Semua metode mengikuti konvensi `ClassName_methodName`.
+* Pola ini memungkinkan pemrograman gaya OOP yang rapi di RenzMcLang.
+* Sistem import mendukung ekstensi file `.rmc` dan `.renzmc`.

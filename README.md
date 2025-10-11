@@ -169,8 +169,6 @@ selama kondisi
 selesai
 ```
 
-### Functions
-
 ```python
 # Deklarasi fungsi
 fungsi tambah(a, b):
@@ -256,13 +254,6 @@ Lihat folder [docs/](docs/) untuk dokumentasi lengkap:
 - [🌐 HTTP Client Guide](docs/http-client-guide.md) - HTTP client built-in untuk API calls
 - [📝 Contoh Program](docs/examples.md) - 80+ contoh program siap pakai
 
-**⚠️ PENTING:** Dokumentasi telah diperbarui dengan informasi yang akurat. Pastikan menggunakan:
-- `lainnya` bukan `kalau_tidak`
-- `lainnya jika` bukan `kalau_tidak_jika`
-- `masukkan()` bukan `sisipkan()`
-- `balikkan()` untuk in-place reverse, `terbalik()` untuk copy
-- `urutkan()` untuk in-place sort, `sorted()` untuk copy
-
 ## 📖 Contoh Program
 
 Lihat folder [examples/](examples/) untuk 130+ contoh program yang mencakup:
@@ -287,41 +278,6 @@ renzmc examples/database/01_sqlite_basic.rmc
 # Contoh web scraping
 renzmc examples/python_integration/01_web_scraping.rmc
 ```
-
-## 🐛 Troubleshooting
-
-### Import Error
-
-```python
-// ❌ Salah
-impor sqlite3
-
-// ✅ Benar
-impor_python "sqlite3"
-```
-
-### Syntax Error
-
-```python
-// ❌ Salah
-jika x bukan dalam list
-
-// ✅ Benar
-jika x tidak dalam list
-```
-
-### File Not Found
-
-```python
-// Pastikan path relatif benar
-dengan buka("data.txt", "r") sebagai f
-    # kode
-selesai
-```
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ## 👥 Authors
 

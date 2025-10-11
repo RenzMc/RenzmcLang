@@ -26,6 +26,7 @@
 16. [File Processing (Pemrosesan File)](#file-processing)
 17. [Functional Programming (Pemrograman Fungsional)](#functional-programming)
 18. [Functions (Fungsi)](#functions)
+   19. [Import System (NEW)](#import-system-new)
 19. [Games (Permainan)](#games)
 20. [Gui (Antarmuka Grafis)](#gui)
 21. [Http Client (Klien HTTP)](#http-client)
@@ -248,6 +249,8 @@ Contoh-contoh penggunaan fungsi dalam RenzMcLang.
 
 - **01_basic_functions.rmc** - Dasar-dasar fungsi
 - **02_function_parameters.rmc** - Parameter fungsi
+
+## Import System (NEW) 🚀\n\nContoh-contoh penggunaan sistem import baru dalam RenzMcLang versi 1.1.0.\n\n### Contoh Tersedia:\n\n- **01_basic_import.rmc** - Import dasar dari modul\n- **02_multiple_imports.rmc** - Import banyak item dari modul\n- **03_import_with_alias.rmc** - Import dengan alias\n- **04_complex_example.rmc** - Contoh aplikasi lengkap dengan import\n\n### Contoh Kode:\n\n```python\n// Import dari modul\ndari math_utils impor jumlah, perkalian\ndari string_utils impor format_text as fmt\n\n// Gunakan fungsi yang diimpor\nhasil itu panggil jumlah dengan 10, 5\nformatted itu panggil fmt dengan "Hello World"\n\ntampilkan f"Hasil: {hasil}, Teks: {formatted}"\n```\n\n### Folder Contoh:\n\n- **examples/oop_imports/** - Contoh lengkap sistem import\n  - **Ren/renz.rmc** - Contoh modul dengan berbagai fungsi\n  - **Utils/helpers.rmc** - Contoh modul utility\n  - **01_basic_import.rmc** - Import dasar\n  - **02_multiple_imports.rmc** - Import multiple items\n  - **03_import_with_alias.rmc** - Import dengan alias\n  - **04_complex_example.rmc** - Contoh aplikasi lengkap\n\nSistem import memungkinkan Anda mengorganisir kode ke dalam modul yang dapat digunakan kembali, membuat proyek lebih terstruktur dan mudah dikelola.
 
 ## Games
 

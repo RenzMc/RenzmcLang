@@ -1,0 +1,100 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pylint flake8 black isort
+    
+    - name: Check code formatting with Black
+      run: |
+        black --check renzmc/
+      continue-on-error: false
+    
+    - name: Check import sorting with isort
+      run: |
+        isort --check-only renzmc/
+      continue-on-error: false
+    
+    - name: Lint with Flake8
+      run: |
+        flake8 renzmc/ --count --max-line-length=100 --show-source --statistics
+    
+    - name: Analyze with Pylint
+      run: |
+        pylint renzmc/ --fail-under=7.0
+      continue-on-error: true
+    
+    - name: Comment PR with Results
+      if: always()
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const fs = require('fs');
+          const comment = `## Code Quality Check Results
+          
+          ✅ All automated checks have been completed.
+          
+          Please review the workflow logs for detailed results.
+          
+          ### Next Steps
+          - Ensure all linting issues are addressed
+          - Verify code formatting follows project standards
+          - Check that imports are properly sorted
+          `;
+          
+          github.rest.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: comment
+          });
+
+  test-examples:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install RenzmcLang
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+    
+    - name: Test OOP Import Examples
+      run: |
+        cd examples/oop_imports
+        renzmc 01_basic_import.rmc
+      continue-on-error: true
+    
+    - name: Test Basic Examples
+      run: |
+        cd examples/dasar
+        for file in *.rmc; do
+          echo "Testing $file"
+          renzmc "$file" || true
+        done
+      continue-on-error: true

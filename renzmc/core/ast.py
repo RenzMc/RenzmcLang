@@ -330,6 +330,18 @@ class Import(AST):
         self.alias = alias
 
 
+class FromImport(AST):
+    """
+    AST node for 'from module import item1, item2' statements
+    Supports both simple and nested module paths (e.g., 'from Ren.renz import Class')
+    """
+
+    def __init__(self, module, items, token=None):
+        super().__init__(token)
+        self.module = module  # Module path (can be dot-separated like "Ren.renz")
+        self.items = items  # List of (name, alias) tuples to import
+
+
 class PythonImport(AST):
 
     def __init__(self, module, alias=None, token=None):

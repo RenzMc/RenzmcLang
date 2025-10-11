@@ -635,6 +635,248 @@ selesai
 
 ---
 
+
+## Import System (NEW) 🚀
+
+---
+
+### 1. Sintaks Dasar Import
+
+#### Import Satu Item
+```python
+// Import fungsi tunggal
+dari math_utils impor jumlah
+
+// Gunakan fungsi yang diimpor
+hasil itu panggil jumlah dengan 10, 5
+tampilkan hasil  // Output: 15
+```
+
+#### Import Banyak Item
+```python
+// Import beberapa fungsi sekaligus
+dari math_utils impor jumlah, selisih, perkalian, pembagian
+
+// Gunakan semua fungsi
+a itu panggil jumlah dengan 10, 5      // 15
+b itu panggil selisih dengan 20, 8     // 12
+c itu panggil perkalian dengan 6, 7    // 42
+d itu panggil pembagian dengan 100, 4  // 25.0
+```
+
+#### Import dengan Alias
+```python
+// Beri nama lain untuk menghindari konflik
+dari math_utils impor jumlah sebagai add
+dari string_utils impor gabung sebagai join
+
+// Gunakan alias
+hasil_math itu panggil add dengan 5, 3
+hasil_string itu panggil join dengan "Hello", "World"
+```
+
+#### Import Biasa (Seluruh Module)
+```python
+// Import seluruh module
+impor math_utils sebagai math
+
+// Akses fungsi dengan dot notation
+hasil itu panggil math.jumlah dengan 10, 5
+```
+
+---
+
+### 2. Import dari Nested Modules
+
+Anda dapat mengorganisir kode dalam folder dan mengimport dari struktur nested:
+
+```
+project/
+├── main.rmc
+├── Utils/
+│   ├── helpers.rmc
+│   └── validators.rmc
+└── Models/
+    └── user.rmc
+```
+
+**Utils/helpers.rmc:**
+```python
+buat fungsi format_currency dengan amount
+    hasil f"Rp {amount:,.0f}"
+selesai
+
+buat fungsi validate_email dengan email
+    hasil berisi(email, "@") dan berisi(email, ".")
+selesai
+```
+
+**main.rmc:**
+```python
+// Import dari nested modules
+dari Utils.helpers impor format_currency, validate_email
+
+// Gunakan fungsi yang diimpor
+formatted itu panggil format_currency dengan 1000000
+is_valid itu panggil validate_email dengan "user@example.com"
+
+tampilkan formatted    // Output: Rp 1,000,000
+tampilkan is_valid     // Output: true
+```
+
+---
+
+### 3. Import Constants
+
+Anda juga bisa mengimport konstanta dan variabel:
+
+**constants.rmc:**
+```python
+// Konstanta aplikasi
+APP_NAME itu "MyApp"
+VERSION itu "1.0.0"
+MAX_USERS itu 100
+
+// Konstanta matematika
+PI itu 3.14159
+E itu 2.71828
+```
+
+**main.rmc:**
+```python
+// Import konstanta
+dari constants impor APP_NAME, VERSION, PI
+
+tampilkan f"{APP_NAME} v{VERSION}"  // Output: MyApp v1.0.0
+tampilkan f"PI = {PI}"              // Output: PI = 3.14159
+```
+
+---
+
+### 4. Import Function yang Mengembalikan Object
+
+**user.rmc:**
+```python
+// Constructor function
+buat fungsi buat_User dengan nama, email
+    user itu {
+        "nama": nama,
+        "email": email,
+        "active": benar
+    }
+    hasil user
+selesai
+
+// Method function
+buat fungsi User_get_info dengan self
+    hasil f"{self[nama]} ({self[email]})"
+selesai
+```
+
+**main.rmc:**
+```python
+// Import constructor dan method
+dari user impor buat_User, User_get_info
+
+// Buat object dan gunakan method
+user itu panggil buat_User dengan "Alice", "alice@example.com"
+info itu panggil User_get_info dengan user
+
+tampilkan info  // Output: Alice (alice@example.com)
+```
+
+#### Urutan Import yang Benar
+```python
+// 1. Import dari standard library (jika ada)
+// 2. Import dari third-party (jika ada)
+// 3. Import dari modul lokal
+dari Utils.helpers impor format_text
+dari Models.user impor buat_User
+dari Config.settings impor DEBUG
+
+// Kode Anda di sini
+```
+
+#### Hindari Konflik Nama
+```python
+// ❌ Hindari: nama yang sama dengan builtin
+buat fungsi tambah dengan a, b  // tambah adalah builtin
+    hasil a + b
+selesai
+
+// ✅ Gunakan: nama yang berbeda
+buat fungsi jumlah dengan a, b  // Nama yang unik
+    hasil a + b
+selesai
+```
+
+---
+
+### 5. Tips dan Trik
+
+#### Import Conditional
+```python
+jika DEBUG == benar
+    dari Debug.tools impor log_debug
+    panggil log_debug dengan "Mode debug aktif"
+selesai
+```
+
+### 6. Contoh Lengkap
+
+**math_utils.rmc:**
+```python
+// Fungsi matematika dasar
+buat fungsi jumlah dengan a, b
+    hasil a + b
+selesai
+
+buat fungsi selisih dengan a, b
+    hasil a - b
+selesai
+
+buat fungsi perkalian dengan a, b
+    hasil a * b
+selesai
+
+// Konstanta
+PI itu 3.14159
+E itu 2.71828
+```
+
+**string_utils.rmc:**
+```python
+// Fungsi string helper
+buat fungsi format_currency dengan amount
+    hasil f"Rp {amount:,.0f}"
+selesai
+
+buat fungsi validate_email dengan email
+    hasil berisi(email, "@") dan berisi(email, ".")
+selesai
+```
+
+**main.rmc:**
+```python
+// Import dari multiple modules
+dari math_utils impor jumlah, perkalian, PI
+dari string_utils impor format_currency, validate_email
+
+// Gunakan fungsi yang diimpor
+hasil_math itu panggil jumlah dengan 10, 5
+hasil_string itu panggil format_currency dengan 1000000
+is_valid itu panggil validate_email dengan "user@example.com"
+
+tampilkan f"Math: {hasil_math}, Currency: {hasil_string}, Valid: {is_valid}"
+tampilkan f"PI = {PI}"
+```
+
+**Output:**
+```
+Math: 15, Currency: Rp 1,000,000, Valid: true
+PI = 3.14159
+```
+
 ## Dukungan Multi-baris
 
 RenzMcLang mendukung sintaks multi-baris untuk keterbacaan kode yang lebih baik, terutama ketika berurusan dengan pemanggilan fungsi yang panjang atau struktur data yang kompleks.

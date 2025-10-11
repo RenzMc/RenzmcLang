@@ -1,0 +1,34 @@
+// ============================================
+// Example 3: Import with Aliases
+// Using 'sebagai' for aliasing imports
+// ============================================
+
+tampilkan "╔══════════════════════════════════════╗"
+tampilkan "║  IMPORT WITH ALIASES                 ║"
+tampilkan "╚══════════════════════════════════════╝"
+tampilkan ""
+
+// Import with aliases to avoid name conflicts
+tampilkan "=== 1. Import with Aliases ==="
+dari Ren.renz impor buat_Person sebagai create_person, Person_perkenalan sebagai greet
+dari Utils.helpers impor buat_Logger sebagai create_logger, Logger_info sebagai log_info
+
+tampilkan ""
+tampilkan "=== 2. Using Aliased Imports ==="
+
+// Create instances using aliases
+person itu panggil create_person dengan "Charlie", 30
+logger itu panggil create_logger dengan "App"
+
+tampilkan ""
+tampilkan "✓ Person created with alias:"
+greeting itu panggil greet dengan person
+tampilkan f"  {greeting}"
+
+tampilkan ""
+panggil log_info dengan logger, "Person created successfully"
+
+tampilkan ""
+tampilkan "╔══════════════════════════════════════╗"
+tampilkan "║  Example Complete! ✅                ║"
+tampilkan "╚══════════════════════════════════════╝"

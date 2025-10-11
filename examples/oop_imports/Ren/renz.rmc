@@ -1,0 +1,43 @@
+// ============================================
+// Module: Ren/renz.rmc
+// Simple module with functions for import
+// ============================================
+
+// Simple greeting function
+buat fungsi sapa dengan nama
+    hasil f"Halo, {nama}!"
+selesai
+
+// Math functions
+buat fungsi jumlah dengan a, b
+    hasil a + b
+selesai
+
+buat fungsi selisih dengan a, b
+    hasil a - b
+selesai
+
+buat fungsi perkalian dengan a, b
+    hasil a * b
+selesai
+
+buat fungsi pembagian dengan a, b
+    jika b == 0
+        tampilkan "Error: Tidak bisa membagi dengan nol"
+        hasil 0
+    selesai
+    hasil a / b
+selesai
+
+// String functions
+buat fungsi gabung_nama dengan depan, belakang
+    hasil depan + " " + belakang
+selesai
+
+buat fungsi format_pesan dengan nama, pesan
+    hasil f"{nama}: {pesan}"
+selesai
+
+// Constants
+PI itu 3.14159
+VERSI itu "1.0.0"

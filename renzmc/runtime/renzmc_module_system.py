@@ -91,12 +91,30 @@ class RenzmcModuleManager:
             self.module_search_paths.append(abs_path)
 
     def find_module(self, module_name):
+        """
+        Find a module file by name, supporting both simple and nested paths.
+        Examples:
+        - "math_utils" -> searches for "math_utils.rmc"
+        - "Ren.renz" -> searches for "Ren/renz.rmc"
+        """
         extensions = [".rmc", ".renzmc"]
+        
+        # Convert dot-separated module name to path
+        # e.g., "Ren.renz" becomes "Ren/renz"
+        module_path = module_name.replace(".", os.sep)
+        
         for search_path in self.module_search_paths:
             for ext in extensions:
-                module_file = os.path.join(search_path, f"{module_name}{ext}")
+                # Try direct file path
+                module_file = os.path.join(search_path, f"{module_path}{ext}")
                 if os.path.isfile(module_file):
                     return module_file
+                
+                # Try as package with __init__ file
+                package_init = os.path.join(search_path, module_path, f"__init__{ext}")
+                if os.path.isfile(package_init):
+                    return package_init
+        
         return None
 
     def load_module(self, module_name, alias=None):

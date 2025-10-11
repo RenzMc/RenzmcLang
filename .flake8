@@ -1,0 +1,35 @@
+[flake8]
+max-line-length = 100
+max-complexity = 15
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    build,
+    dist,
+    *.egg-info,
+    .tox,
+    .pytest_cache
+
+# Ignore specific error codes
+ignore =
+    E203,  # whitespace before ':'
+    E402,  # module level import not at top of file (needed for license headers)
+    W503,  # line break before binary operator
+    W504,  # line break after binary operator
+    E731,  # do not assign a lambda expression, use a def
+
+# Select specific error codes to check
+select = E,W,F,C
+
+# Per-file ignores
+per-file-ignores =
+    __init__.py:F401,F403
+    renzmc/__init__.py:E402
+    renzmc/__main__.py:E402
+    renzmc/repl.py:E402
+
+# Count errors
+count = True
+statistics = True

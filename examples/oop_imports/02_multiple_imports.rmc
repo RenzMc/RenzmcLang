@@ -1,0 +1,58 @@
+// ============================================
+// Example 2: Multiple Class Imports
+// Importing from multiple modules
+// ============================================
+
+tampilkan "╔══════════════════════════════════════╗"
+tampilkan "║  MULTIPLE MODULE IMPORTS             ║"
+tampilkan "╚══════════════════════════════════════╝"
+tampilkan ""
+
+// Import from Ren.renz module
+tampilkan "=== 1. Import from Ren.renz ==="
+dari Ren.renz impor buat_BankAccount, BankAccount_deposit, BankAccount_withdraw, BankAccount_cek_saldo, BankAccount_riwayat
+
+// Import from Utils.helpers module
+tampilkan "=== 2. Import from Utils.helpers ==="
+dari Utils.helpers impor format_currency, buat_Logger, Logger_info, Logger_error
+
+tampilkan ""
+tampilkan "=== 3. Using Imported Classes ==="
+
+// Create logger
+logger itu panggil buat_Logger dengan "BankApp"
+panggil Logger_info dengan logger, "Aplikasi bank dimulai"
+
+tampilkan ""
+
+// Create bank account
+account itu panggil buat_BankAccount dengan "Bob", 1000000
+panggil Logger_info dengan logger, f"Account created for Bob"
+
+tampilkan ""
+tampilkan "✓ Initial balance:"
+saldo itu panggil BankAccount_cek_saldo dengan account
+formatted itu panggil format_currency dengan saldo
+tampilkan f"  {formatted}"
+
+tampilkan ""
+tampilkan "✓ Performing transactions:"
+panggil BankAccount_deposit dengan account, 500000
+panggil BankAccount_withdraw dengan account, 200000
+
+tampilkan ""
+tampilkan "✓ Final balance:"
+saldo_akhir itu panggil BankAccount_cek_saldo dengan account
+formatted_akhir itu panggil format_currency dengan saldo_akhir
+tampilkan f"  {formatted_akhir}"
+
+tampilkan ""
+panggil BankAccount_riwayat dengan account
+
+tampilkan ""
+panggil Logger_info dengan logger, "Semua transaksi selesai"
+
+tampilkan ""
+tampilkan "╔══════════════════════════════════════╗"
+tampilkan "║  Example Complete! ✅                ║"
+tampilkan "╚══════════════════════════════════════╝"

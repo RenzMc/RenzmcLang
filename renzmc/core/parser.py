@@ -75,6 +75,7 @@ from renzmc.core.ast import (
     AttributeRef,
     MethodCall,
     Import,
+    FromImport,
     PythonImport,
     PythonCall,
     TryCatch,
@@ -270,6 +271,8 @@ class Parser:
             return self.continue_statement()
         elif self.current_token.type == TokenType.SIMPAN:
             return self.assignment_statement()
+        elif self.current_token.type == TokenType.DARI:
+            return self.from_import_statement()
         elif self.current_token.type == TokenType.IMPOR:
             return self.import_statement()
         elif self.current_token.type == TokenType.IMPOR_PYTHON:
@@ -2289,18 +2292,107 @@ class Parser:
             self.eat(TokenType.IDENTIFIER)
         return PythonImport(module_name, alias, token)
 
+    def from_import_statement(self):
+        """
+        Parse 'dari module impor item1, item2, ...' statements
+        Supports nested modules: 'dari Ren.renz impor Class1, Class2'
+        """
+        token = self.current_token
+        self.eat(TokenType.DARI)
+        
+        # Parse module path (can be dot-separated like "Ren.renz")
+        module_parts = []
+        if self.current_token.type == TokenType.IDENTIFIER:
+            module_parts.append(self.current_token.value)
+            self.eat(TokenType.IDENTIFIER)
+        elif self.current_token.type == TokenType.TEKS:
+            module_parts.append(self.current_token.value)
+            self.eat(TokenType.TEKS)
+        else:
+            self.error("Diharapkan nama modul setelah 'dari'")
+        
+        # Handle dot-separated module paths (e.g., Ren.renz)
+        while self.current_token.type == TokenType.TITIK:
+            self.eat(TokenType.TITIK)
+            if self.current_token.type == TokenType.IDENTIFIER:
+                module_parts.append(self.current_token.value)
+                self.eat(TokenType.IDENTIFIER)
+            else:
+                self.error("Diharapkan nama modul setelah '.'")
+        
+        module_name = ".".join(module_parts)
+        
+        # Expect 'impor' keyword
+        if self.current_token.type != TokenType.IMPOR:
+            self.error("Diharapkan 'impor' setelah nama modul")
+        self.eat(TokenType.IMPOR)
+        
+        # Parse items to import (can be comma-separated)
+        items = []
+        
+        # First item
+        if self.current_token.type == TokenType.IDENTIFIER:
+            item_name = self.current_token.value
+            self.eat(TokenType.IDENTIFIER)
+            
+            # Check for alias
+            alias = None
+            if self.current_token.type == TokenType.SEBAGAI:
+                self.eat(TokenType.SEBAGAI)
+                alias = self.current_token.value
+                self.eat(TokenType.IDENTIFIER)
+            
+            items.append((item_name, alias))
+        else:
+            self.error("Diharapkan nama item untuk diimpor")
+        
+        # Additional items (comma-separated)
+        while self.current_token.type == TokenType.KOMA:
+            self.eat(TokenType.KOMA)
+            
+            if self.current_token.type == TokenType.IDENTIFIER:
+                item_name = self.current_token.value
+                self.eat(TokenType.IDENTIFIER)
+                
+                # Check for alias
+                alias = None
+                if self.current_token.type == TokenType.SEBAGAI:
+                    self.eat(TokenType.SEBAGAI)
+                    alias = self.current_token.value
+                    self.eat(TokenType.IDENTIFIER)
+                
+                items.append((item_name, alias))
+            else:
+                self.error("Diharapkan nama item setelah koma")
+        
+        return FromImport(module_name, items, token)
+
     def import_statement(self):
         token = self.current_token
         self.eat(TokenType.IMPOR)
-        module_name = None
+        
+        # Parse module path (can be dot-separated like "Ren.renz")
+        module_parts = []
         if self.current_token.type == TokenType.TEKS:
-            module_name = self.current_token.value
+            module_parts.append(self.current_token.value)
             self.eat(TokenType.TEKS)
         elif self.current_token.type == TokenType.IDENTIFIER:
-            module_name = self.current_token.value
+            module_parts.append(self.current_token.value)
             self.eat(TokenType.IDENTIFIER)
         else:
             self.error("Diharapkan nama modul setelah 'impor'")
+        
+        # Handle dot-separated module paths (e.g., Ren.renz)
+        while self.current_token.type == TokenType.TITIK:
+            self.eat(TokenType.TITIK)
+            if self.current_token.type == TokenType.IDENTIFIER:
+                module_parts.append(self.current_token.value)
+                self.eat(TokenType.IDENTIFIER)
+            else:
+                self.error("Diharapkan nama modul setelah '.'")
+        
+        module_name = ".".join(module_parts)
+        
         alias = None
         if self.current_token.type == TokenType.SEBAGAI:
             self.eat(TokenType.SEBAGAI)

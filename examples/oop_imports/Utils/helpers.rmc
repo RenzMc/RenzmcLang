@@ -1,0 +1,61 @@
+// ============================================
+// Module: Utils/helpers.rmc
+// Utility functions and helper classes
+// ============================================
+
+// Helper function untuk formatting
+buat fungsi format_currency dengan jumlah
+    hasil f"Rp {jumlah:,.0f}"
+selesai
+
+buat fungsi format_percentage dengan nilai
+    hasil f"{nilai}%"
+selesai
+
+// Class Logger
+buat fungsi buat_Logger dengan nama
+    logger itu {
+        "nama": nama,
+        "logs": [],
+        "tipe": "Logger"
+    }
+    hasil logger
+selesai
+
+buat fungsi Logger_info dengan self, pesan
+    log_entry itu f"[INFO] {self['nama']}: {pesan}"
+    tambah(self["logs"], log_entry)
+    tampilkan log_entry
+selesai
+
+buat fungsi Logger_error dengan self, pesan
+    log_entry itu f"[ERROR] {self['nama']}: {pesan}"
+    tambah(self["logs"], log_entry)
+    tampilkan log_entry
+selesai
+
+buat fungsi Logger_get_logs dengan self
+    hasil self["logs"]
+selesai
+
+// Class Validator
+buat fungsi buat_Validator
+    validator itu {
+        "tipe": "Validator"
+    }
+    hasil validator
+selesai
+
+buat fungsi Validator_is_email dengan self, email
+    // Simple email validation
+    hasil berisi(email, "@") dan berisi(email, ".")
+selesai
+
+buat fungsi Validator_is_phone dengan self, phone
+    // Simple phone validation (numbers only)
+    hasil panjang(phone) >= 10 dan panjang(phone) <= 15
+selesai
+
+buat fungsi Validator_is_positive dengan self, number
+    hasil number > 0
+selesai

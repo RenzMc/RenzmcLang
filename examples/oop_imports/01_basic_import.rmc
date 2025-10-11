@@ -1,0 +1,57 @@
+// ============================================
+// Example 1: Basic Function Import
+// Demonstrating 'dari...impor' syntax
+// ============================================
+
+tampilkan "╔══════════════════════════════════════╗"
+tampilkan "║  BASIC IMPORT EXAMPLE                ║"
+tampilkan "╚══════════════════════════════════════╝"
+tampilkan ""
+
+// Import single function from module
+tampilkan "=== 1. Import Single Function ==="
+dari Ren.renz impor sapa
+
+// Use imported function
+pesan itu panggil sapa dengan "Alice"
+tampilkan f"✓ {pesan}"
+
+tampilkan ""
+tampilkan "=== 2. Import Multiple Functions ==="
+dari Ren.renz impor jumlah, selisih, perkalian, pembagian
+
+// Use imported functions
+tampilkan "✓ Performing calculations:"
+hasil1 itu panggil jumlah dengan 10, 5
+tampilkan f"  10 + 5 = {hasil1}"
+
+hasil2 itu panggil selisih dengan 20, 8
+tampilkan f"  20 - 8 = {hasil2}"
+
+hasil3 itu panggil perkalian dengan 6, 7
+tampilkan f"  6 * 7 = {hasil3}"
+
+hasil4 itu panggil pembagian dengan 100, 4
+tampilkan f"  100 / 4 = {hasil4}"
+
+tampilkan ""
+tampilkan "=== 3. Import Constants ==="
+dari Ren.renz impor PI, VERSI
+
+tampilkan f"✓ PI = {PI}"
+tampilkan f"✓ Version = {VERSI}"
+
+tampilkan ""
+tampilkan "=== 4. Import String Functions ==="
+dari Ren.renz impor gabung_nama, format_pesan
+
+nama_lengkap itu panggil gabung_nama dengan "John", "Doe"
+tampilkan f"✓ Full name: {nama_lengkap}"
+
+pesan_format itu panggil format_pesan dengan "Alice", "Hello World"
+tampilkan f"✓ Formatted: {pesan_format}"
+
+tampilkan ""
+tampilkan "╔══════════════════════════════════════╗"
+tampilkan "║  Example Complete! ✅                ║"
+tampilkan "╚══════════════════════════════════════╝"

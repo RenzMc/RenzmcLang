@@ -2356,21 +2356,88 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         except ImportError:
             raise ImportError(f"Modul '{module}' tidak ditemukan")
 
+    def visit_FromImport(self, node):
+        """
+        Handle 'dari module impor item1, item2' statements
+        Supports nested modules like 'dari Ren.renz impor Class1, Class2'
+        """
+        module = node.module
+        items = node.items  # List of (name, alias) tuples
+        
+        # Try to load RenzMcLang module first
+        rmc_module = self._load_rmc_module(module)
+        if rmc_module:
+            # Import specific items from the module
+            for item_name, alias in items:
+                actual_name = alias if alias else item_name
+                
+                # Try to get the item from module
+                # Check both hasattr and _exports dict
+                if hasattr(rmc_module, item_name):
+                    value = getattr(rmc_module, item_name)
+                    self.global_scope[actual_name] = value
+                    if hasattr(self, "local_scope") and self.local_scope is not None:
+                        self.local_scope[actual_name] = value
+                elif hasattr(rmc_module, '_exports') and item_name in rmc_module._exports:
+                    value = rmc_module._exports[item_name]
+                    self.global_scope[actual_name] = value
+                    if hasattr(self, "local_scope") and self.local_scope is not None:
+                        self.local_scope[actual_name] = value
+                else:
+                    # Debug: print what's available
+                    available = []
+                    if hasattr(rmc_module, '_exports'):
+                        available = list(rmc_module._exports.keys())
+                    raise ImportError(
+                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'. "
+                        f"Available: {available}"
+                    )
+            return
+        
+        # Try Python module import as fallback
+        try:
+            try:
+                imported_module = __import__(
+                    f"renzmc.builtins.{module}", fromlist=[item[0] for item in items]
+                )
+            except ImportError:
+                imported_module = importlib.import_module(module)
+            
+            for item_name, alias in items:
+                actual_name = alias if alias else item_name
+                if hasattr(imported_module, item_name):
+                    value = getattr(imported_module, item_name)
+                    self.global_scope[actual_name] = value
+                else:
+                    raise ImportError(
+                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
+                    )
+        except ImportError as e:
+            raise ImportError(f"Modul '{module}' tidak ditemukan: {str(e)}")
+
     def _load_rmc_module(self, module_name):
+        # Check if module is already loaded in cache
+        if module_name in self.modules:
+            return self.modules[module_name]
+        
+        # Convert dot-separated module name to path (e.g., "Ren.renz" -> "Ren/renz")
+        module_path = module_name.replace(".", os.sep)
+        
         search_paths = [
-            f"{module_name}.rmc",
-            f"modules/{module_name}.rmc",
-            f"examples/modules/{module_name}.rmc",
-            f"lib/{module_name}.rmc",
-            f"rmc_modules/{module_name}.rmc",
+            f"{module_path}.rmc",
+            f"modules/{module_path}.rmc",
+            f"examples/{module_path}.rmc",
+            f"examples/modules/{module_path}.rmc",
+            f"lib/{module_path}.rmc",
+            f"rmc_modules/{module_path}.rmc",
         ]
         if "__file__" in globals():
             script_dir = Path(__file__).parent
             search_paths.extend(
                 [
-                    str(script_dir / f"{module_name}.rmc"),
-                    str(script_dir / "modules" / f"{module_name}.rmc"),
-                    str(script_dir / "lib" / f"{module_name}.rmc"),
+                    str(script_dir / f"{module_path}.rmc"),
+                    str(script_dir / "modules" / f"{module_path}.rmc"),
+                    str(script_dir / "lib" / f"{module_path}.rmc"),
                 ]
             )
         for file_path in search_paths:
@@ -2393,11 +2460,28 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             self._exports = {}
                             builtin_names = set(self._get_builtin_names())
                             for name, value in scope.items():
-                                if (
-                                    not name.startswith("_")
-                                    and name not in builtin_names
-                                    and (not name.startswith("py_"))
-                                ):
+                                # Export user-defined items, but skip:
+                                # - Private items (starting with _)
+                                # - Python integration items (starting with py_)
+                                # - Builtin functions that are the same object as the builtin
+                                # (Allow user-defined functions even if they have the same name as builtins)
+                                if name.startswith("_") or name.startswith("py_"):
+                                    continue
+                                
+                                # Check if it's actually a builtin by comparing object identity
+                                is_builtin = False
+                                if name in builtin_names:
+                                    # Only skip if it's the actual builtin function, not a user-defined one
+                                    try:
+                                        import renzmc.builtins as renzmc_builtins
+                                        if hasattr(renzmc_builtins, name):
+                                            builtin_func = getattr(renzmc_builtins, name)
+                                            if value is builtin_func:
+                                                is_builtin = True
+                                    except:
+                                        pass
+                                
+                                if not is_builtin:
                                     setattr(self, name, value)
                                     self._exports[name] = value
 
@@ -2482,7 +2566,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                         def __contains__(self, key):
                             return hasattr(self, key)
 
-                    return RenzmcModule(module_interpreter.global_scope)
+                    loaded_module = RenzmcModule(module_interpreter.global_scope)
+                    # Cache the loaded module
+                    self.modules[module_name] = loaded_module
+                    return loaded_module
                 except Exception as e:
                     raise ImportError(
                         f"Gagal memuat modul RenzMC '{module_name}': {str(e)}"

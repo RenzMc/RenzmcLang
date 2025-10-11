@@ -1,0 +1,90 @@
+// ============================================
+// Example 4: Complex Real-World Example
+// Building a complete application with imports
+// ============================================
+
+tampilkan "╔══════════════════════════════════════╗"
+tampilkan "║  COMPLEX APPLICATION EXAMPLE         ║"
+tampilkan "╚══════════════════════════════════════╝"
+tampilkan ""
+
+// Import all necessary components
+dari Ren.renz impor buat_Person, Person_perkenalan, buat_BankAccount, BankAccount_deposit, BankAccount_withdraw, BankAccount_cek_saldo, BankAccount_riwayat
+dari Utils.helpers impor format_currency, buat_Logger, Logger_info, Logger_error, buat_Validator, Validator_is_positive
+
+tampilkan "=== Banking Application ==="
+tampilkan ""
+
+// Initialize logger
+logger itu panggil buat_Logger dengan "BankingApp"
+panggil Logger_info dengan logger, "Application started"
+
+// Initialize validator
+validator itu panggil buat_Validator
+
+tampilkan ""
+tampilkan "=== 1. Creating Customer ==="
+customer itu panggil buat_Person dengan "Diana", 28
+intro itu panggil Person_perkenalan dengan customer
+tampilkan f"✓ {intro}"
+panggil Logger_info dengan logger, f"Customer created: Diana"
+
+tampilkan ""
+tampilkan "=== 2. Opening Bank Account ==="
+account itu panggil buat_BankAccount dengan "Diana", 5000000
+saldo_awal itu panggil BankAccount_cek_saldo dengan account
+formatted_awal itu panggil format_currency dengan saldo_awal
+tampilkan f"✓ Account opened with balance: {formatted_awal}"
+panggil Logger_info dengan logger, f"Account opened with {formatted_awal}"
+
+tampilkan ""
+tampilkan "=== 3. Processing Transactions ==="
+
+// Transaction 1: Deposit
+jumlah_deposit itu 2000000
+is_valid itu panggil Validator_is_positive dengan validator, jumlah_deposit
+jika is_valid
+    panggil BankAccount_deposit dengan account, jumlah_deposit
+    panggil Logger_info dengan logger, f"Deposit processed: {jumlah_deposit}"
+lainnya
+    panggil Logger_error dengan logger, "Invalid deposit amount"
+selesai
+
+tampilkan ""
+
+// Transaction 2: Withdrawal
+jumlah_withdraw itu 1500000
+is_valid2 itu panggil Validator_is_positive dengan validator, jumlah_withdraw
+jika is_valid2
+    success itu panggil BankAccount_withdraw dengan account, jumlah_withdraw
+    jika success
+        panggil Logger_info dengan logger, f"Withdrawal processed: {jumlah_withdraw}"
+    lainnya
+        panggil Logger_error dengan logger, "Withdrawal failed: insufficient funds"
+    selesai
+lainnya
+    panggil Logger_error dengan logger, "Invalid withdrawal amount"
+selesai
+
+tampilkan ""
+
+// Transaction 3: Another deposit
+panggil BankAccount_deposit dengan account, 3000000
+panggil Logger_info dengan logger, "Another deposit processed"
+
+tampilkan ""
+tampilkan "=== 4. Final Report ==="
+saldo_akhir itu panggil BankAccount_cek_saldo dengan account
+formatted_akhir itu panggil format_currency dengan saldo_akhir
+tampilkan f"✓ Final balance: {formatted_akhir}"
+
+tampilkan ""
+panggil BankAccount_riwayat dengan account
+
+tampilkan ""
+panggil Logger_info dengan logger, "Application completed successfully"
+
+tampilkan ""
+tampilkan "╔══════════════════════════════════════╗"
+tampilkan "║  Application Complete! ✅            ║"
+tampilkan "╚══════════════════════════════════════╝"

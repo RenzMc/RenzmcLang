@@ -232,6 +232,33 @@ pesan itu f"Nama: {nama}, Umur: {umur}"
 
 ---
 
+
+### Import System (NEW) 🚀
+
+```python
+// Import satu item
+dari module impor item
+
+// Import banyak item
+dari module impor item1, item2, item3
+
+// Import dengan alias
+dari module impor item sebagai alias
+
+// Import dari nested module
+dari folder.module impor item
+
+// Import biasa (seluruh module)
+impor module sebagai alias
+
+// Contoh penggunaan
+dari math_utils impor jumlah, perkalian
+dari string_utils impor format_text sebagai fmt
+impor helpers as h
+```
+
+---
+
 ### Operasi List
 
 ```python
@@ -628,7 +655,7 @@ tampilkan, tunjukkan, tanya
 buat, fungsi, dengan, parameter
 panggil, jalankan, kembali, hasil, kembalikan
 kelas, metode, konstruktor, warisi
-gunakan, impor, impor_python, panggil_python
+gunakan, impor, dari, impor_python, panggil_python
 modul, paket
 lambda, fungsi_cepat
 async, asinkron, await, tunggu
@@ -656,6 +683,10 @@ self, ini, diri
 **Terakhir Diperbarui: 2025-10-08**
 
 **Baru di versi terbaru:**
+   - 🚀 Sistem Import OOP baru (dari...impor)
+   - 📦 Import dari nested modules
+   - 🏷️ Import dengan alias
+   - 📚 Module caching untuk performa
 - ✨ REPL (Shell Interaktif)
 - 🌐 HTTP Client Bawaan
 - 📦 7 fungsi HTTP baru

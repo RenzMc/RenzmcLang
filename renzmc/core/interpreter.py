@@ -22,138 +22,144 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import importlib
-import sys
-import builtins as py_builtins
 import asyncio
+import builtins as py_builtins
+import importlib
 import inspect
-import re
 import os
+import re
+import sys
 import time
 from pathlib import Path
-from renzmc.core.token import TokenType
 
-from renzmc.core.type_system import TypeChecker, TypeValidator, BaseType
-from renzmc.core.type_integration import TypeIntegrationMixin
+import renzmc.builtins as renzmc_builtins
 from renzmc.core.base_visitor import NodeVisitor
-from renzmc.runtime.builtin_manager import BuiltinManager
-from renzmc.runtime.scope_manager import ScopeManager
-from renzmc.runtime.python_integration import PythonIntegration
-from renzmc.runtime.file_operations import FileOperations
-from renzmc.runtime.crypto_operations import CryptoOperations
-from renzmc.runtime.renzmc_module_system import RenzmcModuleManager
+from renzmc.core.token import TokenType
+from renzmc.core.type_integration import TypeIntegrationMixin
+from renzmc.core.type_system import BaseType, TypeChecker, TypeValidator
 from renzmc.runtime.advanced_features import (
     AdvancedFeatureManager,
-    timing_decorator,
-    retry_decorator,
     cache_decorator,
+    retry_decorator,
     simple_retry_decorator,
+    timing_decorator,
     universal_retry_decorator,
 )
-import renzmc.builtins as renzmc_builtins
+from renzmc.runtime.builtin_manager import BuiltinManager
+from renzmc.runtime.crypto_operations import CryptoOperations
+from renzmc.runtime.file_operations import FileOperations
+from renzmc.runtime.python_integration import PythonIntegration
+from renzmc.runtime.renzmc_module_system import RenzmcModuleManager
+from renzmc.runtime.scope_manager import ScopeManager
 
 # Import error handling utilities
 from renzmc.utils.error_handler import (
-    log_exception, handle_type_error, handle_import_error,
-    handle_attribute_error, ErrorContext
+    ErrorContext,
+    handle_attribute_error,
+    handle_import_error,
+    handle_type_error,
+    log_exception,
 )
+from renzmc.utils.module_helpers import import_submodule, require_module
 from renzmc.utils.type_helpers import (
-    validate_type, check_parameter_type, check_return_type,
-    get_type_from_registry
+    check_parameter_type,
+    check_return_type,
+    get_type_from_registry,
+    validate_type,
 )
-from renzmc.utils.module_helpers import require_module, import_submodule
-
 
 try:
     import numba
+
     from renzmc.jit import JITCompiler
+
     JIT_AVAILABLE = True
 except ImportError:
     JIT_AVAILABLE = False
     JITCompiler = None
 from renzmc.core.ast import (
     AST,
-    Program,
-    Block,
-    BinOp,
-    UnaryOp,
-    Num,
-    String,
-    Boolean,
-    List,
-    Dict,
-    Set,
-    Tuple,
-    DictComp,
-    Var,
-    VarDecl,
     Assign,
-    MultiVarDecl,
-    MultiAssign,
-    NoOp,
-    Print,
-    Input,
-    If,
-    While,
-    For,
-    ForEach,
-    Break,
-    Continue,
-    FuncDecl,
-    FuncCall,
-    Return,
-    ClassDecl,
-    MethodDecl,
-    Constructor,
-    AttributeRef,
-    MethodCall,
-    Import,
-    PythonImport,
-    PythonCall,
-    TryCatch,
-    Raise,
-    IndexAccess,
-    SliceAccess,
-    SelfVar,
-    Lambda,
-    ListComp,
-    SetComp,
-    Generator,
-    Yield,
-    YieldFrom,
-    Decorator,
     AsyncFuncDecl,
     AsyncMethodDecl,
+    AttributeRef,
     Await,
-    TypeHint,
-    FormatString,
-    Ternary,
-    Unpacking,
-    WalrusOperator,
-    CompoundAssign,
-    Switch,
+    BinOp,
+    Block,
+    Boolean,
+    Break,
     Case,
+    ClassDecl,
+    CompoundAssign,
+    Constructor,
+    Continue,
+    Decorator,
+    Dict,
+    DictComp,
+    For,
+    ForEach,
+    FormatString,
+    FuncCall,
+    FuncDecl,
+    Generator,
+    If,
+    Import,
+    IndexAccess,
+    Input,
+    Lambda,
+    List,
+    ListComp,
+    MethodCall,
+    MethodDecl,
+    MultiAssign,
+    MultiVarDecl,
+    NoOp,
+    Num,
+    Print,
+    Program,
+    PythonCall,
+    PythonImport,
+    Raise,
+    Return,
+    SelfVar,
+    Set,
+    SetComp,
+    SliceAccess,
+    String,
+    Switch,
+    Ternary,
+    TryCatch,
+    Tuple,
+    TypeHint,
+    UnaryOp,
+    Unpacking,
+    Var,
+    VarDecl,
+    WalrusOperator,
+    While,
     With,
+    Yield,
+    YieldFrom,
 )
 from renzmc.core.error import (
-    RenzmcError,
-    LexerError,
-    ParserError,
-    InterpreterError,
-    RenzmcNameError,
-    RenzmcTypeError,
-    RenzmcValueError,
-    RenzmcImportError,
-    RenzmcAttributeError,
-    RenzmcIndexError,
-    RenzmcKeyError,
-    RenzmcRuntimeError,
+    AsyncError,
     DivisionByZeroError,
     FileError,
+    InterpreterError,
+    LexerError,
+    ParserError,
     PythonIntegrationError,
+    RenzmcAttributeError,
+    RenzmcError,
+    RenzmcImportError,
+    RenzmcIndexError,
+    RenzmcKeyError,
+    RenzmcNameError,
+    RenzmcRuntimeError,
     RenzmcSyntaxError,
+    RenzmcTypeError,
+    RenzmcValueError,
     TypeHintError,
-    AsyncError,
 )
 
 NameError = RenzmcNameError
@@ -193,16 +199,17 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         self.advanced_features.create_decorator("cache", cache_decorator)
         self.advanced_features.create_decorator("coba_ulang", universal_retry_decorator)
         from renzmc.runtime.advanced_features import (
-            create_custom_decorator,
-            web_route_decorator,
             clear_cache,
+            create_custom_decorator,
             get_cache_stats,
+            gpu_decorator,
             jit_compile_decorator,
             jit_force_decorator,
             parallel_decorator,
-            gpu_decorator,
             profile_decorator,
+            web_route_decorator,
         )
+
         self.advanced_features.create_decorator("jit_compile", jit_compile_decorator)
         self.advanced_features.create_decorator("jit_force", jit_force_decorator)
         self.advanced_features.create_decorator("parallel", parallel_decorator)
@@ -294,94 +301,96 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     # ========================================================================
     # HELPER METHODS - Added to reduce code duplication
     # ========================================================================
-    
-    def _validate_parameter_type(self, param_value, type_name, param_name, function_name=""):
+
+    def _validate_parameter_type(
+        self, param_value, type_name, param_name, function_name=""
+    ):
         """
         Validate parameter type with proper error handling
-        
+
         Args:
             param_value: The parameter value to check
             type_name: Expected type name
             param_name: Name of the parameter
             function_name: Name of the function (for error messages)
-            
+
         Returns:
             bool: True if validation passes, False otherwise
         """
         # Using imported check_parameter_type
         return check_parameter_type(
-            param_value, type_name, param_name,
-            self.type_registry, function_name
+            param_value, type_name, param_name, self.type_registry, function_name
         )
-    
+
     def _validate_return_type(self, return_value, type_name, function_name=""):
         """
         Validate return type with proper error handling
-        
+
         Args:
             return_value: The return value to check
             type_name: Expected type name
             function_name: Name of the function (for error messages)
-            
+
         Returns:
             bool: True if validation passes, False otherwise
         """
         # Using imported check_return_type
         return check_return_type(
-            return_value, type_name,
-            self.type_registry, function_name
+            return_value, type_name, self.type_registry, function_name
         )
-    
+
     def _get_type_from_registry(self, type_name):
         """
         Get a type from the registry or builtins
-        
+
         Args:
             type_name: Name of the type to retrieve
-            
+
         Returns:
             The type object if found, None otherwise
         """
         # Using imported get_type_from_registry
         return get_type_from_registry(type_name, self.type_registry)
-    
+
     def _safe_import_module(self, module_name, operation="module import"):
         """
         Safely import a module with proper error handling
-        
+
         Args:
             module_name: Name of the module to import
             operation: Description of the operation
-            
+
         Returns:
             The imported module or None if not available
         """
         # Using imported require_module
         return require_module(module_name, operation, raise_on_missing=False)
-    
-    def _safe_import_submodule(self, parent_module, submodule_name, operation="submodule import"):
+
+    def _safe_import_submodule(
+        self, parent_module, submodule_name, operation="submodule import"
+    ):
         """
         Safely import a submodule with proper error handling
-        
+
         Args:
             parent_module: The parent module object
             submodule_name: Name of the submodule
             operation: Description of the operation
-            
+
         Returns:
             The submodule or None if not available
         """
         # Using imported import_submodule
         return import_submodule(parent_module, submodule_name, operation)
-    
+
     def _safe_isinstance(self, obj, type_obj):
         """
         Safely check isinstance with proper error handling
-        
+
         Args:
             obj: Object to check
             type_obj: Type to check against
-            
+
         Returns:
             bool: True if isinstance check passes, False on error
         """
@@ -390,11 +399,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         except TypeError as e:
             log_exception("isinstance check", e, level="debug")
             return False
-    
+
     # ========================================================================
     # END OF HELPER METHODS
     # ========================================================================
-
 
     def _call_magic_method(self, obj, method_name, *args):
         if hasattr(obj, method_name):
@@ -433,6 +441,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     @property
     def global_scope(self):
         return self.scope_manager.global_scope
+
+    @global_scope.setter
+    def global_scope(self, value):
+        self.scope_manager.global_scope = value
 
     @property
     def local_scope(self):
@@ -1062,6 +1074,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             )
         try:
             import base64
+
             from cryptography.fernet import Fernet
             from cryptography.hazmat.primitives import hashes
             from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -1085,6 +1098,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             )
         try:
             import base64
+
             from cryptography.fernet import Fernet
             from cryptography.hazmat.primitives import hashes
             from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
@@ -1383,12 +1397,16 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         elif node.op.type == TokenType.GESER_KANAN:
             return int(left) >> int(right)
         elif node.op.type in (TokenType.DALAM, TokenType.DALAM_OP):
-            if not hasattr(right, '__iter__') and not hasattr(right, '__contains__'):
-                raise TypeError(f"argument of type '{type(right).__name__}' is not iterable")
+            if not hasattr(right, "__iter__") and not hasattr(right, "__contains__"):
+                raise TypeError(
+                    f"argument of type '{type(right).__name__}' is not iterable"
+                )
             return left in right
         elif node.op.type == TokenType.TIDAK_DALAM:
-            if not hasattr(right, '__iter__') and not hasattr(right, '__contains__'):
-                raise TypeError(f"argument of type '{type(right).__name__}' is not iterable")
+            if not hasattr(right, "__iter__") and not hasattr(right, "__contains__"):
+                raise TypeError(
+                    f"argument of type '{type(right).__name__}' is not iterable"
+                )
             return left not in right
         elif node.op.type in (TokenType.ADALAH, TokenType.ADALAH_OP):
             return left is right
@@ -1446,16 +1464,24 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(value, expected_type):
-                            raise TypeHintError(f"Nilai '{value}' bukan tipe '{type_name}'")
+                        if isinstance(expected_type, type) and not isinstance(
+                            value, expected_type
+                        ):
+                            raise TypeHintError(
+                                f"Nilai '{value}' bukan tipe '{type_name}'"
+                            )
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(value, expected_type):
-                            raise TypeHintError(f"Nilai '{value}' bukan tipe '{type_name}'")
+                        if isinstance(expected_type, type) and not isinstance(
+                            value, expected_type
+                        ):
+                            raise TypeHintError(
+                                f"Nilai '{value}' bukan tipe '{type_name}'"
+                            )
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
@@ -1535,11 +1561,20 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             new_value = current_value**operand
         elif node.op.type == TokenType.PEMBAGIAN_BULAT_SAMA_DENGAN:
             new_value = current_value // operand
-        elif node.op.type in (TokenType.BIT_DAN_SAMA_DENGAN, TokenType.BITWISE_AND_SAMA_DENGAN):
+        elif node.op.type in (
+            TokenType.BIT_DAN_SAMA_DENGAN,
+            TokenType.BITWISE_AND_SAMA_DENGAN,
+        ):
             new_value = current_value & operand
-        elif node.op.type in (TokenType.BIT_ATAU_SAMA_DENGAN, TokenType.BITWISE_OR_SAMA_DENGAN):
+        elif node.op.type in (
+            TokenType.BIT_ATAU_SAMA_DENGAN,
+            TokenType.BITWISE_OR_SAMA_DENGAN,
+        ):
             new_value = current_value | operand
-        elif node.op.type in (TokenType.BIT_XOR_SAMA_DENGAN, TokenType.BITWISE_XOR_SAMA_DENGAN):
+        elif node.op.type in (
+            TokenType.BIT_XOR_SAMA_DENGAN,
+            TokenType.BITWISE_XOR_SAMA_DENGAN,
+        ):
             new_value = current_value ^ operand
         elif node.op.type == TokenType.GESER_KIRI_SAMA_DENGAN:
             new_value = current_value << operand
@@ -1723,7 +1758,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             )
         for item in iterable:
             if isinstance(var_name, tuple):
-                if hasattr(item, '__iter__') and not isinstance(item, str):
+                if hasattr(item, "__iter__") and not isinstance(item, str):
                     unpacked = list(item)
                     if len(unpacked) != len(var_name):
                         raise ValueError(
@@ -1732,7 +1767,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     for var, val in zip(var_name, unpacked):
                         self.set_variable(var, val)
                 else:
-                    raise TypeError(f"Tidak dapat unpack nilai tipe '{type(item).__name__}'")
+                    raise TypeError(
+                        f"Tidak dapat unpack nilai tipe '{type(item).__name__}'"
+                    )
             else:
                 self.set_variable(var_name, item)
 
@@ -1766,9 +1803,8 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         # Manual decorators handle compilation themselves
         if JIT_AVAILABLE:
             has_manual_jit = (
-                (hasattr(self, '_jit_hints') and name in self._jit_hints) or
-                (hasattr(self, '_jit_force') and name in self._jit_force)
-            )
+                hasattr(self, "_jit_hints") and name in self._jit_hints
+            ) or (hasattr(self, "_jit_force") and name in self._jit_force)
             if not has_manual_jit:
                 self.jit_call_counts[name] = 0
                 self.jit_execution_times[name] = 0.0
@@ -1781,14 +1817,14 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         renzmc_function.__name__ = name
         renzmc_function.__renzmc_function__ = True
         self.global_scope[name] = renzmc_function
-        
+
         # Return the function so decorators can work with it
         return renzmc_function
 
     def visit_FuncCall(self, node):
         # Initialize return_type to avoid UnboundLocal error
         return_type = None
-        
+
         if hasattr(node, "func_expr") and node.func_expr is not None:
             try:
                 func = self.visit(node.func_expr)
@@ -1856,7 +1892,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 and name in self._decorated_functions
             ):
                 decorator_data = self._decorated_functions[name]
-                
+
                 # Check if this is a wrapped function (new style) or decorator+func tuple (old style)
                 if callable(decorator_data):
                     # New style: decorator_data is the already-wrapped function
@@ -1871,10 +1907,14 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     raw_decorator_func, original_func = decorator_data
                     try:
                         # Check if this is a marker decorator (JIT, GPU, parallel)
-                        marker_decorators = {'jit_compile_decorator', 'jit_force_decorator', 
-                                           'gpu_decorator', 'parallel_decorator'}
-                        decorator_name = getattr(raw_decorator_func, '__name__', '')
-                        
+                        marker_decorators = {
+                            "jit_compile_decorator",
+                            "jit_force_decorator",
+                            "gpu_decorator",
+                            "parallel_decorator",
+                        }
+                        decorator_name = getattr(raw_decorator_func, "__name__", "")
+
                         if decorator_name in marker_decorators:
                             # For marker decorators, just call the original function
                             # The decorator has already set the necessary attributes
@@ -1909,15 +1949,15 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     ):
         # Check if function should be force-compiled with JIT
         # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip
-        if JIT_AVAILABLE and hasattr(self, '_jit_force') and name in self._jit_force:
+        if JIT_AVAILABLE and hasattr(self, "_jit_force") and name in self._jit_force:
             if name not in self.jit_compiled_functions:
                 self._compile_function_with_jit(name, params, body, force=True)
-        
+
         # Check if function has JIT hint and should be compiled
-        if JIT_AVAILABLE and hasattr(self, '_jit_hints') and name in self._jit_hints:
+        if JIT_AVAILABLE and hasattr(self, "_jit_hints") and name in self._jit_hints:
             if name not in self.jit_compiled_functions:
                 self._compile_function_with_jit(name, params, body, force=True)
-        
+
         if JIT_AVAILABLE and name in self.jit_compiled_functions:
             compiled_func = self.jit_compiled_functions[name]
             if compiled_func is not None:
@@ -1958,7 +1998,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                value, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Parameter '{param_name}' harus bertipe '{type_name}'"
                                 )
@@ -1968,7 +2010,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                value, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Parameter '{param_name}' harus bertipe '{type_name}'"
                                 )
@@ -1996,12 +2040,14 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 break
         return_value = self.return_value
         if return_type and return_value is not None:
-            if hasattr(return_type, 'type_name'):
+            if hasattr(return_type, "type_name"):
                 type_name = return_type.type_name
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                        if isinstance(expected_type, type) and not isinstance(
+                            return_value, expected_type
+                        ):
                             raise TypeHintError(
                                 f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                             )
@@ -2011,7 +2057,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                        if isinstance(expected_type, type) and not isinstance(
+                            return_value, expected_type
+                        ):
                             raise TypeHintError(
                                 f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                             )
@@ -2019,13 +2067,16 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
             else:
-                from renzmc.core.advanced_types import TypeParser, AdvancedTypeValidator
+                from renzmc.core.advanced_types import AdvancedTypeValidator, TypeParser
+
                 if isinstance(return_type, str):
                     type_spec = TypeParser.parse_type_string(return_type)
                 else:
                     type_spec = return_type
                 if type_spec:
-                    is_valid, error_msg = AdvancedTypeValidator.validate(return_value, type_spec, "return")
+                    is_valid, error_msg = AdvancedTypeValidator.validate(
+                        return_value, type_spec, "return"
+                    )
                     if not is_valid:
                         raise TypeHintError(f"Fungsi '{name}': {error_msg}")
         self.local_scope = old_local_scope
@@ -2036,13 +2087,16 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             self.jit_call_counts[name] += 1
             self.jit_execution_times[name] += execution_time
 
-            if (self.jit_call_counts[name] >= self.jit_threshold and
-                name not in self.jit_compiled_functions):
+            if (
+                self.jit_call_counts[name] >= self.jit_threshold
+                and name not in self.jit_compiled_functions
+            ):
                 # Check if function is recursive before auto-compiling
                 from renzmc.jit.type_inference import TypeInferenceEngine
+
                 type_inference = TypeInferenceEngine()
                 complexity = type_inference.analyze_function_complexity(body, name)
-                if not complexity['has_recursion']:
+                if not complexity["has_recursion"]:
                     self._compile_function_with_jit(name, params, body)
 
         return return_value
@@ -2220,7 +2274,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     return submodule
                 except ImportError:
                     # Module not available - continuing without it
-                    handle_import_error("module", "import operation", "Continuing without module")
+                    handle_import_error(
+                        "module", "import operation", "Continuing without module"
+                    )
             raise AttributeError(
                 f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
             )
@@ -2269,7 +2325,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             if type_name in self.type_registry:
                                 expected_type = self.type_registry[type_name]
                                 try:
-                                    if isinstance(expected_type, type) and not isinstance(arg, expected_type):
+                                    if isinstance(
+                                        expected_type, type
+                                    ) and not isinstance(arg, expected_type):
                                         raise TypeHintError(
                                             f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
                                         )
@@ -2279,7 +2337,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             elif hasattr(py_builtins, type_name):
                                 expected_type = getattr(py_builtins, type_name)
                                 try:
-                                    if isinstance(expected_type, type) and not isinstance(arg, expected_type):
+                                    if isinstance(
+                                        expected_type, type
+                                    ) and not isinstance(arg, expected_type):
                                         raise TypeHintError(
                                             f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
                                         )
@@ -2300,7 +2360,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                return_value, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
                                 )
@@ -2310,7 +2372,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                return_value, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
                                 )
@@ -2359,59 +2423,122 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     def visit_FromImport(self, node):
         """
         Handle 'dari module impor item1, item2' statements
-        Supports nested modules like 'dari Ren.renz impor Class1, Class2'
+        Supports:
+        - Nested modules like 'dari Ren.renz impor Class1, Class2'
+        - Wildcard imports like 'dari module impor *'
+        - Relative imports like 'dari .module impor func'
         """
         module = node.module
         items = node.items  # List of (name, alias) tuples
-        
-        # Try to load RenzMcLang module first
-        rmc_module = self._load_rmc_module(module)
-        if rmc_module:
-            # Import specific items from the module
-            for item_name, alias in items:
-                actual_name = alias if alias else item_name
-                
-                # Try to get the item from module
-                # Check both hasattr and _exports dict
-                if hasattr(rmc_module, item_name):
-                    value = getattr(rmc_module, item_name)
-                    self.global_scope[actual_name] = value
-                    if hasattr(self, "local_scope") and self.local_scope is not None:
-                        self.local_scope[actual_name] = value
-                elif hasattr(rmc_module, '_exports') and item_name in rmc_module._exports:
-                    value = rmc_module._exports[item_name]
-                    self.global_scope[actual_name] = value
-                    if hasattr(self, "local_scope") and self.local_scope is not None:
-                        self.local_scope[actual_name] = value
-                else:
-                    # Debug: print what's available
-                    available = []
-                    if hasattr(rmc_module, '_exports'):
-                        available = list(rmc_module._exports.keys())
-                    raise ImportError(
-                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'. "
-                        f"Available: {available}"
-                    )
-            return
-        
-        # Try Python module import as fallback
-        try:
-            try:
-                imported_module = __import__(
-                    f"renzmc.builtins.{module}", fromlist=[item[0] for item in items]
+        is_relative = getattr(node, "is_relative", False)
+        relative_level = getattr(node, "relative_level", 0)
+
+        # Handle relative imports
+        resolved_path = None
+        if is_relative:
+            # Get current file path from interpreter context
+            current_file = getattr(self, "current_file", None)
+            if not current_file:
+                raise ImportError(
+                    "Tidak dapat menggunakan relative import: file path tidak tersedia"
                 )
-            except ImportError:
-                imported_module = importlib.import_module(module)
-            
+
+            # Resolve relative path using module manager
+            try:
+                resolved_path = self.module_manager.resolve_relative_import(
+                    module, relative_level, current_file
+                )
+                # Extract module name from path for caching
+                import os
+
+                module = os.path.splitext(os.path.basename(resolved_path))[0]
+
+                # Add the directory to search paths temporarily
+                module_dir = os.path.dirname(resolved_path)
+                if module_dir not in self.module_manager.module_search_paths:
+                    self.module_manager.add_search_path(module_dir)
+            except Exception as e:
+                raise ImportError(f"Error resolving relative import: {str(e)}")
+
+        # Check for wildcard import
+        is_wildcard = len(items) == 1 and items[0][0] == "*"
+
+        if is_wildcard:
+            # Use the module_manager's import_all method
+            try:
+                all_items = self.module_manager.import_all_from_module(module)
+                # Add all items to scope
+                for name, value in all_items.items():
+                    self.global_scope[name] = value
+                    if hasattr(self, "local_scope") and self.local_scope is not None:
+                        self.local_scope[name] = value
+                return
+            except Exception as e:
+                # Try Python module import as fallback
+                pass
+
+        # Try to import specific items using module_manager
+        try:
+            item_names = [item[0] for item in items]
+            imported_items = self.module_manager.import_from_module(module, item_names)
+
+            # Add items to scope with aliases if specified
             for item_name, alias in items:
                 actual_name = alias if alias else item_name
-                if hasattr(imported_module, item_name):
-                    value = getattr(imported_module, item_name)
+                if item_name in imported_items:
+                    value = imported_items[item_name]
                     self.global_scope[actual_name] = value
-                else:
-                    raise ImportError(
-                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
+                    if hasattr(self, "local_scope") and self.local_scope is not None:
+                        self.local_scope[actual_name] = value
+            return
+        except Exception as e:
+            # Try Python module import as fallback
+            pass
+
+        # Fallback to Python module import
+        try:
+            if is_wildcard:
+                # Import all from Python module
+                try:
+                    imported_module = __import__(
+                        f"renzmc.builtins.{module}", fromlist=["*"]
                     )
+                except ImportError:
+                    imported_module = importlib.import_module(module)
+
+                # Get all public attributes
+                if hasattr(imported_module, "__all__"):
+                    all_names = imported_module.__all__
+                else:
+                    all_names = [
+                        name
+                        for name in dir(imported_module)
+                        if not name.startswith("_")
+                    ]
+
+                for name in all_names:
+                    if hasattr(imported_module, name):
+                        value = getattr(imported_module, name)
+                        self.global_scope[name] = value
+            else:
+                # Import specific items
+                try:
+                    imported_module = __import__(
+                        f"renzmc.builtins.{module}",
+                        fromlist=[item[0] for item in items],
+                    )
+                except ImportError:
+                    imported_module = importlib.import_module(module)
+
+                for item_name, alias in items:
+                    actual_name = alias if alias else item_name
+                    if hasattr(imported_module, item_name):
+                        value = getattr(imported_module, item_name)
+                        self.global_scope[actual_name] = value
+                    else:
+                        raise ImportError(
+                            f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
+                        )
         except ImportError as e:
             raise ImportError(f"Modul '{module}' tidak ditemukan: {str(e)}")
 
@@ -2419,10 +2546,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         # Check if module is already loaded in cache
         if module_name in self.modules:
             return self.modules[module_name]
-        
+
         # Convert dot-separated module name to path (e.g., "Ren.renz" -> "Ren/renz")
         module_path = module_name.replace(".", os.sep)
-        
+
         search_paths = [
             f"{module_path}.rmc",
             f"modules/{module_path}.rmc",
@@ -2467,20 +2594,23 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 # (Allow user-defined functions even if they have the same name as builtins)
                                 if name.startswith("_") or name.startswith("py_"):
                                     continue
-                                
+
                                 # Check if it's actually a builtin by comparing object identity
                                 is_builtin = False
                                 if name in builtin_names:
                                     # Only skip if it's the actual builtin function, not a user-defined one
                                     try:
                                         import renzmc.builtins as renzmc_builtins
+
                                         if hasattr(renzmc_builtins, name):
-                                            builtin_func = getattr(renzmc_builtins, name)
+                                            builtin_func = getattr(
+                                                renzmc_builtins, name
+                                            )
                                             if value is builtin_func:
                                                 is_builtin = True
                                     except:
                                         pass
-                                
+
                                 if not is_builtin:
                                     setattr(self, name, value)
                                     self._exports[name] = value
@@ -2745,7 +2875,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(arg, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                arg, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
                                 )
@@ -2755,7 +2887,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(arg, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                arg, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
                                 )
@@ -2772,7 +2906,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(result, expected_type):
+                        if isinstance(expected_type, type) and not isinstance(
+                            result, expected_type
+                        ):
                             raise TypeHintError(
                                 f"Nilai kembali lambda harus bertipe '{type_name}'"
                             )
@@ -2782,7 +2918,9 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(result, expected_type):
+                        if isinstance(expected_type, type) and not isinstance(
+                            result, expected_type
+                        ):
                             raise TypeHintError(
                                 f"Nilai kembali lambda harus bertipe '{type_name}'"
                             )
@@ -2903,45 +3041,45 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
 
                 decorator_instance = RenzmcDecorator(raw_decorator_func, args)
                 decorated_function = decorator_instance(decorated)
-                
+
                 # Check if this is a marker decorator
-                marker_decorators = {'jit_compile', 'jit_force', 'gpu', 'parallel'}
-                
+                marker_decorators = {"jit_compile", "jit_force", "gpu", "parallel"}
+
                 if hasattr(node.decorated, "name"):
                     func_name = node.decorated.name
-                    
+
                     # For marker decorators, just set attributes on the function metadata
                     if name in marker_decorators:
                         # Store decorator hints in function metadata
-                        if not hasattr(self, '_function_decorators'):
+                        if not hasattr(self, "_function_decorators"):
                             self._function_decorators = {}
                         if func_name not in self._function_decorators:
                             self._function_decorators[func_name] = []
                         self._function_decorators[func_name].append(name)
-                        
+
                         # Set attributes directly on the function if it exists
                         if func_name in self.functions:
                             # Mark the function with JIT hints
-                            if name == 'jit_compile':
-                                if not hasattr(self, '_jit_hints'):
+                            if name == "jit_compile":
+                                if not hasattr(self, "_jit_hints"):
                                     self._jit_hints = set()
                                 self._jit_hints.add(func_name)
-                            elif name == 'jit_force':
-                                if not hasattr(self, '_jit_force'):
+                            elif name == "jit_force":
+                                if not hasattr(self, "_jit_force"):
                                     self._jit_force = set()
                                 self._jit_force.add(func_name)
-                            elif name == 'gpu':
-                                if not hasattr(self, '_gpu_functions'):
+                            elif name == "gpu":
+                                if not hasattr(self, "_gpu_functions"):
                                     self._gpu_functions = set()
                                 self._gpu_functions.add(func_name)
-                            elif name == 'parallel':
-                                if not hasattr(self, '_parallel_functions'):
+                            elif name == "parallel":
+                                if not hasattr(self, "_parallel_functions"):
                                     self._parallel_functions = set()
                                 self._parallel_functions.add(func_name)
-                        
+
                         # Don't add to _decorated_functions for marker decorators
                         return decorated_function
-                    
+
                     # For wrapper decorators (like @profile), store the wrapped function
                     self._decorated_functions = getattr(
                         self, "_decorated_functions", {}
@@ -2967,10 +3105,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             )
 
                     original_func_callable.__name__ = func_name
-                    
+
                     # Apply the decorator to get the wrapped function
                     wrapped_function = raw_decorator_func(original_func_callable)
-                    
+
                     # Store the wrapped function directly
                     self._decorated_functions[func_name] = wrapped_function
                 return decorated_function

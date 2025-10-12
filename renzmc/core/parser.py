@@ -29,85 +29,85 @@ This module implements the parser for RenzmcLang, converting tokens
 into an Abstract Syntax Tree (AST).
 """
 
-from renzmc.core.token import TokenType, Token
-from renzmc.core.parser_type_helpers import parse_type_hint_advanced
 from renzmc.core.ast import (
-    PropertyDecl,
-    StaticMethodDecl,
-    ClassMethodDecl,
-    ExtendedUnpacking,
-    StarredExpr,
-    SliceAssign,
     AST,
-    Program,
-    Block,
-    BinOp,
-    UnaryOp,
-    Num,
-    String,
-    Boolean,
-    NoneValue,
-    List,
-    Dict,
-    Set,
-    Tuple,
-    DictComp,
-    Var,
-    VarDecl,
     Assign,
-    MultiVarDecl,
-    MultiAssign,
-    NoOp,
-    Print,
-    Input,
-    If,
-    While,
-    For,
-    ForEach,
-    Break,
-    Continue,
-    FuncDecl,
-    FuncCall,
-    Return,
-    ClassDecl,
-    MethodDecl,
-    Constructor,
-    AttributeRef,
-    MethodCall,
-    Import,
-    FromImport,
-    PythonImport,
-    PythonCall,
-    TryCatch,
-    Raise,
-    IndexAccess,
-    SliceAccess,
-    SelfVar,
-    Lambda,
-    ListComp,
-    SetComp,
-    Generator,
-    Yield,
-    YieldFrom,
-    Decorator,
     AsyncFuncDecl,
     AsyncMethodDecl,
+    AttributeRef,
     Await,
-    TypeHint,
-    FormatString,
-    Ternary,
-    Unpacking,
-    WalrusOperator,
-    CompoundAssign,
-    Switch,
+    BinOp,
+    Block,
+    Boolean,
+    Break,
     Case,
-    With,
-    TypeAlias,
+    ClassDecl,
+    ClassMethodDecl,
+    CompoundAssign,
+    Constructor,
+    Continue,
+    Decorator,
+    Dict,
+    DictComp,
+    ExtendedUnpacking,
+    For,
+    ForEach,
+    FormatString,
+    FromImport,
+    FuncCall,
+    FuncDecl,
+    Generator,
+    If,
+    Import,
+    IndexAccess,
+    Input,
+    Lambda,
+    List,
+    ListComp,
     LiteralType,
+    MethodCall,
+    MethodDecl,
+    MultiAssign,
+    MultiVarDecl,
+    NoneValue,
+    NoOp,
+    Num,
+    Print,
+    Program,
+    PropertyDecl,
+    PythonCall,
+    PythonImport,
+    Raise,
+    Return,
+    SelfVar,
+    Set,
+    SetComp,
+    SliceAccess,
+    SliceAssign,
+    StarredExpr,
+    StaticMethodDecl,
+    String,
+    Switch,
+    Ternary,
+    TryCatch,
+    Tuple,
+    TypeAlias,
     TypedDictType,
+    TypeHint,
+    UnaryOp,
+    Unpacking,
+    Var,
+    VarDecl,
+    WalrusOperator,
+    While,
+    With,
+    Yield,
+    YieldFrom,
 )
-from renzmc.core.error import ParserError, LexerError
+from renzmc.core.error import LexerError, ParserError
 from renzmc.core.lexer import Lexer
+from renzmc.core.parser_type_helpers import parse_type_hint_advanced
+from renzmc.core.token import Token, TokenType
 
 
 class Parser:
@@ -130,12 +130,25 @@ class Parser:
         else:
             # Check if we're expecting ITU but got a keyword token (common when using reserved word as variable)
             if token_type == TokenType.ITU and self.current_token.type in [
-                TokenType.SELESAI, TokenType.JIKA, TokenType.SELAMA, TokenType.UNTUK,
-                TokenType.FUNGSI, TokenType.KELAS, TokenType.HASIL, TokenType.BERHENTI,
-                TokenType.LANJUT, TokenType.COBA, TokenType.TANGKAP, TokenType.AKHIRNYA
+                TokenType.SELESAI,
+                TokenType.JIKA,
+                TokenType.SELAMA,
+                TokenType.UNTUK,
+                TokenType.FUNGSI,
+                TokenType.KELAS,
+                TokenType.HASIL,
+                TokenType.BERHENTI,
+                TokenType.LANJUT,
+                TokenType.COBA,
+                TokenType.TANGKAP,
+                TokenType.AKHIRNYA,
             ]:
                 # Get the actual keyword text from lexer
-                keyword_text = self.current_token.value if hasattr(self.current_token, 'value') else str(self.current_token.type)
+                keyword_text = (
+                    self.current_token.value
+                    if hasattr(self.current_token, "value")
+                    else str(self.current_token.type)
+                )
                 self.error(
                     f"Kesalahan sintaks: Kata kunci '{keyword_text}' tidak dapat digunakan sebagai nama variabel. "
                     f"Kata kunci ini adalah reserved keyword dalam RenzmcLang. "
@@ -305,26 +318,26 @@ class Parser:
             if self.current_token.type != TokenType.EOF:
                 # Check if it's a reserved keyword being used incorrectly
                 reserved_keywords = {
-                    TokenType.SELESAI: 'selesai/akhir',
-                    TokenType.JIKA: 'jika',
-                    TokenType.SELAMA: 'selama',
-                    TokenType.UNTUK: 'untuk',
-                    TokenType.FUNGSI: 'fungsi',
-                    TokenType.KELAS: 'kelas',
-                    TokenType.HASIL: 'hasil',
-                    TokenType.BERHENTI: 'berhenti',
-                    TokenType.LANJUT: 'lanjut',
-                    TokenType.COBA: 'coba',
-                    TokenType.TANGKAP: 'tangkap',
-                    TokenType.AKHIRNYA: 'akhirnya',
-                    TokenType.DAN: 'dan',
-                    TokenType.ATAU: 'atau',
-                    TokenType.TIDAK: 'tidak',
-                    TokenType.DALAM: 'dalam',
-                    TokenType.DARI: 'dari',
-                    TokenType.SAMPAI: 'sampai',
+                    TokenType.SELESAI: "selesai/akhir",
+                    TokenType.JIKA: "jika",
+                    TokenType.SELAMA: "selama",
+                    TokenType.UNTUK: "untuk",
+                    TokenType.FUNGSI: "fungsi",
+                    TokenType.KELAS: "kelas",
+                    TokenType.HASIL: "hasil",
+                    TokenType.BERHENTI: "berhenti",
+                    TokenType.LANJUT: "lanjut",
+                    TokenType.COBA: "coba",
+                    TokenType.TANGKAP: "tangkap",
+                    TokenType.AKHIRNYA: "akhirnya",
+                    TokenType.DAN: "dan",
+                    TokenType.ATAU: "atau",
+                    TokenType.TIDAK: "tidak",
+                    TokenType.DALAM: "dalam",
+                    TokenType.DARI: "dari",
+                    TokenType.SAMPAI: "sampai",
                 }
-                
+
                 if self.current_token.type in reserved_keywords:
                     keyword = reserved_keywords[self.current_token.type]
                     self.error(
@@ -1014,7 +1027,9 @@ class Parser:
                 else_expr = self.walrus_expr()
                 node = Ternary(condition, if_expr, else_expr)
             else:
-                self.error("Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'")
+                self.error(
+                    "Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'"
+                )
         return node
 
     def walrus_expr(self):
@@ -1262,7 +1277,9 @@ class Parser:
                     elif self.current_token.type == TokenType.BIT_ATAU:
                         break
                     else:
-                        self.error(f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}")
+                        self.error(
+                            f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}"
+                        )
                 self.eat(TokenType.BIT_ATAU)
                 self.eat(TokenType.KURUNG_AKHIR)
                 primary = Tuple(elements, token)
@@ -2295,22 +2312,36 @@ class Parser:
     def from_import_statement(self):
         """
         Parse 'dari module impor item1, item2, ...' statements
-        Supports nested modules: 'dari Ren.renz impor Class1, Class2'
+        Supports:
+        - Nested modules: 'dari Ren.renz impor Class1, Class2'
+        - Wildcard import: 'dari module impor *'
+        - Relative import: 'dari .module impor func'
         """
         token = self.current_token
         self.eat(TokenType.DARI)
-        
+
+        # Check for relative import (starts with .)
+        is_relative = False
+        relative_level = 0
+
+        while self.current_token.type == TokenType.TITIK:
+            is_relative = True
+            relative_level += 1
+            self.eat(TokenType.TITIK)
+
         # Parse module path (can be dot-separated like "Ren.renz")
         module_parts = []
+
+        # For relative imports, module name is optional (e.g., 'dari . impor func')
         if self.current_token.type == TokenType.IDENTIFIER:
             module_parts.append(self.current_token.value)
             self.eat(TokenType.IDENTIFIER)
         elif self.current_token.type == TokenType.TEKS:
             module_parts.append(self.current_token.value)
             self.eat(TokenType.TEKS)
-        else:
+        elif not is_relative:
             self.error("Diharapkan nama modul setelah 'dari'")
-        
+
         # Handle dot-separated module paths (e.g., Ren.renz)
         while self.current_token.type == TokenType.TITIK:
             self.eat(TokenType.TITIK)
@@ -2319,58 +2350,76 @@ class Parser:
                 self.eat(TokenType.IDENTIFIER)
             else:
                 self.error("Diharapkan nama modul setelah '.'")
-        
-        module_name = ".".join(module_parts)
-        
+
+        module_name = ".".join(module_parts) if module_parts else ""
+
         # Expect 'impor' keyword
         if self.current_token.type != TokenType.IMPOR:
             self.error("Diharapkan 'impor' setelah nama modul")
         self.eat(TokenType.IMPOR)
-        
+
+        # Check for wildcard import (*)
+        if self.current_token.type == TokenType.KALI_OP:
+            self.eat(TokenType.KALI_OP)
+            # Return special marker for wildcard import
+            return FromImport(
+                module_name,
+                [("*", None)],
+                token,
+                is_relative=is_relative,
+                relative_level=relative_level,
+            )
+
         # Parse items to import (can be comma-separated)
         items = []
-        
+
         # First item
         if self.current_token.type == TokenType.IDENTIFIER:
             item_name = self.current_token.value
             self.eat(TokenType.IDENTIFIER)
-            
+
             # Check for alias
             alias = None
             if self.current_token.type == TokenType.SEBAGAI:
                 self.eat(TokenType.SEBAGAI)
                 alias = self.current_token.value
                 self.eat(TokenType.IDENTIFIER)
-            
+
             items.append((item_name, alias))
         else:
             self.error("Diharapkan nama item untuk diimpor")
-        
+
         # Additional items (comma-separated)
         while self.current_token.type == TokenType.KOMA:
             self.eat(TokenType.KOMA)
-            
+
             if self.current_token.type == TokenType.IDENTIFIER:
                 item_name = self.current_token.value
                 self.eat(TokenType.IDENTIFIER)
-                
+
                 # Check for alias
                 alias = None
                 if self.current_token.type == TokenType.SEBAGAI:
                     self.eat(TokenType.SEBAGAI)
                     alias = self.current_token.value
                     self.eat(TokenType.IDENTIFIER)
-                
+
                 items.append((item_name, alias))
             else:
                 self.error("Diharapkan nama item setelah koma")
-        
-        return FromImport(module_name, items, token)
+
+        return FromImport(
+            module_name,
+            items,
+            token,
+            is_relative=is_relative,
+            relative_level=relative_level,
+        )
 
     def import_statement(self):
         token = self.current_token
         self.eat(TokenType.IMPOR)
-        
+
         # Parse module path (can be dot-separated like "Ren.renz")
         module_parts = []
         if self.current_token.type == TokenType.TEKS:
@@ -2381,7 +2430,7 @@ class Parser:
             self.eat(TokenType.IDENTIFIER)
         else:
             self.error("Diharapkan nama modul setelah 'impor'")
-        
+
         # Handle dot-separated module paths (e.g., Ren.renz)
         while self.current_token.type == TokenType.TITIK:
             self.eat(TokenType.TITIK)
@@ -2390,9 +2439,9 @@ class Parser:
                 self.eat(TokenType.IDENTIFIER)
             else:
                 self.error("Diharapkan nama modul setelah '.'")
-        
+
         module_name = ".".join(module_parts)
-        
+
         alias = None
         if self.current_token.type == TokenType.SEBAGAI:
             self.eat(TokenType.SEBAGAI)

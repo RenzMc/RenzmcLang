@@ -28,12 +28,13 @@ RenzmcLang Main Entry Point
 This module provides the command-line interface for running RenzmcLang programs.
 """
 
-import sys
 import argparse
+import sys
+
+from renzmc.core.error import format_error
+from renzmc.core.interpreter import Interpreter
 from renzmc.core.lexer import Lexer
 from renzmc.core.parser import Parser
-from renzmc.core.interpreter import Interpreter
-from renzmc.core.error import format_error
 from renzmc.version import __version__
 
 
@@ -72,6 +73,13 @@ def run_code(source_code, filename="<stdin>", interpreter=None):
         lexer = Lexer(source_code)
         if interpreter is None:
             interpreter = Interpreter()
+
+        # Set the current file path for relative imports
+        if filename != "<stdin>":
+            import os
+
+            interpreter.current_file = os.path.abspath(filename)
+
         parser = Parser(lexer)
         ast = parser.parse()
         interpreter.visit(ast)
@@ -86,6 +94,7 @@ def run_code(source_code, filename="<stdin>", interpreter=None):
 def run_interactive():
     """Start the interactive REPL (Read-Eval-Print Loop)."""
     from renzmc.repl import RenzmcREPL
+
     repl = RenzmcREPL()
     repl.run()
 

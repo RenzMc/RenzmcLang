@@ -15,8 +15,8 @@ exclude =
     .pytest_cache
 
 ignore =
-    E203,  # whitespace before ':'
-    W503,  # line break before binary operator
+    E203,
+    W503
 
 select = E,W,F,C,B,D
 

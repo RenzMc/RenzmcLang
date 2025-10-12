@@ -1,0 +1,20 @@
+// Test module with various exports
+
+buat fungsi jumlahkan dengan a, b
+    hasil a + b
+selesai
+
+buat fungsi kalikan dengan a, b
+    hasil a * b
+selesai
+
+buat fungsi kurangkan dengan a, b
+    hasil a - b
+selesai
+
+KONSTANTA itu 42
+
+// Private function (should not be exported with wildcard)
+buat fungsi _private_func dengan x
+    hasil x * 2
+selesai

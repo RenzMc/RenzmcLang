@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+
 class AST:
 
     def __init__(self, token=None):
@@ -333,13 +334,18 @@ class Import(AST):
 class FromImport(AST):
     """
     AST node for 'from module import item1, item2' statements
-    Supports both simple and nested module paths (e.g., 'from Ren.renz import Class')
+    Supports:
+    - Simple and nested module paths (e.g., 'from Ren.renz import Class')
+    - Wildcard imports (e.g., 'from module import *')
+    - Relative imports (e.g., 'from .module import func')
     """
 
-    def __init__(self, module, items, token=None):
+    def __init__(self, module, items, token=None, is_relative=False, relative_level=0):
         super().__init__(token)
         self.module = module  # Module path (can be dot-separated like "Ren.renz")
         self.items = items  # List of (name, alias) tuples to import
+        self.is_relative = is_relative  # True if relative import (starts with .)
+        self.relative_level = relative_level  # Number of dots (1 for ., 2 for .., etc.)
 
 
 class PythonImport(AST):

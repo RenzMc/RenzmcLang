@@ -1,0 +1,19 @@
+// Test wildcard import
+tampilkan "=== Testing Wildcard Import ==="
+tampilkan ""
+
+// This should import all functions from the module
+dari test_module impor *
+
+// Test imported functions
+tampilkan "Testing imported functions:"
+hasil1 itu panggil jumlahkan dengan 5, 3
+tampilkan f"jumlahkan(5, 3) = {hasil1}"
+
+hasil2 itu panggil kalikan dengan 4, 6
+tampilkan f"kalikan(4, 6) = {hasil2}"
+
+tampilkan f"KONSTANTA = {KONSTANTA}"
+
+tampilkan ""
+tampilkan "✓ Wildcard import test completed!"

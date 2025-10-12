@@ -26,6 +26,175 @@ RenzMcLang menyediakan fitur-fitur advanced yang powerful untuk development mode
 
 ---
 
+## Advanced Import System 🚀
+
+RenzMcLang now supports advanced import features that rival Python's import system!
+
+### 1. Wildcard Import (Import All)
+
+**Sintaks:** `dari module impor *`
+
+**Deskripsi:** Import semua item publik dari module.
+
+**Contoh:**
+```python
+// math_utils.rmc
+buat fungsi tambah dengan a, b
+    hasil a + b
+selesai
+
+buat fungsi kali dengan a, b
+    hasil a * b
+selesai
+
+PI itu 3.14159
+
+// main.rmc
+dari math_utils impor *
+
+// Semua fungsi dan variabel publik bisa digunakan
+hasil1 itu panggil tambah dengan 10, 5
+tampilkan hasil1  // Output: 15
+
+hasil2 itu panggil kali dengan 4, 6
+tampilkan hasil2  // Output: 24
+```
+
+### 2. Relative Import
+
+**Sintaks:** `dari .module impor item` atau `dari ..module impor item`
+
+**Deskripsi:** Import berdasarkan lokasi file relatif terhadap file saat ini.
+
+**Contoh Struktur Folder:**
+```
+project/
+├── main.rmc
+├── Utils/
+│   ├── helpers.rmc
+│   └── validators.rmc
+└── Models/
+    └── user.rmc
+```
+
+**Contoh Relative Import:**
+```python
+// Di Utils/validators.rmc
+dari .helpers impor format_text      // Import dari file di folder yang sama
+dari ..config impor settings         // Import dari parent folder
+
+// Di main.rmc
+dari Utils.helpers impor format_text  // Import dari nested module
+dari Models.user impor buat_User      // Import dari folder lain
+```
+
+**Level Relative Import:**
+- `.` - Folder yang sama (1 level)
+- `..` - Parent folder (2 level)
+- `...` - Grandparent folder (3 level)
+
+### 3. Import dari Nested Modules
+
+**Contoh:**
+```python
+// Import dari modul dalam struktur folder
+dari Utils.math.operations impor jumlah, kurang, kali
+dari Utils.string.formatters impor format_currency sebagai format
+```
+
+### 4. Import dengan Python Integration
+
+**Contoh:**
+```python
+// Import library Python
+impor_python "requests"
+impor_python "json"
+
+// Gunakan library Python
+response itu panggil_python requests.get("https://api.example.com/data")
+data itu panggil_python json.loads(response.text)
+tampilkan data
+```
+
+### 5. Best Practices untuk Import
+
+**Urutan yang Disarankan:**
+```python
+// 1. Import dari standard library (jika ada)
+// 2. Import dari third-party
+// 3. Import dari modul lokal
+
+dari Utils.helpers impor format_text
+dari Models.user impor buat_User
+dari Config.settings impor DEBUG
+```
+
+**Hindari Konflik Nama:**
+```python
+// ❌ Hindari: nama yang sama dengan builtin
+buat fungsi tambah dengan a, b  // 'tambah' adalah builtin
+    hasil a + b
+selesai
+
+// ✅ Gunakan: nama yang unik
+buat fungsi jumlah dengan a, b  // Nama yang berbeda
+    hasil a + b
+selesai
+```
+
+### 6. Contoh Lengkap Import System
+
+**math_utils.rmc:**
+```python
+// Fungsi matematika dasar
+buat fungsi tambah dengan a, b
+    hasil a + b
+selesai
+
+buat fungsi selisih dengan a, b
+    hasil a - b
+selesai
+
+// Konstanta
+PI itu 3.14159
+E itu 2.71828
+```
+
+**string_utils.rmc:**
+```python
+// Fungsi string helper
+buat fungsi format_currency dengan amount
+    hasil f"Rp {amount:,.0f}"
+selesai
+
+buat fungsi validate_email dengan email
+    hasil berisi(email, "@") dan berisi(email, ".")
+selesai
+```
+
+**main.rmc:**
+```python
+// Import dari multiple modules
+dari math_utils impor tambah, selisih, PI
+dari string_utils impor format_currency, validate_email
+
+// Gunakan fungsi yang diimpor
+hasil_math itu panggil tambah dengan 10, 5
+hasil_string itu panggil format_currency dengan 1000000
+is_valid itu panggil validate_email dengan "user@example.com"
+
+tampilkan f"Math: {hasil_math}, Currency: {hasil_string}, Valid: {is_valid}"
+tampilkan f"PI = {PI}"
+```
+
+**Output:**
+```
+Math: 15, Currency: Rp 1,000,000, Valid: true
+PI = 3.14159
+```
+
+---
+
 ## Object-Oriented Programming (OOP)
 
 ### 1. Classes and Objects

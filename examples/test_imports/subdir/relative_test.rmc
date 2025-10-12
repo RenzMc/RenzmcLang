@@ -1,0 +1,16 @@
+// Test relative import
+tampilkan "=== Testing Relative Import ==="
+tampilkan ""
+
+// Import from parent directory (one level up)
+dari .test_module impor jumlahkan, kalikan
+
+tampilkan "Testing relative imports:"
+hasil1 itu panggil jumlahkan dengan 10, 20
+tampilkan f"jumlahkan(10, 20) = {hasil1}"
+
+hasil2 itu panggil kalikan dengan 7, 8
+tampilkan f"kalikan(7, 8) = {hasil2}"
+
+tampilkan ""
+tampilkan "✓ Relative import test completed!"

@@ -251,10 +251,20 @@ dari folder.module impor item
 // Import biasa (seluruh module)
 impor module sebagai alias
 
+// WILDCARD IMPORT - Import semua item publik
+dari module impor *
+
+// RELATIVE IMPORT - Import berdasarkan lokasi file
+dari .module impor item          // Folder yang sama
+dari ..module impor item         // Parent folder
+dari ...module impor item        // Grandparent folder
+
 // Contoh penggunaan
 dari math_utils impor jumlah, perkalian
 dari string_utils impor format_text sebagai fmt
 impor helpers as h
+dari utils impor *               // Import semua fungsi
+dari .helpers impor format_text  // Import relatif
 ```
 
 ---

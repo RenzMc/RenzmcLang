@@ -39,11 +39,11 @@ jobs:
             safety \
             pre-commit
 
-      - name: Run Black (format check)
+      - name: Run Black (Code formatter - fail on mismatch)
         run: |
           black --check renzmc/
 
-      - name: Run isort (import sort check)
+      - name: Run isort (Import sorting - fail on mismatch)
         run: |
           isort --check-only renzmc/
 
@@ -58,23 +58,23 @@ jobs:
             --output-file=flake8-report.json
           flake8 renzmc/ --count --statistics --max-line-length=88 || exit 1
 
-      - name: Run Pylint (analysis)
+      - name: Run Pylint (Code analysis - fail on errors)
         run: |
           pylint renzmc/ --output-format=text --reports=y > pylint-report.txt
 
-      - name: Run MyPy (type checking)
+      - name: Run MyPy (Strict type checking)
         run: |
           mypy renzmc/ --strict --show-error-codes > mypy-report.txt
 
-      - name: Run Bandit (security scan)
+      - name: Run Bandit (Security quick scan)
         run: |
           bandit -r renzmc/ -f json -o bandit-report.json
 
-      - name: Optional: run pre-commit hooks (all files)
+      - name: "Optional: run pre-commit hooks (all files)"
         run: |
           pre-commit run --all-files || true
 
-      - name: Generate Lint Summary
+      - name: Generate Lint Summary (always)
         if: ${{ always() }}
         run: |
           echo "## Lint Report for Python ${{ matrix.python-version }}" >> $GITHUB_STEP_SUMMARY
@@ -112,7 +112,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python (security)
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
@@ -122,11 +122,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install bandit safety
 
-      - name: Run Bandit (security linter)
+      - name: Run Bandit (Security Linter)
         run: |
           bandit -r renzmc/ -f json -o bandit-report.json
 
-      - name: Run Safety (dependency security check)
+      - name: Run Safety (Dependency Security Check)
         run: |
           safety check --json > safety-report.json || true
 

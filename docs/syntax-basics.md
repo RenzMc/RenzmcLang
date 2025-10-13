@@ -797,108 +797,6 @@ dari Config.settings impor DEBUG
 // Kode Anda di sini
 ```
 
-### 5. Wildcard Import (Import Semua Item)
-
-**Sintaks:** `dari module impor *`
-
-**Deskripsi:** Import semua item publik dari module.
-
-**Contoh:**
-```python
-// Import semua fungsi dari math_utils
-dari math_utils impor *
-
-// Sekarang Anda bisa gunakan semua fungsi
-hasil itu panggil jumlah dengan 10, 5
-tampilkan hasil  // Output: 15
-
-hasil2 itu panggil kali dengan 4, 6
-tampilkan hasil2  // Output: 24
-```
-
-**Catatan:** Hanya item publik (tidak dimulai dengan `_`) yang akan diimport.
-
-### 6. Relative Import (Import Relatif)
-
-**Sintaks:** `dari .module impor item` atau `dari ..module impor item`
-
-**Deskripsi:** Import berdasarkan lokasi file relatif terhadap file saat ini.
-
-**Contoh Struktur Folder:**
-```
-project/
-├── main.rmc
-├── Utils/
-│   ├── helpers.rmc
-│   └── validators.rmc
-└── Models/
-    └── user.rmc
-```
-
-**Contoh Relative Import:**
-```python
-// Di main.rmc
-dari Utils.helpers impor format_text    // Import dari folder Utils
-dari Models.user impor buat_User        // Import dari folder Models
-
-// Di Utils/validators.rmc
-dari .helpers impor format_text         // Import dari file di folder yang sama
-dari ..config impor settings            // Import dari parent folder
-```
-
-**Level Relative Import:**
-- `.` - Folder yang sama
-- `..` - Parent folder (satu level naik)
-- `...` - Grandparent folder (dua level naik)
-
-### 7. Import dari Nested Modules
-
-**Contoh:**
-```python
-// Import dari modul dalam folder
-dari Utils.math.operations impor jumlah, kurang, kali
-
-// Import dengan alias
-dari Utils.string.formatters impor format_currency sebagai format
-```
-
-### 8. Import Constants dan Variabel
-
-**Contoh:**
-```python
-// constants.rmc
-PI itu 3.14159
-E itu 2.71828
-MAX_USERS itu 100
-
-// main.rmc
-dari constants impor PI, E, MAX_USERS
-
-tampilkan f"PI = {PI}"              // Output: PI = 3.14159
-tampilkan f"Max users: {MAX_USERS}"  // Output: Max users: 100
-```
-
-### 9. Import Function yang Mengembalikan Object
-
-**Contoh:**
-```python
-// user.rmc
-buat fungsi buat_User dengan nama, email
-    user itu {
-        "nama": nama,
-        "email": email
-    }
-    hasil user
-selesai
-
-// main.rmc
-dari user impor buat_User
-
-user_baru itu panggil buat_User dengan "Alice", "alice@example.com"
-tampilkan user_baru
-```
-
-
 #### Hindari Konflik Nama
 ```python
 // ❌ Hindari: nama yang sama dengan builtin
@@ -914,7 +812,7 @@ selesai
 
 ---
 
-### Tips dan Trik
+### 5. Tips dan Trik
 
 #### Import Conditional
 ```python
@@ -924,7 +822,7 @@ jika DEBUG == benar
 selesai
 ```
 
-### Contoh Lengkap
+### 6. Contoh Lengkap
 
 **math_utils.rmc:**
 ```python
@@ -982,6 +880,142 @@ PI = 3.14159
 ## Dukungan Multi-baris
 
 RenzMcLang mendukung sintaks multi-baris untuk keterbacaan kode yang lebih baik, terutama ketika berurusan dengan pemanggilan fungsi yang panjang atau struktur data yang kompleks.
+
+### 1. Wildcard Import (Import Semua Item)
+
+**Sintaks:** `dari module impor *`
+
+**Deskripsi:** Import semua item publik dari module.
+
+**Contoh:**
+```python
+// Import semua fungsi dari math_utils
+dari math_utils impor *
+
+// Sekarang Anda bisa gunakan semua fungsi
+hasil itu panggil jumlah dengan 10, 5
+tampilkan hasil  // Output: 15
+
+hasil2 itu panggil kali dengan 4, 6
+tampilkan hasil2  // Output: 24
+```
+
+**Catatan:** Hanya item publik (tidak dimulai dengan `_`) yang akan diimport.
+
+### 2. Relative Import (Import Relatif)
+
+**Sintaks:** `dari .module impor item` atau `dari ..module impor item`
+
+**Deskripsi:** Import berdasarkan lokasi file relatif terhadap file saat ini.
+
+**Contoh Struktur Folder:**
+```
+project/
+├── main.rmc
+├── Utils/
+│   ├── helpers.rmc
+│   └── validators.rmc
+└── Models/
+    └── user.rmc
+```
+
+**Contoh Relative Import:**
+```python
+// Di main.rmc
+dari Utils.helpers impor format_text    // Import dari folder Utils
+dari Models.user impor buat_User        // Import dari folder Models
+
+// Di Utils/validators.rmc
+dari .helpers impor format_text         // Import dari file di folder yang sama
+dari ..config impor settings            // Import dari parent folder
+```
+
+**Level Relative Import:**
+- `.` - Folder yang sama
+- `..` - Parent folder (satu level naik)
+- `...` - Grandparent folder (dua level naik)
+
+### 3. Import dari Nested Modules
+
+**Contoh:**
+```python
+// Import dari modul dalam folder
+dari Utils.math.operations impor jumlah, kurang, kali
+
+// Import dengan alias
+dari Utils.string.formatters impor format_currency sebagai format
+```
+
+### 4. Import Constants dan Variabel
+
+**Contoh:**
+```python
+// constants.rmc
+PI itu 3.14159
+E itu 2.71828
+MAX_USERS itu 100
+
+// main.rmc
+dari constants impor PI, E, MAX_USERS
+
+tampilkan f"PI = {PI}"              // Output: PI = 3.14159
+tampilkan f"Max users: {MAX_USERS}"  // Output: Max users: 100
+```
+
+### 5. Import Function yang Mengembalikan Object
+
+**Contoh:**
+```python
+// user.rmc
+buat fungsi buat_User dengan nama, email
+    user itu {
+        "nama": nama,
+        "email": email
+    }
+    hasil user
+selesai
+
+// main.rmc
+dari user impor buat_User
+
+user_baru itu panggil buat_User dengan "Alice", "alice@example.com"
+tampilkan user_baru
+```
+
+### 6. Import dengan Python Integration
+
+**Contoh:**
+```python
+// Import library Python
+impor_python "requests"
+impor_python "json"
+
+// Gunakan library Python
+response itu panggil_python requests.get("https://api.example.com/data")
+data itu panggil_python json.loads(response.text)
+tampilkan data
+```
+
+### 7. Best Practices untuk Import
+
+**Urutan yang Benar:**
+```python
+// 1. Import dari standard library
+// 2. Import dari third-party
+// 3. Import dari modul lokal
+dari Utils.helpers impor format_text
+dari Models.user impor buat_User
+dari Config.settings impor DEBUG
+```
+
+**Hindari Konflik Nama:**
+```python
+// ❌ Hindari: nama yang sama dengan builtin
+dari math impor tambah  // 'tambah' adalah builtin
+
+// ✅ Gunakan: nama yang unik
+dari math impor jumlah  // Nama yang berbeda
+```
 
 ---
 

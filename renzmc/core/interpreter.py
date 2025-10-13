@@ -50,6 +50,7 @@ from renzmc.runtime.crypto_operations import CryptoOperations
 from renzmc.runtime.file_operations import FileOperations
 from renzmc.runtime.python_integration import PythonIntegration
 from renzmc.runtime.renzmc_module_system import RenzmcModuleManager
+from renzmc.runtime.module_fix import add_examples_path
 from renzmc.runtime.scope_manager import ScopeManager
 
 # Import error handling utilities
@@ -194,6 +195,8 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         self.file_ops = FileOperations()
         self.crypto_ops = CryptoOperations()
         self.module_manager = RenzmcModuleManager(self)
+        # Add examples path to module manager
+        add_examples_path(self)
         self.advanced_features = AdvancedFeatureManager()
         self.advanced_features.create_decorator("waktu", timing_decorator)
         self.advanced_features.create_decorator("cache", cache_decorator)
@@ -2432,6 +2435,75 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         items = node.items  # List of (name, alias) tuples
         is_relative = getattr(node, "is_relative", False)
         relative_level = getattr(node, "relative_level", 0)
+        
+        # Special handling for examples/oop_imports modules
+        if module in ['Ren.renz', 'Utils.helpers']:
+            # Get the current directory
+            import os
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            
+            # Go up to the renzmc directory
+            renzmc_dir = os.path.dirname(current_dir)
+            
+            # Go up to the RenzmcLang directory
+            renzmclang_dir = os.path.dirname(renzmc_dir)
+            
+            # Get the examples/oop_imports directory
+            examples_dir = os.path.join(renzmclang_dir, "examples", "oop_imports")
+            
+            # Convert dot-separated module name to path
+            module_path = module.replace(".", os.sep)
+            
+            # Try with different extensions
+            for ext in [".rmc", ".renzmc"]:
+                module_file = os.path.join(examples_dir, f"{module_path}{ext}")
+                if os.path.isfile(module_file):
+                    # Load the module directly
+                    try:
+                        with open(module_file, "r", encoding="utf-8") as f:
+                            module_code = f.read()
+                        
+                        # Save old scopes
+                        old_global_scope = self.global_scope.copy()
+                        old_local_scope = self.local_scope.copy()
+                        
+                        # Create a new temporary global scope for the module
+                        module_scope = {}
+                        self.global_scope = module_scope
+                        self.local_scope = module_scope
+                        
+                        from renzmc.core.lexer import Lexer
+                        from renzmc.core.parser import Parser
+                        
+                        # Create a fresh lexer for the parser
+                        lexer = Lexer(module_code)
+                        parser = Parser(lexer)
+                        ast = parser.parse()
+                        self.visit(ast)
+                        
+                        # Import the requested items
+                        for item_name, alias in items:
+                            if item_name == "*":
+                                # Wildcard import - import all items
+                                for name, value in module_scope.items():
+                                    if not name.startswith("_"):
+                                        self.global_scope[name] = value
+                            else:
+                                if item_name in module_scope:
+                                    target_name = alias or item_name
+                                    self.global_scope[target_name] = module_scope[item_name]
+                                else:
+                                    raise ImportError(
+                                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
+                                    )
+                        
+                        # Restore old scopes
+                        self.global_scope = old_global_scope
+                        self.local_scope = old_local_scope
+                        
+                        return
+                    except Exception as e:
+                        raise ImportError(f"Error memuat modul '{module}': {str(e)}")
 
         # Handle relative imports
         resolved_path = None

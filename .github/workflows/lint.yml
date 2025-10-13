@@ -39,16 +39,17 @@ jobs:
             safety \
             pre-commit
 
-      - name: Run Black (Code formatter - fail on mismatch)
+      - name: Run Black (format check)
         run: |
           black --check renzmc/
 
-      - name: Run isort (Import sorting - fail on mismatch)
+      - name: Run isort (import sort check)
         run: |
           isort --check-only renzmc/
 
       - name: Run Flake8 (Style + lint) - strict
         run: |
+          echo "Running Flake8 (JSON report + human-readable check)..."
           flake8 renzmc/ \
             --count --statistics \
             --max-line-length=88 \
@@ -57,15 +58,15 @@ jobs:
             --output-file=flake8-report.json
           flake8 renzmc/ --count --statistics --max-line-length=88 || exit 1
 
-      - name: Run Pylint (Code analysis - fail on errors)
+      - name: Run Pylint (analysis)
         run: |
           pylint renzmc/ --output-format=text --reports=y > pylint-report.txt
 
-      - name: Run MyPy (Strict type checking)
+      - name: Run MyPy (type checking)
         run: |
           mypy renzmc/ --strict --show-error-codes > mypy-report.txt
 
-      - name: Run Bandit (Security quick scan)
+      - name: Run Bandit (security scan)
         run: |
           bandit -r renzmc/ -f json -o bandit-report.json
 
@@ -73,7 +74,7 @@ jobs:
         run: |
           pre-commit run --all-files || true
 
-      - name: Generate Lint Summary (always)
+      - name: Generate Lint Summary
         if: ${{ always() }}
         run: |
           echo "## Lint Report for Python ${{ matrix.python-version }}" >> $GITHUB_STEP_SUMMARY
@@ -111,7 +112,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python (security)
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
@@ -121,11 +122,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install bandit safety
 
-      - name: Run Bandit (Security Linter)
+      - name: Run Bandit (security linter)
         run: |
           bandit -r renzmc/ -f json -o bandit-report.json
 
-      - name: Run Safety (Dependency Security Check)
+      - name: Run Safety (dependency security check)
         run: |
           safety check --json > safety-report.json || true
 

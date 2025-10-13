@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
+from typing import Any, Dict, Optional
 
 import requests
-from typing import Dict, Any, Optional
 
 
 class HTTPResponse:
@@ -51,36 +51,47 @@ class HTTPResponse:
     def __repr__(self):
         return self.__str__()
 
+
 class HTTPClient:
 
     def __init__(self):
         self.session = requests.Session()
         self.default_timeout = 30
-        self.default_headers = {
-            'User-Agent': 'RenzMcLang'
-        }
+        self.default_headers = {"User-Agent": "RenzMcLang"}
 
-    def get(self, url: str, params: Optional[Dict] = None,
-            headers: Optional[Dict] = None, timeout: Optional[int] = None) -> HTTPResponse:
+    def get(
+        self,
+        url: str,
+        params: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[int] = None,
+    ) -> HTTPResponse:
         try:
             merged_headers = {**self.default_headers, **(headers or {})}
             response = self.session.get(
                 url,
                 params=params,
                 headers=merged_headers,
-                timeout=timeout or self.default_timeout
+                timeout=timeout or self.default_timeout,
             )
             return HTTPResponse(response)
         except requests.exceptions.Timeout:
-            raise TimeoutError(f"Request timeout setelah {timeout or self.default_timeout} detik")
+            raise TimeoutError(
+                f"Request timeout setelah {timeout or self.default_timeout} detik"
+            )
         except requests.exceptions.ConnectionError:
             raise ConnectionError(f"Gagal terhubung ke {url}")
         except Exception as e:
             raise RuntimeError(f"HTTP GET error: {e}")
 
-    def post(self, url: str, data: Optional[Any] = None,
-             json: Optional[Dict] = None, headers: Optional[Dict] = None,
-             timeout: Optional[int] = None) -> HTTPResponse:
+    def post(
+        self,
+        url: str,
+        data: Optional[Any] = None,
+        json: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[int] = None,
+    ) -> HTTPResponse:
         try:
             merged_headers = {**self.default_headers, **(headers or {})}
             response = self.session.post(
@@ -88,19 +99,26 @@ class HTTPClient:
                 data=data,
                 json=json,
                 headers=merged_headers,
-                timeout=timeout or self.default_timeout
+                timeout=timeout or self.default_timeout,
             )
             return HTTPResponse(response)
         except requests.exceptions.Timeout:
-            raise TimeoutError(f"Request timeout setelah {timeout or self.default_timeout} detik")
+            raise TimeoutError(
+                f"Request timeout setelah {timeout or self.default_timeout} detik"
+            )
         except requests.exceptions.ConnectionError:
             raise ConnectionError(f"Gagal terhubung ke {url}")
         except Exception as e:
             raise RuntimeError(f"HTTP POST error: {e}")
 
-    def put(self, url: str, data: Optional[Any] = None,
-            json: Optional[Dict] = None, headers: Optional[Dict] = None,
-            timeout: Optional[int] = None) -> HTTPResponse:
+    def put(
+        self,
+        url: str,
+        data: Optional[Any] = None,
+        json: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[int] = None,
+    ) -> HTTPResponse:
         try:
             merged_headers = {**self.default_headers, **(headers or {})}
             response = self.session.put(
@@ -108,36 +126,44 @@ class HTTPClient:
                 data=data,
                 json=json,
                 headers=merged_headers,
-                timeout=timeout or self.default_timeout
+                timeout=timeout or self.default_timeout,
             )
             return HTTPResponse(response)
         except requests.exceptions.Timeout:
-            raise TimeoutError(f"Request timeout setelah {timeout or self.default_timeout} detik")
+            raise TimeoutError(
+                f"Request timeout setelah {timeout or self.default_timeout} detik"
+            )
         except requests.exceptions.ConnectionError:
             raise ConnectionError(f"Gagal terhubung ke {url}")
         except Exception as e:
             raise RuntimeError(f"HTTP PUT error: {e}")
 
-    def delete(self, url: str, headers: Optional[Dict] = None,
-               timeout: Optional[int] = None) -> HTTPResponse:
+    def delete(
+        self, url: str, headers: Optional[Dict] = None, timeout: Optional[int] = None
+    ) -> HTTPResponse:
         try:
             merged_headers = {**self.default_headers, **(headers or {})}
             response = self.session.delete(
-                url,
-                headers=merged_headers,
-                timeout=timeout or self.default_timeout
+                url, headers=merged_headers, timeout=timeout or self.default_timeout
             )
             return HTTPResponse(response)
         except requests.exceptions.Timeout:
-            raise TimeoutError(f"Request timeout setelah {timeout or self.default_timeout} detik")
+            raise TimeoutError(
+                f"Request timeout setelah {timeout or self.default_timeout} detik"
+            )
         except requests.exceptions.ConnectionError:
             raise ConnectionError(f"Gagal terhubung ke {url}")
         except Exception as e:
             raise RuntimeError(f"HTTP DELETE error: {e}")
 
-    def patch(self, url: str, data: Optional[Any] = None,
-              json: Optional[Dict] = None, headers: Optional[Dict] = None,
-              timeout: Optional[int] = None) -> HTTPResponse:
+    def patch(
+        self,
+        url: str,
+        data: Optional[Any] = None,
+        json: Optional[Dict] = None,
+        headers: Optional[Dict] = None,
+        timeout: Optional[int] = None,
+    ) -> HTTPResponse:
         try:
             merged_headers = {**self.default_headers, **(headers or {})}
             response = self.session.patch(
@@ -145,11 +171,13 @@ class HTTPClient:
                 data=data,
                 json=json,
                 headers=merged_headers,
-                timeout=timeout or self.default_timeout
+                timeout=timeout or self.default_timeout,
             )
             return HTTPResponse(response)
         except requests.exceptions.Timeout:
-            raise TimeoutError(f"Request timeout setelah {timeout or self.default_timeout} detik")
+            raise TimeoutError(
+                f"Request timeout setelah {timeout or self.default_timeout} detik"
+            )
         except requests.exceptions.ConnectionError:
             raise ConnectionError(f"Gagal terhubung ke {url}")
         except Exception as e:

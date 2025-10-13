@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from renzmc.core.token import TokenType
 from renzmc.core.ast import TypeHint
+from renzmc.core.token import TokenType
 
 
 def parse_type_hint_advanced(parser):
@@ -48,7 +48,7 @@ def parse_type_hint_advanced(parser):
     return TypeHint(full_type_name, token)
 
 
-def parse_single_type_component(parser):
+def parse_single_type_component(parser):  # noqa: C901
     if parser.current_token.type != TokenType.IDENTIFIER:
         return None
 
@@ -60,18 +60,29 @@ def parse_single_type_component(parser):
 
         generic_params = []
 
-        if parser.current_token.type in (TokenType.IDENTIFIER, TokenType.TEKS, TokenType.STRING_CONST, TokenType.ANGKA, TokenType.INTEGER_CONST, TokenType.FLOAT_CONST):
+        if parser.current_token.type in (
+            TokenType.IDENTIFIER,
+            TokenType.TEKS,
+            TokenType.STRING_CONST,
+            TokenType.ANGKA,
+            TokenType.INTEGER_CONST,
+            TokenType.FLOAT_CONST,
+        ):
             if parser.current_token.type in (TokenType.TEKS, TokenType.STRING_CONST):
                 param_parts = [f'"{parser.current_token.value}"']
                 parser.eat(parser.current_token.type)
-                
+
                 if parser.current_token.type in (TokenType.TITIK_DUA, TokenType.COLON):
                     param_parts.append(":")
                     parser.eat(parser.current_token.type)
                     if parser.current_token.type == TokenType.IDENTIFIER:
                         param_parts.append(parser.current_token.value)
                         parser.eat(TokenType.IDENTIFIER)
-            elif parser.current_token.type in (TokenType.ANGKA, TokenType.INTEGER_CONST, TokenType.FLOAT_CONST):
+            elif parser.current_token.type in (
+                TokenType.ANGKA,
+                TokenType.INTEGER_CONST,
+                TokenType.FLOAT_CONST,
+            ):
                 param_parts = [str(parser.current_token.value)]
                 parser.eat(parser.current_token.type)
             else:
@@ -89,19 +100,29 @@ def parse_single_type_component(parser):
 
             while parser.current_token.type in (TokenType.KOMA, TokenType.COMMA):
                 parser.eat(parser.current_token.type)
-                if parser.current_token.type in (TokenType.TEKS, TokenType.STRING_CONST):
+                if parser.current_token.type in (
+                    TokenType.TEKS,
+                    TokenType.STRING_CONST,
+                ):
                     param_parts = [f'"{parser.current_token.value}"']
                     parser.eat(parser.current_token.type)
-                    
-                    if parser.current_token.type in (TokenType.TITIK_DUA, TokenType.COLON):
+
+                    if parser.current_token.type in (
+                        TokenType.TITIK_DUA,
+                        TokenType.COLON,
+                    ):
                         param_parts.append(":")
                         parser.eat(parser.current_token.type)
                         if parser.current_token.type == TokenType.IDENTIFIER:
                             param_parts.append(parser.current_token.value)
                             parser.eat(TokenType.IDENTIFIER)
-                    
+
                     generic_params.append(" ".join(param_parts))
-                elif parser.current_token.type in (TokenType.ANGKA, TokenType.INTEGER_CONST, TokenType.FLOAT_CONST):
+                elif parser.current_token.type in (
+                    TokenType.ANGKA,
+                    TokenType.INTEGER_CONST,
+                    TokenType.FLOAT_CONST,
+                ):
                     param_parts = [str(parser.current_token.value)]
                     parser.eat(parser.current_token.type)
                     generic_params.append(" ".join(param_parts))
@@ -109,7 +130,10 @@ def parse_single_type_component(parser):
                     param_parts = [parser.current_token.value]
                     parser.eat(TokenType.IDENTIFIER)
 
-                    while parser.current_token.type in (TokenType.BIT_ATAU, TokenType.PIPE):
+                    while parser.current_token.type in (
+                        TokenType.BIT_ATAU,
+                        TokenType.PIPE,
+                    ):
                         param_parts.append("|")
                         parser.eat(parser.current_token.type)
                         if parser.current_token.type == TokenType.IDENTIFIER:
@@ -124,7 +148,10 @@ def parse_single_type_component(parser):
         generic_str = ", ".join(generic_params)
         base_type = f"{base_type}[{generic_str}]"
 
-    if hasattr(parser.current_token, 'type') and parser.current_token.type == TokenType.TANYA_MARK:
+    if (
+        hasattr(parser.current_token, "type")
+        and parser.current_token.type == TokenType.TANYA_MARK
+    ):
         parser.eat(TokenType.TANYA_MARK)
         base_type = f"{base_type}?"
 

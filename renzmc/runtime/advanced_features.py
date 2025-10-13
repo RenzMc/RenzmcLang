@@ -23,7 +23,7 @@ SOFTWARE.
 """
 
 import functools
-import contextlib
+
 from renzmc.core.error import RenzmcRuntimeError
 
 
@@ -52,16 +52,25 @@ class RenzmcDecorator:
 
     def __call__(self, func):
         # Marker decorators that just set attributes on the function
-        marker_decorators = {'jit_compile_decorator', 'jit_force_decorator', 'gpu_decorator', 'parallel_decorator'}
-        
+        marker_decorators = {
+            "jit_compile_decorator",
+            "jit_force_decorator",
+            "gpu_decorator",
+            "parallel_decorator",
+        }
+
         # Wrapper decorators that wrap the function execution
-        wrapper_decorators = {'profile_decorator', 'timing_decorator', 'cache_decorator'}
-        
+        wrapper_decorators = {
+            "profile_decorator",
+            "timing_decorator",
+            "cache_decorator",
+        }
+
         if self.name in marker_decorators:
             # For marker decorators, just call them with the function
             result = self.actual_decorator(func)
             return result if result is not None else func
-        
+
         if self.name in wrapper_decorators:
             # For wrapper decorators, they return a wrapped function
             try:
@@ -276,7 +285,7 @@ def timing_decorator(func, *args, **kwargs):
     return result
 
 
-def retry_decorator(*decorator_args, **decorator_kwargs):
+def retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C901
     if decorator_args:
         max_attempts = decorator_args[0]
 
@@ -288,7 +297,7 @@ def retry_decorator(*decorator_args, **decorator_kwargs):
                     if attempt == max_attempts - 1:
                         raise e
                     print(
-                        f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."
+                        f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."  # noqa: E501
                     )
             return None
 
@@ -321,7 +330,7 @@ def simple_retry_decorator(func, *args, **kwargs):
     return None
 
 
-def universal_retry_decorator(*decorator_args, **decorator_kwargs):
+def universal_retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C901
     if decorator_args and (not callable(decorator_args[0])):
         max_attempts = decorator_args[0]
 
@@ -333,7 +342,7 @@ def universal_retry_decorator(*decorator_args, **decorator_kwargs):
                     if attempt == max_attempts - 1:
                         raise e
                     print(
-                        f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."
+                        f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."  # noqa: E501
                     )
             return None
 
@@ -349,7 +358,7 @@ def universal_retry_decorator(*decorator_args, **decorator_kwargs):
                 if attempt == max_attempts - 1:
                     raise e
                 print(
-                    f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."
+                    f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."  # noqa: E501
                 )
         return None
     else:
@@ -366,7 +375,7 @@ def create_parameterized_retry_decorator(max_attempts):
                 if attempt == max_attempts - 1:
                     raise e
                 print(
-                    f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."
+                    f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."  # noqa: E501
                 )
         return None
 
@@ -493,29 +502,29 @@ def profile_decorator(func):
     """Profiling decorator that wraps function execution"""
     import time
     import tracemalloc
-    
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         tracemalloc.start()
         start_time = time.perf_counter()
         start_memory = tracemalloc.get_traced_memory()[0]
-        
+
         result = func(*args, **kwargs)
-        
+
         end_time = time.perf_counter()
         end_memory = tracemalloc.get_traced_memory()[0]
         tracemalloc.stop()
-        
+
         execution_time = end_time - start_time
         memory_used = (end_memory - start_memory) / 1024 / 1024
-        
-        func_name = getattr(func, '__name__', 'anonymous')
+
+        func_name = getattr(func, "__name__", "anonymous")
         print(f"Profile [{func_name}]:")
         print(f"  Execution Time: {execution_time:.6f} seconds")
         print(f"  Memory Used: {memory_used:.2f} MB")
-        
+
         return result
-    
+
     return wrapper
 
 

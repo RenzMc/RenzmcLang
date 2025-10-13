@@ -121,7 +121,7 @@ class AsyncError(RenzmcError):
     """Error in asynchronous operations."""
 
 
-def format_error(error, source_code=None):
+def format_error(error, source_code=None):  # noqa: C901
     """
     Format error messages in a user-friendly and informative way.
 
@@ -154,8 +154,7 @@ def format_error(error, source_code=None):
             )
         elif "tidak dapat dipanggil" in error_msg.lower():
             result += (
-                "\n💡 Tips: Pastikan objek yang dipanggil "
-                "adalah fungsi atau metode"
+                "\n💡 Tips: Pastikan objek yang dipanggil " "adalah fungsi atau metode"
             )
         elif "server" in error_msg.lower():
             result += (
@@ -211,7 +210,7 @@ def format_error(error, source_code=None):
     return result
 
 
-def _get_error_solutions(error):
+def _get_error_solutions(error):  # noqa: C901
     """
     Get specific solutions for different error types.
 
@@ -224,124 +223,158 @@ def _get_error_solutions(error):
     solutions = []
 
     if isinstance(error, LexerError):
-        solutions.extend([
-            "• Periksa karakter yang tidak valid atau tidak dikenali",
-            "• Pastikan string ditutup dengan tanda kutip yang sesuai",
-            "• Pastikan komentar ditutup dengan benar",
-            "• Periksa penggunaan karakter khusus yang tidak didukung"
-        ])
+        solutions.extend(
+            [
+                "• Periksa karakter yang tidak valid atau tidak dikenali",
+                "• Pastikan string ditutup dengan tanda kutip yang sesuai",
+                "• Pastikan komentar ditutup dengan benar",
+                "• Periksa penggunaan karakter khusus yang tidak didukung",
+            ]
+        )
     elif isinstance(error, ParserError):
         # Check if this is a reserved keyword error
-        error_msg = str(error.message) if hasattr(error, 'message') else str(error)
-        if "tidak dapat digunakan sebagai nama variabel" in error_msg or "reserved keyword" in error_msg.lower():
+        error_msg = str(error.message) if hasattr(error, "message") else str(error)
+        if (
+            "tidak dapat digunakan sebagai nama variabel" in error_msg
+            or "reserved keyword" in error_msg.lower()
+        ):
             # This is a reserved keyword error - the message already has the solution
             pass  # Don't add generic solutions
         else:
-            solutions.extend([
-                "• Periksa tanda kurung, kurung kurawal, dan kurung siku",
-                "• Pastikan setiap 'jika' memiliki 'selesai' yang sesuai",
-                "• Periksa penggunaan koma dan titik koma",
-                "• Pastikan struktur blok kode sudah benar"
-            ])
+            solutions.extend(
+                [
+                    "• Periksa tanda kurung, kurung kurawal, dan kurung siku",
+                    "• Pastikan setiap 'jika' memiliki 'selesai' yang sesuai",
+                    "• Periksa penggunaan koma dan titik koma",
+                    "• Pastikan struktur blok kode sudah benar",
+                ]
+            )
     elif isinstance(error, (RenzmcNameError, type(None))):
         if isinstance(error, RenzmcNameError) or "NameError" in str(type(error)):
-            solutions.extend([
-                "• Pastikan variabel sudah dideklarasikan sebelum digunakan",
-                "• Periksa ejaan nama variabel (case-sensitive)",
-                "• Pastikan variabel berada dalam scope yang benar",
-                "• Cek apakah variabel dideklarasikan di dalam blok yang tepat"
-            ])
+            solutions.extend(
+                [
+                    "• Pastikan variabel sudah dideklarasikan sebelum digunakan",
+                    "• Periksa ejaan nama variabel (case-sensitive)",
+                    "• Pastikan variabel berada dalam scope yang benar",
+                    "• Cek apakah variabel dideklarasikan di dalam blok yang tepat",
+                ]
+            )
     elif isinstance(error, (RenzmcTypeError, type(None))):
         if isinstance(error, RenzmcTypeError) or "TypeError" in str(type(error)):
-            solutions.extend([
-                "• Pastikan tipe data sesuai dengan operasi yang dilakukan",
-                "• Gunakan konversi tipe jika diperlukan (ke_angka, ke_teks)",
-                "• Periksa apakah fungsi menerima argumen dengan tipe yang benar",
-                "• Pastikan operasi matematika hanya dilakukan pada angka"
-            ])
+            solutions.extend(
+                [
+                    "• Pastikan tipe data sesuai dengan operasi yang dilakukan",
+                    "• Gunakan konversi tipe jika diperlukan (ke_angka, ke_teks)",
+                    "• Periksa apakah fungsi menerima argumen dengan tipe yang benar",
+                    "• Pastikan operasi matematika hanya dilakukan pada angka",
+                ]
+            )
     elif isinstance(error, (RenzmcValueError, type(None))):
         if isinstance(error, RenzmcValueError) or "ValueError" in str(type(error)):
-            solutions.extend([
-                "• Periksa nilai yang dimasukkan sesuai dengan yang diharapkan",
-                "• Pastikan format nilai sudah benar",
-                "• Periksa rentang nilai yang valid",
-                "• Validasi input sebelum digunakan"
-            ])
+            solutions.extend(
+                [
+                    "• Periksa nilai yang dimasukkan sesuai dengan yang diharapkan",
+                    "• Pastikan format nilai sudah benar",
+                    "• Periksa rentang nilai yang valid",
+                    "• Validasi input sebelum digunakan",
+                ]
+            )
     elif isinstance(error, (RenzmcImportError, type(None))):
         if isinstance(error, RenzmcImportError) or "ImportError" in str(type(error)):
-            solutions.extend([
-                "• Pastikan modul yang diimpor tersedia",
-                "• Periksa ejaan nama modul",
-                "• Pastikan modul sudah terinstall",
-                "• Periksa jalur impor dan dependensi"
-            ])
+            solutions.extend(
+                [
+                    "• Pastikan modul yang diimpor tersedia",
+                    "• Periksa ejaan nama modul",
+                    "• Pastikan modul sudah terinstall",
+                    "• Periksa jalur impor dan dependensi",
+                ]
+            )
     elif isinstance(error, (RenzmcAttributeError, type(None))):
-        if (isinstance(error, RenzmcAttributeError) or
-                "AttributeError" in str(type(error))):
-            solutions.extend([
-                "• Pastikan objek memiliki atribut yang dipanggil",
-                "• Periksa ejaan nama atribut/metode",
-                "• Pastikan objek sudah diinisialisasi dengan benar",
-                "• Cek dokumentasi untuk atribut yang tersedia"
-            ])
+        if isinstance(error, RenzmcAttributeError) or "AttributeError" in str(
+            type(error)
+        ):
+            solutions.extend(
+                [
+                    "• Pastikan objek memiliki atribut yang dipanggil",
+                    "• Periksa ejaan nama atribut/metode",
+                    "• Pastikan objek sudah diinisialisasi dengan benar",
+                    "• Cek dokumentasi untuk atribut yang tersedia",
+                ]
+            )
     elif isinstance(error, (RenzmcIndexError, type(None))):
         if isinstance(error, RenzmcIndexError) or "IndexError" in str(type(error)):
-            solutions.extend([
-                "• Pastikan indeks berada dalam rentang yang valid",
-                "• Periksa panjang daftar sebelum mengakses indeks",
-                "• Ingat: indeks dimulai dari 0",
-                "• Gunakan len() untuk memeriksa panjang daftar"
-            ])
+            solutions.extend(
+                [
+                    "• Pastikan indeks berada dalam rentang yang valid",
+                    "• Periksa panjang daftar sebelum mengakses indeks",
+                    "• Ingat: indeks dimulai dari 0",
+                    "• Gunakan len() untuk memeriksa panjang daftar",
+                ]
+            )
     elif isinstance(error, (RenzmcKeyError, type(None))):
         if isinstance(error, RenzmcKeyError) or "KeyError" in str(type(error)):
-            solutions.extend([
-                "• Pastikan kunci ada dalam kamus sebelum diakses",
-                "• Gunakan metode .get() untuk menghindari error",
-                "• Periksa ejaan kunci (case-sensitive)",
-                "• Gunakan 'dalam' untuk memeriksa keberadaan kunci"
-            ])
+            solutions.extend(
+                [
+                    "• Pastikan kunci ada dalam kamus sebelum diakses",
+                    "• Gunakan metode .get() untuk menghindari error",
+                    "• Periksa ejaan kunci (case-sensitive)",
+                    "• Gunakan 'dalam' untuk memeriksa keberadaan kunci",
+                ]
+            )
     elif isinstance(error, DivisionByZeroError):
-        solutions.extend([
-            "• Hindari pembagian dengan nol",
-            "• Tambahkan pemeriksaan sebelum pembagian",
-            "• Gunakan kondisi: jika pembagi != 0",
-            "• Pertimbangkan nilai default jika pembagi nol"
-        ])
+        solutions.extend(
+            [
+                "• Hindari pembagian dengan nol",
+                "• Tambahkan pemeriksaan sebelum pembagian",
+                "• Gunakan kondisi: jika pembagi != 0",
+                "• Pertimbangkan nilai default jika pembagi nol",
+            ]
+        )
     elif isinstance(error, FileError):
-        solutions.extend([
-            "• Pastikan file ada dan dapat diakses",
-            "• Periksa izin file (read/write permissions)",
-            "• Pastikan jalur file sudah benar",
-            "• Gunakan jalur absolut jika diperlukan"
-        ])
+        solutions.extend(
+            [
+                "• Pastikan file ada dan dapat diakses",
+                "• Periksa izin file (read/write permissions)",
+                "• Pastikan jalur file sudah benar",
+                "• Gunakan jalur absolut jika diperlukan",
+            ]
+        )
     elif isinstance(error, TypeHintError):
-        solutions.extend([
-            "• Pastikan nilai sesuai dengan tipe yang ditentukan",
-            "• Periksa deklarasi tipe pada variabel/fungsi",
-            "• Gunakan konversi tipe jika diperlukan",
-            "• Pastikan tipe hint konsisten di seluruh kode"
-        ])
+        solutions.extend(
+            [
+                "• Pastikan nilai sesuai dengan tipe yang ditentukan",
+                "• Periksa deklarasi tipe pada variabel/fungsi",
+                "• Gunakan konversi tipe jika diperlukan",
+                "• Pastikan tipe hint konsisten di seluruh kode",
+            ]
+        )
     elif isinstance(error, (RenzmcSyntaxError, type(None))):
         if isinstance(error, RenzmcSyntaxError) or "SyntaxError" in str(type(error)):
-            solutions.extend([
-                "• Periksa sintaks kode untuk kesalahan",
-                "• Pastikan tanda kurung seimbang",
-                "• Periksa penggunaan kata kunci yang benar",
-                "• Pastikan struktur kode sesuai dengan aturan bahasa"
-            ])
+            solutions.extend(
+                [
+                    "• Periksa sintaks kode untuk kesalahan",
+                    "• Pastikan tanda kurung seimbang",
+                    "• Periksa penggunaan kata kunci yang benar",
+                    "• Pastikan struktur kode sesuai dengan aturan bahasa",
+                ]
+            )
     elif isinstance(error, AsyncError):
-        solutions.extend([
-            "• Pastikan fungsi async dipanggil dengan 'tunggu'",
-            "• Periksa penggunaan async/await yang benar",
-            "• Pastikan event loop berjalan dengan baik",
-            "• Gunakan 'asinkron' untuk mendefinisikan fungsi async"
-        ])
+        solutions.extend(
+            [
+                "• Pastikan fungsi async dipanggil dengan 'tunggu'",
+                "• Periksa penggunaan async/await yang benar",
+                "• Pastikan event loop berjalan dengan baik",
+                "• Gunakan 'asinkron' untuk mendefinisikan fungsi async",
+            ]
+        )
     else:
-        solutions.extend([
-            "• Periksa kembali kode Anda untuk kesalahan",
-            "• Pastikan semua nilai dan operasi sesuai",
-            "• Coba jalankan kode secara bertahap untuk menemukan masalah",
-            "• Periksa dokumentasi untuk penggunaan yang benar"
-        ])
+        solutions.extend(
+            [
+                "• Periksa kembali kode Anda untuk kesalahan",
+                "• Pastikan semua nilai dan operasi sesuai",
+                "• Coba jalankan kode secara bertahap untuk menemukan masalah",
+                "• Periksa dokumentasi untuk penggunaan yang benar",
+            ]
+        )
 
     return solutions

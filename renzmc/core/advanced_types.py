@@ -22,8 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Any, Optional, List as PyList, Dict as PyDict, Union as PyUnion, Set as PySet
 from enum import Enum
+from typing import (
+    Any,
+)
+from typing import Dict as PyDict
+from typing import List as PyList
+from typing import (
+    Optional,
+)
+from typing import Union as PyUnion
+
 from renzmc.core.type_system import BaseType, TypeValidator
 
 
@@ -87,7 +96,9 @@ class GenericType(AdvancedType):
 
     def __repr__(self):
         container_name = TypeValidator.type_to_string(self.container_type)
-        element_names = ", ".join([TypeValidator.type_to_string(t) for t in self.element_types])
+        element_names = ", ".join(
+            [TypeValidator.type_to_string(t) for t in self.element_types]
+        )
         return f"{container_name}[{element_names}]"
 
     def validate(self, value: Any) -> bool:
@@ -183,7 +194,9 @@ class TupleType(AdvancedType):
         self.element_types = element_types
 
     def __repr__(self):
-        element_names = ", ".join([TypeValidator.type_to_string(t) for t in self.element_types])
+        element_names = ", ".join(
+            [TypeValidator.type_to_string(t) for t in self.element_types]
+        )
         return f"Tuple[{element_names}]"
 
     def validate(self, value: Any) -> bool:
@@ -226,7 +239,9 @@ class TypedDictType(AdvancedType):
         self.fields = fields
 
     def __repr__(self):
-        field_strs = ", ".join([f"{k}: {TypeValidator.type_to_string(v)}" for k, v in self.fields.items()])
+        field_strs = ", ".join(
+            [f"{k}: {TypeValidator.type_to_string(v)}" for k, v in self.fields.items()]
+        )
         return f"TypedDict[{field_strs}]"
 
     def validate(self, value: Any) -> bool:
@@ -251,17 +266,19 @@ class TypedDictType(AdvancedType):
 class TypeParser:
 
     @staticmethod
-    def parse_type_string(type_str: str) -> PyUnion[BaseType, AdvancedType]:
+    def parse_type_string(  # noqa: C901
+        type_str: str,
+    ) -> PyUnion[BaseType, AdvancedType]:
         type_str = type_str.strip()
 
-        if type_str.endswith('?'):
+        if type_str.endswith("?"):
             base_type_str = type_str[:-1].strip()
             base_type = TypeValidator().parse_type_hint(base_type_str)
             if base_type:
                 return OptionalType(base_type)
 
-        if '|' in type_str:
-            type_parts = [part.strip() for part in type_str.split('|')]
+        if "|" in type_str:
+            type_parts = [part.strip() for part in type_str.split("|")]
             types = []
             for part in type_parts:
                 parsed = TypeValidator().parse_type_hint(part)
@@ -270,27 +287,27 @@ class TypeParser:
             if types:
                 return UnionType(types)
 
-        if '[' in type_str and ']' in type_str:
-            bracket_start = type_str.index('[')
-            bracket_end = type_str.rindex(']')
+        if "[" in type_str and "]" in type_str:
+            bracket_start = type_str.index("[")
+            bracket_end = type_str.rindex("]")
 
             container_str = type_str[:bracket_start].strip()
-            elements_str = type_str[bracket_start + 1:bracket_end].strip()
+            elements_str = type_str[bracket_start + 1 : bracket_end].strip()
 
-            if container_str in ['Literal', 'literal']:
+            if container_str in ["Literal", "literal"]:
                 values = []
-                parts = elements_str.split(',')
+                parts = elements_str.split(",")
                 for part in parts:
                     part = part.strip()
                     if part.startswith('"') and part.endswith('"'):
                         values.append(part[1:-1])
                     elif part.startswith("'") and part.endswith("'"):
                         values.append(part[1:-1])
-                    elif part.lower() == 'benar' or part.lower() == 'true':
+                    elif part.lower() == "benar" or part.lower() == "true":
                         values.append(True)
-                    elif part.lower() == 'salah' or part.lower() == 'false':
+                    elif part.lower() == "salah" or part.lower() == "false":
                         values.append(False)
-                    elif '.' in part:
+                    elif "." in part:
                         try:
                             values.append(float(part))
                         except ValueError:
@@ -303,12 +320,12 @@ class TypeParser:
                 if values:
                     return LiteralType(values)
 
-            if container_str in ['TypedDict', 'typed_dict', 'KamusTipe', 'kamus_tipe']:
+            if container_str in ["TypedDict", "typed_dict", "KamusTipe", "kamus_tipe"]:
                 fields = {}
-                parts = elements_str.split(',')
+                parts = elements_str.split(",")
                 for part in parts:
-                    if ':' in part:
-                        key_val = part.split(':', 1)
+                    if ":" in part:
+                        key_val = part.split(":", 1)
                         key = key_val[0].strip().strip('"').strip("'")
                         type_str_inner = key_val[1].strip()
                         parsed_type = TypeValidator().parse_type_hint(type_str_inner)
@@ -321,7 +338,7 @@ class TypeParser:
             if not container_type:
                 return None
 
-            element_parts = [part.strip() for part in elements_str.split(',')]
+            element_parts = [part.strip() for part in elements_str.split(",")]
             element_types = []
             for part in element_parts:
                 parsed = TypeValidator().parse_type_hint(part)
@@ -337,7 +354,9 @@ class TypeParser:
 class AdvancedTypeValidator:
 
     @staticmethod
-    def validate(value: Any, type_spec: PyUnion[BaseType, AdvancedType], var_name: str = "") -> tuple[bool, str]:
+    def validate(
+        value: Any, type_spec: PyUnion[BaseType, AdvancedType], var_name: str = ""
+    ) -> tuple[bool, str]:
         if isinstance(type_spec, BaseType):
             validator = TypeValidator()
             return validator.validate_type(value, type_spec, var_name)

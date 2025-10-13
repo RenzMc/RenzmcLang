@@ -22,32 +22,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import math
-import random
-import time
-import datetime
-import os
-import subprocess
-import json
-import re
+import asyncio
 import base64
+import datetime
 import hashlib
-import uuid
+import inspect
+import json
+import math
+import os
+import random
+import re
+import shlex
+import shutil
+import statistics
+import subprocess
+import time
 import urllib.parse
 import urllib.request
-import sys
-import inspect
-import asyncio
-import shlex
-from typing import Any, List, Dict, Set, Tuple, Optional, Union, Callable
-import shutil
+import uuid
 from pathlib import Path
-import statistics
 
 # Import error handling utilities
 from renzmc.utils.error_handler import (
-    log_exception, handle_resource_limit_error,
-    handle_timeout_error, handle_import_error
+    handle_resource_limit_error,
+    handle_timeout_error,
+    log_exception,
 )
 
 try:
@@ -556,7 +555,7 @@ def validate_executable_path(cmd_path):
         return False
 
 
-def validate_command_safety(command, use_sandbox=None):
+def validate_command_safety(command, use_sandbox=None):  # noqa: C901
     if not isinstance(command, str):
         return (False, "Perintah harus berupa teks")
     command = command.strip()
@@ -595,14 +594,14 @@ def validate_command_safety(command, use_sandbox=None):
                 if not validate_executable_path(compound_base):
                     return (
                         False,
-                        f"Perintah compound '{compound_base}' tidak ditemukan di direktori aman",
+                        f"Perintah compound '{compound_base}' tidak ditemukan di direktori aman",  # noqa: E501
                     )
                 remaining_args = cmd_tokens[len(compound_cmd.split()) :]
                 for arg in remaining_args:
                     if allowed_flags and arg not in allowed_flags:
                         return (
                             False,
-                            f"Argumen '{arg}' tidak diizinkan untuk perintah '{compound_cmd}'",
+                            f"Argumen '{arg}' tidak diizinkan untuk perintah '{compound_cmd}'",  # noqa: E501
                         )
                     if re.search("[;&|`$<>()]", arg):
                         return (False, f"Argumen '{arg}' mengandung karakter berbahaya")
@@ -614,12 +613,14 @@ def validate_command_safety(command, use_sandbox=None):
                 return (True, "Perintah compound aman")
         return (
             False,
-            f"Perintah '{base_command}' tidak diizinkan dalam mode sandbox. Perintah yang diizinkan: {sorted(list(ALLOWED_COMMANDS))}",
+            f"Perintah '{base_command}' tidak diizinkan dalam mode sandbox. Perintah yang diizinkan: {sorted(list(ALLOWED_COMMANDS))}",  # noqa: E501
         )
     return (True, "Sandbox dinonaktifkan - perintah diizinkan")
 
 
-def jalankan_perintah(command, sandbox=None, working_dir=None, timeout=None):
+def jalankan_perintah(  # noqa: C901
+    command, sandbox=None, working_dir=None, timeout=None
+):
     use_sandbox = SANDBOX_MODE if sandbox is None else sandbox
     command_timeout = timeout if timeout is not None else MAX_COMMAND_TIMEOUT
     if use_sandbox:
@@ -633,7 +634,7 @@ def jalankan_perintah(command, sandbox=None, working_dir=None, timeout=None):
             real_path = os.path.realpath(working_dir)
             if not real_path.startswith(os.getcwd()):
                 raise SecurityError(
-                    f"Direktori kerja '{working_dir}' berada di luar direktori yang diizinkan"
+                    f"Direktori kerja '{working_dir}' berada di luar direktori yang diizinkan"  # noqa: E501
                 )
         except (OSError, RuntimeError):
             raise SecurityError(
@@ -748,7 +749,9 @@ def jalankan_perintah(command, sandbox=None, working_dir=None, timeout=None):
                     process.wait(timeout=2)
                 except subprocess.TimeoutExpired:
                     # Process wait timeout - continuing with cleanup
-                    handle_timeout_error("process wait", 2, "Proceeding with force kill")
+                    handle_timeout_error(
+                        "process wait", 2, "Proceeding with force kill"
+                    )
             try:
                 import psutil
 
@@ -856,6 +859,7 @@ def url_encode(text):
 
 def url_decode(text):
     return urllib.parse.unquote(text)
+
 
 def regex_match(pattern, text):
     return re.findall(pattern, text)
@@ -987,14 +991,18 @@ super = RenzmcBuiltinFunction(super_impl, "super")
 def impor_semua_python(module_name):
     pass
 
+
 def reload_python(module_name):
     pass
+
 
 def daftar_modul_python():
     pass
 
+
 def jalankan_python(code_string):
     pass
+
 
 _builtin_zip = zip
 _builtin_enumerate = enumerate
@@ -1070,15 +1078,18 @@ def sorted_impl(iterable, key=None, reverse=False):
     if key is None:
         return _builtin_sorted(iterable, reverse=reverse)
     else:
-        if hasattr(key, '__call__'):
+        if hasattr(key, "__call__"):
+
             def key_wrapper(item):
                 try:
                     result = key(item)
                     return result
                 except Exception:
                     import traceback
+
                     traceback.print_exc()
                     raise
+
             return _builtin_sorted(iterable, key=key_wrapper, reverse=reverse)
         else:
             return _builtin_sorted(iterable, key=key, reverse=reverse)
@@ -1158,6 +1169,7 @@ def is_space_impl(text):
 
 is_space = RenzmcBuiltinFunction(is_space_impl, "is_space")
 adalah_spasi = is_space
+
 
 def direktori_ada_impl(path):
     return os.path.isdir(path)
@@ -1265,6 +1277,7 @@ file_dapat_ditulis = RenzmcBuiltinFunction(
     file_dapat_ditulis_impl, "file_dapat_ditulis"
 )
 
+
 def median_impl(data):
     return statistics.median(data)
 
@@ -1305,7 +1318,6 @@ quantiles = RenzmcBuiltinFunction(quantiles_impl, "quantiles")
 kuantil = quantiles
 
 
-
 def _convert_to_bool(value):
     if isinstance(value, str):
         if value == "benar" or value == "true" or value == "True":
@@ -1317,9 +1329,9 @@ def _convert_to_bool(value):
     return bool(value)
 
 
-
 def range_impl(*args):
     import builtins
+
     if len(args) == 1:
         return list(builtins.range(args[0]))
     elif len(args) == 2:
@@ -1335,10 +1347,10 @@ range = range_func
 rentang = range_func
 
 
-
-def buka_impl(filename, mode='r', encoding='utf-8', **kwargs):
+def buka_impl(filename, mode="r", encoding="utf-8", **kwargs):
     import builtins
-    if 'b' in mode:
+
+    if "b" in mode:
         return builtins.open(filename, mode, **kwargs)
     else:
         return builtins.open(filename, mode, encoding=encoding, **kwargs)
@@ -1348,9 +1360,8 @@ buka = RenzmcBuiltinFunction(buka_impl, "buka")
 open_file = buka
 
 
-
 def tutup_impl(file_obj):
-    if hasattr(file_obj, 'close'):
+    if hasattr(file_obj, "close"):
         file_obj.close()
     else:
         raise TypeError("Objek tidak memiliki metode close()")
@@ -1360,9 +1371,8 @@ tutup = RenzmcBuiltinFunction(tutup_impl, "tutup")
 close_file = tutup
 
 
-
 def tulis_impl(file_obj, content):
-    if hasattr(file_obj, 'write'):
+    if hasattr(file_obj, "write"):
         file_obj.write(content)
     else:
         raise TypeError("Objek tidak memiliki metode write()")
@@ -1372,9 +1382,8 @@ tulis = RenzmcBuiltinFunction(tulis_impl, "tulis")
 write_to_file = tulis
 
 
-
 def baca_impl(file_obj, size=-1):
-    if hasattr(file_obj, 'read'):
+    if hasattr(file_obj, "read"):
         return file_obj.read(size)
     else:
         raise TypeError("Objek tidak memiliki metode read()")
@@ -1384,11 +1393,11 @@ baca = RenzmcBuiltinFunction(baca_impl, "baca")
 read_from_file = baca
 
 
-
 def tulis_json_impl(filename, data, indent=2):
-    import json
     import builtins as _builtins
-    with _builtins.open(filename, 'w', encoding='utf-8') as f:
+    import json
+
+    with _builtins.open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=indent, ensure_ascii=False)
 
 
@@ -1396,11 +1405,11 @@ tulis_json = RenzmcBuiltinFunction(tulis_json_impl, "tulis_json")
 write_json = tulis_json
 
 
-
 def baca_json_impl(filename):
-    import json
     import builtins as _builtins
-    with _builtins.open(filename, 'r', encoding='utf-8') as f:
+    import json
+
+    with _builtins.open(filename, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
@@ -1408,9 +1417,9 @@ baca_json = RenzmcBuiltinFunction(baca_json_impl, "baca_json")
 read_json = baca_json
 
 
-
 def ke_json_impl(data, indent=None):
     import json
+
     return json.dumps(data, indent=indent, ensure_ascii=False)
 
 
@@ -1418,9 +1427,9 @@ ke_json = RenzmcBuiltinFunction(ke_json_impl, "ke_json")
 to_json = ke_json
 
 
-
 def dari_json_impl(json_string):
     import json
+
     return json.loads(json_string)
 
 
@@ -1428,10 +1437,10 @@ dari_json = RenzmcBuiltinFunction(dari_json_impl, "dari_json")
 from_json = dari_json
 
 
-
 def cek_modul_python_impl(module_name):
     try:
         import importlib
+
         importlib.import_module(module_name)
         return True
     except ImportError:
@@ -1442,12 +1451,12 @@ cek_modul_python = RenzmcBuiltinFunction(cek_modul_python_impl, "cek_modul_pytho
 check_python_module = cek_modul_python
 
 
-
 def path_modul_python_impl(module_name):
     try:
         import importlib
+
         module = importlib.import_module(module_name)
-        if hasattr(module, '__file__'):
+        if hasattr(module, "__file__"):
             return module.__file__
         else:
             return f"<built-in module '{module_name}'>"
@@ -1459,12 +1468,12 @@ path_modul_python = RenzmcBuiltinFunction(path_modul_python_impl, "path_modul_py
 get_python_module_path = path_modul_python
 
 
-
 def versi_modul_python_impl(module_name):
     try:
         import importlib
+
         module = importlib.import_module(module_name)
-        if hasattr(module, '__version__'):
+        if hasattr(module, "__version__"):
             return module.__version__
         else:
             return "Unknown"
@@ -1472,9 +1481,10 @@ def versi_modul_python_impl(module_name):
         return None
 
 
-versi_modul_python = RenzmcBuiltinFunction(versi_modul_python_impl, "versi_modul_python")
+versi_modul_python = RenzmcBuiltinFunction(
+    versi_modul_python_impl, "versi_modul_python"
+)
 get_python_module_version = versi_modul_python
-
 
 
 def evaluasi_python_impl(expression):
@@ -1486,7 +1496,6 @@ def evaluasi_python_impl(expression):
 
 evaluasi_python = RenzmcBuiltinFunction(evaluasi_python_impl, "evaluasi_python")
 eval_python = evaluasi_python
-
 
 
 def eksekusi_python_impl(code):
@@ -1501,9 +1510,9 @@ eksekusi_python = RenzmcBuiltinFunction(eksekusi_python_impl, "eksekusi_python")
 exec_python = eksekusi_python
 
 
-
-def input_impl(prompt=''):
+def input_impl(prompt=""):
     import builtins
+
     return builtins.input(prompt)
 
 
@@ -1512,9 +1521,9 @@ input = input_func
 masukan = input_func
 
 
-
-def print_impl(*args, sep=' ', end='\n'):
+def print_impl(*args, sep=" ", end="\n"):
     import builtins
+
     builtins.print(*args, sep=sep, end=end)
 
 
@@ -1524,9 +1533,9 @@ cetak = print_func
 tampilkan = print_func
 
 
-
 def list_impl(iterable):
     import builtins as _builtins
+
     return _builtins.list(iterable)
 
 
@@ -1534,9 +1543,9 @@ list_renzmc = RenzmcBuiltinFunction(list_impl, "list")
 daftar = RenzmcBuiltinFunction(list_impl, "daftar")
 
 
-
 def dict_impl(*args, **kwargs):
     import builtins as _builtins
+
     return _builtins.dict(*args, **kwargs)
 
 
@@ -1544,9 +1553,9 @@ dict_renzmc = RenzmcBuiltinFunction(dict_impl, "dict")
 kamus = RenzmcBuiltinFunction(dict_impl, "kamus")
 
 
-
 def set_impl(iterable=None):
     import builtins as _builtins
+
     if iterable is None:
         return _builtins.set()
     return _builtins.set(iterable)
@@ -1556,9 +1565,9 @@ set_renzmc = RenzmcBuiltinFunction(set_impl, "set")
 himpunan = RenzmcBuiltinFunction(set_impl, "himpunan")
 
 
-
 def tuple_impl(iterable=None):
     import builtins as _builtins
+
     if iterable is None:
         return _builtins.tuple()
     return _builtins.tuple(iterable)
@@ -1568,9 +1577,9 @@ tuple_renzmc = RenzmcBuiltinFunction(tuple_impl, "tuple")
 tupel = RenzmcBuiltinFunction(tuple_impl, "tupel")
 
 
-
 def str_impl(obj):
     import builtins as _builtins
+
     return _builtins.str(obj)
 
 
@@ -1578,9 +1587,9 @@ str_renzmc = RenzmcBuiltinFunction(str_impl, "str")
 teks_convert = RenzmcBuiltinFunction(str_impl, "teks")
 
 
-
 def int_impl(obj, base=10):
     import builtins as _builtins
+
     if isinstance(obj, str) and base != 10:
         return _builtins.int(obj, base)
     return _builtins.int(obj)
@@ -1590,9 +1599,9 @@ int_renzmc = RenzmcBuiltinFunction(int_impl, "int")
 bulat_int = RenzmcBuiltinFunction(int_impl, "bulat_int")
 
 
-
 def float_impl(obj):
     import builtins as _builtins
+
     return _builtins.float(obj)
 
 
@@ -1600,9 +1609,9 @@ float_renzmc = RenzmcBuiltinFunction(float_impl, "float")
 pecahan = RenzmcBuiltinFunction(float_impl, "pecahan")
 
 
-
 def bool_impl(obj):
     import builtins as _builtins
+
     return _builtins.bool(obj)
 
 
@@ -1610,18 +1619,18 @@ bool_renzmc = RenzmcBuiltinFunction(bool_impl, "bool")
 boolean = RenzmcBuiltinFunction(bool_impl, "boolean")
 
 
-
 def sum_impl(iterable, start=0):
     import builtins as _builtins
+
     return _builtins.sum(iterable, start)
 
 
 sum_renzmc = RenzmcBuiltinFunction(sum_impl, "sum")
 
 
-
 def len_impl(obj):
     import builtins as _builtins
+
     return _builtins.len(obj)
 
 
@@ -1629,9 +1638,9 @@ len_renzmc = RenzmcBuiltinFunction(len_impl, "len")
 panjang_len = RenzmcBuiltinFunction(len_impl, "panjang_len")
 
 
-
 def min_impl(*args, **kwargs):
     import builtins as _builtins
+
     return _builtins.min(*args, **kwargs)
 
 
@@ -1639,9 +1648,9 @@ min_renzmc = RenzmcBuiltinFunction(min_impl, "min")
 min_nilai = RenzmcBuiltinFunction(min_impl, "min_nilai")
 
 
-
 def max_impl(*args, **kwargs):
     import builtins as _builtins
+
     return _builtins.max(*args, **kwargs)
 
 
@@ -1649,9 +1658,9 @@ max_renzmc = RenzmcBuiltinFunction(max_impl, "max")
 max_nilai = RenzmcBuiltinFunction(max_impl, "max_nilai")
 
 
-
 def abs_impl(x):
     import builtins as _builtins
+
     return _builtins.abs(x)
 
 
@@ -1659,9 +1668,9 @@ abs_renzmc = RenzmcBuiltinFunction(abs_impl, "abs")
 nilai_absolut = RenzmcBuiltinFunction(abs_impl, "nilai_absolut")
 
 
-
 def round_impl(number, ndigits=None):
     import builtins as _builtins
+
     if ndigits is None:
         return _builtins.round(number)
     return _builtins.round(number, ndigits)
@@ -1671,9 +1680,9 @@ round_renzmc = RenzmcBuiltinFunction(round_impl, "round")
 bulatkan = RenzmcBuiltinFunction(round_impl, "bulatkan")
 
 
-
 def pow_impl(base, exp, mod=None):
     import builtins as _builtins
+
     if mod is None:
         return _builtins.pow(base, exp)
     return _builtins.pow(base, exp, mod)
@@ -1683,9 +1692,9 @@ pow_renzmc = RenzmcBuiltinFunction(pow_impl, "pow")
 pangkat_pow = RenzmcBuiltinFunction(pow_impl, "pangkat_pow")
 
 
-
 def reversed_impl(seq):
     import builtins as _builtins
+
     return list(_builtins.reversed(seq))
 
 
@@ -1693,34 +1702,47 @@ reversed_renzmc = RenzmcBuiltinFunction(reversed_impl, "reversed")
 terbalik = RenzmcBuiltinFunction(reversed_impl, "terbalik")
 
 
-
 def http_get_impl(url, **kwargs):
     from renzmc.runtime.http_client import http_get
+
     return http_get(url, **kwargs)
+
 
 def http_post_impl(url, **kwargs):
     from renzmc.runtime.http_client import http_post
+
     return http_post(url, **kwargs)
+
 
 def http_put_impl(url, **kwargs):
     from renzmc.runtime.http_client import http_put
+
     return http_put(url, **kwargs)
+
 
 def http_delete_impl(url, **kwargs):
     from renzmc.runtime.http_client import http_delete
+
     return http_delete(url, **kwargs)
+
 
 def http_patch_impl(url, **kwargs):
     from renzmc.runtime.http_client import http_patch
+
     return http_patch(url, **kwargs)
+
 
 def http_set_header_impl(key, value):
     from renzmc.runtime.http_client import http_set_header
+
     return http_set_header(key, value)
+
 
 def http_set_timeout_impl(timeout):
     from renzmc.runtime.http_client import http_set_timeout
+
     return http_set_timeout(timeout)
+
 
 http_get = RenzmcBuiltinFunction(http_get_impl, "http_get")
 http_post = RenzmcBuiltinFunction(http_post_impl, "http_post")

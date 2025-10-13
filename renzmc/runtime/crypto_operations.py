@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import hashlib
-import uuid
 import base64
+import hashlib
 import urllib.parse
+import uuid
 
 try:
     from cryptography.fernet import Fernet

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from .compiler import JITCompiler
 from .code_generator import CodeGenerator
+from .compiler import JITCompiler
 from .type_inference import TypeInferenceEngine
 
-__all__ = ['JITCompiler', 'CodeGenerator', 'TypeInferenceEngine']
+__all__ = ["JITCompiler", "CodeGenerator", "TypeInferenceEngine"]

@@ -29,20 +29,16 @@ This module implements the parser for RenzmcLang, converting tokens
 into an Abstract Syntax Tree (AST).
 """
 
-from renzmc.core.ast import (
-    AST,
+from renzmc.core.ast import (  # noqa: E402
     Assign,
     AsyncFuncDecl,
-    AsyncMethodDecl,
     AttributeRef,
     Await,
     BinOp,
-    Block,
     Boolean,
     Break,
     Case,
     ClassDecl,
-    ClassMethodDecl,
     CompoundAssign,
     Constructor,
     Continue,
@@ -56,15 +52,12 @@ from renzmc.core.ast import (
     FromImport,
     FuncCall,
     FuncDecl,
-    Generator,
     If,
     Import,
     IndexAccess,
-    Input,
     Lambda,
     List,
     ListComp,
-    LiteralType,
     MethodCall,
     MethodDecl,
     MultiAssign,
@@ -74,28 +67,18 @@ from renzmc.core.ast import (
     Num,
     Print,
     Program,
-    PropertyDecl,
     PythonCall,
     PythonImport,
-    Raise,
     Return,
     SelfVar,
     Set,
-    SetComp,
-    SliceAccess,
-    SliceAssign,
-    StarredExpr,
-    StaticMethodDecl,
     String,
     Switch,
     Ternary,
     TryCatch,
     Tuple,
     TypeAlias,
-    TypedDictType,
-    TypeHint,
     UnaryOp,
-    Unpacking,
     Var,
     VarDecl,
     WalrusOperator,
@@ -104,10 +87,10 @@ from renzmc.core.ast import (
     Yield,
     YieldFrom,
 )
-from renzmc.core.error import LexerError, ParserError
-from renzmc.core.lexer import Lexer
-from renzmc.core.parser_type_helpers import parse_type_hint_advanced
-from renzmc.core.token import Token, TokenType
+from renzmc.core.error import LexerError, ParserError  # noqa: E402
+from renzmc.core.lexer import Lexer  # noqa: E402
+from renzmc.core.parser_type_helpers import parse_type_hint_advanced  # noqa: E402
+from renzmc.core.token import Token, TokenType  # noqa: E402
 
 
 class Parser:
@@ -128,7 +111,7 @@ class Parser:
         if self.current_token.type == token_type:
             self.current_token = self.lexer.get_next_token()
         else:
-            # Check if we're expecting ITU but got a keyword token (common when using reserved word as variable)
+            # Check if we're expecting ITU but got a keyword token (common when using reserved word as variable)  # noqa: E501
             if token_type == TokenType.ITU and self.current_token.type in [
                 TokenType.SELESAI,
                 TokenType.JIKA,
@@ -150,13 +133,13 @@ class Parser:
                     else str(self.current_token.type)
                 )
                 self.error(
-                    f"Kesalahan sintaks: Kata kunci '{keyword_text}' tidak dapat digunakan sebagai nama variabel. "
+                    f"Kesalahan sintaks: Kata kunci '{keyword_text}' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
                     f"Kata kunci ini adalah reserved keyword dalam RenzmcLang. "
-                    f"Gunakan nama variabel yang berbeda (contoh: '{keyword_text}_value', '{keyword_text}_data', dll)."
+                    f"Gunakan nama variabel yang berbeda (contoh: '{keyword_text}_value', '{keyword_text}_data', dll)."  # noqa: E501
                 )
             else:
                 self.error(
-                    f"Kesalahan sintaks: Diharapkan '{token_type}', tetapi ditemukan '{self.current_token.type}'"
+                    f"Kesalahan sintaks: Diharapkan '{token_type}', tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
                 )
 
     def parse(self):
@@ -182,7 +165,7 @@ class Parser:
                 statements.append(stmt)
         return statements
 
-    def statement(self):
+    def statement(self):  # noqa: C901
         if self.current_token.type == TokenType.IDENTIFIER:
             next_token = self.lexer.peek_token()
             if next_token is not None and next_token.type == TokenType.ITU:
@@ -309,9 +292,9 @@ class Parser:
         elif self.current_token.type == TokenType.SELESAI:
             # User might be trying to use 'akhir' or 'selesai' as variable name
             self.error(
-                "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
                 "Ini adalah reserved keyword dalam RenzmcLang. "
-                "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
             )
         elif self.current_token.type == TokenType.NEWLINE:
             self.eat(TokenType.NEWLINE)
@@ -343,9 +326,9 @@ class Parser:
                 if self.current_token.type in reserved_keywords:
                     keyword = reserved_keywords[self.current_token.type]
                     self.error(
-                        f"Kata kunci '{keyword}' tidak dapat digunakan sebagai nama variabel. "
+                        f"Kata kunci '{keyword}' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
                         f"Ini adalah reserved keyword dalam RenzmcLang. "
-                        f"Gunakan nama yang berbeda (contoh: '{keyword}_value', '{keyword}_data', 'my_{keyword}', dll)."
+                        f"Gunakan nama yang berbeda (contoh: '{keyword}_value', '{keyword}_data', 'my_{keyword}', dll)."  # noqa: E501
                     )
                 else:
                     self.error(f"Token tidak dikenal: '{self.current_token.type}'")
@@ -425,7 +408,7 @@ class Parser:
         body = self.expr()
         return Lambda(params, body, token)
 
-    def print_statement(self):
+    def print_statement(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.TAMPILKAN)
 
@@ -460,7 +443,7 @@ class Parser:
         else:
             return Print(Tuple(exprs, token), token)
 
-    def if_statement(self):
+    def if_statement(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.JIKA)
         condition = self.expr()
@@ -528,7 +511,7 @@ class Parser:
         self.eat(TokenType.SELESAI)
         return While(condition, body, token)
 
-    def for_or_foreach_statement(self):
+    def for_or_foreach_statement(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.UNTUK)
         var_name = self.current_token.value
@@ -548,9 +531,9 @@ class Parser:
                     next_token = self.lexer.peek_token()
                     if next_token and next_token.type == TokenType.ITU:
                         self.error(
-                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
                             "Ini adalah reserved keyword dalam RenzmcLang. "
-                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
                         )
                     break
                 stmt = self.statement()
@@ -575,9 +558,9 @@ class Parser:
                     next_token = self.lexer.peek_token()
                     if next_token and next_token.type == TokenType.ITU:
                         self.error(
-                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
                             "Ini adalah reserved keyword dalam RenzmcLang. "
-                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
                         )
                     break
                 stmt = self.statement()
@@ -605,16 +588,16 @@ class Parser:
                 next_token = self.lexer.peek_token()
                 if next_token and next_token.type == TokenType.ITU:
                     self.error(
-                        "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                        "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
                         "Ini adalah reserved keyword dalam RenzmcLang. "
-                        "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                        "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
                     )
                 break
             body.append(self.statement())
         self.eat(TokenType.SELESAI)
         return For(var_name, start, end, body, token)
 
-    def foreach_statement(self):
+    def foreach_statement(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.UNTUK)
         self.eat(TokenType.SETIAP)
@@ -644,13 +627,13 @@ class Parser:
                 if self.current_token.type == TokenType.EOF:
                     break
                 if self.current_token.type == TokenType.SELESAI:
-                    # Check if this is actually someone trying to use 'akhir' as a variable
+                    # Check if this is actually someone trying to use 'akhir' as a variable  # noqa: E501
                     next_token = self.lexer.peek_token()
                     if next_token and next_token.type == TokenType.ITU:
                         self.error(
-                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
                             "Ini adalah reserved keyword dalam RenzmcLang. "
-                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
                         )
                     break
                 stmt = self.statement()
@@ -666,13 +649,13 @@ class Parser:
                 if self.current_token.type == TokenType.EOF:
                     break
                 if self.current_token.type == TokenType.SELESAI:
-                    # Check if this is actually someone trying to use 'akhir' as a variable
+                    # Check if this is actually someone trying to use 'akhir' as a variable  # noqa: E501
                     next_token = self.lexer.peek_token()
                     if next_token and next_token.type == TokenType.ITU:
                         self.error(
-                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
                             "Ini adalah reserved keyword dalam RenzmcLang. "
-                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
                         )
                     break
                 stmt = self.statement()
@@ -681,7 +664,7 @@ class Parser:
             self.eat(TokenType.SELESAI)
             return ForEach(var_name, iterable, body, token)
 
-    def function_declaration(self):
+    def function_declaration(self):  # noqa: C901
         token = self.current_token
         if self.current_token.type == TokenType.BUAT:
             self.eat(TokenType.BUAT)
@@ -702,7 +685,7 @@ class Parser:
                     self.eat(TokenType.IDENTIFIER)
                 if self.current_token.type == TokenType.TITIK_DUA:
                     self.eat(TokenType.TITIK_DUA)
-                    # # type_name = self.current_token.value  # Unused variable  # Unused variable
+                    # # type_name = self.current_token.value  # Unused variable  # Unused variable  # noqa: E501
                     param_types[param_name] = parse_type_hint_advanced(self)
                 while self.current_token.type == TokenType.KOMA:
                     self.eat(TokenType.KOMA)
@@ -714,7 +697,7 @@ class Parser:
                         self.eat(TokenType.IDENTIFIER)
                     if self.current_token.type == TokenType.TITIK_DUA:
                         self.eat(TokenType.TITIK_DUA)
-                        # # type_name = self.current_token.value  # Unused variable  # Unused variable
+                        # # type_name = self.current_token.value  # Unused variable  # Unused variable  # noqa: E501
                         param_types[param_name] = parse_type_hint_advanced(self)
             self.eat(TokenType.KURUNG_AKHIR)
             return_type = None
@@ -748,7 +731,7 @@ class Parser:
         self.eat(TokenType.SELESAI)
         return FuncDecl(name, params, body, token, return_type, param_types)
 
-    def async_function_declaration(self):
+    def async_function_declaration(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.ASYNC)
         if self.current_token.type == TokenType.BUAT:
@@ -768,7 +751,7 @@ class Parser:
                 self.eat(TokenType.IDENTIFIER)
             if self.current_token.type == TokenType.TITIK_DUA:
                 self.eat(TokenType.TITIK_DUA)
-                # # type_name = self.current_token.value  # Unused variable  # Unused variable
+                # # type_name = self.current_token.value  # Unused variable  # Unused variable  # noqa: E501
                 param_types[param_name] = parse_type_hint_advanced(self)
             while self.current_token.type == TokenType.KOMA:
                 self.eat(TokenType.KOMA)
@@ -780,7 +763,7 @@ class Parser:
                     self.eat(TokenType.IDENTIFIER)
                 if self.current_token.type == TokenType.TITIK_DUA:
                     self.eat(TokenType.TITIK_DUA)
-                    # # type_name = self.current_token.value  # Unused variable  # Unused variable
+                    # # type_name = self.current_token.value  # Unused variable  # Unused variable  # noqa: E501
                     param_types[param_name] = parse_type_hint_advanced(self)
         self.eat(TokenType.KURUNG_AKHIR)
         return_type = None
@@ -798,7 +781,7 @@ class Parser:
         self.eat(TokenType.SELESAI)
         return AsyncFuncDecl(name, params, body, token, return_type, param_types)
 
-    def function_call(self):
+    def function_call(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.PANGGIL)
         name = self.current_token.value
@@ -816,7 +799,7 @@ class Parser:
                 self.current_token = self.lexer.get_next_token()
             else:
                 self.error(
-                    f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'"
+                    f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
                 )
             args = []
             kwargs = {}
@@ -1036,7 +1019,7 @@ class Parser:
                 node = Ternary(condition, if_expr, else_expr)
             else:
                 self.error(
-                    "Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'"
+                    "Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'"  # noqa: E501
                 )
         return node
 
@@ -1244,7 +1227,7 @@ class Parser:
             TokenType.TITIK_KOMA,
         )
 
-    def factor(self):
+    def factor(self):  # noqa: C901
         token = self.current_token
         if self.end_of_expression():
             self.error(
@@ -1286,7 +1269,7 @@ class Parser:
                         break
                     else:
                         self.error(
-                            f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}"
+                            f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}"  # noqa: E501
                         )
                 self.eat(TokenType.BIT_ATAU)
                 self.eat(TokenType.KURUNG_AKHIR)
@@ -1374,7 +1357,7 @@ class Parser:
             parts.append(String(Token(TokenType.TEKS, text)))
         return parts
 
-    def list_literal(self):
+    def list_literal(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.DAFTAR_AWAL)
         while self.current_token.type == TokenType.NEWLINE:
@@ -1420,7 +1403,7 @@ class Parser:
             self.eat(TokenType.DAFTAR_AKHIR)
             return List(elements, token)
 
-    def dict_literal(self):
+    def dict_literal(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.KAMUS_AWAL)
         while self.current_token.type == TokenType.NEWLINE:
@@ -1541,7 +1524,7 @@ class Parser:
                 self.advance_token()
             else:
                 self.error(
-                    f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"
+                    f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
                 )
             if self.current_token.type == TokenType.KURUNG_AWAL:
                 self.eat(TokenType.KURUNG_AWAL)
@@ -1570,7 +1553,7 @@ class Parser:
                     self.advance_token()
                 else:
                     self.error(
-                        f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"
+                        f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
                     )
                 if self.current_token.type == TokenType.KURUNG_AWAL:
                     self.eat(TokenType.KURUNG_AWAL)
@@ -1609,7 +1592,7 @@ class Parser:
                     self.advance_token()
                 else:
                     self.error(
-                        f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"
+                        f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
                     )
                 if self.current_token.type == TokenType.KURUNG_AWAL:
                     self.eat(TokenType.KURUNG_AWAL)
@@ -1632,7 +1615,7 @@ class Parser:
                 expr = MethodCall(expr, "", args, call_token, kwargs)
         return expr
 
-    def parse_arguments(self):
+    def parse_arguments(self):  # noqa: C901
         positional_args = []
         keyword_args = {}
         seen_keyword = False
@@ -1658,13 +1641,13 @@ class Parser:
                 else:
                     if seen_keyword:
                         self.error(
-                            "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"
+                            "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"  # noqa: E501
                         )
                     positional_args.append(self.expr())
             else:
                 if seen_keyword:
                     self.error(
-                        "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"
+                        "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"  # noqa: E501
                     )
                 positional_args.append(self.expr())
 
@@ -1702,13 +1685,13 @@ class Parser:
                 else:
                     if seen_keyword:
                         self.error(
-                            "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"
+                            "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"  # noqa: E501
                         )
                     positional_args.append(self.expr())
             else:
                 if seen_keyword:
                     self.error(
-                        "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"
+                        "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"  # noqa: E501
                     )
                 positional_args.append(self.expr())
             if self.current_token.type == TokenType.KOMA:
@@ -1778,7 +1761,7 @@ class Parser:
             return target
         else:
             self.error(
-                f"Diharapkan identifier untuk assignment target, ditemukan '{self.current_token.type}'"
+                f"Diharapkan identifier untuk assignment target, ditemukan '{self.current_token.type}'"  # noqa: E501
             )
 
     def assignment_statement(self):
@@ -1838,7 +1821,7 @@ class Parser:
             return CompoundAssign(target, op_token, value, var_token)
         else:
             self.error(
-                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"
+                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"  # noqa: E501
             )
 
     def self_index_access_statement(self):
@@ -1874,10 +1857,10 @@ class Parser:
             return CompoundAssign(target, op_token, value, var_token)
         else:
             self.error(
-                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"
+                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"  # noqa: E501
             )
 
-    def parse_comma_separated_statement(self):
+    def parse_comma_separated_statement(self):  # noqa: C901
         start_token = self.current_token
         targets = []
         has_starred = False
@@ -1955,7 +1938,7 @@ class Parser:
                 return MultiAssign(var_nodes, value_expr, start_token)
         else:
             self.error(
-                f"Expected 'itu' or '=' after comma-separated identifiers, got {self.current_token.type}"
+                f"Expected 'itu' or '=' after comma-separated identifiers, got {self.current_token.type}"  # noqa: E501
             )
 
     def simple_assignment_statement(self):
@@ -2008,7 +1991,7 @@ class Parser:
             value_expr = Tuple(values, token) if len(values) > 1 else values[0]
             return MultiAssign(var_nodes, value_expr, token)
 
-    def compound_assignment_statement(self):
+    def compound_assignment_statement(self):  # noqa: C901
         var_token = self.current_token
         self.eat(TokenType.IDENTIFIER)
         target = Var(var_token)
@@ -2044,7 +2027,7 @@ class Parser:
             self.eat(TokenType.GESER_KANAN_SAMA_DENGAN)
         else:
             self.error(
-                f"Diharapkan operator assignment gabungan, ditemukan '{self.current_token.type}'"
+                f"Diharapkan operator assignment gabungan, ditemukan '{self.current_token.type}'"  # noqa: E501
             )
         value = self.expr()
         return CompoundAssign(target, op_token, value, var_token)
@@ -2124,7 +2107,7 @@ class Parser:
         else:
             return expr
 
-    def class_declaration(self):
+    def class_declaration(self):  # noqa: C901
         token = self.current_token
         if self.current_token.type == TokenType.BUAT:
             self.eat(TokenType.BUAT)
@@ -2174,7 +2157,7 @@ class Parser:
         self.eat(TokenType.SELESAI)
         return ClassDecl(class_name, methods, parent, token)
 
-    def constructor_declaration(self):
+    def constructor_declaration(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.KONSTRUKTOR)
         params = []
@@ -2280,7 +2263,7 @@ class Parser:
         allowed_tokens = all_token_types - excluded_tokens
         return allowed_tokens
 
-    def method_declaration(self):
+    def method_declaration(self):  # noqa: C901
         token = self.current_token
         if self.current_token.type == TokenType.BUAT:
             self.eat(TokenType.BUAT)
@@ -2363,7 +2346,7 @@ class Parser:
             self.eat(TokenType.IDENTIFIER)
         return PythonImport(module_name, alias, token)
 
-    def from_import_statement(self):
+    def from_import_statement(self):  # noqa: C901
         """
         Parse 'dari module impor item1, item2, ...' statements
         Supports:
@@ -2525,7 +2508,7 @@ class Parser:
                 self.advance_token()
             else:
                 self.error(
-                    f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"
+                    f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
                 )
             func_expr = AttributeRef(func_expr, attr_name, self.current_token)
         args = []
@@ -2541,7 +2524,7 @@ class Parser:
                 args, kwargs = self.parse_arguments_with_separator(TokenType.NEWLINE)
         return FuncCall(func_expr, args, token, kwargs)
 
-    def _old_call_statement(self):
+    def _old_call_statement(self):  # noqa: C901
         token = self.current_token
         self.eat(TokenType.PANGGIL)
         name = self.current_token.value
@@ -2559,7 +2542,7 @@ class Parser:
                 self.current_token = self.lexer.get_next_token()
             else:
                 self.error(
-                    f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'"
+                    f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
                 )
             args = []
             if self.current_token.type == TokenType.KURUNG_AWAL:

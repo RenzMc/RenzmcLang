@@ -23,7 +23,6 @@ SOFTWARE.
 """
 
 from renzmc.core.token import Token, TokenType
-from renzmc.utils.logging import logger
 
 
 class LexerHelpers:

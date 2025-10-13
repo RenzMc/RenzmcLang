@@ -28,7 +28,6 @@ from renzmc.core.error import (
     RenzmcImportError,
     RenzmcNameError,
 )
-from renzmc.core.token import TokenType
 
 
 class RenzmcModule:

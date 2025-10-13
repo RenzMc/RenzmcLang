@@ -22,8 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from typing import Callable, Any
 from functools import wraps
+from typing import Any, Callable
+
 from renzmc.utils.logging import logger
 
 
@@ -37,7 +38,7 @@ class RecursionGuard:
         self.current_depth += 1
         if self.current_depth > self.max_depth:
             raise RecursionError(
-                f"⚠️ Kedalaman rekursi maksimum tercapai: {self.max_depth}\nKode Anda mungkin terlalu kompleks atau memiliki struktur nested yang terlalu dalam.\nPertimbangkan untuk menyederhanakan struktur kode atau mengurangi tingkat nested."
+                f"⚠️ Kedalaman rekursi maksimum tercapai: {self.max_depth}\nKode Anda mungkin terlalu kompleks atau memiliki struktur nested yang terlalu dalam.\nPertimbangkan untuk menyederhanakan struktur kode atau mengurangi tingkat nested."  # noqa: E501
             )
         logger.debug(f"Recursion depth: {self.current_depth}/{self.max_depth}")
 

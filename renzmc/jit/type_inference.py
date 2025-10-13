@@ -23,12 +23,33 @@ SOFTWARE.
 """
 
 from __future__ import annotations
-from typing import Any, Optional
-from typing import Dict as PyDict
-from typing import List as PyList
-from typing import Set as PySet
+
+from typing import Any
+from typing import Optional
+
 from renzmc.core.ast import (
-    AST, Assign, BinOp, Boolean, Break, Continue, Dict, For, ForEach, FuncCall, If, List, NoOp, Num, Return, Set, String, Tuple, UnaryOp, Var, VarDecl, While
+    AST,
+    Assign,
+    BinOp,
+    Boolean,
+    Break,
+    Continue,
+    Dict,
+    For,
+    ForEach,
+    FuncCall,
+    If,
+    List,
+    NoOp,
+    Num,
+    Return,
+    Set,
+    String,
+    Tuple,
+    UnaryOp,
+    Var,
+    VarDecl,
+    While,
 )
 
 
@@ -39,7 +60,9 @@ class TypeInferenceEngine:
         self.numeric_types = {int, float}
         self.collection_types = {list, dict, set, tuple}
 
-    def infer_type(self, node: AST, context: Dict[str, Any] = None) -> Optional[type]:
+    def infer_type(  # noqa: C901
+        self, node: AST, context: Dict[str, Any] = None
+    ) -> Optional[type]:
         if context is None:
             context = {}
 
@@ -83,8 +106,9 @@ class TypeInferenceEngine:
 
         return None
 
-    def is_numeric_function(self, params: List[str], body: List[AST],
-                           context: Dict[str, Any] = None) -> bool:
+    def is_numeric_function(
+        self, params: List[str], body: List[AST], context: Dict[str, Any] = None
+    ) -> bool:
         if context is None:
             context = {}
 
@@ -99,7 +123,9 @@ class TypeInferenceEngine:
         except Exception:
             return False
 
-    def _is_numeric_statement(self, stmt: AST, context: Dict[str, Any]) -> bool:
+    def _is_numeric_statement(  # noqa: C901
+        self, stmt: AST, context: Dict[str, Any]
+    ) -> bool:
 
         if isinstance(stmt, (VarDecl, Assign)):
             value = stmt.value
@@ -116,13 +142,13 @@ class TypeInferenceEngine:
             return True
 
         elif isinstance(stmt, Return):
-            if hasattr(stmt, 'value') and stmt.value:
+            if hasattr(stmt, "value") and stmt.value:
                 return_type = self.infer_type(stmt.value, context)
                 return return_type in self.numeric_types or return_type is None
             return True
 
         elif isinstance(stmt, (If, While)):
-            # # cond_type = self.infer_type(stmt.condition, context)  # Unused variable  # Unused variable
+            # # cond_type = self.infer_type(stmt.condition, context)  # Unused variable  # Unused variable  # noqa: E501
 
             body = stmt.if_body if isinstance(stmt, If) else stmt.body
             for s in body:
@@ -157,51 +183,56 @@ class TypeInferenceEngine:
 
         return False
 
-    def analyze_function_complexity(self, body: List[AST], func_name: str = None) -> Dict[str, Any]:
+    def analyze_function_complexity(  # noqa: C901
+        self, body: List[AST], func_name: str = None
+    ) -> Dict[str, Any]:
         analysis = {
-            'has_loops': False,
-            'loop_depth': 0,
-            'has_recursion': False,
-            'operation_count': 0,
-            'has_function_calls': False
+            "has_loops": False,
+            "loop_depth": 0,
+            "has_recursion": False,
+            "operation_count": 0,
+            "has_function_calls": False,
         }
 
         def analyze_node(node: AST, depth: int = 0):
             if isinstance(node, (For, While, ForEach)):
-                analysis['has_loops'] = True
-                analysis['loop_depth'] = max(analysis['loop_depth'], depth + 1)
+                analysis["has_loops"] = True
+                analysis["loop_depth"] = max(analysis["loop_depth"], depth + 1)
 
                 body = node.body
                 for stmt in body:
                     analyze_node(stmt, depth + 1)
 
             elif isinstance(node, FuncCall):
-                analysis['has_function_calls'] = True
-                analysis['operation_count'] += 1
-                
+                analysis["has_function_calls"] = True
+                analysis["operation_count"] += 1
+
                 # Check for recursion - check both direct name and func_expr
                 if func_name:
                     # Check direct name attribute
-                    if hasattr(node, 'name') and node.name and node.name == func_name:
-                        analysis['has_recursion'] = True
+                    if hasattr(node, "name") and node.name and node.name == func_name:
+                        analysis["has_recursion"] = True
                     # Check func_expr (which is a Var node for 'panggil' syntax)
-                    elif hasattr(node, 'func_expr') and node.func_expr:
+                    elif hasattr(node, "func_expr") and node.func_expr:
                         # If func_expr is a Var node with the function name
-                        if hasattr(node.func_expr, 'name') and node.func_expr.name == func_name:
-                            analysis['has_recursion'] = True
-                
+                        if (
+                            hasattr(node.func_expr, "name")
+                            and node.func_expr.name == func_name
+                        ):
+                            analysis["has_recursion"] = True
+
                 # Recursively analyze function call arguments
-                if hasattr(node, 'args'):
+                if hasattr(node, "args"):
                     for arg in node.args:
                         analyze_node(arg, depth)
 
             elif isinstance(node, BinOp):
-                analysis['operation_count'] += 1
+                analysis["operation_count"] += 1
                 analyze_node(node.left, depth)
                 analyze_node(node.right, depth)
 
             elif isinstance(node, UnaryOp):
-                analysis['operation_count'] += 1
+                analysis["operation_count"] += 1
                 analyze_node(node.expr, depth)
 
             elif isinstance(node, If):
@@ -210,9 +241,9 @@ class TypeInferenceEngine:
                 if node.else_body:
                     for stmt in node.else_body:
                         analyze_node(stmt, depth)
-            
+
             elif isinstance(node, Return):
-                if hasattr(node, 'value') and node.value:
+                if hasattr(node, "value") and node.value:
                     analyze_node(node.value, depth)
 
         for stmt in body:

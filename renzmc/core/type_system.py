@@ -23,7 +23,7 @@ SOFTWARE.
 """
 
 from enum import Enum, auto
-from typing import Any, Optional, Dict, List, Union as PyUnion
+from typing import Any, Optional
 
 
 class BaseType(Enum):
@@ -71,7 +71,6 @@ TYPE_NAME_MAPPING = {
     "Kelas": BaseType.CLASS,
     "Object": BaseType.OBJECT,
     "Objek": BaseType.OBJECT,
-
     "int": BaseType.INTEGER,
     "integer": BaseType.INTEGER,
     "float": BaseType.FLOAT,
@@ -96,7 +95,7 @@ TYPE_ALIASES = {}
 class TypeValidator:
 
     @staticmethod
-    def get_python_type(value: Any) -> BaseType:
+    def get_python_type(value: Any) -> BaseType:  # noqa: C901
         if value is None:
             return BaseType.NONE
         elif isinstance(value, bool):
@@ -136,7 +135,9 @@ class TypeValidator:
         return None
 
     @staticmethod
-    def validate_type(value: Any, expected_type: BaseType, var_name: str = "") -> tuple[bool, str]:
+    def validate_type(
+        value: Any, expected_type: BaseType, var_name: str = ""
+    ) -> tuple[bool, str]:
         if expected_type == BaseType.ANY:
             return True, ""
 
@@ -150,7 +151,7 @@ class TypeValidator:
 
         var_info = f"variabel '{var_name}'" if var_name else "nilai"
         error_msg = (
-            f"Kesalahan Tipe: {var_info} diharapkan bertipe '{TypeValidator.type_to_string(expected_type)}', "
+            f"Kesalahan Tipe: {var_info} diharapkan bertipe '{TypeValidator.type_to_string(expected_type)}', "  # noqa: E501
             f"tetapi mendapat '{TypeValidator.type_to_string(actual_type)}'"
         )
         return False, error_msg
@@ -183,16 +184,21 @@ class TypeChecker:
         self.enable_advanced_types = True
         self.enable_type_inference = True
 
-    def check_variable_assignment(self, var_name: str, value: Any,
-                                  type_hint: Optional[str]) -> tuple[bool, str]:
+    def check_variable_assignment(
+        self, var_name: str, value: Any, type_hint: Optional[str]
+    ) -> tuple[bool, str]:
         if not type_hint:
             if self.strict_mode:
-                return False, f"Mode Ketat: Variabel '{var_name}' harus memiliki anotasi tipe"
+                return (
+                    False,
+                    f"Mode Ketat: Variabel '{var_name}' harus memiliki anotasi tipe",
+                )
             return True, ""
 
         if self.enable_advanced_types:
             try:
-                from renzmc.core.advanced_types import TypeParser, AdvancedTypeValidator
+                from renzmc.core.advanced_types import AdvancedTypeValidator, TypeParser
+
                 type_spec = TypeParser.parse_type_string(type_hint)
                 if type_spec:
                     return AdvancedTypeValidator.validate(value, type_spec, var_name)
@@ -205,20 +211,27 @@ class TypeChecker:
 
         return self.validator.validate_type(value, expected_type, var_name)
 
-    def check_function_parameter(self, param_name: str, value: Any,
-                                type_hint: Optional[str], func_name: str = "") -> tuple[bool, str]:
+    def check_function_parameter(
+        self, param_name: str, value: Any, type_hint: Optional[str], func_name: str = ""
+    ) -> tuple[bool, str]:
         if not type_hint:
             if self.strict_mode:
                 func_info = f" di fungsi '{func_name}'" if func_name else ""
-                return False, f"Mode Ketat: Parameter '{param_name}'{func_info} harus memiliki anotasi tipe"
+                return (
+                    False,
+                    f"Mode Ketat: Parameter '{param_name}'{func_info} harus memiliki anotasi tipe",  # noqa: E501
+                )
             return True, ""
 
         if self.enable_advanced_types:
             try:
-                from renzmc.core.advanced_types import TypeParser, AdvancedTypeValidator
+                from renzmc.core.advanced_types import AdvancedTypeValidator, TypeParser
+
                 type_spec = TypeParser.parse_type_string(type_hint)
                 if type_spec:
-                    is_valid, error_msg = AdvancedTypeValidator.validate(value, type_spec, param_name)
+                    is_valid, error_msg = AdvancedTypeValidator.validate(
+                        value, type_spec, param_name
+                    )
                     if not is_valid and func_name:
                         error_msg = f"Fungsi '{func_name}': {error_msg}"
                     return is_valid, error_msg
@@ -229,27 +242,36 @@ class TypeChecker:
         if expected_type is None:
             return True, ""
 
-        is_valid, error_msg = self.validator.validate_type(value, expected_type, param_name)
+        is_valid, error_msg = self.validator.validate_type(
+            value, expected_type, param_name
+        )
 
         if not is_valid and func_name:
             error_msg = f"Fungsi '{func_name}': {error_msg}"
 
         return is_valid, error_msg
 
-    def check_function_return(self, return_value: Any, return_type_hint: Optional[str],
-                            func_name: str = "") -> tuple[bool, str]:
+    def check_function_return(
+        self, return_value: Any, return_type_hint: Optional[str], func_name: str = ""
+    ) -> tuple[bool, str]:
         if not return_type_hint:
             if self.strict_mode:
                 func_info = f"Fungsi '{func_name}'" if func_name else "Fungsi"
-                return False, f"Mode Ketat: {func_info} harus memiliki anotasi tipe return"
+                return (
+                    False,
+                    f"Mode Ketat: {func_info} harus memiliki anotasi tipe return",
+                )
             return True, ""
 
         if self.enable_advanced_types:
             try:
-                from renzmc.core.advanced_types import TypeParser, AdvancedTypeValidator
+                from renzmc.core.advanced_types import AdvancedTypeValidator, TypeParser
+
                 type_spec = TypeParser.parse_type_string(return_type_hint)
                 if type_spec:
-                    is_valid, error_msg = AdvancedTypeValidator.validate(return_value, type_spec, "nilai return")
+                    is_valid, error_msg = AdvancedTypeValidator.validate(
+                        return_value, type_spec, "nilai return"
+                    )
                     if not is_valid and func_name:
                         error_msg = f"Fungsi '{func_name}': {error_msg}"
                     return is_valid, error_msg
@@ -260,7 +282,9 @@ class TypeChecker:
         if expected_type is None:
             return True, ""
 
-        is_valid, error_msg = self.validator.validate_type(return_value, expected_type, "nilai return")
+        is_valid, error_msg = self.validator.validate_type(
+            return_value, expected_type, "nilai return"
+        )
 
         if not is_valid and func_name:
             error_msg = f"Fungsi '{func_name}': {error_msg}"

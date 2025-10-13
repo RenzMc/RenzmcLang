@@ -22,35 +22,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import os
 from pathlib import Path
 
 
 def add_examples_path(interpreter_instance):
     """
     Add examples directory to module search paths.
-    
+
     This function adds the examples directory to the module manager's search paths,
     allowing RenzmcLang programs to import modules from the examples directory.
-    
+
     Args:
         interpreter_instance: The Interpreter instance to modify
     """
     # Get the package root directory
     package_root = Path(__file__).parent.parent.parent
     examples_path = package_root / "examples"
-    
+
     # Add examples path if it exists
     if examples_path.exists() and examples_path.is_dir():
         interpreter_instance.module_manager.add_search_path(str(examples_path))
-        
+
         # Also add common subdirectories that might be imported
         common_dirs = [
             "oop_imports",
             "test_imports",
             "utilities",
         ]
-        
+
         for subdir in common_dirs:
             subdir_path = examples_path / subdir
             if subdir_path.exists() and subdir_path.is_dir():

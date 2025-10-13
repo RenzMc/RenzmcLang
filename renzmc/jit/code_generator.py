@@ -23,11 +23,29 @@ SOFTWARE.
 """
 
 from __future__ import annotations
-from typing import Any, Optional
-from typing import List as PyList
-from typing import Dict as PyDict
+
+from typing import Any
+
 from renzmc.core.ast import (
-    AST, Assign, BinOp, Boolean, Break, Continue, Dict, For, FuncCall, If, List, NoOp, Num, Return, String, UnaryOp, Var, VarDecl, While
+    AST,
+    Assign,
+    BinOp,
+    Boolean,
+    Break,
+    Continue,
+    Dict,
+    For,
+    FuncCall,
+    If,
+    List,
+    NoOp,
+    Num,
+    Return,
+    String,
+    UnaryOp,
+    Var,
+    VarDecl,
+    While,
 )
 from renzmc.core.token import TokenType
 
@@ -42,12 +60,17 @@ class CodeGenerator:
         if context is None:
             context = {}
 
-        method_name = f'generate_{type(node).__name__}'
+        method_name = f"generate_{type(node).__name__}"
         generator = getattr(self, method_name, self.generic_generate)
         return generator(node, context)
 
-    def generate_function(self, name: str, params: List[str],
-                         body: List[AST], context: Dict[str, Any] = None) -> str:
+    def generate_function(
+        self,
+        name: str,
+        params: List[str],
+        body: List[AST],
+        context: Dict[str, Any] = None,
+    ) -> str:
         if context is None:
             context = {}
 
@@ -74,7 +97,7 @@ class CodeGenerator:
         return str(node.value)
 
     def generate_String(self, node: String, context: Dict[str, Any]) -> str:
-        value = node.value.replace('"', r'\&quot;')
+        value = node.value.replace('"', r"\&quot;")
         return f'"{value}"'
 
     def generate_Boolean(self, node: Boolean, context: Dict[str, Any]) -> str:
@@ -88,26 +111,26 @@ class CodeGenerator:
         right = self.generate(node.right, context)
 
         op_map = {
-            TokenType.TAMBAH: '+',
-            TokenType.KURANG: '-',
-            TokenType.KALI: '*',
-            TokenType.BAGI: '/',
-            TokenType.PEMBAGIAN_BULAT: '//',
-            TokenType.SISA_BAGI: '%',
-            TokenType.PANGKAT: '**',
-            TokenType.SAMA_DENGAN: '==',
-            TokenType.TIDAK_SAMA: '!=',
-            TokenType.KURANG_DARI: '<',
-            TokenType.LEBIH_DARI: '>',
-            TokenType.KURANG_SAMA: '<=',
-            TokenType.LEBIH_SAMA: '>=',
-            TokenType.DAN: 'and',
-            TokenType.ATAU: 'or',
-            TokenType.BITWISE_AND: '&',
-            TokenType.BITWISE_OR: '|',
-            TokenType.BITWISE_XOR: '^',
-            TokenType.GESER_KIRI: '<<',
-            TokenType.GESER_KANAN: '>>',
+            TokenType.TAMBAH: "+",
+            TokenType.KURANG: "-",
+            TokenType.KALI: "*",
+            TokenType.BAGI: "/",
+            TokenType.PEMBAGIAN_BULAT: "//",
+            TokenType.SISA_BAGI: "%",
+            TokenType.PANGKAT: "**",
+            TokenType.SAMA_DENGAN: "==",
+            TokenType.TIDAK_SAMA: "!=",
+            TokenType.KURANG_DARI: "<",
+            TokenType.LEBIH_DARI: ">",
+            TokenType.KURANG_SAMA: "<=",
+            TokenType.LEBIH_SAMA: ">=",
+            TokenType.DAN: "and",
+            TokenType.ATAU: "or",
+            TokenType.BITWISE_AND: "&",
+            TokenType.BITWISE_OR: "|",
+            TokenType.BITWISE_XOR: "^",
+            TokenType.GESER_KIRI: "<<",
+            TokenType.GESER_KANAN: ">>",
         }
 
         op = op_map.get(node.op.type, str(node.op.value))
@@ -117,10 +140,10 @@ class CodeGenerator:
         expr = self.generate(node.expr, context)
 
         op_map = {
-            TokenType.TAMBAH: '+',
-            TokenType.KURANG: '-',
-            TokenType.TIDAK: 'not ',
-            TokenType.BITWISE_NOT: '~',
+            TokenType.TAMBAH: "+",
+            TokenType.KURANG: "-",
+            TokenType.TIDAK: "not ",
+            TokenType.BITWISE_NOT: "~",
         }
 
         op = op_map.get(node.op.type, str(node.op.value))
@@ -138,7 +161,7 @@ class CodeGenerator:
         return f"{var_name} = {value}"
 
     def generate_Return(self, node: Return, context: Dict[str, Any]) -> str:
-        if hasattr(node, 'expr') and node.expr:
+        if hasattr(node, "expr") and node.expr:
             value = self.generate(node.expr, context)
             return f"return {value}"
         return "return"
@@ -238,5 +261,5 @@ class CodeGenerator:
         if not code:
             return ""
         indent = self.indent_str * self.indent_level
-        lines = code.split('\n')
-        return '\n'.join(indent + line if line.strip() else line for line in lines)
+        lines = code.split("\n")
+        return "\n".join(indent + line if line.strip() else line for line in lines)

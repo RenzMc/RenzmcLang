@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from renzmc.core.type_system import TypeChecker, TypeValidator, BaseType
 from renzmc.core.error import RenzmcRuntimeError
+from renzmc.core.type_system import TypeChecker, TypeValidator
 
 
 class TypeIntegrationMixin:
@@ -40,7 +40,9 @@ class TypeIntegrationMixin:
         if not type_hint:
             return
 
-        type_hint_str = type_hint.type_name if hasattr(type_hint, 'type_name') else str(type_hint)
+        type_hint_str = (
+            type_hint.type_name if hasattr(type_hint, "type_name") else str(type_hint)
+        )
 
         is_valid, error_msg = self.type_checker.check_variable_assignment(
             var_name, value, type_hint_str
@@ -67,7 +69,11 @@ class TypeIntegrationMixin:
         for param_name, value in param_values.items():
             if param_name in param_types:
                 type_hint = param_types[param_name]
-                type_hint_str = type_hint.type_name if hasattr(type_hint, 'type_name') else str(type_hint)
+                type_hint_str = (
+                    type_hint.type_name
+                    if hasattr(type_hint, "type_name")
+                    else str(type_hint)
+                )
 
                 is_valid, error_msg = self.type_checker.check_function_parameter(
                     param_name, value, type_hint_str, func_name
@@ -86,7 +92,11 @@ class TypeIntegrationMixin:
         if return_value is None:
             return
 
-        type_hint_str = return_type.type_name if hasattr(return_type, 'type_name') else str(return_type)
+        type_hint_str = (
+            return_type.type_name
+            if hasattr(return_type, "type_name")
+            else str(return_type)
+        )
 
         is_valid, error_msg = self.type_checker.check_function_return(
             return_value, type_hint_str, func_name
@@ -102,5 +112,5 @@ class TypeIntegrationMixin:
         self.type_checking_enabled = False
 
     def set_strict_mode(self, strict: bool):
-        if hasattr(self, 'type_checker'):
+        if hasattr(self, "type_checker"):
             self.type_checker.strict_mode = strict

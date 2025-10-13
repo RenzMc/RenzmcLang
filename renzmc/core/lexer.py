@@ -29,8 +29,8 @@ This module implements the lexical analyzer (tokenizer) for RenzmcLang.
 It converts source code text into a stream of tokens.
 """
 
-from renzmc.core.token import TokenType, Token
-from renzmc.core.error import LexerError
+from renzmc.core.error import LexerError  # noqa: E402
+from renzmc.core.token import Token, TokenType  # noqa: E402
 
 
 class Lexer:
@@ -201,7 +201,7 @@ class Lexer:
                 break
             self.advance()
 
-    def skip_comment(self):
+    def skip_comment(self):  # noqa: C901
         if self.current_char == "/" and self.peek() == "/":
             while self.current_char is not None and self.current_char != "\n":
                 self.advance()
@@ -262,7 +262,7 @@ class Lexer:
         else:
             return Token(TokenType.ANGKA, int(result), start_line, start_column)
 
-    def string(self):
+    def string(self):  # noqa: C901
         start_line = self.line
         start_column = self.column
         is_f_string = False
@@ -331,8 +331,7 @@ class Lexer:
         else:
             return Token(TokenType.TEKS, result, start_line, start_column)
 
-
-    def identifier(self):
+    def identifier(self):  # noqa: C901
         result = ""
         start_line = self.line
         start_column = self.column
@@ -361,7 +360,7 @@ class Lexer:
             saved_line = self.line
             saved_column = self.column
 
-            while self.current_char is not None and self.current_char in (' ', '\t'):
+            while self.current_char is not None and self.current_char in (" ", "\t"):
                 self.advance()
 
             if self.current_char is not None and self.current_char.isalpha():
@@ -373,7 +372,9 @@ class Lexer:
                     self.advance()
 
                 if next_word == "dalam":
-                    return Token(TokenType.TIDAK_DALAM, "tidak dalam", start_line, start_column)
+                    return Token(
+                        TokenType.TIDAK_DALAM, "tidak dalam", start_line, start_column
+                    )
 
             self.pos = saved_pos
             self.current_char = saved_char
@@ -386,7 +387,7 @@ class Lexer:
         else:
             return Token(TokenType.IDENTIFIER, result, start_line, start_column)
 
-    def get_next_token(self):
+    def get_next_token(self):  # noqa: C901
         while self.current_char is not None:
             if self.current_char.isspace() and self.current_char != "\n":
                 self.skip_whitespace()

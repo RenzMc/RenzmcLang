@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-from functools import wraps
 import time
 from collections import defaultdict
+from functools import wraps
 from threading import Lock
-from typing import Callable, Any
+from typing import Any, Callable
 
 
 class RateLimiter:
@@ -51,7 +51,7 @@ class RateLimiter:
                 ]
                 if len(self.calls[key]) >= self.max_calls:
                     raise RuntimeError(
-                        f"⚠️ Rate limit tercapai untuk '{func.__name__}'\nMaksimum: {self.max_calls} panggilan per {self.period} detik\nSilakan tunggu beberapa saat sebelum mencoba lagi."
+                        f"⚠️ Rate limit tercapai untuk '{func.__name__}'\nMaksimum: {self.max_calls} panggilan per {self.period} detik\nSilakan tunggu beberapa saat sebelum mencoba lagi."  # noqa: E501
                     )
                 self.calls[key].append(now)
             return func(*args, **kwargs)

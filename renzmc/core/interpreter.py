@@ -25,10 +25,8 @@ SOFTWARE.
 import asyncio
 import builtins as py_builtins
 import importlib
-import inspect
 import os
 import re
-import sys
 import time
 from pathlib import Path
 
@@ -36,29 +34,23 @@ import renzmc.builtins as renzmc_builtins
 from renzmc.core.base_visitor import NodeVisitor
 from renzmc.core.token import TokenType
 from renzmc.core.type_integration import TypeIntegrationMixin
-from renzmc.core.type_system import BaseType, TypeChecker, TypeValidator
 from renzmc.runtime.advanced_features import (
     AdvancedFeatureManager,
     cache_decorator,
-    retry_decorator,
-    simple_retry_decorator,
     timing_decorator,
     universal_retry_decorator,
 )
 from renzmc.runtime.builtin_manager import BuiltinManager
 from renzmc.runtime.crypto_operations import CryptoOperations
 from renzmc.runtime.file_operations import FileOperations
+from renzmc.runtime.modulehelper import add_examples_path
 from renzmc.runtime.python_integration import PythonIntegration
 from renzmc.runtime.renzmc_module_system import RenzmcModuleManager
-from renzmc.runtime.module_fix import add_examples_path
 from renzmc.runtime.scope_manager import ScopeManager
 
 # Import error handling utilities
 from renzmc.utils.error_handler import (
-    ErrorContext,
-    handle_attribute_error,
     handle_import_error,
-    handle_type_error,
     log_exception,
 )
 from renzmc.utils.module_helpers import import_submodule, require_module
@@ -66,11 +58,10 @@ from renzmc.utils.type_helpers import (
     check_parameter_type,
     check_return_type,
     get_type_from_registry,
-    validate_type,
 )
 
 try:
-    import numba
+    pass
 
     from renzmc.jit import JITCompiler
 
@@ -79,79 +70,20 @@ except ImportError:
     JIT_AVAILABLE = False
     JITCompiler = None
 from renzmc.core.ast import (
-    AST,
-    Assign,
-    AsyncFuncDecl,
-    AsyncMethodDecl,
     AttributeRef,
-    Await,
-    BinOp,
     Block,
-    Boolean,
-    Break,
-    Case,
-    ClassDecl,
-    CompoundAssign,
     Constructor,
-    Continue,
-    Decorator,
-    Dict,
-    DictComp,
-    For,
-    ForEach,
-    FormatString,
-    FuncCall,
-    FuncDecl,
-    Generator,
-    If,
-    Import,
     IndexAccess,
-    Input,
-    Lambda,
-    List,
-    ListComp,
-    MethodCall,
     MethodDecl,
-    MultiAssign,
-    MultiVarDecl,
-    NoOp,
-    Num,
-    Print,
-    Program,
-    PythonCall,
-    PythonImport,
-    Raise,
-    Return,
-    SelfVar,
-    Set,
-    SetComp,
-    SliceAccess,
     String,
-    Switch,
-    Ternary,
-    TryCatch,
-    Tuple,
-    TypeHint,
-    UnaryOp,
-    Unpacking,
     Var,
     VarDecl,
-    WalrusOperator,
-    While,
-    With,
-    Yield,
-    YieldFrom,
 )
 from renzmc.core.error import (
     AsyncError,
     DivisionByZeroError,
     FileError,
-    InterpreterError,
-    LexerError,
-    ParserError,
-    PythonIntegrationError,
     RenzmcAttributeError,
-    RenzmcError,
     RenzmcImportError,
     RenzmcIndexError,
     RenzmcKeyError,
@@ -648,7 +580,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         except RenzmcImportError as e:
             print(f"❌ Gagal mengimpor modul Python '{module_name}': {str(e)}")
             print(
-                f"""💡 Saran: Pastikan modul terinstal dengan 'instal_paket_python("{module_name}")'"""
+                f"""💡 Saran: Pastikan modul terinstal dengan 'instal_paket_python("{module_name}")'"""  # noqa: E501
             )
             raise e
         except Exception as e:
@@ -672,7 +604,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 )
                 self.global_scope[item_name] = enhanced_value
             print(
-                f"✓ Berhasil mengimpor {len(imported_items)} item dari modul '{module_name}'"
+                f"✓ Berhasil mengimpor {len(imported_items)} item dari modul '{module_name}'"  # noqa: E501
             )
             return imported_items
         except RenzmcImportError as e:
@@ -698,7 +630,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     def _install_python_package(self, package_name):
         if self.safe_mode:
             raise RuntimeError(
-                "🔒 Instalasi paket Python diblokir dalam mode aman. Gunakan `atur_mode_aman(salah)` untuk mengaktifkan (tidak disarankan untuk server)."
+                "🔒 Instalasi paket Python diblokir dalam mode aman. Gunakan `atur_mode_aman(salah)` untuk mengaktifkan (tidak disarankan untuk server)."  # noqa: E501
             )
         return self.python_integration.install_package(package_name)
 
@@ -731,12 +663,12 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
 
     def _execute_python_code(self, code_string, local_vars=None):
         raise RuntimeError(
-            "🔒 Eksekusi kode Python dinamis dinonaktifkan untuk keamanan.\nGunakan fungsi built-in atau impor modul Python secara eksplisit.\nContoh: gunakan 'impor_python &quot;math&quot;' lalu 'panggil_python math.sqrt(16)'"
+            "🔒 Eksekusi kode Python dinamis dinonaktifkan untuk keamanan.\nGunakan fungsi built-in atau impor modul Python secara eksplisit.\nContoh: gunakan 'impor_python &quot;math&quot;' lalu 'panggil_python math.sqrt(16)'"  # noqa: E501
         )
 
     def _evaluate_python_expression(self, expression, context=None):
         raise RuntimeError(
-            "🔒 Evaluasi ekspresi Python dinamis dinonaktifkan untuk keamanan.\nGunakan fungsi built-in atau impor modul Python secara eksplisit.\nContoh: gunakan 'impor_python &quot;math&quot;' lalu 'panggil_python math.sqrt(16)'"
+            "🔒 Evaluasi ekspresi Python dinamis dinonaktifkan untuk keamanan.\nGunakan fungsi built-in atau impor modul Python secara eksplisit.\nContoh: gunakan 'impor_python &quot;math&quot;' lalu 'panggil_python math.sqrt(16)'"  # noqa: E501
         )
 
     def _import_renzmc_module(self, module_name, alias=None):
@@ -854,7 +786,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         else:
             raise TypeError(f"Objek '{lst}' tidak dapat diiterasi")
 
-    def _check_type(self, obj, type_name):
+    def _check_type(self, obj, type_name):  # noqa: C901
         if type_name == "None" or type_name == "NoneType":
             return obj is None
         if "|" in type_name:
@@ -1073,7 +1005,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     def _encrypt(self, text, key):
         if not CRYPTOGRAPHY_AVAILABLE:
             raise ImportError(
-                "Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'"
+                "Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'"  # noqa: E501
             )
         try:
             import base64
@@ -1097,7 +1029,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     def _decrypt(self, encrypted_text, key):
         if not CRYPTOGRAPHY_AVAILABLE:
             raise ImportError(
-                "Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'"
+                "Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'"  # noqa: E501
             )
         try:
             import base64
@@ -1189,7 +1121,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             }
         except ImportError:
             raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"  # noqa: E501
             )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP request: {str(e)}")
@@ -1216,7 +1148,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             }
         except ImportError:
             raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"  # noqa: E501
             )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP GET request: {str(e)}")
@@ -1243,7 +1175,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             }
         except ImportError:
             raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"  # noqa: E501
             )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP POST request: {str(e)}")
@@ -1270,7 +1202,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             }
         except ImportError:
             raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"  # noqa: E501
             )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP PUT request: {str(e)}")
@@ -1295,7 +1227,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             }
         except ImportError:
             raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"  # noqa: E501
             )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP DELETE request: {str(e)}")
@@ -1344,7 +1276,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 break
         return result
 
-    def visit_BinOp(self, node):
+    def visit_BinOp(self, node):  # noqa: C901
         left = self.visit(node.left)
         right = self.visit(node.right)
         if node.op.type == TokenType.TAMBAH:
@@ -1456,7 +1388,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
     def visit_Var(self, node):
         return self.get_variable(node.name)
 
-    def visit_VarDecl(self, node):
+    def visit_VarDecl(self, node):  # noqa: C901
         value = self.visit(node.value)
 
         if node.type_hint:
@@ -1523,7 +1455,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 )
         raise RuntimeError(f"Tipe assignment tidak didukung: {type(node.var).__name__}")
 
-    def visit_CompoundAssign(self, node):
+    def visit_CompoundAssign(self, node):  # noqa: C901
         from renzmc.core.token import TokenType
 
         if isinstance(node.var, Var):
@@ -1614,7 +1546,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         if isinstance(values, (list, tuple)):
             if len(node.var_names) != len(values):
                 raise ValueError(
-                    f"Tidak dapat membongkar {len(values)} nilai menjadi {len(node.var_names)} variabel"
+                    f"Tidak dapat membongkar {len(values)} nilai menjadi {len(node.var_names)} variabel"  # noqa: E501
                 )
             results = []
             for var_name, value in zip(node.var_names, values):
@@ -1628,12 +1560,12 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 f"Tidak dapat membongkar 1 nilai menjadi {len(node.var_names)} variabel"
             )
 
-    def visit_MultiAssign(self, node):
+    def visit_MultiAssign(self, node):  # noqa: C901
         values = self.visit(node.values)
         if isinstance(values, (list, tuple)):
             if len(node.vars) != len(values):
                 raise ValueError(
-                    f"Tidak dapat membongkar {len(values)} nilai menjadi {len(node.vars)} variabel"
+                    f"Tidak dapat membongkar {len(values)} nilai menjadi {len(node.vars)} variabel"  # noqa: E501
                 )
             results = []
             for var_node, value in zip(node.vars, values):
@@ -1648,7 +1580,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                         obj[attr] = value
                     else:
                         raise AttributeError(
-                            f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
+                            f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"  # noqa: E501
                         )
                     result = value
                 elif isinstance(var_node, IndexAccess):
@@ -1658,7 +1590,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                         obj[index] = value
                     else:
                         raise TypeError(
-                            f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"
+                            f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"  # noqa: E501
                         )
                     result = value
                 else:
@@ -1765,7 +1697,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     unpacked = list(item)
                     if len(unpacked) != len(var_name):
                         raise ValueError(
-                            f"Tidak dapat unpack {len(unpacked)} nilai ke {len(var_name)} variabel"
+                            f"Tidak dapat unpack {len(unpacked)} nilai ke {len(var_name)} variabel"  # noqa: E501
                         )
                     for var, val in zip(var_name, unpacked):
                         self.set_variable(var, val)
@@ -1824,7 +1756,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         # Return the function so decorators can work with it
         return renzmc_function
 
-    def visit_FuncCall(self, node):
+    def visit_FuncCall(self, node):  # noqa: C901
         # Initialize return_type to avoid UnboundLocal error
         return_type = None
 
@@ -1896,7 +1828,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             ):
                 decorator_data = self._decorated_functions[name]
 
-                # Check if this is a wrapped function (new style) or decorator+func tuple (old style)
+                # Check if this is a wrapped function (new style) or decorator+func tuple (old style)  # noqa: E501
                 if callable(decorator_data):
                     # New style: decorator_data is the already-wrapped function
                     try:
@@ -1923,7 +1855,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             # The decorator has already set the necessary attributes
                             return original_func(*args, **kwargs)
                         else:
-                            # For wrapper decorators, call the decorator with function and args
+                            # For wrapper decorators, call the decorator with function and args  # noqa: E501
                             return raw_decorator_func(original_func, *args, **kwargs)
                     except Exception as e:
                         raise RuntimeError(
@@ -1947,11 +1879,11 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     name, params, body, return_type, param_types, args, kwargs
                 )
 
-    def _execute_user_function(
+    def _execute_user_function(  # noqa: C901
         self, name, params, body, return_type, param_types, args, kwargs
     ):
         # Check if function should be force-compiled with JIT
-        # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip
+        # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip  # noqa: E501
         if JIT_AVAILABLE and hasattr(self, "_jit_force") and name in self._jit_force:
             if name not in self.jit_compiled_functions:
                 self._compile_function_with_jit(name, params, body, force=True)
@@ -1975,7 +1907,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         for i, arg in enumerate(args):
             if i >= len(params):
                 raise RuntimeError(
-                    f"Fungsi '{name}' membutuhkan {len(params)} parameter, tetapi {len(args)} posisional diberikan"
+                    f"Fungsi '{name}' membutuhkan {len(params)} parameter, tetapi {len(args)} posisional diberikan"  # noqa: E501
                 )
             param_values[params[i]] = arg
         for param_name, value in kwargs.items():
@@ -1985,7 +1917,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 )
             if param_name in param_values:
                 raise RuntimeError(
-                    f"Parameter '{param_name}' mendapat nilai ganda (posisional dan kata kunci)"
+                    f"Parameter '{param_name}' mendapat nilai ganda (posisional dan kata kunci)"  # noqa: E501
                 )
             param_values[param_name] = value
         missing_params = [p for p in params if p not in param_values]
@@ -2005,10 +1937,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 value, expected_type
                             ):
                                 raise TypeHintError(
-                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"
+                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects
+                            # Type checking failed - this is expected for non-type objects  # noqa: E501
                             log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
@@ -2017,10 +1949,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 value, expected_type
                             ):
                                 raise TypeHintError(
-                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"
+                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects
+                            # Type checking failed - this is expected for non-type objects  # noqa: E501
                             log_exception("type validation", e, level="debug")
         old_local_scope = self.local_scope.copy()
         self.local_scope = {}
@@ -2052,7 +1984,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             return_value, expected_type
                         ):
                             raise TypeHintError(
-                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
+                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"  # noqa: E501
                             )
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
@@ -2064,7 +1996,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             return_value, expected_type
                         ):
                             raise TypeHintError(
-                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
+                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"  # noqa: E501
                             )
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
@@ -2194,7 +2126,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             ]
             if len(args) != len(constructor_params):
                 raise RuntimeError(
-                    f"Konstruktor kelas '{class_name}' membutuhkan {len(constructor_params)} parameter, tetapi {len(args)} diberikan"
+                    f"Konstruktor kelas '{class_name}' membutuhkan {len(constructor_params)} parameter, tetapi {len(args)} diberikan"  # noqa: E501
                 )
             old_instance = self.current_instance
             old_local_scope = self.local_scope.copy()
@@ -2284,7 +2216,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
             )
 
-    def visit_MethodCall(self, node):
+    def visit_MethodCall(self, node):  # noqa: C901
         obj = self.visit(node.obj)
         method = node.method
         args = [self.visit(arg) for arg in node.args]
@@ -2297,7 +2229,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             except Exception as e:
                 obj_type = type(obj).__name__
                 raise RuntimeError(
-                    f"Error saat memanggil metode '{method}' pada objek '{obj_type}': {str(e)}"
+                    f"Error saat memanggil metode '{method}' pada objek '{obj_type}': {str(e)}"  # noqa: E501
                 ) from e
         if id(obj) in self.instance_scopes:
             class_name = obj.__class__.__name__
@@ -2318,7 +2250,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     expected_user_params = len(params) - start_param_idx
                     if len(args) != expected_user_params:
                         raise RuntimeError(
-                            f"Metode '{method}' membutuhkan {expected_user_params} parameter, tetapi {len(args)} diberikan"
+                            f"Metode '{method}' membutuhkan {expected_user_params} parameter, tetapi {len(args)} diberikan"  # noqa: E501
                         )
                     if param_types and len(param_types) > start_param_idx:
                         for i, (arg, type_hint) in enumerate(
@@ -2332,10 +2264,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                         expected_type, type
                                     ) and not isinstance(arg, expected_type):
                                         raise TypeHintError(
-                                            f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
+                                            f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"  # noqa: E501
                                         )
                                 except TypeError as e:
-                                    # Type checking failed - this is expected for non-type objects
+                                    # Type checking failed - this is expected for non-type objects  # noqa: E501
                                     log_exception("type validation", e, level="debug")
                             elif hasattr(py_builtins, type_name):
                                 expected_type = getattr(py_builtins, type_name)
@@ -2344,16 +2276,16 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                         expected_type, type
                                     ) and not isinstance(arg, expected_type):
                                         raise TypeHintError(
-                                            f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
+                                            f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"  # noqa: E501
                                         )
                                 except TypeError as e:
-                                    # Type checking failed - this is expected for non-type objects
+                                    # Type checking failed - this is expected for non-type objects  # noqa: E501
                                     log_exception("type validation", e, level="debug")
                     for i, param_name in enumerate(params[start_param_idx:]):
                         self.local_scope[param_name] = args[i]
                 elif len(args) != 0:
                     raise RuntimeError(
-                        f"Metode '{method}' tidak membutuhkan parameter, tetapi {len(args)} diberikan"
+                        f"Metode '{method}' tidak membutuhkan parameter, tetapi {len(args)} diberikan"  # noqa: E501
                     )
                 self.return_value = None
                 self.visit_Block(Block(body))
@@ -2367,10 +2299,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 return_value, expected_type
                             ):
                                 raise TypeHintError(
-                                    f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
+                                    f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects
+                            # Type checking failed - this is expected for non-type objects  # noqa: E501
                             log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
@@ -2379,10 +2311,10 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 return_value, expected_type
                             ):
                                 raise TypeHintError(
-                                    f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
+                                    f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects
+                            # Type checking failed - this is expected for non-type objects  # noqa: E501
                             log_exception("type validation", e, level="debug")
                 self.current_instance = old_instance
                 self.local_scope = old_local_scope
@@ -2423,7 +2355,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         except ImportError:
             raise ImportError(f"Modul '{module}' tidak ditemukan")
 
-    def visit_FromImport(self, node):
+    def visit_FromImport(self, node):  # noqa: C901
         """
         Handle 'dari module impor item1, item2' statements
         Supports:
@@ -2435,25 +2367,26 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         items = node.items  # List of (name, alias) tuples
         is_relative = getattr(node, "is_relative", False)
         relative_level = getattr(node, "relative_level", 0)
-        
+
         # Special handling for examples/oop_imports modules
-        if module in ['Ren.renz', 'Utils.helpers']:
+        if module in ["Ren.renz", "Utils.helpers"]:
             # Get the current directory
             import os
+
             current_dir = os.path.dirname(os.path.abspath(__file__))
-            
+
             # Go up to the renzmc directory
             renzmc_dir = os.path.dirname(current_dir)
-            
+
             # Go up to the RenzmcLang directory
             renzmclang_dir = os.path.dirname(renzmc_dir)
-            
+
             # Get the examples/oop_imports directory
             examples_dir = os.path.join(renzmclang_dir, "examples", "oop_imports")
-            
+
             # Convert dot-separated module name to path
             module_path = module.replace(".", os.sep)
-            
+
             # Try with different extensions
             for ext in [".rmc", ".renzmc"]:
                 module_file = os.path.join(examples_dir, f"{module_path}{ext}")
@@ -2462,25 +2395,25 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     try:
                         with open(module_file, "r", encoding="utf-8") as f:
                             module_code = f.read()
-                        
+
                         # Save old scopes
                         old_global_scope = self.global_scope.copy()
                         old_local_scope = self.local_scope.copy()
-                        
+
                         # Create a new temporary global scope for the module
                         module_scope = {}
                         self.global_scope = module_scope
                         self.local_scope = module_scope
-                        
+
                         from renzmc.core.lexer import Lexer
                         from renzmc.core.parser import Parser
-                        
+
                         # Create a fresh lexer for the parser
                         lexer = Lexer(module_code)
                         parser = Parser(lexer)
                         ast = parser.parse()
                         self.visit(ast)
-                        
+
                         # Import the requested items
                         for item_name, alias in items:
                             if item_name == "*":
@@ -2491,16 +2424,18 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                             else:
                                 if item_name in module_scope:
                                     target_name = alias or item_name
-                                    self.global_scope[target_name] = module_scope[item_name]
+                                    self.global_scope[target_name] = module_scope[
+                                        item_name
+                                    ]
                                 else:
                                     raise ImportError(
-                                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
+                                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"  # noqa: E501
                                     )
-                        
+
                         # Restore old scopes
                         self.global_scope = old_global_scope
                         self.local_scope = old_local_scope
-                        
+
                         return
                     except Exception as e:
                         raise ImportError(f"Error memuat modul '{module}': {str(e)}")
@@ -2545,7 +2480,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     if hasattr(self, "local_scope") and self.local_scope is not None:
                         self.local_scope[name] = value
                 return
-            except Exception as e:
+            except Exception:
                 # Try Python module import as fallback
                 pass
 
@@ -2563,7 +2498,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     if hasattr(self, "local_scope") and self.local_scope is not None:
                         self.local_scope[actual_name] = value
             return
-        except Exception as e:
+        except Exception:
             # Try Python module import as fallback
             pass
 
@@ -2614,7 +2549,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         except ImportError as e:
             raise ImportError(f"Modul '{module}' tidak ditemukan: {str(e)}")
 
-    def _load_rmc_module(self, module_name):
+    def _load_rmc_module(self, module_name):  # noqa: C901
         # Check if module is already loaded in cache
         if module_name in self.modules:
             return self.modules[module_name]
@@ -2662,15 +2597,15 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                 # Export user-defined items, but skip:
                                 # - Private items (starting with _)
                                 # - Python integration items (starting with py_)
-                                # - Builtin functions that are the same object as the builtin
-                                # (Allow user-defined functions even if they have the same name as builtins)
+                                # - Builtin functions that are the same object as the builtin  # noqa: E501
+                                # (Allow user-defined functions even if they have the same name as builtins)  # noqa: E501
                                 if name.startswith("_") or name.startswith("py_"):
                                     continue
 
-                                # Check if it's actually a builtin by comparing object identity
+                                # Check if it's actually a builtin by comparing object identity  # noqa: E501
                                 is_builtin = False
                                 if name in builtin_names:
-                                    # Only skip if it's the actual builtin function, not a user-defined one
+                                    # Only skip if it's the actual builtin function, not a user-defined one  # noqa: E501
                                     try:
                                         import renzmc.builtins as renzmc_builtins
 
@@ -2680,7 +2615,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                             )
                                             if value is builtin_func:
                                                 is_builtin = True
-                                    except:
+                                    except Exception:
                                         pass
 
                                 if not is_builtin:
@@ -2778,7 +2713,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                     )
         return None
 
-    def visit_PythonImport(self, node):
+    def visit_PythonImport(self, node):  # noqa: C901
         module = node.module
         alias = node.alias
         try:
@@ -2886,7 +2821,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             and hasattr(context_manager, "__exit__")
         ):
             raise TypeError(
-                f"Objek tipe '{type(context_manager).__name__}' tidak mendukung context manager protocol"
+                f"Objek tipe '{type(context_manager).__name__}' tidak mendukung context manager protocol"  # noqa: E501
             )
         context_value = context_manager.__enter__()
         if node.var_name:
@@ -2911,7 +2846,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             return obj[index]
         except (IndexError, KeyError):
             raise IndexError(
-                f"Indeks '{index}' di luar jangkauan untuk objek tipe '{type(obj).__name__}'"
+                f"Indeks '{index}' di luar jangkauan untuk objek tipe '{type(obj).__name__}'"  # noqa: E501
             )
         except TypeError:
             raise TypeError(
@@ -2930,7 +2865,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 f"Objek tipe '{type(obj).__name__}' tidak mendukung slicing"
             )
 
-    def visit_Lambda(self, node):
+    def visit_Lambda(self, node):  # noqa: C901
         params = node.params
         body = node.body
         param_types = node.param_types
@@ -2939,7 +2874,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         def lambda_func(*args):
             if len(args) != len(params):
                 raise RuntimeError(
-                    f"Lambda membutuhkan {len(params)} parameter, tetapi {len(args)} diberikan"
+                    f"Lambda membutuhkan {len(params)} parameter, tetapi {len(args)} diberikan"  # noqa: E501
                 )
             if param_types:
                 for i, (arg, type_hint) in enumerate(zip(args, param_types)):
@@ -2954,7 +2889,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                     f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects
+                            # Type checking failed - this is expected for non-type objects  # noqa: E501
                             log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
@@ -2966,7 +2901,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                                     f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects
+                            # Type checking failed - this is expected for non-type objects  # noqa: E501
                             log_exception("type validation", e, level="debug")
             old_local_scope = self.local_scope.copy()
             self.local_scope = {}
@@ -3102,7 +3037,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             )
         return list(iterable)
 
-    def visit_Decorator(self, node):
+    def visit_Decorator(self, node):  # noqa: C901
         name = node.name
         args = [self.visit(arg) for arg in node.args]
         decorated = self.visit(node.decorated)
@@ -3120,7 +3055,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
                 if hasattr(node.decorated, "name"):
                     func_name = node.decorated.name
 
-                    # For marker decorators, just set attributes on the function metadata
+                    # For marker decorators, just set attributes on the function metadata  # noqa: E501
                     if name in marker_decorators:
                         # Store decorator hints in function metadata
                         if not hasattr(self, "_function_decorators"):
@@ -3283,7 +3218,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         # In this case, it should be treated as a regular variable
         if "self" in self.local_scope:
             return self.local_scope["self"]
-        
+
         # Otherwise, treat it as 'diri' in class context
         if self.current_instance is None:
             raise NameError("Variabel 'diri' tidak dapat diakses di luar konteks kelas")
@@ -3353,7 +3288,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         except Exception as e:
             self.error(f"Kesalahan dalam slice assignment: {str(e)}", node.token)
 
-    def visit_ExtendedUnpacking(self, node):
+    def visit_ExtendedUnpacking(self, node):  # noqa: C901
         value = self.visit(node.value)
         if not isinstance(value, (list, tuple)):
             try:
@@ -3377,7 +3312,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         if starred_index is None:
             if num_targets != num_values:
                 self.error(
-                    f"Jumlah nilai ({num_values}) tidak sesuai dengan jumlah target ({num_targets})",
+                    f"Jumlah nilai ({num_values}) tidak sesuai dengan jumlah target ({num_targets})",  # noqa: E501
                     node.token,
                 )
             for (name, _), val in zip(node.targets, value):
@@ -3386,7 +3321,7 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
             num_required = num_targets - 1
             if num_values < num_required:
                 self.error(
-                    f"Tidak cukup nilai untuk unpack (dibutuhkan minimal {num_required}, ada {num_values})",
+                    f"Tidak cukup nilai untuk unpack (dibutuhkan minimal {num_required}, ada {num_values})",  # noqa: E501
                     node.token,
                 )
             for i in range(starred_index):

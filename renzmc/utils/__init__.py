@@ -22,21 +22,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-import os
-import sys
+import asyncio
+import base64
+import datetime
+import hashlib
 import importlib
 import inspect
-import re
 import json
-import datetime
+import os
+import re
+import sys
 import time
-import hashlib
-import uuid
-import base64
 import urllib.parse
 import urllib.request
-import asyncio
-from typing import Any, List, Dict, Set, Tuple, Optional, Union, Callable
+import uuid
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple, Union
 
 
 def is_identifier(name):
@@ -151,7 +151,7 @@ def format_code(code):
     return "\n".join(result)
 
 
-def parse_type_annotation(annotation):
+def parse_type_annotation(annotation):  # noqa: C901
     if annotation == "int" or annotation == "bilangan_bulat":
         return int
     elif annotation == "float" or annotation == "desimal":
@@ -202,7 +202,7 @@ def parse_type_annotation(annotation):
         return annotation
 
 
-def check_type(value, type_annotation):
+def check_type(value, type_annotation):  # noqa: C901
     if type_annotation is Any:
         return True
     if isinstance(type_annotation, str):

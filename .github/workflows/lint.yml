@@ -72,7 +72,8 @@ jobs:
         run: |
           bandit -r renzmc/ -f json -o bandit-report.json || true
 
-      - name: Optional: run pre-commit hooks (all files)
+      - name: 
+        Optional: run pre-commit hooks (all files)
         run: |
           pre-commit run --all-files || true
         # pre-commit failure won't block pipeline here (optional). Remove "|| true" to make it strict.

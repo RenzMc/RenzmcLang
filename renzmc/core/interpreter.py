@@ -3279,6 +3279,12 @@ class Interpreter(NodeVisitor, TypeIntegrationMixin):
         return value
 
     def visit_SelfVar(self, node):
+        # Check if 'self' is used as a regular parameter in a function
+        # In this case, it should be treated as a regular variable
+        if "self" in self.local_scope:
+            return self.local_scope["self"]
+        
+        # Otherwise, treat it as 'diri' in class context
         if self.current_instance is None:
             raise NameError("Variabel 'diri' tidak dapat diakses di luar konteks kelas")
         if "diri" in self.local_scope:

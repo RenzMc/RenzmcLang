@@ -41,3 +41,64 @@ selesai
 // Constants
 PI itu 3.14159
 VERSI itu "1.0.0"
+
+// ============================================
+// Person Class Functions
+// ============================================
+
+buat fungsi buat_Person dengan nama, umur
+    person itu {
+        "nama": nama,
+        "umur": umur,
+        "tipe": "Person"
+    }
+    hasil person
+selesai
+
+buat fungsi Person_perkenalan dengan self
+    hasil f"Halo, nama saya {self['nama']} dan umur saya {self['umur']} tahun"
+selesai
+
+// ============================================
+// BankAccount Class Functions
+// ============================================
+
+buat fungsi buat_BankAccount dengan pemilik, saldo_awal
+    account itu {
+        "pemilik": pemilik,
+        "saldo": saldo_awal,
+        "transaksi": [],
+        "tipe": "BankAccount"
+    }
+    hasil account
+selesai
+
+buat fungsi BankAccount_deposit dengan self, jumlah
+    self["saldo"] itu self["saldo"] + jumlah
+    transaksi itu f"Deposit: +{jumlah}"
+    tambah(self["transaksi"], transaksi)
+    tampilkan f"✓ Deposit berhasil: {jumlah}"
+selesai
+
+buat fungsi BankAccount_withdraw dengan self, jumlah
+    jika jumlah > self["saldo"]
+        tampilkan "✗ Saldo tidak cukup"
+        hasil salah
+    selesai
+    self["saldo"] itu self["saldo"] - jumlah
+    transaksi itu f"Withdraw: -{jumlah}"
+    tambah(self["transaksi"], transaksi)
+    tampilkan f"✓ Withdraw berhasil: {jumlah}"
+    hasil benar
+selesai
+
+buat fungsi BankAccount_cek_saldo dengan self
+    hasil self["saldo"]
+selesai
+
+buat fungsi BankAccount_riwayat dengan self
+    tampilkan "=== Riwayat Transaksi ==="
+    untuk setiap t dari self["transaksi"]
+        tampilkan f"  • {t}"
+    selesai
+selesai

@@ -218,6 +218,8 @@ class Parser:
             next_token = self.lexer.peek_token()
             if next_token is not None and next_token.type == TokenType.TITIK:
                 return self.handle_self_attribute()
+            elif next_token is not None and next_token.type == TokenType.DAFTAR_AWAL:
+                return self.self_index_access_statement()
             else:
                 return self.expr()
         elif self.current_token.type == TokenType.TAMPILKAN:
@@ -722,13 +724,19 @@ class Parser:
             self.eat(TokenType.TITIK_DUA)
         elif self.current_token.type == TokenType.DENGAN:
             self.eat(TokenType.DENGAN)
-            if self.current_token.type == TokenType.IDENTIFIER:
+            if self.current_token.type in (TokenType.IDENTIFIER, TokenType.SELF):
                 params.append(self.current_token.value)
-                self.eat(TokenType.IDENTIFIER)
+                if self.current_token.type == TokenType.SELF:
+                    self.eat(TokenType.SELF)
+                else:
+                    self.eat(TokenType.IDENTIFIER)
                 while self.current_token.type == TokenType.KOMA:
                     self.eat(TokenType.KOMA)
                     params.append(self.current_token.value)
-                    self.eat(TokenType.IDENTIFIER)
+                    if self.current_token.type == TokenType.SELF:
+                        self.eat(TokenType.SELF)
+                    else:
+                        self.eat(TokenType.IDENTIFIER)
             return_type = None
         while self.current_token.type == TokenType.NEWLINE:
             self.eat(TokenType.NEWLINE)
@@ -1758,6 +1766,16 @@ class Parser:
                 self.eat(TokenType.DAFTAR_AKHIR)
                 target = IndexAccess(target, index, token)
             return target
+        elif self.current_token.type == TokenType.SELF:
+            token = self.current_token
+            self.eat(TokenType.SELF)
+            target = SelfVar(token.value, token)
+            while self.current_token.type == TokenType.DAFTAR_AWAL:
+                self.eat(TokenType.DAFTAR_AWAL)
+                index = self.expr()
+                self.eat(TokenType.DAFTAR_AKHIR)
+                target = IndexAccess(target, index, token)
+            return target
         else:
             self.error(
                 f"Diharapkan identifier untuk assignment target, ditemukan '{self.current_token.type}'"
@@ -1792,6 +1810,42 @@ class Parser:
         var_token = self.current_token
         self.eat(TokenType.IDENTIFIER)
         target = Var(var_token)
+        while self.current_token.type == TokenType.DAFTAR_AWAL:
+            self.eat(TokenType.DAFTAR_AWAL)
+            index = self.expr()
+            self.eat(TokenType.DAFTAR_AKHIR)
+            target = IndexAccess(target, index, var_token)
+        if self.current_token.type == TokenType.ITU:
+            self.eat(TokenType.ITU)
+            value = self.expr()
+            return Assign(target, value, var_token)
+        elif self.current_token.type in (
+            TokenType.TAMBAH_SAMA_DENGAN,
+            TokenType.KURANG_SAMA_DENGAN,
+            TokenType.KALI_SAMA_DENGAN,
+            TokenType.BAGI_SAMA_DENGAN,
+        ):
+            op_token = self.current_token
+            if self.current_token.type == TokenType.TAMBAH_SAMA_DENGAN:
+                self.eat(TokenType.TAMBAH_SAMA_DENGAN)
+            elif self.current_token.type == TokenType.KURANG_SAMA_DENGAN:
+                self.eat(TokenType.KURANG_SAMA_DENGAN)
+            elif self.current_token.type == TokenType.KALI_SAMA_DENGAN:
+                self.eat(TokenType.KALI_SAMA_DENGAN)
+            elif self.current_token.type == TokenType.BAGI_SAMA_DENGAN:
+                self.eat(TokenType.BAGI_SAMA_DENGAN)
+            value = self.expr()
+            return CompoundAssign(target, op_token, value, var_token)
+        else:
+            self.error(
+                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"
+            )
+
+    def self_index_access_statement(self):
+        """Handle self[index] = value statements"""
+        var_token = self.current_token
+        self.eat(TokenType.SELF)
+        target = SelfVar(var_token.value, var_token)
         while self.current_token.type == TokenType.DAFTAR_AWAL:
             self.eat(TokenType.DAFTAR_AWAL)
             index = self.expr()

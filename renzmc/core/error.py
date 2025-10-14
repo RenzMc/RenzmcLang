@@ -29,6 +29,8 @@ This module defines all error types and error formatting functionality
 for the RenzmcLang programming language.
 """
 
+from renzmc.core.error_catalog import get_error_info, suggest_error_code  # noqa: E402
+
 
 class RenzmcError(Exception):
     """Base exception class for all RenzmcLang errors."""
@@ -135,18 +137,40 @@ def format_error(error, source_code=None):  # noqa: C901
     if isinstance(error, KeyboardInterrupt):
         return "✓ Program dihentikan oleh pengguna (Ctrl+C)"
 
+    # Get error type and message
+    error_type = error.__class__.__name__
+    error_msg = str(error)
+
+    # Try to get error code from catalog
+    error_code = suggest_error_code(error_type, error_msg)
+    error_info = get_error_info(error_code) if error_code else None
+
+    # Format error type name
+    display_type = error_type
+    if display_type.endswith("Error"):
+        display_type = display_type[:-5]
+
+    # Build result string
+    result = ""
+
+    # Error header with code
+    if error_code:
+        result += f"🚫 Error [{error_code}] {display_type}\n"
+        if error_info:
+            result += f"📋 {error_info.title}\n"
+    else:
+        result += f"🚫 Error {display_type}\n"
+
+    # Handle errors without line/column information
     if (
         not hasattr(error, "line")
         or not hasattr(error, "column")
         or error.line is None
         or error.column is None
     ):
-        error_type = error.__class__.__name__
-        if error_type.endswith("Error"):
-            error_type = error_type[:-5]
-        error_msg = str(error)
-        result = f"🚫 Error {error_type}: {error_msg}\n"
+        result += f"💬 {error_msg}\n"
 
+        # Add quick tips for common errors
         if "tidak ditemukan" in error_msg.lower():
             result += (
                 "\n💡 Tips: Pastikan variabel atau fungsi sudah "
@@ -154,22 +178,35 @@ def format_error(error, source_code=None):  # noqa: C901
             )
         elif "tidak dapat dipanggil" in error_msg.lower():
             result += (
-                "\n💡 Tips: Pastikan objek yang dipanggil " "adalah fungsi atau metode"
+                "\n💡 Tips: Pastikan objek yang dipanggil "
+                "adalah fungsi atau metode"
             )
         elif "server" in error_msg.lower():
             result += (
                 "\n💡 Tips: Periksa apakah port sudah digunakan "
                 "atau coba restart aplikasi"
             )
+
+        # Add catalog solutions if available
+        if error_info:
+            result += "\n\n💡 Solusi:\n"
+            for solution in error_info.solutions[:3]:  # Show top 3 solutions
+                result += f"   {solution}\n"
+
+            # Add examples if available
+            if error_info.examples:
+                result += "\n📝 Contoh:\n"
+                for example in error_info.examples[:2]:  # Show first 2 examples
+                    result += f"   {example}\n"
+
         return result
 
-    error_type = error.__class__.__name__
-    if error_type.endswith("Error"):
-        error_type = error_type[:-5]
-
-    result = f"🚫 Error {error_type}: {error.message}\n"
+    # Error with line/column information
+    message = error.message if hasattr(error, "message") else error_msg
+    result += f"💬 {message}\n"
     result += f"📍 Lokasi: Baris {error.line}, Kolom {error.column}\n"
 
+    # Source code context
     code_to_use = (
         error.source_code
         if hasattr(error, "source_code") and error.source_code
@@ -179,6 +216,7 @@ def format_error(error, source_code=None):  # noqa: C901
     if code_to_use:
         lines = code_to_use.split("\n")
         if 0 <= error.line - 1 < len(lines):
+            # Show error line with pointer
             line = lines[error.line - 1]
             result += f"\n{error.line:4d} | {line}\n"
             pointer = " " * (7 + error.column - 1) + "^"
@@ -186,6 +224,7 @@ def format_error(error, source_code=None):  # noqa: C901
                 pointer += "~" * min(len(line) - error.column, 10)
             result += pointer + "\n"
 
+            # Show context lines
             context_lines = 2
             start_line = max(0, error.line - 1 - context_lines)
             end_line = min(len(lines), error.line - 1 + context_lines + 1)
@@ -201,11 +240,36 @@ def format_error(error, source_code=None):  # noqa: C901
             if end_line < len(lines):
                 result += "     ...\n"
 
-    result += "\n💡 Penyebab & Solusi:\n"
+    # Solutions section
+    result += "\n💡 Solusi:\n"
 
-    error_solutions = _get_error_solutions(error)
-    for solution in error_solutions:
-        result += f"   {solution}\n"
+    if error_info:
+        # Use catalog solutions
+        for solution in error_info.solutions:
+            result += f"   {solution}\n"
+
+        # Add examples if available
+        if error_info.examples:
+            result += "\n📝 Contoh:\n"
+            for example in error_info.examples:
+                result += f"   {example}\n"
+
+        # Add related errors if available
+        if error_info.related_errors:
+            result += "\n🔗 Error Terkait:\n"
+            for related_code in error_info.related_errors[:3]:
+                related_info = get_error_info(related_code)
+                if related_info:
+                    result += f"   • [{related_code}] {related_info.title}\n"
+
+        # Add documentation link if available
+        if error_info.doc_link:
+            result += f"\n📚 Dokumentasi: {error_info.doc_link}\n"
+    else:
+        # Fallback to legacy solutions
+        error_solutions = _get_error_solutions(error)
+        for solution in error_solutions:
+            result += f"   {solution}\n"
 
     return result
 

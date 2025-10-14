@@ -32,6 +32,7 @@ import argparse
 import sys
 
 from renzmc.core.error import format_error
+from renzmc.core.error_logger import log_error
 from renzmc.core.interpreter import Interpreter
 from renzmc.core.lexer import Lexer
 from renzmc.core.parser import Parser
@@ -85,7 +86,20 @@ def run_code(source_code, filename="<stdin>", interpreter=None):
         interpreter.visit(ast)
         return interpreter
     except Exception as e:
+        # Log error to file with full context
+        log_error(
+            error=e,
+            source_code=source_code,
+            filename=filename,
+            context={
+                "interpreter_state": "parsing" if interpreter is None else "executing",
+                "file_type": "stdin" if filename == "<stdin>" else "file",
+            },
+        )
+
+        # Print formatted error to console
         print(format_error(e, source_code))
+
         if filename != "<stdin>":
             sys.exit(1)
         return interpreter

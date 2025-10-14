@@ -1,10 +1,3 @@
-# 🚀 JIT Compiler - RenzMcLang
-
-**Last Updated:** 2025-10-06  
-[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)+
-
----
-
 ## 📋 Table of Contents
 
 1. [Overview](#overview)
@@ -756,7 +749,3 @@ JIT Compiler di RenzMcLang sekarang memberikan:
 - File I/O operations
 - API calls
 - Simple one-liner functions
-
----
-
-**Happy Coding with Advanced JIT! 🚀**

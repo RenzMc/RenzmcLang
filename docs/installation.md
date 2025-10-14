@@ -22,7 +22,7 @@ renzmc --version
 
 Anda akan melihat output seperti:
 ```
-RenzmcLang version 0.0.1
+RenzmcLang version (0.0.8)
 ```
 
 ## 🔧 Instalasi dari Source

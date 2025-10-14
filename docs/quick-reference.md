@@ -1,12 +1,3 @@
-# ⚡ Referensi Cepat - RenzMcLang versi terbaru
-
-**Terakhir Diperbarui:** 2025-10-08  
-[![Versi PyPI](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
-
----
-
-## 🎯 Lembar Contekan
-
 ### Variabel & Tipe Data
 
 ```python

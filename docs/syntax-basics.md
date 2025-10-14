@@ -1,16 +1,3 @@
-# 📖 Dasar-dasar Sintaks - RenzMcLang versi terbaru
-
-**Terakhir Diperbarui:** 2025-10-08  
-[![Versi PyPI](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
-
----
-
-## 🎯 Ikhtisar
-
-RenzMcLang menggunakan sintaks Bahasa Indonesia yang intuitif dan mudah dipahami. Panduan ini mencakup semua dasar sintaks yang perlu Anda ketahui.
-
----
-
 ## 📋 Daftar Isi
 
 1. [Komentar](#komentar)

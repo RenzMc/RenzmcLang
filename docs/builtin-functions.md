@@ -1,17 +1,3 @@
-# 📦 Built-in Functions - RenzMcLang latest version
-
-**Last Updated:** 2025-10-04  
-[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)  
-**Total Functions:** 184+
-
----
-
-## 🎯 Overview
-
-RenzMcLang menyediakan 184+ built-in functions yang mencakup berbagai kebutuhan programming, dari operasi string hingga HTTP requests. Semua fungsi tersedia langsung tanpa perlu import.
-
----
-
 ## 📋 Table of Contents
 
 1. [String Functions](#string-functions)
@@ -1023,10 +1009,4 @@ tulis_file("output.txt", hasil)
 - [Syntax Basics](syntax-basics.md) - Basic syntax
 - [Advanced Features](advanced-features.md) - Advanced features
 - [Examples](examples.md) - Code examples
-- [Python Integration](python-integration.md) - Python integration
-
----
-
-**Total Functions: 184+**  
-**Categories: 10**  
-**Version: Latest**
+- [Python Integration](python-integration.md) - Python integratio

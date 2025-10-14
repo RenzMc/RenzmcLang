@@ -1,16 +1,3 @@
-# 🚀 Advanced Features - RenzMcLang latest version
-
-**Last Updated:** 2025-10-04  
-[![PyPI version](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)
-
----
-
-## 🎯 Overview
-
-RenzMcLang menyediakan fitur-fitur advanced yang powerful untuk development modern, termasuk OOP, Async/Await, Comprehensions, dan banyak lagi.
-
----
-
 ## 📋 Table of Contents
 
 1. [Object-Oriented Programming (OOP)](#object-oriented-programming-oop)
@@ -875,8 +862,3 @@ selesai
 - [Built-in Functions](builtin-functions.md) - Built-in functions
 - [Examples](examples.md) - Code examples
 - [Python Integration](python-integration.md) - Python integration
-
----
-
-**Version: Latest**  
-**Last Updated: 2025-10-04**

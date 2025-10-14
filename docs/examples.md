@@ -1,11 +1,3 @@
-# 📚 Panduan Komprehensif Contoh RenzMcLang
-
-**Terakhir Diperbarui:** 2025-10-08  
-[![Versi PyPI](https://img.shields.io/pypi/v/renzmc.svg)](https://pypi.org/project/renzmc/)  
-**Total Contoh:** 134
-
----
-
 ## 📋 Daftar Isi
 
 1. [Advanced (Lanjutan)](#advanced)
@@ -509,8 +501,6 @@ Jika Anda ingin berkontribusi dengan contoh baru:
 2. Buat contoh baru di folder yang sesuai
 3. Pastikan contoh berjalan dengan baik
 4. Kirim pull request
-
----
 
 **Dibuat dengan ❤️ untuk pengembang Indonesia**
 

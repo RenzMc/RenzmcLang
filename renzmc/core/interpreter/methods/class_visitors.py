@@ -115,7 +115,7 @@ class ClassVisitorsMixin:
                     handle_import_error("module", "import operation", "Continuing without module")
             raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
 
-    def visit_MethodCall(self, node):  # noqa: C901
+    def visit_MethodCall(self, node):
         obj = self.visit(node.obj)
         method = node.method
         args = [self.visit(arg) for arg in node.args]
@@ -128,7 +128,7 @@ class ClassVisitorsMixin:
             except Exception as e:
                 obj_type = type(obj).__name__
                 raise RuntimeError(
-                    f"Error saat memanggil metode '{method}' pada objek '{obj_type}': {str(e)}"  # noqa: E501
+                    f"Error saat memanggil metode '{method}' pada objek '{obj_type}': {str(e)}"
                 ) from e
         if id(obj) in self.instance_scopes:
             class_name = obj.__class__.__name__
@@ -144,7 +144,7 @@ class ClassVisitorsMixin:
                     expected_user_params = len(params) - start_param_idx
                     if len(args) != expected_user_params:
                         raise RuntimeError(
-                            f"Metode '{method}' membutuhkan {expected_user_params} parameter, tetapi {len(args)} diberikan"  # noqa: E501
+                            f"Metode '{method}' membutuhkan {expected_user_params} parameter, tetapi {len(args)} diberikan"
                         )
                     if param_types and len(param_types) > start_param_idx:
                         for i, (arg, type_hint) in enumerate(zip(args, param_types[start_param_idx:])):
@@ -154,26 +154,26 @@ class ClassVisitorsMixin:
                                 try:
                                     if isinstance(expected_type, type) and not isinstance(arg, expected_type):
                                         raise TypeHintError(
-                                            f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"  # noqa: E501
+                                            f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
                                         )
                                 except TypeError as e:
-                                    # Type checking failed - this is expected for non-type objects  # noqa: E501
+                                    # Type checking failed - this is expected for non-type objects
                                     log_exception("type validation", e, level="debug")
                             elif hasattr(py_builtins, type_name):
                                 expected_type = getattr(py_builtins, type_name)
                                 try:
                                     if isinstance(expected_type, type) and not isinstance(arg, expected_type):
                                         raise TypeHintError(
-                                            f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"  # noqa: E501
+                                            f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
                                         )
                                 except TypeError as e:
-                                    # Type checking failed - this is expected for non-type objects  # noqa: E501
+                                    # Type checking failed - this is expected for non-type objects
                                     log_exception("type validation", e, level="debug")
                     for i, param_name in enumerate(params[start_param_idx:]):
                         self.local_scope[param_name] = args[i]
                 elif len(args) != 0:
                     raise RuntimeError(
-                        f"Metode '{method}' tidak membutuhkan parameter, tetapi {len(args)} diberikan"  # noqa: E501
+                        f"Metode '{method}' tidak membutuhkan parameter, tetapi {len(args)} diberikan"
                     )
                 self.return_value = None
                 self.visit_Block(Block(body))
@@ -185,20 +185,20 @@ class ClassVisitorsMixin:
                         try:
                             if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                                 raise TypeHintError(
-                                    f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"  # noqa: E501
+                                    f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects  # noqa: E501
+                            # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
                             if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                                 raise TypeHintError(
-                                    f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"  # noqa: E501
+                                    f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects  # noqa: E501
+                            # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
                 self.current_instance = old_instance
                 self.local_scope = old_local_scope

@@ -28,14 +28,14 @@ RenzmcLang Parser Call Statements Module
 Call statement parsing methods (python_call, call).
 """
 
-from renzmc.core.ast import (  # noqa: E402
+from renzmc.core.ast import (
     AttributeRef,
     FuncCall,
     MethodCall,
     PythonCall,
     Var,
 )
-from renzmc.core.token import Token, TokenType  # noqa: E402
+from renzmc.core.token import Token, TokenType
 
 
 class CallStatements:
@@ -80,7 +80,7 @@ class CallStatements:
                 self.advance_token()
             else:
                 self.error(
-                    f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
+                    f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"
                 )
             func_expr = AttributeRef(func_expr, attr_name, self.current_token)
         args = []
@@ -96,7 +96,7 @@ class CallStatements:
                 args, kwargs = self.parse_arguments_with_separator(TokenType.NEWLINE)
         return FuncCall(func_expr, args, token, kwargs)
 
-    def _old_call_statement(self):  # noqa: C901
+    def _old_call_statement(self):
         token = self.current_token
         self.eat(TokenType.PANGGIL)
         name = self.current_token.value
@@ -113,7 +113,7 @@ class CallStatements:
             elif self.current_token.type in self._get_allowed_method_keywords():
                 self.current_token = self.lexer.get_next_token()
             else:
-                self.error(f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'")  # noqa: E501
+                self.error(f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'")
             args = []
             if self.current_token.type == TokenType.KURUNG_AWAL:
                 self.eat(TokenType.KURUNG_AWAL)

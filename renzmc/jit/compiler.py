@@ -95,7 +95,7 @@ class JITCompiler:
             self._record_compilation(name, success=False, reason=error_detail)
             return None
 
-    def _compile_with_numba(  # noqa: C901
+    def _compile_with_numba(
         self, name: str, python_code: str, params: List[str], fallback_func: Callable
     ) -> Optional[Callable]:
         try:

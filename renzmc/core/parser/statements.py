@@ -31,6 +31,6 @@ This module has been modularized into separate files for better maintainability.
 All statement parsing functionality is now organized in the statements package.
 """
 
-from renzmc.core.parser.statements import StatementParser  # noqa: E402, F401
+from renzmc.core.parser.statements import StatementParser
 
 __all__ = ["StatementParser"]

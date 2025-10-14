@@ -28,8 +28,8 @@ RenzmcLang Parser Control Flow Statements Module
 Control flow statement parsing methods (if, while, for, foreach, switch).
 """
 
-from renzmc.core.ast import Case, For, ForEach, If, Switch, While  # noqa: E402
-from renzmc.core.token import TokenType  # noqa: E402
+from renzmc.core.ast import Case, For, ForEach, If, Switch, While
+from renzmc.core.token import TokenType
 
 
 class ControlFlowStatements:
@@ -37,7 +37,7 @@ class ControlFlowStatements:
     Control flow statement parsing methods.
     """
 
-    def if_statement(self):  # noqa: C901
+    def if_statement(self):
         token = self.current_token
         self.eat(TokenType.JIKA)
         condition = self.expr()
@@ -105,7 +105,7 @@ class ControlFlowStatements:
         self.eat(TokenType.SELESAI)
         return While(condition, body, token)
 
-    def for_or_foreach_statement(self):  # noqa: C901
+    def for_or_foreach_statement(self):
         token = self.current_token
         self.eat(TokenType.UNTUK)
         var_name = self.current_token.value
@@ -125,9 +125,9 @@ class ControlFlowStatements:
                     next_token = self.lexer.peek_token()
                     if next_token and next_token.type == TokenType.ITU:
                         self.error(
-                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
                             "Ini adalah reserved keyword dalam RenzmcLang. "
-                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
                         )
                     break
                 stmt = self.statement()
@@ -152,9 +152,9 @@ class ControlFlowStatements:
                     next_token = self.lexer.peek_token()
                     if next_token and next_token.type == TokenType.ITU:
                         self.error(
-                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
                             "Ini adalah reserved keyword dalam RenzmcLang. "
-                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
                         )
                     break
                 stmt = self.statement()
@@ -182,16 +182,16 @@ class ControlFlowStatements:
                 next_token = self.lexer.peek_token()
                 if next_token and next_token.type == TokenType.ITU:
                     self.error(
-                        "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
+                        "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
                         "Ini adalah reserved keyword dalam RenzmcLang. "
-                        "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
+                        "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
                     )
                 break
             body.append(self.statement())
         self.eat(TokenType.SELESAI)
         return For(var_name, start, end, body, token)
 
-    def foreach_statement(self):  # noqa: C901
+    def foreach_statement(self):
         token = self.current_token
         self.eat(TokenType.UNTUK)
         self.eat(TokenType.SETIAP)
@@ -223,9 +223,9 @@ class ControlFlowStatements:
                     next_token = self.lexer.peek_token()
                     if next_token and next_token.type == TokenType.ITU:
                         self.error(
-                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
                             "Ini adalah reserved keyword dalam RenzmcLang. "
-                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
                         )
                     break
                 stmt = self.statement()
@@ -243,9 +243,9 @@ class ControlFlowStatements:
                     next_token = self.lexer.peek_token()
                     if next_token and next_token.type == TokenType.ITU:
                         self.error(
-                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
+                            "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
                             "Ini adalah reserved keyword dalam RenzmcLang. "
-                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
+                            "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
                         )
                     break
                 stmt = self.statement()

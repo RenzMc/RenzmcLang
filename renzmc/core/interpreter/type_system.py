@@ -87,7 +87,7 @@ class TypeSystemMixin:
         """
         return get_type_from_registry(type_name, self.type_registry)
 
-    def _check_type(self, obj, type_name):  # noqa: C901
+    def _check_type(self, obj, type_name):
         """
         Check if an object matches a type specification.
 

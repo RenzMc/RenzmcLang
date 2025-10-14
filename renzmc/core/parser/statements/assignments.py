@@ -28,7 +28,7 @@ RenzmcLang Parser Assignment Statements Module
 Assignment statement parsing methods (simple, compound, multi-assign).
 """
 
-from renzmc.core.ast import (  # noqa: E402
+from renzmc.core.ast import (
     Assign,
     CompoundAssign,
     ExtendedUnpacking,
@@ -40,7 +40,7 @@ from renzmc.core.ast import (  # noqa: E402
     Var,
     VarDecl,
 )
-from renzmc.core.token import Token, TokenType  # noqa: E402
+from renzmc.core.token import Token, TokenType
 
 
 class AssignmentStatements:
@@ -105,7 +105,7 @@ class AssignmentStatements:
             return CompoundAssign(target, op_token, value, var_token)
         else:
             self.error(
-                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"  # noqa: E501
+                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"
             )
 
     def self_index_access_statement(self):
@@ -141,10 +141,10 @@ class AssignmentStatements:
             return CompoundAssign(target, op_token, value, var_token)
         else:
             self.error(
-                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"  # noqa: E501
+                f"Diharapkan 'itu' atau operator assignment gabungan, ditemukan '{self.current_token.type}'"
             )
 
-    def parse_comma_separated_statement(self):  # noqa: C901
+    def parse_comma_separated_statement(self):
         start_token = self.current_token
         targets = []
         has_starred = False
@@ -216,7 +216,7 @@ class AssignmentStatements:
                 return MultiAssign(var_nodes, value_expr, start_token)
         else:
             self.error(
-                f"Expected 'itu' or '=' after comma-separated identifiers, got {self.current_token.type}"  # noqa: E501
+                f"Expected 'itu' or '=' after comma-separated identifiers, got {self.current_token.type}"
             )
 
     def simple_assignment_statement(self):
@@ -262,7 +262,7 @@ class AssignmentStatements:
             value_expr = Tuple(values, token) if len(values) > 1 else values[0]
             return MultiAssign(var_nodes, value_expr, token)
 
-    def compound_assignment_statement(self):  # noqa: C901
+    def compound_assignment_statement(self):
         var_token = self.current_token
         self.eat(TokenType.IDENTIFIER)
         target = Var(var_token)
@@ -297,6 +297,6 @@ class AssignmentStatements:
         elif self.current_token.type == TokenType.GESER_KANAN_SAMA_DENGAN:
             self.eat(TokenType.GESER_KANAN_SAMA_DENGAN)
         else:
-            self.error(f"Diharapkan operator assignment gabungan, ditemukan '{self.current_token.type}'")  # noqa: E501
+            self.error(f"Diharapkan operator assignment gabungan, ditemukan '{self.current_token.type}'")
         value = self.expr()
         return CompoundAssign(target, op_token, value, var_token)

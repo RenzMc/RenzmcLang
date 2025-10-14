@@ -26,10 +26,10 @@ SOFTWARE.
 Type Helper Utilities for RenzmcLang
 Provides reusable type checking and validation functions
 """
-import builtins as py_builtins  # noqa: E402
-from typing import Any, Optional, Type  # noqa: E402
+import builtins as py_builtins
+from typing import Any, Optional, Type
 
-from renzmc.utils.error_handler import log_exception, logger  # noqa: E402
+from renzmc.utils.error_handler import log_exception, logger
 
 
 def validate_type(obj: Any, type_name: str, type_registry: dict, operation: str = "type validation") -> bool:

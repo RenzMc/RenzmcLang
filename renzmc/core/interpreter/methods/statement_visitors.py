@@ -58,7 +58,7 @@ class StatementVisitorsMixin:
     def visit_Var(self, node):
         return self.get_variable(node.name)
 
-    def visit_VarDecl(self, node):  # noqa: C901
+    def visit_VarDecl(self, node):
         value = self.visit(node.value)
 
         if node.type_hint:
@@ -113,7 +113,7 @@ class StatementVisitorsMixin:
                 raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")
         raise RuntimeError(f"Tipe assignment tidak didukung: {type(node.var).__name__}")
 
-    def visit_CompoundAssign(self, node):  # noqa: C901
+    def visit_CompoundAssign(self, node):
 
         if isinstance(node.var, Var):
             current_value = self.get_variable(node.var.name)
@@ -195,7 +195,7 @@ class StatementVisitorsMixin:
         if isinstance(values, (list, tuple)):
             if len(node.var_names) != len(values):
                 raise ValueError(
-                    f"Tidak dapat membongkar {len(values)} nilai menjadi {len(node.var_names)} variabel"  # noqa: E501
+                    f"Tidak dapat membongkar {len(values)} nilai menjadi {len(node.var_names)} variabel"
                 )
             results = []
             for var_name, value in zip(node.var_names, values):
@@ -207,12 +207,12 @@ class StatementVisitorsMixin:
         else:
             raise ValueError(f"Tidak dapat membongkar 1 nilai menjadi {len(node.var_names)} variabel")
 
-    def visit_MultiAssign(self, node):  # noqa: C901
+    def visit_MultiAssign(self, node):
         values = self.visit(node.values)
         if isinstance(values, (list, tuple)):
             if len(node.vars) != len(values):
                 raise ValueError(
-                    f"Tidak dapat membongkar {len(values)} nilai menjadi {len(node.vars)} variabel"  # noqa: E501
+                    f"Tidak dapat membongkar {len(values)} nilai menjadi {len(node.vars)} variabel"
                 )
             results = []
             for var_node, value in zip(node.vars, values):
@@ -227,7 +227,7 @@ class StatementVisitorsMixin:
                         obj[attr] = value
                     else:
                         raise AttributeError(
-                            f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"  # noqa: E501
+                            f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
                         )
                     result = value
                 elif isinstance(var_node, IndexAccess):
@@ -236,7 +236,7 @@ class StatementVisitorsMixin:
                     if isinstance(obj, (list, dict)):
                         obj[index] = value
                     else:
-                        raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")  # noqa: E501
+                        raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")
                     result = value
                 else:
                     raise RuntimeError(f"Tipe assignment tidak didukung: {type(var_node).__name__}")

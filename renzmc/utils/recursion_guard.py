@@ -38,7 +38,7 @@ class RecursionGuard:
         self.current_depth += 1
         if self.current_depth > self.max_depth:
             raise RecursionError(
-                f"⚠️ Kedalaman rekursi maksimum tercapai: {self.max_depth}\nKode Anda mungkin terlalu kompleks atau memiliki struktur nested yang terlalu dalam.\nPertimbangkan untuk menyederhanakan struktur kode atau mengurangi tingkat nested."  # noqa: E501
+                f"⚠️ Kedalaman rekursi maksimum tercapai: {self.max_depth}\nKode Anda mungkin terlalu kompleks atau memiliki struktur nested yang terlalu dalam.\nPertimbangkan untuk menyederhanakan struktur kode atau mengurangi tingkat nested."
             )
         logger.debug(f"Recursion depth: {self.current_depth}/{self.max_depth}")
 

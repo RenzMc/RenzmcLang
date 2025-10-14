@@ -59,7 +59,7 @@ class TypeInferenceEngine:
         self.numeric_types = {int, float}
         self.collection_types = {list, dict, set, tuple}
 
-    def infer_type(self, node: AST, context: Dict[str, Any] = None) -> Optional[type]:  # noqa: C901
+    def infer_type(self, node: AST, context: Dict[str, Any] = None) -> Optional[type]:
         if context is None:
             context = {}
 
@@ -118,7 +118,7 @@ class TypeInferenceEngine:
         except Exception:
             return False
 
-    def _is_numeric_statement(self, stmt: AST, context: Dict[str, Any]) -> bool:  # noqa: C901
+    def _is_numeric_statement(self, stmt: AST, context: Dict[str, Any]) -> bool:
 
         if isinstance(stmt, (VarDecl, Assign)):
             value = stmt.value
@@ -141,7 +141,7 @@ class TypeInferenceEngine:
             return True
 
         elif isinstance(stmt, (If, While)):
-            # # cond_type = self.infer_type(stmt.condition, context)  # Unused variable  # Unused variable  # noqa: E501
+            # # cond_type = self.infer_type(stmt.condition, context)  # Unused variable  # Unused variable
 
             body = stmt.if_body if isinstance(stmt, If) else stmt.body
             for s in body:
@@ -176,7 +176,7 @@ class TypeInferenceEngine:
 
         return False
 
-    def analyze_function_complexity(self, body: List[AST], func_name: str = None) -> Dict[str, Any]:  # noqa: C901
+    def analyze_function_complexity(self, body: List[AST], func_name: str = None) -> Dict[str, Any]:
         analysis = {
             "has_loops": False,
             "loop_depth": 0,

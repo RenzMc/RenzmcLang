@@ -267,7 +267,7 @@ def timing_decorator(func, *args, **kwargs):
     return result
 
 
-def retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C901
+def retry_decorator(*decorator_args, **decorator_kwargs):
     if decorator_args:
         max_attempts = decorator_args[0]
 
@@ -278,7 +278,7 @@ def retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C901
                 except Exception as e:
                     if attempt == max_attempts - 1:
                         raise e
-                    print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")  # noqa: E501
+                    print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")
             return None
 
         return parameterized_retry_decorator
@@ -310,7 +310,7 @@ def simple_retry_decorator(func, *args, **kwargs):
     return None
 
 
-def universal_retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C901
+def universal_retry_decorator(*decorator_args, **decorator_kwargs):
     if decorator_args and (not callable(decorator_args[0])):
         max_attempts = decorator_args[0]
 
@@ -321,7 +321,7 @@ def universal_retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C90
                 except Exception as e:
                     if attempt == max_attempts - 1:
                         raise e
-                    print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")  # noqa: E501
+                    print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")
             return None
 
         return parameterized_retry_decorator
@@ -335,7 +335,7 @@ def universal_retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C90
             except Exception as e:
                 if attempt == max_attempts - 1:
                     raise e
-                print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")  # noqa: E501
+                print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")
         return None
     else:
         return simple_retry_decorator
@@ -350,7 +350,7 @@ def create_parameterized_retry_decorator(max_attempts):
             except Exception as e:
                 if attempt == max_attempts - 1:
                     raise e
-                print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")  # noqa: E501
+                print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")
         return None
 
     return parameterized_retry_decorator

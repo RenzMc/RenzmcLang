@@ -48,7 +48,7 @@ def parse_type_hint_advanced(parser):
     return TypeHint(full_type_name, token)
 
 
-def parse_single_type_component(parser):  # noqa: C901
+def parse_single_type_component(parser):
     if parser.current_token.type != TokenType.IDENTIFIER:
         return None
 

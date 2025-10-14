@@ -29,7 +29,7 @@ This module defines all error types and error formatting functionality
 for the RenzmcLang programming language.
 """
 
-from renzmc.core.error_catalog import get_error_info, suggest_error_code  # noqa: E402
+from renzmc.core.error_catalog import get_error_info, suggest_error_code
 
 
 class RenzmcError(Exception):
@@ -123,7 +123,7 @@ class AsyncError(RenzmcError):
     """Error in asynchronous operations."""
 
 
-def format_error(error, source_code=None):  # noqa: C901
+def format_error(error, source_code=None):
     """
     Format error messages in a user-friendly and informative way.
 
@@ -139,7 +139,14 @@ def format_error(error, source_code=None):  # noqa: C901
 
     # Get error type and message
     error_type = error.__class__.__name__
-    error_msg = str(error)
+
+    # Extract clean error message
+    if isinstance(error, RuntimeError) and error.args:
+        # For RuntimeError, extract the first argument (the actual message)
+        # and ignore line/column info which are in args[1] and args[2]
+        error_msg = str(error.args[0])
+    else:
+        error_msg = str(error)
 
     # Try to get error code from catalog
     error_code = suggest_error_code(error_type, error_msg)
@@ -256,7 +263,7 @@ def format_error(error, source_code=None):  # noqa: C901
     return result
 
 
-def _get_error_solutions(error):  # noqa: C901
+def _get_error_solutions(error):
     """
     Get specific solutions for different error types.
 

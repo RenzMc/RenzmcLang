@@ -48,7 +48,7 @@ class ExpressionVisitorsMixin:
     Provides 4 methods for handling expression visitors.
     """
 
-    def visit_BinOp(self, node):  # noqa: C901
+    def visit_BinOp(self, node):
         left = self.visit(node.left)
         right = self.visit(node.right)
         if node.op.type == TokenType.TAMBAH:

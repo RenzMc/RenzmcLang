@@ -72,7 +72,7 @@ class PathValidator:
             abs_path.relative_to(self.base_dir)
         except ValueError:
             raise ValidationError(
-                f"Akses ditolak: File di luar direktori yang diizinkan\nBase: {self.base_dir}\nRequested: {abs_path}"  # noqa: E501
+                f"Akses ditolak: File di luar direktori yang diizinkan\nBase: {self.base_dir}\nRequested: {abs_path}"
             )
         return abs_path
 
@@ -85,11 +85,11 @@ class PathValidator:
         size = abs_path.stat().st_size
         if size > self.max_file_size:
             raise ValidationError(
-                f"File terlalu besar: {size:,} bytes (maksimum: {self.max_file_size:,} bytes)"  # noqa: E501
+                f"File terlalu besar: {size:,} bytes (maksimum: {self.max_file_size:,} bytes)"
             )
         if abs_path.suffix.lower() not in self.allowed_extensions:
             raise ValidationError(
-                f"Ekstensi file tidak diizinkan: {abs_path.suffix}\nEkstensi yang diizinkan: {', '.join(sorted(self.allowed_extensions))}"  # noqa: E501
+                f"Ekstensi file tidak diizinkan: {abs_path.suffix}\nEkstensi yang diizinkan: {', '.join(sorted(self.allowed_extensions))}"
             )
         return abs_path
 
@@ -97,7 +97,7 @@ class PathValidator:
         abs_path = self.validate_path(filepath)
         if abs_path.suffix.lower() not in self.allowed_extensions:
             raise ValidationError(
-                f"Ekstensi file tidak diizinkan: {abs_path.suffix}\nEkstensi yang diizinkan: {', '.join(sorted(self.allowed_extensions))}"  # noqa: E501
+                f"Ekstensi file tidak diizinkan: {abs_path.suffix}\nEkstensi yang diizinkan: {', '.join(sorted(self.allowed_extensions))}"
             )
         if not abs_path.parent.exists():
             raise ValidationError(f"Direktori tidak ditemukan: {abs_path.parent}")
@@ -112,7 +112,7 @@ class StringValidator:
             raise ValidationError("Nama identifier tidak boleh kosong")
         if not re.match("^[a-zA-Z_][a-zA-Z0-9_]*$", name):
             raise ValidationError(
-                f"Identifier tidak valid: '{name}'\nIdentifier harus dimulai dengan huruf atau underscore, dan hanya boleh mengandung huruf, angka, dan underscore"  # noqa: E501
+                f"Identifier tidak valid: '{name}'\nIdentifier harus dimulai dengan huruf atau underscore, dan hanya boleh mengandung huruf, angka, dan underscore"
             )
         if len(name) > 255:
             raise ValidationError("Identifier terlalu panjang (maksimum 255 karakter)")
@@ -123,7 +123,7 @@ class StringValidator:
         if not url:
             raise ValidationError("URL tidak boleh kosong")
         url_pattern = re.compile(
-            "^https?://(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\\.)+[A-Z]{2,6}\\.?|localhost|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})(?::\\d+)?(?:/?|[/?]\\S+)$",  # noqa: E501
+            "^https?://(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\\.)+[A-Z]{2,6}\\.?|localhost|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})(?::\\d+)?(?:/?|[/?]\\S+)$",
             re.IGNORECASE,
         )
         if not url_pattern.match(url):

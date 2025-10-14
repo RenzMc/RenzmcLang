@@ -28,7 +28,7 @@ RenzmcLang Parser Literals Module
 Literal parsing methods for data structures.
 """
 
-from renzmc.core.ast import (  # noqa: E402
+from renzmc.core.ast import (
     Dict,
     DictComp,
     List,
@@ -37,9 +37,9 @@ from renzmc.core.ast import (  # noqa: E402
     String,
     Tuple,
 )
-from renzmc.core.error import LexerError, ParserError  # noqa: E402
-from renzmc.core.lexer import Lexer  # noqa: E402
-from renzmc.core.token import Token, TokenType  # noqa: E402
+from renzmc.core.error import LexerError, ParserError
+from renzmc.core.lexer import Lexer
+from renzmc.core.token import Token, TokenType
 
 
 class LiteralParser:
@@ -59,7 +59,7 @@ class LiteralParser:
             expr_text = match.group(1)
             if expr_text.strip():
                 try:
-                    from renzmc.core.parser import Parser  # noqa: E501
+                    from renzmc.core.parser import Parser
 
                     expr_lexer = Lexer(expr_text)
                     expr_parser = Parser(expr_lexer)
@@ -77,7 +77,7 @@ class LiteralParser:
             parts.append(String(Token(TokenType.TEKS, text)))
         return parts
 
-    def list_literal(self):  # noqa: C901
+    def list_literal(self):
         token = self.current_token
         self.eat(TokenType.DAFTAR_AWAL)
         while self.current_token.type == TokenType.NEWLINE:
@@ -123,7 +123,7 @@ class LiteralParser:
             self.eat(TokenType.DAFTAR_AKHIR)
             return List(elements, token)
 
-    def dict_literal(self):  # noqa: C901
+    def dict_literal(self):
         token = self.current_token
         self.eat(TokenType.KAMUS_AWAL)
         while self.current_token.type == TokenType.NEWLINE:

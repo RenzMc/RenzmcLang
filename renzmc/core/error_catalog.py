@@ -29,7 +29,7 @@ Comprehensive error catalog with 100+ unique error codes, detailed descriptions,
 solutions, and examples for all error types in RenzmcLang.
 """
 
-from typing import Dict, List, Optional  # noqa: E402
+from typing import Dict, List, Optional
 
 
 class ErrorInfo:

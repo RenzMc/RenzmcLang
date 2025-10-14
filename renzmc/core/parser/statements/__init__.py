@@ -37,21 +37,21 @@ The statements module is split into multiple files for better maintainability:
 - call_statements: Call statements (python_call, call)
 """
 
-from renzmc.core.parser.statements.assignments import (  # noqa: E402
+from renzmc.core.parser.statements.assignments import (
     AssignmentStatements,
 )
-from renzmc.core.parser.statements.call_statements import CallStatements  # noqa: E402
-from renzmc.core.parser.statements.control_flow import (  # noqa: E402
+from renzmc.core.parser.statements.call_statements import CallStatements
+from renzmc.core.parser.statements.control_flow import (
     ControlFlowStatements,
 )
-from renzmc.core.parser.statements.error_handling import (  # noqa: E402
+from renzmc.core.parser.statements.error_handling import (
     ErrorHandlingStatements,
 )
-from renzmc.core.parser.statements.flow_control import (  # noqa: E402
+from renzmc.core.parser.statements.flow_control import (
     FlowControlStatements,
 )
-from renzmc.core.parser.statements.router import StatementRouter  # noqa: E402
-from renzmc.core.parser.statements.special_statements import (  # noqa: E402
+from renzmc.core.parser.statements.router import StatementRouter
+from renzmc.core.parser.statements.special_statements import (
     SpecialStatements,
 )
 

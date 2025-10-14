@@ -34,6 +34,18 @@ class NodeVisitor:
             return visitor(node)
         except RenzmcError as e:
             raise e
+        except RuntimeError as e:
+            if len(e.args) >= 3 and isinstance(e.args[1], int) and isinstance(e.args[2], int):
+                raise
+            error_msg = e.args[0] if e.args else str(e)
+            if isinstance(error_msg, tuple) and len(error_msg) >= 1:
+                error_msg = error_msg[0]
+            if hasattr(node, "line") and hasattr(node, "column"):
+                line = node.line
+                column = node.column
+                raise RuntimeError(error_msg, line, column)
+            else:
+                raise RuntimeError(error_msg)
         except Exception as e:
             if hasattr(node, "line") and hasattr(node, "column"):
                 line = node.line

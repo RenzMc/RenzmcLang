@@ -28,7 +28,7 @@ RenzmcLang Parser Declarations Module
 Declaration parsing methods for variables, functions, and classes.
 """
 
-from renzmc.core.ast import (  # noqa: E402
+from renzmc.core.ast import (
     AsyncFuncDecl,
     ClassDecl,
     Constructor,
@@ -38,7 +38,7 @@ from renzmc.core.ast import (  # noqa: E402
     Tuple,
     VarDecl,
 )
-from renzmc.core.parser_type_helpers import parse_type_hint_advanced  # noqa: E402
+from renzmc.core.parser_type_helpers import parse_type_hint_advanced
 from renzmc.core.token import TokenType
 
 
@@ -95,7 +95,7 @@ class DeclarationParser:
         value = self.expr()
         return VarDecl(var_name, value, token, None)
 
-    def function_declaration(self):  # noqa: C901
+    def function_declaration(self):
         token = self.current_token
         if self.current_token.type == TokenType.BUAT:
             self.eat(TokenType.BUAT)
@@ -116,7 +116,7 @@ class DeclarationParser:
                     self.eat(TokenType.IDENTIFIER)
                 if self.current_token.type == TokenType.TITIK_DUA:
                     self.eat(TokenType.TITIK_DUA)
-                    # # type_name = self.current_token.value  # Unused variable  # Unused variable  # noqa: E501
+                    # # type_name = self.current_token.value  # Unused variable  # Unused variable
                     param_types[param_name] = parse_type_hint_advanced(self)
                 while self.current_token.type == TokenType.KOMA:
                     self.eat(TokenType.KOMA)
@@ -128,7 +128,7 @@ class DeclarationParser:
                         self.eat(TokenType.IDENTIFIER)
                     if self.current_token.type == TokenType.TITIK_DUA:
                         self.eat(TokenType.TITIK_DUA)
-                        # # type_name = self.current_token.value  # Unused variable  # Unused variable  # noqa: E501
+                        # # type_name = self.current_token.value  # Unused variable  # Unused variable
                         param_types[param_name] = parse_type_hint_advanced(self)
             self.eat(TokenType.KURUNG_AKHIR)
             return_type = None
@@ -162,7 +162,7 @@ class DeclarationParser:
         self.eat(TokenType.SELESAI)
         return FuncDecl(name, params, body, token, return_type, param_types)
 
-    def async_function_declaration(self):  # noqa: C901
+    def async_function_declaration(self):
         token = self.current_token
         self.eat(TokenType.ASYNC)
         if self.current_token.type == TokenType.BUAT:
@@ -182,7 +182,7 @@ class DeclarationParser:
                 self.eat(TokenType.IDENTIFIER)
             if self.current_token.type == TokenType.TITIK_DUA:
                 self.eat(TokenType.TITIK_DUA)
-                # # type_name = self.current_token.value  # Unused variable  # Unused variable  # noqa: E501
+                # # type_name = self.current_token.value  # Unused variable  # Unused variable
                 param_types[param_name] = parse_type_hint_advanced(self)
             while self.current_token.type == TokenType.KOMA:
                 self.eat(TokenType.KOMA)
@@ -194,7 +194,7 @@ class DeclarationParser:
                     self.eat(TokenType.IDENTIFIER)
                 if self.current_token.type == TokenType.TITIK_DUA:
                     self.eat(TokenType.TITIK_DUA)
-                    # # type_name = self.current_token.value  # Unused variable  # Unused variable  # noqa: E501
+                    # # type_name = self.current_token.value  # Unused variable  # Unused variable
                     param_types[param_name] = parse_type_hint_advanced(self)
         self.eat(TokenType.KURUNG_AKHIR)
         return_type = None
@@ -212,7 +212,7 @@ class DeclarationParser:
         self.eat(TokenType.SELESAI)
         return AsyncFuncDecl(name, params, body, token, return_type, param_types)
 
-    def class_declaration(self):  # noqa: C901
+    def class_declaration(self):
         token = self.current_token
         if self.current_token.type == TokenType.BUAT:
             self.eat(TokenType.BUAT)
@@ -262,7 +262,7 @@ class DeclarationParser:
         self.eat(TokenType.SELESAI)
         return ClassDecl(class_name, methods, parent, token)
 
-    def constructor_declaration(self):  # noqa: C901
+    def constructor_declaration(self):
         token = self.current_token
         self.eat(TokenType.KONSTRUKTOR)
         params = []
@@ -334,7 +334,7 @@ class DeclarationParser:
         self.eat(TokenType.SELESAI)
         return Constructor(params, body, token)
 
-    def method_declaration(self):  # noqa: C901
+    def method_declaration(self):
         token = self.current_token
         if self.current_token.type == TokenType.BUAT:
             self.eat(TokenType.BUAT)

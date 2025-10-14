@@ -28,9 +28,9 @@ RenzmcLang Parser Special Statements Module
 Special statement parsing methods (print, with, decorator, type_alias).
 """
 
-from renzmc.core.ast import Decorator, Print, Tuple, TypeAlias, With  # noqa: E402
-from renzmc.core.parser_type_helpers import parse_type_hint_advanced  # noqa: E402
-from renzmc.core.token import TokenType  # noqa: E402
+from renzmc.core.ast import Decorator, Print, Tuple, TypeAlias, With
+from renzmc.core.parser_type_helpers import parse_type_hint_advanced
+from renzmc.core.token import TokenType
 
 
 class SpecialStatements:
@@ -38,7 +38,7 @@ class SpecialStatements:
     Special statement parsing methods.
     """
 
-    def print_statement(self):  # noqa: C901
+    def print_statement(self):
         token = self.current_token
         self.eat(TokenType.TAMPILKAN)
 

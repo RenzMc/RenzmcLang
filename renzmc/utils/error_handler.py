@@ -26,9 +26,9 @@ SOFTWARE.
 Error Handler Utility for RenzmcLang
 Provides centralized exception handling with proper logging and context
 """
-import logging  # noqa: E402
-from functools import wraps  # noqa: E402
-from typing import Any, Callable, Optional  # noqa: E402
+import logging
+from functools import wraps
+from typing import Any, Callable, Optional
 
 # Configure logger
 logger = logging.getLogger("renzmc.error_handler")

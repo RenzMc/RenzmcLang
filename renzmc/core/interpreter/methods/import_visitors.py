@@ -75,7 +75,7 @@ class ImportVisitorsMixin:
         except ImportError:
             raise ImportError(f"Modul '{module}' tidak ditemukan")
 
-    def visit_FromImport(self, node):  # noqa: C901
+    def visit_FromImport(self, node):
         """
         Handle 'dari module impor item1, item2' statements
         Supports:
@@ -146,7 +146,7 @@ class ImportVisitorsMixin:
                                     self.global_scope[target_name] = module_scope[item_name]
                                 else:
                                     raise ImportError(
-                                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"  # noqa: E501
+                                        f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
                                     )
 
                         # Restore old scopes
@@ -253,7 +253,7 @@ class ImportVisitorsMixin:
         except ImportError as e:
             raise ImportError(f"Modul '{module}' tidak ditemukan: {str(e)}")
 
-    def visit_PythonImport(self, node):  # noqa: C901
+    def visit_PythonImport(self, node):
         module = node.module
         alias = node.alias
         try:

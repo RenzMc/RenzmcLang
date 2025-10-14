@@ -53,9 +53,9 @@ class ExecutionHelpersMixin:
     Provides 10 methods for handling execution helpers.
     """
 
-    def _execute_user_function(self, name, params, body, return_type, param_types, args, kwargs):  # noqa: C901
+    def _execute_user_function(self, name, params, body, return_type, param_types, args, kwargs):
         # Check if function should be force-compiled with JIT
-        # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip  # noqa: E501
+        # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip
         if JIT_AVAILABLE and hasattr(self, "_jit_force") and name in self._jit_force:
             if name not in self.jit_compiled_functions:
                 self._compile_function_with_jit(name, params, body, force=True)
@@ -79,7 +79,7 @@ class ExecutionHelpersMixin:
         for i, arg in enumerate(args):
             if i >= len(params):
                 raise RuntimeError(
-                    f"Fungsi '{name}' membutuhkan {len(params)} parameter, tetapi {len(args)} posisional diberikan"  # noqa: E501
+                    f"Fungsi '{name}' membutuhkan {len(params)} parameter, tetapi {len(args)} posisional diberikan"
                 )
             param_values[params[i]] = arg
         for param_name, value in kwargs.items():
@@ -87,7 +87,7 @@ class ExecutionHelpersMixin:
                 raise RuntimeError(f"Parameter '{param_name}' tidak ada dalam fungsi '{name}'")
             if param_name in param_values:
                 raise RuntimeError(
-                    f"Parameter '{param_name}' mendapat nilai ganda (posisional dan kata kunci)"  # noqa: E501
+                    f"Parameter '{param_name}' mendapat nilai ganda (posisional dan kata kunci)"
                 )
             param_values[param_name] = value
         missing_params = [p for p in params if p not in param_values]
@@ -103,20 +103,20 @@ class ExecutionHelpersMixin:
                         try:
                             if isinstance(expected_type, type) and not isinstance(value, expected_type):
                                 raise TypeHintError(
-                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"  # noqa: E501
+                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects  # noqa: E501
+                            # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
                             if isinstance(expected_type, type) and not isinstance(value, expected_type):
                                 raise TypeHintError(
-                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"  # noqa: E501
+                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"
                                 )
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects  # noqa: E501
+                            # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
         old_local_scope = self.local_scope.copy()
         self.local_scope = {}
@@ -146,7 +146,7 @@ class ExecutionHelpersMixin:
                     try:
                         if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                             raise TypeHintError(
-                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"  # noqa: E501
+                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                             )
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
@@ -156,7 +156,7 @@ class ExecutionHelpersMixin:
                     try:
                         if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                             raise TypeHintError(
-                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"  # noqa: E501
+                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                             )
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
@@ -271,7 +271,7 @@ class ExecutionHelpersMixin:
             constructor_params, constructor_body, param_types = class_info["constructor"]
             if len(args) != len(constructor_params):
                 raise RuntimeError(
-                    f"Konstruktor kelas '{class_name}' membutuhkan {len(constructor_params)} parameter, tetapi {len(args)} diberikan"  # noqa: E501
+                    f"Konstruktor kelas '{class_name}' membutuhkan {len(constructor_params)} parameter, tetapi {len(args)} diberikan"
                 )
             old_instance = self.current_instance
             old_local_scope = self.local_scope.copy()
@@ -285,7 +285,7 @@ class ExecutionHelpersMixin:
             self.local_scope = old_local_scope
         return instance
 
-    def _load_rmc_module(self, module_name):  # noqa: C901
+    def _load_rmc_module(self, module_name):
         # Check if module is already loaded in cache
         if module_name in self.modules:
             return self.modules[module_name]
@@ -335,15 +335,15 @@ class ExecutionHelpersMixin:
                                 # Export user-defined items, but skip:
                                 # - Private items (starting with _)
                                 # - Python integration items (starting with py_)
-                                # - Builtin functions that are the same object as the builtin  # noqa: E501
-                                # (Allow user-defined functions even if they have the same name as builtins)  # noqa: E501
+                                # - Builtin functions that are the same object as the builtin
+                                # (Allow user-defined functions even if they have the same name as builtins)
                                 if name.startswith("_") or name.startswith("py_"):
                                     continue
 
-                                # Check if it's actually a builtin by comparing object identity  # noqa: E501
+                                # Check if it's actually a builtin by comparing object identity
                                 is_builtin = False
                                 if name in builtin_names:
-                                    # Only skip if it's the actual builtin function, not a user-defined one  # noqa: E501
+                                    # Only skip if it's the actual builtin function, not a user-defined one
                                     try:
                                         import renzmc.builtins as renzmc_builtins
 

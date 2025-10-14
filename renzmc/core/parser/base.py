@@ -28,9 +28,9 @@ RenzmcLang Parser Base Module
 This module contains the base Parser class with core functionality.
 """
 
-from renzmc.core.ast import Program  # noqa: E402
-from renzmc.core.error import ParserError  # noqa: E402
-from renzmc.core.token import TokenType  # noqa: E402
+from renzmc.core.ast import Program
+from renzmc.core.error import ParserError
+from renzmc.core.token import TokenType
 
 
 class ParserBase:
@@ -55,7 +55,7 @@ class ParserBase:
         if self.current_token.type == token_type:
             self.current_token = self.lexer.get_next_token()
         else:
-            # Check if we're expecting ITU but got a keyword token (common when using reserved word as variable)  # noqa: E501
+            # Check if we're expecting ITU but got a keyword token (common when using reserved word as variable)
             if token_type == TokenType.ITU and self.current_token.type in [
                 TokenType.SELESAI,
                 TokenType.JIKA,
@@ -75,13 +75,13 @@ class ParserBase:
                     self.current_token.value if hasattr(self.current_token, "value") else str(self.current_token.type)
                 )
                 self.error(
-                    f"Kesalahan sintaks: Kata kunci '{keyword_text}' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
+                    f"Kesalahan sintaks: Kata kunci '{keyword_text}' tidak dapat digunakan sebagai nama variabel. "
                     f"Kata kunci ini adalah reserved keyword dalam RenzmcLang. "
-                    f"Gunakan nama variabel yang berbeda (contoh: '{keyword_text}_value', '{keyword_text}_data', dll)."  # noqa: E501
+                    f"Gunakan nama variabel yang berbeda (contoh: '{keyword_text}_value', '{keyword_text}_data', dll)."
                 )
             else:
                 self.error(
-                    f"Kesalahan sintaks: Diharapkan '{token_type}', tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
+                    f"Kesalahan sintaks: Diharapkan '{token_type}', tetapi ditemukan '{self.current_token.type}'"
                 )
 
     def parse(self):

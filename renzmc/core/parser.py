@@ -33,6 +33,6 @@ maintainability and extensibility. All functionality is imported
 from the parser package.
 """
 
-from renzmc.core.parser import Parser  # noqa: E402, F401
+from renzmc.core.parser import Parser
 
 __all__ = ["Parser"]

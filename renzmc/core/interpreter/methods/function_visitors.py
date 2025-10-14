@@ -82,7 +82,7 @@ class FunctionVisitorsMixin:
         # Return the function so decorators can work with it
         return renzmc_function
 
-    def visit_FuncCall(self, node):  # noqa: C901
+    def visit_FuncCall(self, node):
         # Initialize return_type to avoid UnboundLocal error
         return_type = None
 
@@ -145,7 +145,7 @@ class FunctionVisitorsMixin:
             if hasattr(self, "_decorated_functions") and name in self._decorated_functions:
                 decorator_data = self._decorated_functions[name]
 
-                # Check if this is a wrapped function (new style) or decorator+func tuple (old style)  # noqa: E501
+                # Check if this is a wrapped function (new style) or decorator+func tuple (old style)
                 if callable(decorator_data):
                     # New style: decorator_data is the already-wrapped function
                     try:
@@ -170,7 +170,7 @@ class FunctionVisitorsMixin:
                             # The decorator has already set the necessary attributes
                             return original_func(*args, **kwargs)
                         else:
-                            # For wrapper decorators, call the decorator with function and args  # noqa: E501
+                            # For wrapper decorators, call the decorator with function and args
                             return raw_decorator_func(original_func, *args, **kwargs)
                     except Exception as e:
                         raise RuntimeError(f"Error dalam fungsi terdekorasi '{name}': {str(e)}")
@@ -195,7 +195,7 @@ class FunctionVisitorsMixin:
             self.return_value = None
         return self.return_value
 
-    def visit_Lambda(self, node):  # noqa: C901
+    def visit_Lambda(self, node):
         params = node.params
         body = node.body
         param_types = node.param_types
@@ -204,7 +204,7 @@ class FunctionVisitorsMixin:
         def lambda_func(*args):
             if len(args) != len(params):
                 raise RuntimeError(
-                    f"Lambda membutuhkan {len(params)} parameter, tetapi {len(args)} diberikan"  # noqa: E501
+                    f"Lambda membutuhkan {len(params)} parameter, tetapi {len(args)} diberikan"
                 )
             if param_types:
                 for i, (arg, type_hint) in enumerate(zip(args, param_types)):
@@ -215,7 +215,7 @@ class FunctionVisitorsMixin:
                             if isinstance(expected_type, type) and not isinstance(arg, expected_type):
                                 raise TypeHintError(f"Parameter ke-{i + 1} harus bertipe '{type_name}'")
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects  # noqa: E501
+                            # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
@@ -223,7 +223,7 @@ class FunctionVisitorsMixin:
                             if isinstance(expected_type, type) and not isinstance(arg, expected_type):
                                 raise TypeHintError(f"Parameter ke-{i + 1} harus bertipe '{type_name}'")
                         except TypeError as e:
-                            # Type checking failed - this is expected for non-type objects  # noqa: E501
+                            # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
             old_local_scope = self.local_scope.copy()
             self.local_scope = {}

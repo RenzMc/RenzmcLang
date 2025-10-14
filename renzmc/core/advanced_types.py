@@ -260,7 +260,7 @@ class TypedDictType(AdvancedType):
 class TypeParser:
 
     @staticmethod
-    def parse_type_string(  # noqa: C901
+    def parse_type_string(
         type_str: str,
     ) -> PyUnion[BaseType, AdvancedType]:
         type_str = type_str.strip()

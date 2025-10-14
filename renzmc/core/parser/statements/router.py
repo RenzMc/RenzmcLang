@@ -28,7 +28,7 @@ RenzmcLang Parser Statement Router Module
 Main statement routing logic for dispatching to appropriate parsers.
 """
 
-from renzmc.core.token import Token, TokenType  # noqa: E402
+from renzmc.core.token import Token, TokenType
 
 
 class StatementRouter:
@@ -36,7 +36,7 @@ class StatementRouter:
     Main statement routing logic.
     """
 
-    def statement(self):  # noqa: C901
+    def statement(self):
         if self.current_token.type == TokenType.IDENTIFIER:
             next_token = self.lexer.peek_token()
             if next_token is not None and next_token.type == TokenType.ITU:
@@ -160,9 +160,9 @@ class StatementRouter:
             return self.type_alias_statement()
         elif self.current_token.type == TokenType.SELESAI:
             self.error(
-                "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
+                "Kata kunci 'akhir' atau 'selesai' tidak dapat digunakan sebagai nama variabel. "
                 "Ini adalah reserved keyword dalam RenzmcLang. "
-                "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."  # noqa: E501
+                "Gunakan nama yang berbeda seperti: 'akhir_waktu', 'waktu_akhir', 'end_time', 'akhir_data', dll."
             )
         elif self.current_token.type == TokenType.NEWLINE:
             self.eat(TokenType.NEWLINE)
@@ -193,9 +193,9 @@ class StatementRouter:
                 if self.current_token.type in reserved_keywords:
                     keyword = reserved_keywords[self.current_token.type]
                     self.error(
-                        f"Kata kunci '{keyword}' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
+                        f"Kata kunci '{keyword}' tidak dapat digunakan sebagai nama variabel. "
                         f"Ini adalah reserved keyword dalam RenzmcLang. "
-                        f"Gunakan nama yang berbeda (contoh: '{keyword}_value', '{keyword}_data', 'my_{keyword}', dll)."  # noqa: E501
+                        f"Gunakan nama yang berbeda (contoh: '{keyword}_value', '{keyword}_data', 'my_{keyword}', dll)."
                     )
                 else:
                     self.error(f"Token tidak dikenal: '{self.current_token.type}'")

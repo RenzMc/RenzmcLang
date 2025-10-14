@@ -28,8 +28,8 @@ RenzmcLang Parser Imports Module
 Import statement parsing methods.
 """
 
-from renzmc.core.ast import FromImport, Import, PythonImport  # noqa: E402
-from renzmc.core.token import TokenType  # noqa: E402
+from renzmc.core.ast import FromImport, Import, PythonImport
+from renzmc.core.token import TokenType
 
 
 class ImportParser:
@@ -64,7 +64,7 @@ class ImportParser:
             self.eat(TokenType.IDENTIFIER)
         return PythonImport(module_name, alias, token)
 
-    def from_import_statement(self):  # noqa: C901
+    def from_import_statement(self):
         """
         Parse 'dari module impor item1, item2, ...' statements
         Supports:

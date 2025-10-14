@@ -54,7 +54,7 @@ class AdvancedVisitorsMixin:
             return obj[index]
         except (IndexError, KeyError):
             raise IndexError(
-                f"Indeks '{index}' di luar jangkauan untuk objek tipe '{type(obj).__name__}'"  # noqa: E501
+                f"Indeks '{index}' di luar jangkauan untuk objek tipe '{type(obj).__name__}'"
             )
         except TypeError:
             raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")
@@ -124,7 +124,7 @@ class AdvancedVisitorsMixin:
         self.local_scope = old_local_scope
         return result
 
-    def visit_Decorator(self, node):  # noqa: C901
+    def visit_Decorator(self, node):
         name = node.name
         args = [self.visit(arg) for arg in node.args]
         decorated = self.visit(node.decorated)
@@ -142,7 +142,7 @@ class AdvancedVisitorsMixin:
                 if hasattr(node.decorated, "name"):
                     func_name = node.decorated.name
 
-                    # For marker decorators, just set attributes on the function metadata  # noqa: E501
+                    # For marker decorators, just set attributes on the function metadata
                     if name in marker_decorators:
                         # Store decorator hints in function metadata
                         if not hasattr(self, "_function_decorators"):
@@ -261,7 +261,7 @@ class AdvancedVisitorsMixin:
             raise TypeError(f"Objek tipe '{type(value).__name__}' tidak dapat diiterasi")
         return value
 
-    def visit_ExtendedUnpacking(self, node):  # noqa: C901
+    def visit_ExtendedUnpacking(self, node):
         value = self.visit(node.value)
         if not isinstance(value, (list, tuple)):
             try:
@@ -285,7 +285,7 @@ class AdvancedVisitorsMixin:
         if starred_index is None:
             if num_targets != num_values:
                 self.error(
-                    f"Jumlah nilai ({num_values}) tidak sesuai dengan jumlah target ({num_targets})",  # noqa: E501
+                    f"Jumlah nilai ({num_values}) tidak sesuai dengan jumlah target ({num_targets})",
                     node.token,
                 )
             for (name, _), val in zip(node.targets, value):
@@ -294,7 +294,7 @@ class AdvancedVisitorsMixin:
             num_required = num_targets - 1
             if num_values < num_required:
                 self.error(
-                    f"Tidak cukup nilai untuk unpack (dibutuhkan minimal {num_required}, ada {num_values})",  # noqa: E501
+                    f"Tidak cukup nilai untuk unpack (dibutuhkan minimal {num_required}, ada {num_values})",
                     node.token,
                 )
             for i in range(starred_index):

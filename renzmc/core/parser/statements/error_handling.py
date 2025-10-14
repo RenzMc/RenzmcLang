@@ -28,8 +28,8 @@ RenzmcLang Parser Error Handling Statements Module
 Error handling statement parsing methods (try-catch).
 """
 
-from renzmc.core.ast import TryCatch  # noqa: E402
-from renzmc.core.token import TokenType  # noqa: E402
+from renzmc.core.ast import TryCatch
+from renzmc.core.token import TokenType
 
 
 class ErrorHandlingStatements:

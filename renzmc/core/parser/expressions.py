@@ -28,7 +28,7 @@ RenzmcLang Parser Expressions Module
 Expression parsing methods for handling operators and precedence.
 """
 
-from renzmc.core.ast import (  # noqa: E402
+from renzmc.core.ast import (
     AttributeRef,
     Await,
     BinOp,
@@ -46,7 +46,7 @@ from renzmc.core.ast import (  # noqa: E402
     Var,
     WalrusOperator,
 )
-from renzmc.core.token import Token, TokenType  # noqa: E402
+from renzmc.core.token import Token, TokenType
 
 
 class ExpressionParser:
@@ -77,7 +77,7 @@ class ExpressionParser:
                 else_expr = self.walrus_expr()
                 node = Ternary(condition, if_expr, else_expr)
             else:
-                self.error("Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'")  # noqa: E501
+                self.error("Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'")
         return node
 
     def walrus_expr(self):
@@ -284,7 +284,7 @@ class ExpressionParser:
             TokenType.TITIK_KOMA,
         )
 
-    def factor(self):  # noqa: C901
+    def factor(self):
         token = self.current_token
         if self.end_of_expression():
             self.error(f"Kesalahan sintaks: Diharapkan ekspresi, ditemukan '{token.type}'")
@@ -323,7 +323,7 @@ class ExpressionParser:
                     elif self.current_token.type == TokenType.BIT_ATAU:
                         break
                     else:
-                        self.error(f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}")  # noqa: E501
+                        self.error(f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}")
                 self.eat(TokenType.BIT_ATAU)
                 self.eat(TokenType.KURUNG_AKHIR)
                 primary = Tuple(elements, token)
@@ -391,7 +391,7 @@ class ExpressionParser:
                     self.advance_token()
                 else:
                     self.error(
-                        f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
+                        f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"
                     )
                 if self.current_token.type == TokenType.KURUNG_AWAL:
                     self.eat(TokenType.KURUNG_AWAL)
@@ -430,7 +430,7 @@ class ExpressionParser:
                     self.advance_token()
                 else:
                     self.error(
-                        f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
+                        f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"
                     )
                 if self.current_token.type == TokenType.KURUNG_AWAL:
                     self.eat(TokenType.KURUNG_AWAL)

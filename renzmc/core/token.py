@@ -285,7 +285,7 @@ class Token:
         self.column = column
 
     def __str__(self):
-        return f"Token({self.type}, {repr(self.value)}, line={self.line}, column={self.column})"  # noqa: E501
+        return f"Token({self.type}, {repr(self.value)}, line={self.line}, column={self.column})"
 
     def __repr__(self):
         return self.__str__()

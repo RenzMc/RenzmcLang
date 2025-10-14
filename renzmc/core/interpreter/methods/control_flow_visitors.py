@@ -103,7 +103,7 @@ class ControlFlowVisitorsMixin:
                     unpacked = list(item)
                     if len(unpacked) != len(var_name):
                         raise ValueError(
-                            f"Tidak dapat unpack {len(unpacked)} nilai ke {len(var_name)} variabel"  # noqa: E501
+                            f"Tidak dapat unpack {len(unpacked)} nilai ke {len(var_name)} variabel"
                         )
                     for var, val in zip(var_name, unpacked):
                         self.set_variable(var, val)
@@ -177,7 +177,7 @@ class ControlFlowVisitorsMixin:
         context_manager = self.visit(node.context_expr)
         if not (hasattr(context_manager, "__enter__") and hasattr(context_manager, "__exit__")):
             raise TypeError(
-                f"Objek tipe '{type(context_manager).__name__}' tidak mendukung context manager protocol"  # noqa: E501
+                f"Objek tipe '{type(context_manager).__name__}' tidak mendukung context manager protocol"
             )
         context_value = context_manager.__enter__()
         if node.var_name:

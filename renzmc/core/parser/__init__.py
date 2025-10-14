@@ -38,14 +38,14 @@ The parser is split into multiple modules for better maintainability:
 - imports: Import statement parsing
 """
 
-from renzmc.core.parser.base import ParserBase  # noqa: E402
-from renzmc.core.parser.declarations import DeclarationParser  # noqa: E402
-from renzmc.core.parser.expressions import ExpressionParser  # noqa: E402
-from renzmc.core.parser.imports import ImportParser  # noqa: E402
-from renzmc.core.parser.literals import LiteralParser  # noqa: E402
-from renzmc.core.parser.oop import OOPParser  # noqa: E402
-from renzmc.core.parser.statements import StatementParser  # noqa: E402
-from renzmc.core.parser.utilities import UtilityParser  # noqa: E402
+from renzmc.core.parser.base import ParserBase
+from renzmc.core.parser.declarations import DeclarationParser
+from renzmc.core.parser.expressions import ExpressionParser
+from renzmc.core.parser.imports import ImportParser
+from renzmc.core.parser.literals import LiteralParser
+from renzmc.core.parser.oop import OOPParser
+from renzmc.core.parser.statements import StatementParser
+from renzmc.core.parser.utilities import UtilityParser
 
 
 class Parser(

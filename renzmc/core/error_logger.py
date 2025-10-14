@@ -29,17 +29,17 @@ Provides comprehensive error logging with structured logging, file rotation,
 error statistics, and analytics capabilities.
 """
 
-import json  # noqa: E402
-import logging  # noqa: E402
-import os  # noqa: E402
-import traceback  # noqa: E402
-from collections import defaultdict  # noqa: E402
-from datetime import datetime  # noqa: E402
-from logging.handlers import RotatingFileHandler  # noqa: E402
-from pathlib import Path  # noqa: E402
-from typing import Any, Dict, List, Optional  # noqa: E402
+import json
+import logging
+import os
+import traceback
+from collections import defaultdict
+from datetime import datetime
+from logging.handlers import RotatingFileHandler
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
-from renzmc.core.error_catalog import suggest_error_code  # noqa: E402
+from renzmc.core.error_catalog import suggest_error_code
 
 
 class ErrorLogger:

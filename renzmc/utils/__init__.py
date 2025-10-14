@@ -151,7 +151,7 @@ def format_code(code):
     return "\n".join(result)
 
 
-def parse_type_annotation(annotation):  # noqa: C901
+def parse_type_annotation(annotation):
     if annotation == "int" or annotation == "bilangan_bulat":
         return int
     elif annotation == "float" or annotation == "desimal":
@@ -202,7 +202,7 @@ def parse_type_annotation(annotation):  # noqa: C901
         return annotation
 
 
-def check_type(value, type_annotation):  # noqa: C901
+def check_type(value, type_annotation):
     if type_annotation is Any:
         return True
     if isinstance(type_annotation, str):

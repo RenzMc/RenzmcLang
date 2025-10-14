@@ -28,7 +28,7 @@ RenzmcLang Parser Flow Control Statements Module
 Flow control statement parsing methods (return, yield, break, continue).
 """
 
-from renzmc.core.ast import (  # noqa: E402
+from renzmc.core.ast import (
     Break,
     Continue,
     Return,
@@ -36,7 +36,7 @@ from renzmc.core.ast import (  # noqa: E402
     Yield,
     YieldFrom,
 )
-from renzmc.core.token import TokenType  # noqa: E402
+from renzmc.core.token import TokenType
 
 
 class FlowControlStatements:

@@ -95,7 +95,7 @@ TYPE_ALIASES = {}
 class TypeValidator:
 
     @staticmethod
-    def get_python_type(value: Any) -> BaseType:  # noqa: C901
+    def get_python_type(value: Any) -> BaseType:
         if value is None:
             return BaseType.NONE
         elif isinstance(value, bool):
@@ -149,7 +149,7 @@ class TypeValidator:
 
         var_info = f"variabel '{var_name}'" if var_name else "nilai"
         error_msg = (
-            f"Kesalahan Tipe: {var_info} diharapkan bertipe '{TypeValidator.type_to_string(expected_type)}', "  # noqa: E501
+            f"Kesalahan Tipe: {var_info} diharapkan bertipe '{TypeValidator.type_to_string(expected_type)}', "
             f"tetapi mendapat '{TypeValidator.type_to_string(actual_type)}'"
         )
         return False, error_msg
@@ -215,7 +215,7 @@ class TypeChecker:
                 func_info = f" di fungsi '{func_name}'" if func_name else ""
                 return (
                     False,
-                    f"Mode Ketat: Parameter '{param_name}'{func_info} harus memiliki anotasi tipe",  # noqa: E501
+                    f"Mode Ketat: Parameter '{param_name}'{func_info} harus memiliki anotasi tipe",
                 )
             return True, ""
 

@@ -28,7 +28,7 @@ RenzmcLang Parser Utilities Module
 Utility parsing methods for common operations.
 """
 
-from renzmc.core.ast import (  # noqa: E402
+from renzmc.core.ast import (
     AttributeRef,
     FuncCall,
     IndexAccess,
@@ -39,7 +39,7 @@ from renzmc.core.ast import (  # noqa: E402
     SelfVar,
     Var,
 )
-from renzmc.core.token import Token, TokenType  # noqa: E402
+from renzmc.core.token import Token, TokenType
 
 
 class UtilityParser:
@@ -73,7 +73,7 @@ class UtilityParser:
         body = self.expr()
         return Lambda(params, body, token)
 
-    def function_call(self):  # noqa: C901
+    def function_call(self):
         token = self.current_token
         self.eat(TokenType.PANGGIL)
         name = self.current_token.value
@@ -90,7 +90,7 @@ class UtilityParser:
             elif self.current_token.type in self._get_allowed_method_keywords():
                 self.current_token = self.lexer.get_next_token()
             else:
-                self.error(f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'")  # noqa: E501
+                self.error(f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'")
             args = []
             kwargs = {}
             if self.current_token.type == TokenType.KURUNG_AWAL:
@@ -150,7 +150,7 @@ class UtilityParser:
                 self.advance_token()
             else:
                 self.error(
-                    f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
+                    f"Diharapkan nama atribut atau metode, tetapi ditemukan '{self.current_token.type}'"
                 )
             if self.current_token.type == TokenType.KURUNG_AWAL:
                 self.eat(TokenType.KURUNG_AWAL)
@@ -166,7 +166,7 @@ class UtilityParser:
                 obj = AttributeRef(obj, attr_name, attr_token)
         return obj
 
-    def parse_arguments(self):  # noqa: C901
+    def parse_arguments(self):
         positional_args = []
         keyword_args = {}
         seen_keyword = False
@@ -192,13 +192,13 @@ class UtilityParser:
                 else:
                     if seen_keyword:
                         self.error(
-                            "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"  # noqa: E501
+                            "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"
                         )
                     positional_args.append(self.expr())
             else:
                 if seen_keyword:
                     self.error(
-                        "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"  # noqa: E501
+                        "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"
                     )
                 positional_args.append(self.expr())
 
@@ -233,13 +233,13 @@ class UtilityParser:
                 else:
                     if seen_keyword:
                         self.error(
-                            "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"  # noqa: E501
+                            "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"
                         )
                     positional_args.append(self.expr())
             else:
                 if seen_keyword:
                     self.error(
-                        "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"  # noqa: E501
+                        "Kesalahan sintaks: Argumen posisional tidak dapat muncul setelah argumen kata kunci"
                     )
                 positional_args.append(self.expr())
             if self.current_token.type == TokenType.KOMA:
@@ -271,7 +271,7 @@ class UtilityParser:
             return target
         else:
             self.error(
-                f"Diharapkan identifier untuk assignment target, ditemukan '{self.current_token.type}'"  # noqa: E501
+                f"Diharapkan identifier untuk assignment target, ditemukan '{self.current_token.type}'"
             )
 
     def _parse_python_function_reference(self):

@@ -38,9 +38,7 @@ class LexerHelpers:
 
     @staticmethod
     def is_string_start(current_char: str, next_char: str = None) -> bool:
-        return current_char in ('"', "'") or (
-            current_char == "f" and next_char in ('"', "'")
-        )
+        return current_char in ('"', "'") or (current_char == "f" and next_char in ('"', "'"))
 
     @staticmethod
     def is_identifier_start(char: str) -> bool:
@@ -85,9 +83,7 @@ class OperatorTokenizer:
         if self.lexer.current_char == "*":
             self.lexer.advance()
             if self.lexer.current_char == "=":
-                token = Token(
-                    TokenType.PANGKAT_SAMA_DENGAN, "**=", token.line, token.column
-                )
+                token = Token(TokenType.PANGKAT_SAMA_DENGAN, "**=", token.line, token.column)
                 self.lexer.advance()
             else:
                 token = Token(TokenType.PANGKAT, "**", token.line, token.column)
@@ -144,9 +140,7 @@ class OperatorTokenizer:
         if self.lexer.current_char == ">":
             self.lexer.advance()
             if self.lexer.current_char == "=":
-                token = Token(
-                    TokenType.GESER_KANAN_SAMA_DENGAN, ">>=", token.line, token.column
-                )
+                token = Token(TokenType.GESER_KANAN_SAMA_DENGAN, ">>=", token.line, token.column)
                 self.lexer.advance()
             else:
                 token = Token(TokenType.GESER_KANAN, ">>", token.line, token.column)
@@ -161,9 +155,7 @@ class OperatorTokenizer:
         if self.lexer.current_char == "<":
             self.lexer.advance()
             if self.lexer.current_char == "=":
-                token = Token(
-                    TokenType.GESER_KIRI_SAMA_DENGAN, "<<=", token.line, token.column
-                )
+                token = Token(TokenType.GESER_KIRI_SAMA_DENGAN, "<<=", token.line, token.column)
                 self.lexer.advance()
             else:
                 token = Token(TokenType.GESER_KIRI, "<<", token.line, token.column)
@@ -176,9 +168,7 @@ class OperatorTokenizer:
         token = Token(TokenType.BITWISE_AND, "&", self.lexer.line, self.lexer.column)
         self.lexer.advance()
         if self.lexer.current_char == "=":
-            token = Token(
-                TokenType.BITWISE_AND_SAMA_DENGAN, "&=", token.line, token.column
-            )
+            token = Token(TokenType.BITWISE_AND_SAMA_DENGAN, "&=", token.line, token.column)
             self.lexer.advance()
         return token
 
@@ -186,9 +176,7 @@ class OperatorTokenizer:
         token = Token(TokenType.BITWISE_OR, "|", self.lexer.line, self.lexer.column)
         self.lexer.advance()
         if self.lexer.current_char == "=":
-            token = Token(
-                TokenType.BITWISE_OR_SAMA_DENGAN, "|=", token.line, token.column
-            )
+            token = Token(TokenType.BITWISE_OR_SAMA_DENGAN, "|=", token.line, token.column)
             self.lexer.advance()
         return token
 
@@ -196,8 +184,6 @@ class OperatorTokenizer:
         token = Token(TokenType.BITWISE_XOR, "^", self.lexer.line, self.lexer.column)
         self.lexer.advance()
         if self.lexer.current_char == "=":
-            token = Token(
-                TokenType.BITWISE_XOR_SAMA_DENGAN, "^=", token.line, token.column
-            )
+            token = Token(TokenType.BITWISE_XOR_SAMA_DENGAN, "^=", token.line, token.column)
             self.lexer.advance()
         return token

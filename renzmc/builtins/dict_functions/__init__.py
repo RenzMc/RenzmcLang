@@ -39,33 +39,25 @@ class RenzmcBuiltinFunction:
 
 def kunci(dictionary):
     if not isinstance(dictionary, dict):
-        raise TypeError(
-            f"Argumen harus berupa dictionary, bukan '{type(dictionary).__name__}'"
-        )
+        raise TypeError(f"Argumen harus berupa dictionary, bukan '{type(dictionary).__name__}'")
     return list(dictionary.keys())
 
 
 def nilai(dictionary):
     if not isinstance(dictionary, dict):
-        raise TypeError(
-            f"Argumen harus berupa dictionary, bukan '{type(dictionary).__name__}'"
-        )
+        raise TypeError(f"Argumen harus berupa dictionary, bukan '{type(dictionary).__name__}'")
     return list(dictionary.values())
 
 
 def item(dictionary):
     if not isinstance(dictionary, dict):
-        raise TypeError(
-            f"Argumen harus berupa dictionary, bukan '{type(dictionary).__name__}'"
-        )
+        raise TypeError(f"Argumen harus berupa dictionary, bukan '{type(dictionary).__name__}'")
     return list(dictionary.items())
 
 
 def hapus_kunci(dictionary, key):
     if not isinstance(dictionary, dict):
-        raise TypeError(
-            f"Argumen harus berupa dictionary, bukan '{type(dictionary).__name__}'"
-        )
+        raise TypeError(f"Argumen harus berupa dictionary, bukan '{type(dictionary).__name__}'")
     if key in dictionary:
         del dictionary[key]
         return dictionary

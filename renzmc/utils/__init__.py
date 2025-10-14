@@ -212,20 +212,13 @@ def check_type(value, type_annotation):  # noqa: C901
     origin = getattr(type_annotation, "__origin__", None)
     args = getattr(type_annotation, "__args__", None)
     if origin is list or origin is List:
-        return isinstance(value, list) and all(
-            (check_type(item, args[0]) for item in value)
-        )
+        return isinstance(value, list) and all((check_type(item, args[0]) for item in value))
     elif origin is dict or origin is Dict:
         return isinstance(value, dict) and all(
-            (
-                check_type(k, args[0]) and check_type(v, args[1])
-                for k, v in value.items()
-            )
+            (check_type(k, args[0]) and check_type(v, args[1]) for k, v in value.items())
         )
     elif origin is set or origin is Set:
-        return isinstance(value, set) and all(
-            (check_type(item, args[0]) for item in value)
-        )
+        return isinstance(value, set) and all((check_type(item, args[0]) for item in value))
     elif origin is tuple or origin is Tuple:
         return (
             isinstance(value, tuple)
@@ -242,20 +235,11 @@ def check_type(value, type_annotation):  # noqa: C901
 
 
 def format_error_message(error, source_code=None):
-    if (
-        not hasattr(error, "line")
-        or not hasattr(error, "column")
-        or error.line is None
-        or (error.column is None)
-    ):
+    if not hasattr(error, "line") or not hasattr(error, "column") or error.line is None or (error.column is None):
         return str(error)
     result = f"Error: {error.message}\n"
     result += f"Pada baris {error.line}, kolom {error.column}\n"
-    code_to_use = (
-        error.source_code
-        if hasattr(error, "source_code") and error.source_code
-        else source_code
-    )
+    code_to_use = error.source_code if hasattr(error, "source_code") and error.source_code else source_code
     if code_to_use:
         lines = code_to_use.split("\n")
         if 0 <= error.line - 1 < len(lines):
@@ -284,46 +268,30 @@ def load_module(module_name):
 
 
 def get_module_functions(module):
-    return {
-        name: obj
-        for name, obj in inspect.getmembers(module, inspect.isfunction)
-        if not name.startswith("_")
-    }
+    return {name: obj for name, obj in inspect.getmembers(module, inspect.isfunction) if not name.startswith("_")}
 
 
 def get_module_classes(module):
-    return {
-        name: obj
-        for name, obj in inspect.getmembers(module, inspect.isclass)
-        if not name.startswith("_")
-    }
+    return {name: obj for name, obj in inspect.getmembers(module, inspect.isclass) if not name.startswith("_")}
 
 
 def get_module_variables(module):
     return {
         name: obj
         for name, obj in inspect.getmembers(module)
-        if not name.startswith("_")
-        and (not inspect.isfunction(obj))
-        and (not inspect.isclass(obj))
+        if not name.startswith("_") and (not inspect.isfunction(obj)) and (not inspect.isclass(obj))
     }
 
 
 def get_class_methods(cls):
-    return {
-        name: obj
-        for name, obj in inspect.getmembers(cls, inspect.isfunction)
-        if not name.startswith("_")
-    }
+    return {name: obj for name, obj in inspect.getmembers(cls, inspect.isfunction) if not name.startswith("_")}
 
 
 def get_class_attributes(cls):
     return {
         name: obj
         for name, obj in inspect.getmembers(cls)
-        if not name.startswith("_")
-        and (not inspect.isfunction(obj))
-        and (not inspect.ismethod(obj))
+        if not name.startswith("_") and (not inspect.isfunction(obj)) and (not inspect.ismethod(obj))
     }
 
 
@@ -402,9 +370,7 @@ def parse_time(time_str, format_str="%Y-%m-%d %H:%M:%S"):
     try:
         return datetime.datetime.strptime(time_str, format_str)
     except ValueError:
-        raise ValueError(
-            f"Format waktu tidak valid: '{time_str}' (format: '{format_str}')"
-        )
+        raise ValueError(f"Format waktu tidak valid: '{time_str}' (format: '{format_str}')")
 
 
 def get_timestamp():
@@ -467,9 +433,7 @@ def http_get(url, headers=None):
 
 def http_post(url, data, headers=None):
     data_bytes = urllib.parse.urlencode(data).encode("utf-8")
-    req = urllib.request.Request(
-        url, data=data_bytes, headers=headers or {}, method="POST"
-    )
+    req = urllib.request.Request(url, data=data_bytes, headers=headers or {}, method="POST")
     with urllib.request.urlopen(req) as response:
         return {
             "status": response.status,
@@ -523,9 +487,7 @@ def remove_file(path):
     if not os.path.exists(path):
         raise FileNotFoundError(f"File tidak ditemukan: '{path}'")
     if os.path.isdir(path):
-        raise IsADirectoryError(
-            f"Tidak dapat menghapus direktori dengan fungsi ini: '{path}'"
-        )
+        raise IsADirectoryError(f"Tidak dapat menghapus direktori dengan fungsi ini: '{path}'")
     os.remove(path)
 
 

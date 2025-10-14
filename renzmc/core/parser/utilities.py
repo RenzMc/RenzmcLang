@@ -90,9 +90,7 @@ class UtilityParser:
             elif self.current_token.type in self._get_allowed_method_keywords():
                 self.current_token = self.lexer.get_next_token()
             else:
-                self.error(
-                    f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
-                )
+                self.error(f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'")  # noqa: E501
             args = []
             kwargs = {}
             if self.current_token.type == TokenType.KURUNG_AWAL:
@@ -103,12 +101,8 @@ class UtilityParser:
             elif self.current_token.type == TokenType.DENGAN:
                 self.eat(TokenType.DENGAN)
                 if self.current_token.type != TokenType.NEWLINE:
-                    args, kwargs = self.parse_arguments_with_separator(
-                        TokenType.NEWLINE
-                    )
-            return MethodCall(
-                Var(Token(TokenType.IDENTIFIER, name)), method_name, args, token, kwargs
-            )
+                    args, kwargs = self.parse_arguments_with_separator(TokenType.NEWLINE)
+            return MethodCall(Var(Token(TokenType.IDENTIFIER, name)), method_name, args, token, kwargs)
         else:
             args = []
             kwargs = {}
@@ -120,17 +114,12 @@ class UtilityParser:
             elif self.current_token.type == TokenType.DENGAN:
                 self.eat(TokenType.DENGAN)
                 if self.current_token.type != TokenType.NEWLINE:
-                    args, kwargs = self.parse_arguments_with_separator(
-                        TokenType.NEWLINE
-                    )
+                    args, kwargs = self.parse_arguments_with_separator(TokenType.NEWLINE)
             return FuncCall(name, args, token, kwargs)
 
     def parse_block_until(self, stop_tokens):
         statements = []
-        while (
-            self.current_token.type not in stop_tokens
-            and self.current_token.type != TokenType.EOF
-        ):
+        while self.current_token.type not in stop_tokens and self.current_token.type != TokenType.EOF:
             stmt = self.statement()
             if stmt:
                 statements.append(stmt)
@@ -230,10 +219,7 @@ class UtilityParser:
         positional_args = []
         keyword_args = {}
         seen_keyword = False
-        while (
-            self.current_token.type != separator_token
-            and self.current_token.type != TokenType.EOF
-        ):
+        while self.current_token.type != separator_token and self.current_token.type != TokenType.EOF:
             if self.current_token.type == TokenType.IDENTIFIER:
                 next_token = self.lexer.peek_token()
                 is_keyword_arg = next_token and next_token.type == TokenType.ASSIGNMENT

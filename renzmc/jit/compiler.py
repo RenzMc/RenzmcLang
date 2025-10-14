@@ -57,9 +57,7 @@ class JITCompiler:
         if complexity["has_recursion"]:
             return False
 
-        should_compile = is_numeric and (
-            complexity["has_loops"] or complexity["operation_count"] > 5
-        )
+        should_compile = is_numeric and (complexity["has_loops"] or complexity["operation_count"] > 5)
 
         return should_compile
 
@@ -80,18 +78,14 @@ class JITCompiler:
                 self._record_compilation(name, success=False, reason="empty_code")
                 return None
 
-            compiled_func = self._compile_with_numba(
-                name, python_code, params, interpreter_func
-            )
+            compiled_func = self._compile_with_numba(name, python_code, params, interpreter_func)
 
             if compiled_func:
                 self.compiled_cache[name] = compiled_func
                 self._record_compilation(name, success=True, code=python_code)
                 return compiled_func
             else:
-                self._record_compilation(
-                    name, success=False, reason="compilation_failed", code=python_code
-                )
+                self._record_compilation(name, success=False, reason="compilation_failed", code=python_code)
                 return None
 
         except Exception as e:
@@ -158,9 +152,7 @@ class JITCompiler:
         except Exception:
             return None
 
-    def _record_compilation(
-        self, name: str, success: bool, reason: str = "", code: str = ""
-    ):
+    def _record_compilation(self, name: str, success: bool, reason: str = "", code: str = ""):
         self.compilation_stats[name] = {
             "success": success,
             "reason": reason,
@@ -177,9 +169,7 @@ class JITCompiler:
         self.compiled_cache.clear()
         self.compilation_stats.clear()
 
-    def force_compile(
-        self, name: str, params: List[str], body: List, interpreter_func: Callable
-    ) -> Optional[Callable]:
+    def force_compile(self, name: str, params: List[str], body: List, interpreter_func: Callable) -> Optional[Callable]:
         if name in self.compiled_cache:
             return self.compiled_cache[name]
 
@@ -187,9 +177,7 @@ class JITCompiler:
             # Check for recursion even in force compile
             complexity = self.type_inference.analyze_function_complexity(body, name)
             if complexity["has_recursion"]:
-                self._record_compilation(
-                    name, success=False, reason="recursive_function_not_supported"
-                )
+                self._record_compilation(name, success=False, reason="recursive_function_not_supported")
                 return None
 
             python_code = self.code_generator.generate_function(name, params, body)
@@ -198,18 +186,14 @@ class JITCompiler:
                 self._record_compilation(name, success=False, reason="empty_code")
                 return None
 
-            compiled_func = self._compile_with_numba(
-                name, python_code, params, interpreter_func
-            )
+            compiled_func = self._compile_with_numba(name, python_code, params, interpreter_func)
 
             if compiled_func:
                 self.compiled_cache[name] = compiled_func
                 self._record_compilation(name, success=True, code=python_code)
                 return compiled_func
             else:
-                self._record_compilation(
-                    name, success=False, reason="compilation_failed", code=python_code
-                )
+                self._record_compilation(name, success=False, reason="compilation_failed", code=python_code)
                 return None
 
         except Exception as e:
@@ -229,9 +213,7 @@ class JITCompiler:
             from numba import cuda
 
             if not cuda.is_available():
-                self._record_compilation(
-                    name, success=False, reason="cuda_not_available"
-                )
+                self._record_compilation(name, success=False, reason="cuda_not_available")
                 return None
 
             python_code = self.code_generator.generate_function(name, params, body)
@@ -271,9 +253,7 @@ class JITCompiler:
             gpu_wrapper.__gpu_compiled__ = True
 
             self.compiled_cache[name] = gpu_wrapper
-            self._record_compilation(
-                name, success=True, code=python_code, reason="gpu_compiled"
-            )
+            self._record_compilation(name, success=True, code=python_code, reason="gpu_compiled")
             return gpu_wrapper
 
         except Exception as e:

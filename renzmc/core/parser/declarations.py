@@ -38,8 +38,8 @@ from renzmc.core.ast import (  # noqa: E402
     Tuple,
     VarDecl,
 )
-from renzmc.core.token import Token, TokenType  # noqa: E402
 from renzmc.core.parser_type_helpers import parse_type_hint_advanced  # noqa: E402
+from renzmc.core.token import TokenType
 
 
 class DeclarationParser:
@@ -345,9 +345,7 @@ class DeclarationParser:
         elif self.current_token.type in self._get_allowed_method_keywords():
             self.current_token = self.lexer.get_next_token()
         else:
-            self.error(
-                f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'"
-            )
+            self.error(f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'")
         params = []
         if self.current_token.type == TokenType.DENGAN:
             self.eat(TokenType.DENGAN)

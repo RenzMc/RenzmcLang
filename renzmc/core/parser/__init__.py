@@ -76,7 +76,5 @@ class Parser(
     8. ImportParser - Import statements
     """
 
-    pass
-
 
 __all__ = ["Parser"]

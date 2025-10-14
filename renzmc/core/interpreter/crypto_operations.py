@@ -67,16 +67,12 @@ class CryptoOperationsMixin:
             ValueError: If encryption fails
         """
         if not CRYPTOGRAPHY_AVAILABLE:
-            raise ImportError(
-                "Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'"
-            )
+            raise ImportError("Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'")
         try:
             import base64
 
             salt = b"renzmc_salt"
-            kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100000
-            )
+            kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100000)
             key_bytes = kdf.derive(key.encode())
             key_base64 = base64.urlsafe_b64encode(key_bytes)
             f = Fernet(key_base64)
@@ -101,16 +97,12 @@ class CryptoOperationsMixin:
             ValueError: If decryption fails
         """
         if not CRYPTOGRAPHY_AVAILABLE:
-            raise ImportError(
-                "Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'"
-            )
+            raise ImportError("Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'")
         try:
             import base64
 
             salt = b"renzmc_salt"
-            kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100000
-            )
+            kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=salt, iterations=100000)
             key_bytes = kdf.derive(key.encode())
             key_base64 = base64.urlsafe_b64encode(key_bytes)
             f = Fernet(key_base64)

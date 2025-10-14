@@ -96,9 +96,7 @@ class GenericType(AdvancedType):
 
     def __repr__(self):
         container_name = TypeValidator.type_to_string(self.container_type)
-        element_names = ", ".join(
-            [TypeValidator.type_to_string(t) for t in self.element_types]
-        )
+        element_names = ", ".join([TypeValidator.type_to_string(t) for t in self.element_types])
         return f"{container_name}[{element_names}]"
 
     def validate(self, value: Any) -> bool:
@@ -194,9 +192,7 @@ class TupleType(AdvancedType):
         self.element_types = element_types
 
     def __repr__(self):
-        element_names = ", ".join(
-            [TypeValidator.type_to_string(t) for t in self.element_types]
-        )
+        element_names = ", ".join([TypeValidator.type_to_string(t) for t in self.element_types])
         return f"Tuple[{element_names}]"
 
     def validate(self, value: Any) -> bool:
@@ -239,9 +235,7 @@ class TypedDictType(AdvancedType):
         self.fields = fields
 
     def __repr__(self):
-        field_strs = ", ".join(
-            [f"{k}: {TypeValidator.type_to_string(v)}" for k, v in self.fields.items()]
-        )
+        field_strs = ", ".join([f"{k}: {TypeValidator.type_to_string(v)}" for k, v in self.fields.items()])
         return f"TypedDict[{field_strs}]"
 
     def validate(self, value: Any) -> bool:
@@ -354,9 +348,7 @@ class TypeParser:
 class AdvancedTypeValidator:
 
     @staticmethod
-    def validate(
-        value: Any, type_spec: PyUnion[BaseType, AdvancedType], var_name: str = ""
-    ) -> tuple[bool, str]:
+    def validate(value: Any, type_spec: PyUnion[BaseType, AdvancedType], var_name: str = "") -> tuple[bool, str]:
         if isinstance(type_spec, BaseType):
             validator = TypeValidator()
             return validator.validate_type(value, type_spec, var_name)

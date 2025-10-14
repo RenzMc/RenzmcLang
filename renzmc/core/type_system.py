@@ -135,9 +135,7 @@ class TypeValidator:
         return None
 
     @staticmethod
-    def validate_type(
-        value: Any, expected_type: BaseType, var_name: str = ""
-    ) -> tuple[bool, str]:
+    def validate_type(value: Any, expected_type: BaseType, var_name: str = "") -> tuple[bool, str]:
         if expected_type == BaseType.ANY:
             return True, ""
 
@@ -184,9 +182,7 @@ class TypeChecker:
         self.enable_advanced_types = True
         self.enable_type_inference = True
 
-    def check_variable_assignment(
-        self, var_name: str, value: Any, type_hint: Optional[str]
-    ) -> tuple[bool, str]:
+    def check_variable_assignment(self, var_name: str, value: Any, type_hint: Optional[str]) -> tuple[bool, str]:
         if not type_hint:
             if self.strict_mode:
                 return (
@@ -229,9 +225,7 @@ class TypeChecker:
 
                 type_spec = TypeParser.parse_type_string(type_hint)
                 if type_spec:
-                    is_valid, error_msg = AdvancedTypeValidator.validate(
-                        value, type_spec, param_name
-                    )
+                    is_valid, error_msg = AdvancedTypeValidator.validate(value, type_spec, param_name)
                     if not is_valid and func_name:
                         error_msg = f"Fungsi '{func_name}': {error_msg}"
                     return is_valid, error_msg
@@ -242,9 +236,7 @@ class TypeChecker:
         if expected_type is None:
             return True, ""
 
-        is_valid, error_msg = self.validator.validate_type(
-            value, expected_type, param_name
-        )
+        is_valid, error_msg = self.validator.validate_type(value, expected_type, param_name)
 
         if not is_valid and func_name:
             error_msg = f"Fungsi '{func_name}': {error_msg}"
@@ -269,9 +261,7 @@ class TypeChecker:
 
                 type_spec = TypeParser.parse_type_string(return_type_hint)
                 if type_spec:
-                    is_valid, error_msg = AdvancedTypeValidator.validate(
-                        return_value, type_spec, "nilai return"
-                    )
+                    is_valid, error_msg = AdvancedTypeValidator.validate(return_value, type_spec, "nilai return")
                     if not is_valid and func_name:
                         error_msg = f"Fungsi '{func_name}': {error_msg}"
                     return is_valid, error_msg
@@ -282,9 +272,7 @@ class TypeChecker:
         if expected_type is None:
             return True, ""
 
-        is_valid, error_msg = self.validator.validate_type(
-            return_value, expected_type, "nilai return"
-        )
+        is_valid, error_msg = self.validator.validate_type(return_value, expected_type, "nilai return")
 
         if not is_valid and func_name:
             error_msg = f"Fungsi '{func_name}': {error_msg}"

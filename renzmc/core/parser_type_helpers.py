@@ -148,10 +148,7 @@ def parse_single_type_component(parser):  # noqa: C901
         generic_str = ", ".join(generic_params)
         base_type = f"{base_type}[{generic_str}]"
 
-    if (
-        hasattr(parser.current_token, "type")
-        and parser.current_token.type == TokenType.TANYA_MARK
-    ):
+    if hasattr(parser.current_token, "type") and parser.current_token.type == TokenType.TANYA_MARK:
         parser.eat(TokenType.TANYA_MARK)
         base_type = f"{base_type}?"
 

@@ -41,18 +41,14 @@ class RenzmcBuiltinFunction:
 
 def tambah(lst, item):
     if not isinstance(lst, list):
-        raise TypeError(
-            f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'")
     lst.append(item)
     return lst
 
 
 def hapus(lst, item):
     if not isinstance(lst, list):
-        raise TypeError(
-            f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'")
     try:
         lst.remove(item)
         return lst
@@ -62,9 +58,7 @@ def hapus(lst, item):
 
 def hapus_pada(lst, index):
     if not isinstance(lst, list):
-        raise TypeError(
-            f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'")
     try:
         del lst[index]
         return lst
@@ -74,9 +68,7 @@ def hapus_pada(lst, index):
 
 def masukkan(lst, index, item):
     if not isinstance(lst, list):
-        raise TypeError(
-            f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'")
     try:
         lst.insert(index, item)
         return lst
@@ -86,9 +78,7 @@ def masukkan(lst, index, item):
 
 def urutkan(lst, terbalik=False):
     if not isinstance(lst, list):
-        raise TypeError(
-            f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa list, bukan '{type(lst).__name__}'")
     try:
         lst.sort(reverse=terbalik)
         return lst

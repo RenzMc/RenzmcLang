@@ -28,32 +28,8 @@ RenzmcLang Interpreter Control Flow Visitors Module
 This module contains control flow visitors methods.
 """
 
-import asyncio
-import builtins as py_builtins
-import importlib
-import os
-import time
-from pathlib import Path
 
-from renzmc.core.ast import (
-    AttributeRef,
-    Block,
-    Constructor,
-    IndexAccess,
-    MethodDecl,
-    String,
-    Var,
-    VarDecl,
-)
-from renzmc.core.error import (
-    AsyncError,
-    DivisionByZeroError,
-    RenzmcImportError,
-    RenzmcRuntimeError,
-    TypeHintError,
-)
-from renzmc.core.token import TokenType
-from renzmc.utils.error_handler import handle_import_error, log_exception
+from renzmc.core.ast import Block
 
 try:
     from renzmc.jit import JITCompiler
@@ -62,6 +38,7 @@ try:
 except ImportError:
     JIT_AVAILABLE = False
     JITCompiler = None
+
 
 class ControlFlowVisitorsMixin:
     """
@@ -80,7 +57,6 @@ class ControlFlowVisitorsMixin:
             return self.visit(else_block)
         return None
 
-
     def visit_While(self, node):
         result = None
         while self.visit(node.condition):
@@ -95,7 +71,6 @@ class ControlFlowVisitorsMixin:
             if self.return_value is not None:
                 break
         return result
-
 
     def visit_For(self, node):
         var_name = node.var_name
@@ -116,15 +91,12 @@ class ControlFlowVisitorsMixin:
                 break
         return result
 
-
     def visit_ForEach(self, node):
         var_name = node.var_name
         iterable = self.visit(node.iterable)
         result = None
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         for item in iterable:
             if isinstance(var_name, tuple):
                 if hasattr(item, "__iter__") and not isinstance(item, str):
@@ -136,9 +108,7 @@ class ControlFlowVisitorsMixin:
                     for var, val in zip(var_name, unpacked):
                         self.set_variable(var, val)
                 else:
-                    raise TypeError(
-                        f"Tidak dapat unpack nilai tipe '{type(item).__name__}'"
-                    )
+                    raise TypeError(f"Tidak dapat unpack nilai tipe '{type(item).__name__}'")
             else:
                 self.set_variable(var_name, item)
 
@@ -154,14 +124,11 @@ class ControlFlowVisitorsMixin:
                 break
         return result
 
-
     def visit_Break(self, node):
         self.break_flag = True
 
-
     def visit_Continue(self, node):
         self.continue_flag = True
-
 
     def visit_TryCatch(self, node):
         try:
@@ -188,11 +155,9 @@ class ControlFlowVisitorsMixin:
             if node.finally_block:
                 self.visit_Block(Block(node.finally_block))
 
-
     def visit_Raise(self, node):
         exception = self.visit(node.exception)
         raise exception
-
 
     def visit_Switch(self, node):
         match_value = self.visit(node.expr)
@@ -205,17 +170,12 @@ class ControlFlowVisitorsMixin:
             return self.visit_Block(Block(node.default_case))
         return None
 
-
     def visit_Case(self, node):
         pass
 
-
     def visit_With(self, node):
         context_manager = self.visit(node.context_expr)
-        if not (
-            hasattr(context_manager, "__enter__")
-            and hasattr(context_manager, "__exit__")
-        ):
+        if not (hasattr(context_manager, "__enter__") and hasattr(context_manager, "__exit__")):
             raise TypeError(
                 f"Objek tipe '{type(context_manager).__name__}' tidak mendukung context manager protocol"  # noqa: E501
             )
@@ -234,5 +194,3 @@ class ControlFlowVisitorsMixin:
         finally:
             if not hasattr(self, "_exception_occurred"):
                 context_manager.__exit__(None, None, None)
-
-

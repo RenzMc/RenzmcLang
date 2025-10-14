@@ -40,10 +40,7 @@ class RenzmcModule:
         self._functions = {}
         self._variables = {}
         for name, value in module_dict.items():
-            if (
-                hasattr(value, "__class__")
-                and value.__class__.__name__ == "RenzmcClass"
-            ):
+            if hasattr(value, "__class__") and value.__class__.__name__ == "RenzmcClass":
                 self._classes[name] = value
             elif callable(value):
                 self._functions[name] = value
@@ -53,9 +50,7 @@ class RenzmcModule:
     def __getattr__(self, name):
         if name in self._module_dict:
             return self._module_dict[name]
-        raise RenzmcNameError(
-            f"Modul '{self.module_name}' tidak memiliki atribut '{name}'"
-        )
+        raise RenzmcNameError(f"Modul '{self.module_name}' tidak memiliki atribut '{name}'")
 
     def get_classes(self):
         return self._classes
@@ -123,9 +118,7 @@ class RenzmcModuleManager:
             return self.loaded_modules[cache_key]
         module_path = self.find_module(module_name)
         if not module_path:
-            raise RenzmcImportError(
-                f"Tidak dapat menemukan modul RenzmcLang '{module_name}'"
-            )
+            raise RenzmcImportError(f"Tidak dapat menemukan modul RenzmcLang '{module_name}'")
         try:
             with open(module_path, "r", encoding="utf-8") as f:
                 module_code = f.read()
@@ -167,9 +160,7 @@ class RenzmcModuleManager:
             if hasattr(module, item):
                 imported_items[item] = getattr(module, item)
             else:
-                raise RenzmcImportError(
-                    f"Tidak dapat mengimpor '{item}' dari modul '{module_name}'"
-                )
+                raise RenzmcImportError(f"Tidak dapat mengimpor '{item}' dari modul '{module_name}'")
         return imported_items
 
     def get_module_info(self, module_name):
@@ -209,9 +200,7 @@ class RenzmcModuleManager:
             Resolved absolute module path
         """
         if not current_file_path:
-            raise RenzmcImportError(
-                "Tidak dapat menggunakan relative import tanpa file path"
-            )
+            raise RenzmcImportError("Tidak dapat menggunakan relative import tanpa file path")
 
         # Get the directory of the current file
         current_dir = os.path.dirname(os.path.abspath(current_file_path))
@@ -238,10 +227,7 @@ class RenzmcModuleManager:
             if os.path.isfile(init_path):
                 return init_path
 
-        raise RenzmcImportError(
-            f"Tidak dapat menemukan modul relatif: {module_name} "
-            f"(level: {relative_level})"
-        )
+        raise RenzmcImportError(f"Tidak dapat menemukan modul relatif: {module_name} " f"(level: {relative_level})")
 
     def import_all_from_module(self, module_name):
         """

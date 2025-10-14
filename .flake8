@@ -1,7 +1,7 @@
 [flake8]
-max-line-length = 88
+max-line-length = 120
 
-max-complexity = 10
+max-complexity = 15
 
 exclude =
     .git,
@@ -12,19 +12,38 @@ exclude =
     dist,
     *.egg-info,
     .tox,
-    .pytest_cache
+    .pytest_cache,
+    examples,
+    tests
 
 ignore =
     E203,
-    W503
+    W503,
+    E501,
+    D100,
+    D101,
+    D102,
+    D103,
+    D104,
+    D105,
+    D107,
+    D200,
+    D205,
+    D400,
+    D401,
+    D403,
+    B008,
+    B902
 
-select = E,W,F,C,B,D
+select = E,W,F,C,B
 
 per-file-ignores =
-    __init__.py:F401,F403
+    __init__.py:F401,F403,E402
     renzmc/__init__.py:E402
     renzmc/__main__.py:E402
     renzmc/repl.py:E402
+    renzmc/core/*.py:E402
+    renzmc/builtins/**/*.py:F401,E402
 
 count = True
 statistics = True

@@ -36,9 +36,7 @@ class HTTPOperationsMixin:
     Provides methods for making HTTP requests.
     """
 
-    def _http_request(
-        self, url, method="GET", headers=None, data=None, json=None, timeout=30
-    ):
+    def _http_request(self, url, method="GET", headers=None, data=None, json=None, timeout=30):
         """
         Make an HTTP request.
 
@@ -73,18 +71,12 @@ class HTTPOperationsMixin:
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json()
-                    if response.headers.get("content-type", "").startswith(
-                        "application/json"
-                    )
-                    else None
+                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
-            )
+            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP request: {str(e)}")
 
@@ -108,26 +100,18 @@ class HTTPOperationsMixin:
         try:
             import requests
 
-            response = requests.get(
-                url, headers=headers, params=params, timeout=timeout
-            )
+            response = requests.get(url, headers=headers, params=params, timeout=timeout)
             return {
                 "status_code": response.status_code,
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json()
-                    if response.headers.get("content-type", "").startswith(
-                        "application/json"
-                    )
-                    else None
+                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
-            )
+            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP GET request: {str(e)}")
 
@@ -152,26 +136,18 @@ class HTTPOperationsMixin:
         try:
             import requests
 
-            response = requests.post(
-                url, headers=headers, data=data, json=json, timeout=timeout
-            )
+            response = requests.post(url, headers=headers, data=data, json=json, timeout=timeout)
             return {
                 "status_code": response.status_code,
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json()
-                    if response.headers.get("content-type", "").startswith(
-                        "application/json"
-                    )
-                    else None
+                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
-            )
+            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP POST request: {str(e)}")
 
@@ -196,26 +172,18 @@ class HTTPOperationsMixin:
         try:
             import requests
 
-            response = requests.put(
-                url, headers=headers, data=data, json=json, timeout=timeout
-            )
+            response = requests.put(url, headers=headers, data=data, json=json, timeout=timeout)
             return {
                 "status_code": response.status_code,
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json()
-                    if response.headers.get("content-type", "").startswith(
-                        "application/json"
-                    )
-                    else None
+                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
-            )
+            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP PUT request: {str(e)}")
 
@@ -244,17 +212,11 @@ class HTTPOperationsMixin:
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json()
-                    if response.headers.get("content-type", "").startswith(
-                        "application/json"
-                    )
-                    else None
+                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError(
-                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
-            )
+            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP DELETE request: {str(e)}")

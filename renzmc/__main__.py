@@ -115,13 +115,9 @@ def run_interactive():
 
 def main():
     """Main entry point for the RenzmcLang CLI."""
-    parser = argparse.ArgumentParser(
-        description="RenzmcLang - Bahasa pemrograman berbasis Bahasa Indonesia"
-    )
+    parser = argparse.ArgumentParser(description="RenzmcLang - Bahasa pemrograman berbasis Bahasa Indonesia")
     parser.add_argument("file", nargs="?", help="File RenzmcLang untuk dijalankan")
-    parser.add_argument(
-        "-v", "--version", action="store_true", help="Tampilkan versi RenzmcLang"
-    )
+    parser.add_argument("-v", "--version", action="store_true", help="Tampilkan versi RenzmcLang")
     parser.add_argument("-c", "--code", help="Jalankan kode RenzmcLang")
     args = parser.parse_args()
 

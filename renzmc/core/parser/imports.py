@@ -28,12 +28,8 @@ RenzmcLang Parser Imports Module
 Import statement parsing methods.
 """
 
-from renzmc.core.ast import (  # noqa: E402
-    FromImport,
-    Import,
-    PythonImport,
-)
-from renzmc.core.token import Token, TokenType  # noqa: E402
+from renzmc.core.ast import FromImport, Import, PythonImport  # noqa: E402
+from renzmc.core.token import TokenType  # noqa: E402
 
 
 class ImportParser:
@@ -60,9 +56,7 @@ class ImportParser:
                     self.error("Diharapkan identifier setelah titik dalam nama modul")
             module_name = ".".join(module_parts)
         else:
-            self.error(
-                "Diharapkan nama modul (string atau identifier) setelah 'impor_python'"
-            )
+            self.error("Diharapkan nama modul (string atau identifier) setelah 'impor_python'")
         alias = None
         if self.current_token.type == TokenType.SEBAGAI:
             self.eat(TokenType.SEBAGAI)

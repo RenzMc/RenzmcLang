@@ -46,9 +46,7 @@ class TypeSystemMixin:
     Provides type validation, checking, and registry management.
     """
 
-    def _validate_parameter_type(
-        self, param_value, type_name, param_name, function_name=""
-    ):
+    def _validate_parameter_type(self, param_value, type_name, param_name, function_name=""):
         """
         Validate parameter type with proper error handling
 
@@ -61,9 +59,7 @@ class TypeSystemMixin:
         Returns:
             bool: True if validation passes, False otherwise
         """
-        return check_parameter_type(
-            param_value, type_name, param_name, self.type_registry, function_name
-        )
+        return check_parameter_type(param_value, type_name, param_name, self.type_registry, function_name)
 
     def _validate_return_type(self, return_value, type_name, function_name=""):
         """
@@ -77,9 +73,7 @@ class TypeSystemMixin:
         Returns:
             bool: True if validation passes, False otherwise
         """
-        return check_return_type(
-            return_value, type_name, self.type_registry, function_name
-        )
+        return check_return_type(return_value, type_name, self.type_registry, function_name)
 
     def _get_type_from_registry(self, type_name):
         """
@@ -125,12 +119,7 @@ class TypeSystemMixin:
                 return True
             key_type = dict_match.group(1).strip()
             value_type = dict_match.group(2).strip()
-            return all(
-                (
-                    self._check_type(k, key_type) and self._check_type(v, value_type)
-                    for k, v in obj.items()
-                )
-            )
+            return all((self._check_type(k, key_type) and self._check_type(v, value_type) for k, v in obj.items()))
         tuple_match = re.match(r"tuple\[(.*)\]", type_name)
         if tuple_match:
             if not isinstance(obj, tuple):
@@ -138,9 +127,7 @@ class TypeSystemMixin:
             element_types = [t.strip() for t in tuple_match.group(1).split(",")]
             if len(obj) != len(element_types):
                 return False
-            return all(
-                (self._check_type(obj[i], element_types[i]) for i in range(len(obj)))
-            )
+            return all((self._check_type(obj[i], element_types[i]) for i in range(len(obj))))
         optional_match = re.match(r"Optional\[(.*)\]", type_name)
         if optional_match:
             if obj is None:

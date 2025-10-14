@@ -63,9 +63,7 @@ class PathValidator:
         filepath_str = str(filepath)
         for pattern in self.dangerous_patterns:
             if pattern in filepath_str:
-                raise ValidationError(
-                    f"Nama file mengandung karakter berbahaya: '{pattern}'"
-                )
+                raise ValidationError(f"Nama file mengandung karakter berbahaya: '{pattern}'")
         try:
             abs_path = (self.base_dir / filepath).resolve()
         except (ValueError, OSError) as e:

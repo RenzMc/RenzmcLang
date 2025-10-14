@@ -62,9 +62,7 @@ class PythonIntegrationMixin:
             RenzmcImportError: If import fails
         """
         try:
-            wrapped_module = self.python_integration.import_python_module(
-                module_name, alias
-            )
+            wrapped_module = self.python_integration.import_python_module(module_name, alias)
             if alias:
                 if isinstance(wrapped_module, dict):
                     self.global_scope[alias] = wrapped_module[alias]
@@ -78,14 +76,10 @@ class PythonIntegrationMixin:
                 return wrapped_module
         except RenzmcImportError as e:
             print(f"❌ Gagal mengimpor modul Python '{module_name}': {str(e)}")
-            print(
-                f"""💡 Saran: Pastikan modul terinstal dengan 'instal_paket_python("{module_name}")'"""
-            )
+            print(f"""💡 Saran: Pastikan modul terinstal dengan 'instal_paket_python("{module_name}")'""")
             raise e
         except Exception as e:
-            import_error = RenzmcImportError(
-                f"Error tidak terduga saat mengimpor '{module_name}': {str(e)}"
-            )
+            import_error = RenzmcImportError(f"Error tidak terduga saat mengimpor '{module_name}': {str(e)}")
             print(f"❌ {import_error}")
             raise import_error
 
@@ -118,26 +112,18 @@ class PythonIntegrationMixin:
             RenzmcImportError: If import fails
         """
         try:
-            imported_items = self.python_integration.import_python_module(
-                module_name, from_items=list(items)
-            )
+            imported_items = self.python_integration.import_python_module(module_name, from_items=list(items))
             for item_name, item_value in imported_items.items():
-                enhanced_value = self.python_integration.convert_python_to_renzmc(
-                    item_value
-                )
+                enhanced_value = self.python_integration.convert_python_to_renzmc(item_value)
                 self.global_scope[item_name] = enhanced_value
-            print(
-                f"✓ Berhasil mengimpor {len(imported_items)} item dari modul '{module_name}'"
-            )
+            print(f"✓ Berhasil mengimpor {len(imported_items)} item dari modul '{module_name}'")
             return imported_items
         except RenzmcImportError as e:
             print(f"❌ Gagal mengimpor dari modul Python '{module_name}': {str(e)}")
             print("💡 Saran: Periksa nama modul dan item yang akan diimpor")
             raise e
         except Exception as e:
-            import_error = RenzmcImportError(
-                f"Error tidak terduga saat mengimpor dari '{module_name}': {str(e)}"
-            )
+            import_error = RenzmcImportError(f"Error tidak terduga saat mengimpor dari '{module_name}': {str(e)}")
             print(f"❌ {import_error}")
             raise import_error
 
@@ -256,9 +242,7 @@ class PythonIntegrationMixin:
         Returns:
             Import result
         """
-        return self.python_integration.enable_star_imports(
-            module_name, self.global_scope
-        )
+        return self.python_integration.enable_star_imports(module_name, self.global_scope)
 
     def _list_python_modules(self):
         """

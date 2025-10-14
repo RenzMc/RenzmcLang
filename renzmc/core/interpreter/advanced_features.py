@@ -28,6 +28,7 @@ RenzmcLang Interpreter Advanced Features Module
 This module contains advanced features like decorators, generators, and async.
 """
 
+
 import asyncio
 
 
@@ -76,9 +77,7 @@ class AdvancedFeaturesMixin:
         Returns:
             Created context manager
         """
-        return self.advanced_features.create_context_manager(
-            name, enter_func, exit_func
-        )
+        return self.advanced_features.create_context_manager(name, enter_func, exit_func)
 
     def _use_context_manager(self, context_manager, action_func):
         """
@@ -113,9 +112,7 @@ class AdvancedFeaturesMixin:
         Returns:
             Created generator
         """
-        return self.advanced_features.create_generator(
-            name, generator_func, *args, **kwargs
-        )
+        return self.advanced_features.create_generator(name, generator_func, *args, **kwargs)
 
     def _create_async_function(self, name, func):
         """

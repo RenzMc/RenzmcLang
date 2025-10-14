@@ -32,9 +32,7 @@ from typing import Any, Optional, Type  # noqa: E402
 from renzmc.utils.error_handler import log_exception, logger  # noqa: E402
 
 
-def validate_type(
-    obj: Any, type_name: str, type_registry: dict, operation: str = "type validation"
-) -> bool:
+def validate_type(obj: Any, type_name: str, type_registry: dict, operation: str = "type validation") -> bool:
     """
     Validate if an object matches a given type name
 
@@ -54,9 +52,7 @@ def validate_type(
             if isinstance(expected_type, type):
                 return isinstance(obj, expected_type)
         except TypeError as e:
-            log_exception(
-                f"{operation} - type registry check for '{type_name}'", e, level="debug"
-            )
+            log_exception(f"{operation} - type registry check for '{type_name}'", e, level="debug")
             return False
 
     # Check in Python builtins
@@ -66,9 +62,7 @@ def validate_type(
             if isinstance(expected_type, type):
                 return isinstance(obj, expected_type)
         except TypeError as e:
-            log_exception(
-                f"{operation} - builtin check for '{type_name}'", e, level="debug"
-            )
+            log_exception(f"{operation} - builtin check for '{type_name}'", e, level="debug")
             return False
 
     # Check common type aliases
@@ -129,12 +123,9 @@ def check_parameter_type(
     if type_name in type_registry:
         try:
             expected_type = type_registry[type_name]
-            if isinstance(expected_type, type) and not isinstance(
-                param_value, expected_type
-            ):
+            if isinstance(expected_type, type) and not isinstance(param_value, expected_type):
                 logger.warning(
-                    f"Parameter '{param_name}' expected type '{type_name}' "
-                    f"but got '{type(param_value).__name__}'"
+                    f"Parameter '{param_name}' expected type '{type_name}' " f"but got '{type(param_value).__name__}'"
                 )
                 return False
         except TypeError as e:
@@ -145,12 +136,9 @@ def check_parameter_type(
     elif hasattr(py_builtins, type_name):
         try:
             expected_type = getattr(py_builtins, type_name)
-            if isinstance(expected_type, type) and not isinstance(
-                param_value, expected_type
-            ):
+            if isinstance(expected_type, type) and not isinstance(param_value, expected_type):
                 logger.warning(
-                    f"Parameter '{param_name}' expected type '{type_name}' "
-                    f"but got '{type(param_value).__name__}'"
+                    f"Parameter '{param_name}' expected type '{type_name}' " f"but got '{type(param_value).__name__}'"
                 )
                 return False
         except TypeError as e:
@@ -160,9 +148,7 @@ def check_parameter_type(
     return True
 
 
-def check_return_type(
-    return_value: Any, type_name: str, type_registry: dict, function_name: str = ""
-) -> bool:
+def check_return_type(return_value: Any, type_name: str, type_registry: dict, function_name: str = "") -> bool:
     """
     Check if a return value matches the expected type
 
@@ -183,13 +169,8 @@ def check_return_type(
     if type_name in type_registry:
         try:
             expected_type = type_registry[type_name]
-            if isinstance(expected_type, type) and not isinstance(
-                return_value, expected_type
-            ):
-                logger.warning(
-                    f"Return value expected type '{type_name}' "
-                    f"but got '{type(return_value).__name__}'"
-                )
+            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                logger.warning(f"Return value expected type '{type_name}' " f"but got '{type(return_value).__name__}'")
                 return False
         except TypeError as e:
             log_exception(operation, e, level="debug")
@@ -199,13 +180,8 @@ def check_return_type(
     elif hasattr(py_builtins, type_name):
         try:
             expected_type = getattr(py_builtins, type_name)
-            if isinstance(expected_type, type) and not isinstance(
-                return_value, expected_type
-            ):
-                logger.warning(
-                    f"Return value expected type '{type_name}' "
-                    f"but got '{type(return_value).__name__}'"
-                )
+            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                logger.warning(f"Return value expected type '{type_name}' " f"but got '{type(return_value).__name__}'")
                 return False
         except TypeError as e:
             log_exception(operation, e, level="debug")

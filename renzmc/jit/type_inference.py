@@ -24,8 +24,7 @@ SOFTWARE.
 
 from __future__ import annotations
 
-from typing import Any
-from typing import Optional
+from typing import Any, Optional
 
 from renzmc.core.ast import (
     AST,
@@ -60,9 +59,7 @@ class TypeInferenceEngine:
         self.numeric_types = {int, float}
         self.collection_types = {list, dict, set, tuple}
 
-    def infer_type(  # noqa: C901
-        self, node: AST, context: Dict[str, Any] = None
-    ) -> Optional[type]:
+    def infer_type(self, node: AST, context: Dict[str, Any] = None) -> Optional[type]:  # noqa: C901
         if context is None:
             context = {}
 
@@ -106,9 +103,7 @@ class TypeInferenceEngine:
 
         return None
 
-    def is_numeric_function(
-        self, params: List[str], body: List[AST], context: Dict[str, Any] = None
-    ) -> bool:
+    def is_numeric_function(self, params: List[str], body: List[AST], context: Dict[str, Any] = None) -> bool:
         if context is None:
             context = {}
 
@@ -123,9 +118,7 @@ class TypeInferenceEngine:
         except Exception:
             return False
 
-    def _is_numeric_statement(  # noqa: C901
-        self, stmt: AST, context: Dict[str, Any]
-    ) -> bool:
+    def _is_numeric_statement(self, stmt: AST, context: Dict[str, Any]) -> bool:  # noqa: C901
 
         if isinstance(stmt, (VarDecl, Assign)):
             value = stmt.value
@@ -183,9 +176,7 @@ class TypeInferenceEngine:
 
         return False
 
-    def analyze_function_complexity(  # noqa: C901
-        self, body: List[AST], func_name: str = None
-    ) -> Dict[str, Any]:
+    def analyze_function_complexity(self, body: List[AST], func_name: str = None) -> Dict[str, Any]:  # noqa: C901
         analysis = {
             "has_loops": False,
             "loop_depth": 0,
@@ -215,10 +206,7 @@ class TypeInferenceEngine:
                     # Check func_expr (which is a Var node for 'panggil' syntax)
                     elif hasattr(node, "func_expr") and node.func_expr:
                         # If func_expr is a Var node with the function name
-                        if (
-                            hasattr(node.func_expr, "name")
-                            and node.func_expr.name == func_name
-                        ):
+                        if hasattr(node.func_expr, "name") and node.func_expr.name == func_name:
                             analysis["has_recursion"] = True
 
                 # Recursively analyze function call arguments

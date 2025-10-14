@@ -49,7 +49,6 @@ from renzmc.core.error import (
     AsyncError,
     DivisionByZeroError,
     RenzmcImportError,
-    RenzmcRuntimeError,
     TypeHintError,
 )
 from renzmc.core.token import TokenType
@@ -144,15 +143,11 @@ class ExecutionMethodsMixin:
             return int(left) >> int(right)
         elif node.op.type in (TokenType.DALAM, TokenType.DALAM_OP):
             if not hasattr(right, "__iter__") and not hasattr(right, "__contains__"):
-                raise TypeError(
-                    f"argument of type '{type(right).__name__}' is not iterable"
-                )
+                raise TypeError(f"argument of type '{type(right).__name__}' is not iterable")
             return left in right
         elif node.op.type == TokenType.TIDAK_DALAM:
             if not hasattr(right, "__iter__") and not hasattr(right, "__contains__"):
-                raise TypeError(
-                    f"argument of type '{type(right).__name__}' is not iterable"
-                )
+                raise TypeError(f"argument of type '{type(right).__name__}' is not iterable")
             return left not in right
         elif node.op.type in (TokenType.ADALAH, TokenType.ADALAH_OP):
             return left is right
@@ -210,24 +205,16 @@ class ExecutionMethodsMixin:
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            value, expected_type
-                        ):
-                            raise TypeHintError(
-                                f"Nilai '{value}' bukan tipe '{type_name}'"
-                            )
+                        if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                            raise TypeHintError(f"Nilai '{value}' bukan tipe '{type_name}'")
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            value, expected_type
-                        ):
-                            raise TypeHintError(
-                                f"Nilai '{value}' bukan tipe '{type_name}'"
-                            )
+                        if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                            raise TypeHintError(f"Nilai '{value}' bukan tipe '{type_name}'")
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
@@ -251,9 +238,7 @@ class ExecutionMethodsMixin:
                 obj[attr] = value
                 return value
             else:
-                raise AttributeError(
-                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
-                )
+                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
         elif isinstance(node.var, IndexAccess):
             obj = self.visit(node.var.obj)
             index = self.visit(node.var.index)
@@ -261,9 +246,7 @@ class ExecutionMethodsMixin:
                 obj[index] = value
                 return value
             else:
-                raise TypeError(
-                    f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"
-                )
+                raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")
         raise RuntimeError(f"Tipe assignment tidak didukung: {type(node.var).__name__}")
 
     def visit_CompoundAssign(self, node):  # noqa: C901
@@ -285,13 +268,9 @@ class ExecutionMethodsMixin:
             elif isinstance(obj, dict):
                 current_value = obj[attr]
             else:
-                raise AttributeError(
-                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
-                )
+                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
         else:
-            raise RuntimeError(
-                f"Tipe compound assignment tidak didukung: {type(node.var).__name__}"
-            )
+            raise RuntimeError(f"Tipe compound assignment tidak didukung: {type(node.var).__name__}")
         operand = self.visit(node.value)
         if node.op.type == TokenType.TAMBAH_SAMA_DENGAN:
             new_value = current_value + operand
@@ -327,9 +306,7 @@ class ExecutionMethodsMixin:
         elif node.op.type == TokenType.GESER_KANAN_SAMA_DENGAN:
             new_value = current_value >> operand
         else:
-            raise RuntimeError(
-                f"Operator compound assignment tidak dikenal: {node.op.type}"
-            )
+            raise RuntimeError(f"Operator compound assignment tidak dikenal: {node.op.type}")
         if isinstance(node.var, Var):
             return self.set_variable(node.var.name, new_value)
         elif isinstance(node.var, IndexAccess):
@@ -347,9 +324,7 @@ class ExecutionMethodsMixin:
             elif isinstance(obj, dict):
                 obj[attr] = new_value
             else:
-                raise AttributeError(
-                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
-                )
+                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
             return new_value
 
     def visit_MultiVarDecl(self, node):
@@ -367,9 +342,7 @@ class ExecutionMethodsMixin:
         elif len(node.var_names) == 1:
             return self.set_variable(node.var_names[0], values)
         else:
-            raise ValueError(
-                f"Tidak dapat membongkar 1 nilai menjadi {len(node.var_names)} variabel"
-            )
+            raise ValueError(f"Tidak dapat membongkar 1 nilai menjadi {len(node.var_names)} variabel")
 
     def visit_MultiAssign(self, node):  # noqa: C901
         values = self.visit(node.values)
@@ -400,14 +373,10 @@ class ExecutionMethodsMixin:
                     if isinstance(obj, (list, dict)):
                         obj[index] = value
                     else:
-                        raise TypeError(
-                            f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"  # noqa: E501
-                        )
+                        raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")  # noqa: E501
                     result = value
                 else:
-                    raise RuntimeError(
-                        f"Tipe assignment tidak didukung: {type(var_node).__name__}"
-                    )
+                    raise RuntimeError(f"Tipe assignment tidak didukung: {type(var_node).__name__}")
                 results.append(result)
             return tuple(results)
         elif len(node.vars) == 1:
@@ -420,9 +389,7 @@ class ExecutionMethodsMixin:
                 temp_assign = AssignNode(var_node, node.values)
                 return self.visit_Assign(temp_assign)
         else:
-            raise ValueError(
-                f"Tidak dapat membongkar 1 nilai menjadi {len(node.vars)} variabel"
-            )
+            raise ValueError(f"Tidak dapat membongkar 1 nilai menjadi {len(node.vars)} variabel")
 
     def visit_NoOp(self, node):
         pass
@@ -499,9 +466,7 @@ class ExecutionMethodsMixin:
         iterable = self.visit(node.iterable)
         result = None
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         for item in iterable:
             if isinstance(var_name, tuple):
                 if hasattr(item, "__iter__") and not isinstance(item, str):
@@ -513,9 +478,7 @@ class ExecutionMethodsMixin:
                     for var, val in zip(var_name, unpacked):
                         self.set_variable(var, val)
                 else:
-                    raise TypeError(
-                        f"Tidak dapat unpack nilai tipe '{type(item).__name__}'"
-                    )
+                    raise TypeError(f"Tidak dapat unpack nilai tipe '{type(item).__name__}'")
             else:
                 self.set_variable(var_name, item)
 
@@ -548,17 +511,15 @@ class ExecutionMethodsMixin:
         # Only enable JIT tracking if function doesn't have manual JIT decorators
         # Manual decorators handle compilation themselves
         if JIT_AVAILABLE:
-            has_manual_jit = (
-                hasattr(self, "_jit_hints") and name in self._jit_hints
-            ) or (hasattr(self, "_jit_force") and name in self._jit_force)
+            has_manual_jit = (hasattr(self, "_jit_hints") and name in self._jit_hints) or (
+                hasattr(self, "_jit_force") and name in self._jit_force
+            )
             if not has_manual_jit:
                 self.jit_call_counts[name] = 0
                 self.jit_execution_times[name] = 0.0
 
         def renzmc_function(*args, **kwargs):
-            return self._execute_user_function(
-                name, params, body, return_type, param_types, list(args), kwargs
-            )
+            return self._execute_user_function(name, params, body, return_type, param_types, list(args), kwargs)
 
         renzmc_function.__name__ = name
         renzmc_function.__renzmc_function__ = True
@@ -581,22 +542,16 @@ class ExecutionMethodsMixin:
                         return func(*args, **kwargs)
                     except Exception as e:
                         func_name = getattr(func, "__name__", str(type(func).__name__))
-                        raise RuntimeError(
-                            f"Error dalam pemanggilan fungsi '{func_name}': {str(e)}"
-                        )
+                        raise RuntimeError(f"Error dalam pemanggilan fungsi '{func_name}': {str(e)}")
                 else:
-                    raise RuntimeError(
-                        f"Objek '{type(func).__name__}' tidak dapat dipanggil"
-                    )
+                    raise RuntimeError(f"Objek '{type(func).__name__}' tidak dapat dipanggil")
             except NameError:
                 if isinstance(node.func_expr, Var):
                     func_name = node.func_expr.name
                     args = [self.visit(arg) for arg in node.args]
                     kwargs = {k: self.visit(v) for k, v in node.kwargs.items()}
                     if func_name in self.functions:
-                        params, body, return_type, param_types = self.functions[
-                            func_name
-                        ]
+                        params, body, return_type, param_types = self.functions[func_name]
                         return self._execute_user_function(
                             func_name,
                             params,
@@ -633,10 +588,7 @@ class ExecutionMethodsMixin:
                 except NameError as e:
                     # Name not found - this is expected in some contexts
                     log_exception("name lookup", e, level="debug")
-            if (
-                hasattr(self, "_decorated_functions")
-                and name in self._decorated_functions
-            ):
+            if hasattr(self, "_decorated_functions") and name in self._decorated_functions:
                 decorator_data = self._decorated_functions[name]
 
                 # Check if this is a wrapped function (new style) or decorator+func tuple (old style)  # noqa: E501
@@ -645,9 +597,7 @@ class ExecutionMethodsMixin:
                     try:
                         return decorator_data(*args, **kwargs)
                     except Exception as e:
-                        raise RuntimeError(
-                            f"Error dalam fungsi terdekorasi '{name}': {str(e)}"
-                        )
+                        raise RuntimeError(f"Error dalam fungsi terdekorasi '{name}': {str(e)}")
                 else:
                     # Old style: tuple of (decorator_func, original_func)
                     raw_decorator_func, original_func = decorator_data
@@ -669,9 +619,7 @@ class ExecutionMethodsMixin:
                             # For wrapper decorators, call the decorator with function and args  # noqa: E501
                             return raw_decorator_func(original_func, *args, **kwargs)
                     except Exception as e:
-                        raise RuntimeError(
-                            f"Error dalam fungsi terdekorasi '{name}': {str(e)}"
-                        )
+                        raise RuntimeError(f"Error dalam fungsi terdekorasi '{name}': {str(e)}")
             if name not in self.functions:
                 raise NameError(f"Fungsi '{name}' tidak ditemukan")
             function_data = self.functions[name]
@@ -679,20 +627,14 @@ class ExecutionMethodsMixin:
                 params, body, return_type, param_types, _ = function_data
 
                 async def async_coroutine():
-                    return self._execute_user_function(
-                        name, params, body, return_type, param_types, args, kwargs
-                    )
+                    return self._execute_user_function(name, params, body, return_type, param_types, args, kwargs)
 
                 return async_coroutine()
             else:
                 params, body, return_type, param_types = function_data
-                return self._execute_user_function(
-                    name, params, body, return_type, param_types, args, kwargs
-                )
+                return self._execute_user_function(name, params, body, return_type, param_types, args, kwargs)
 
-    def _execute_user_function(  # noqa: C901
-        self, name, params, body, return_type, param_types, args, kwargs
-    ):
+    def _execute_user_function(self, name, params, body, return_type, param_types, args, kwargs):  # noqa: C901
         # Check if function should be force-compiled with JIT
         # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip  # noqa: E501
         if JIT_AVAILABLE and hasattr(self, "_jit_force") and name in self._jit_force:
@@ -723,9 +665,7 @@ class ExecutionMethodsMixin:
             param_values[params[i]] = arg
         for param_name, value in kwargs.items():
             if param_name not in params:
-                raise RuntimeError(
-                    f"Parameter '{param_name}' tidak ada dalam fungsi '{name}'"
-                )
+                raise RuntimeError(f"Parameter '{param_name}' tidak ada dalam fungsi '{name}'")
             if param_name in param_values:
                 raise RuntimeError(
                     f"Parameter '{param_name}' mendapat nilai ganda (posisional dan kata kunci)"  # noqa: E501
@@ -733,9 +673,7 @@ class ExecutionMethodsMixin:
             param_values[param_name] = value
         missing_params = [p for p in params if p not in param_values]
         if missing_params:
-            raise RuntimeError(
-                f"Parameter hilang dalam fungsi '{name}': {', '.join(missing_params)}"
-            )
+            raise RuntimeError(f"Parameter hilang dalam fungsi '{name}': {', '.join(missing_params)}")
         if param_types:
             for param_name, value in param_values.items():
                 if param_name in param_types:
@@ -744,9 +682,7 @@ class ExecutionMethodsMixin:
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(
-                                value, expected_type
-                            ):
+                            if isinstance(expected_type, type) and not isinstance(value, expected_type):
                                 raise TypeHintError(
                                     f"Parameter '{param_name}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
@@ -756,9 +692,7 @@ class ExecutionMethodsMixin:
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(
-                                value, expected_type
-                            ):
+                            if isinstance(expected_type, type) and not isinstance(value, expected_type):
                                 raise TypeHintError(
                                     f"Parameter '{param_name}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
@@ -791,9 +725,7 @@ class ExecutionMethodsMixin:
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            return_value, expected_type
-                        ):
+                        if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                             raise TypeHintError(
                                 f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"  # noqa: E501
                             )
@@ -803,9 +735,7 @@ class ExecutionMethodsMixin:
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            return_value, expected_type
-                        ):
+                        if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                             raise TypeHintError(
                                 f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"  # noqa: E501
                             )
@@ -820,9 +750,7 @@ class ExecutionMethodsMixin:
                 else:
                     type_spec = return_type
                 if type_spec:
-                    is_valid, error_msg = AdvancedTypeValidator.validate(
-                        return_value, type_spec, "return"
-                    )
+                    is_valid, error_msg = AdvancedTypeValidator.validate(return_value, type_spec, "return")
                     if not is_valid:
                         raise TypeHintError(f"Fungsi '{name}': {error_msg}")
         self.local_scope = old_local_scope
@@ -833,10 +761,7 @@ class ExecutionMethodsMixin:
             self.jit_call_counts[name] += 1
             self.jit_execution_times[name] += execution_time
 
-            if (
-                self.jit_call_counts[name] >= self.jit_threshold
-                and name not in self.jit_compiled_functions
-            ):
+            if self.jit_call_counts[name] >= self.jit_threshold and name not in self.jit_compiled_functions:
                 # Check if function is recursive before auto-compiling
                 from renzmc.jit.type_inference import TypeInferenceEngine
 
@@ -861,13 +786,9 @@ class ExecutionMethodsMixin:
 
             # Use force_compile if force flag is set
             if force:
-                compiled_func = self.jit_compiler.force_compile(
-                    name, params, body, interpreter_func
-                )
+                compiled_func = self.jit_compiler.force_compile(name, params, body, interpreter_func)
             else:
-                compiled_func = self.jit_compiler.compile_function(
-                    name, params, body, interpreter_func
-                )
+                compiled_func = self.jit_compiler.compile_function(name, params, body, interpreter_func)
 
             if compiled_func:
                 self.jit_compiled_functions[name] = compiled_func
@@ -888,9 +809,7 @@ class ExecutionMethodsMixin:
                 else:
                     params, body, return_type, param_types = function_data
                 all_args = [func] + list(args)
-                return self._execute_user_function(
-                    name, params, body, return_type, param_types, all_args, kwargs
-                )
+                return self._execute_user_function(name, params, body, return_type, param_types, all_args, kwargs)
             else:
                 raise RuntimeError(f"User function '{name}' not found for decorator")
 
@@ -914,9 +833,7 @@ class ExecutionMethodsMixin:
                 else:
                     return func
             else:
-                raise RuntimeError(
-                    f"User function '{name}' not found for decorator factory"
-                )
+                raise RuntimeError(f"User function '{name}' not found for decorator factory")
 
         return decorator_factory
 
@@ -932,9 +849,7 @@ class ExecutionMethodsMixin:
         instance_id = id(instance)
         self.instance_scopes[instance_id] = {}
         if class_info["constructor"]:
-            constructor_params, constructor_body, param_types = class_info[
-                "constructor"
-            ]
+            constructor_params, constructor_body, param_types = class_info["constructor"]
             if len(args) != len(constructor_params):
                 raise RuntimeError(
                     f"Konstruktor kelas '{class_name}' membutuhkan {len(constructor_params)} parameter, tetapi {len(args)} diberikan"  # noqa: E501
@@ -1000,19 +915,13 @@ class ExecutionMethodsMixin:
             if attr in instance_scope:
                 return instance_scope[attr]
             else:
-                raise AttributeError(
-                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
-                )
+                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
         elif hasattr(obj, attr):
             return getattr(obj, attr)
         elif isinstance(obj, dict) and attr in obj:
             return obj[attr]
         else:
-            if (
-                hasattr(obj, "__name__")
-                and hasattr(obj, "__package__")
-                and (not isinstance(obj, dict))
-            ):
+            if hasattr(obj, "__name__") and hasattr(obj, "__package__") and (not isinstance(obj, dict)):
                 try:
                     submodule_name = f"{obj.__name__}.{attr}"
                     submodule = importlib.import_module(submodule_name)
@@ -1020,12 +929,8 @@ class ExecutionMethodsMixin:
                     return submodule
                 except ImportError:
                     # Module not available - continuing without it
-                    handle_import_error(
-                        "module", "import operation", "Continuing without module"
-                    )
-            raise AttributeError(
-                f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
-            )
+                    handle_import_error("module", "import operation", "Continuing without module")
+            raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
 
     def visit_MethodCall(self, node):  # noqa: C901
         obj = self.visit(node.obj)
@@ -1044,17 +949,12 @@ class ExecutionMethodsMixin:
                 ) from e
         if id(obj) in self.instance_scopes:
             class_name = obj.__class__.__name__
-            if (
-                class_name in self.classes
-                and method in self.classes[class_name]["methods"]
-            ):
+            if class_name in self.classes and method in self.classes[class_name]["methods"]:
                 old_instance = self.current_instance
                 old_local_scope = self.local_scope.copy()
                 self.current_instance = id(obj)
                 self.local_scope = {}
-                params, body, return_type, param_types = self.classes[class_name][
-                    "methods"
-                ][method]
+                params, body, return_type, param_types = self.classes[class_name]["methods"][method]
                 self.local_scope["diri"] = obj
                 if params and len(params) > 0:
                     start_param_idx = 1 if params[0] == "diri" else 0
@@ -1064,16 +964,12 @@ class ExecutionMethodsMixin:
                             f"Metode '{method}' membutuhkan {expected_user_params} parameter, tetapi {len(args)} diberikan"  # noqa: E501
                         )
                     if param_types and len(param_types) > start_param_idx:
-                        for i, (arg, type_hint) in enumerate(
-                            zip(args, param_types[start_param_idx:])
-                        ):
+                        for i, (arg, type_hint) in enumerate(zip(args, param_types[start_param_idx:])):
                             type_name = type_hint.type_name
                             if type_name in self.type_registry:
                                 expected_type = self.type_registry[type_name]
                                 try:
-                                    if isinstance(
-                                        expected_type, type
-                                    ) and not isinstance(arg, expected_type):
+                                    if isinstance(expected_type, type) and not isinstance(arg, expected_type):
                                         raise TypeHintError(
                                             f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"  # noqa: E501
                                         )
@@ -1083,9 +979,7 @@ class ExecutionMethodsMixin:
                             elif hasattr(py_builtins, type_name):
                                 expected_type = getattr(py_builtins, type_name)
                                 try:
-                                    if isinstance(
-                                        expected_type, type
-                                    ) and not isinstance(arg, expected_type):
+                                    if isinstance(expected_type, type) and not isinstance(arg, expected_type):
                                         raise TypeHintError(
                                             f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"  # noqa: E501
                                         )
@@ -1106,9 +1000,7 @@ class ExecutionMethodsMixin:
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(
-                                return_value, expected_type
-                            ):
+                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                                 raise TypeHintError(
                                     f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
@@ -1118,9 +1010,7 @@ class ExecutionMethodsMixin:
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(
-                                return_value, expected_type
-                            ):
+                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                                 raise TypeHintError(
                                     f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
@@ -1131,9 +1021,7 @@ class ExecutionMethodsMixin:
                 self.local_scope = old_local_scope
                 self.return_value = None
                 return return_value
-        raise AttributeError(
-            f"Objek '{type(obj).__name__}' tidak memiliki metode '{method}'"
-        )
+        raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki metode '{method}'")
 
     def visit_Import(self, node):
         module = node.module
@@ -1147,16 +1035,11 @@ class ExecutionMethodsMixin:
                     exports = rmc_module.get_exports()
                     for name, value in exports.items():
                         self.global_scope[name] = value
-                        if (
-                            hasattr(self, "local_scope")
-                            and self.local_scope is not None
-                        ):
+                        if hasattr(self, "local_scope") and self.local_scope is not None:
                             self.local_scope[name] = value
                 return
             try:
-                imported_module = __import__(
-                    f"renzmc.builtins.{module}", fromlist=["*"]
-                )
+                imported_module = __import__(f"renzmc.builtins.{module}", fromlist=["*"])
                 self.modules[alias] = imported_module
                 self.global_scope[alias] = imported_module
             except ImportError:
@@ -1235,9 +1118,7 @@ class ExecutionMethodsMixin:
                             else:
                                 if item_name in module_scope:
                                     target_name = alias or item_name
-                                    self.global_scope[target_name] = module_scope[
-                                        item_name
-                                    ]
+                                    self.global_scope[target_name] = module_scope[item_name]
                                 else:
                                     raise ImportError(
                                         f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"  # noqa: E501
@@ -1257,15 +1138,11 @@ class ExecutionMethodsMixin:
             # Get current file path from interpreter context
             current_file = getattr(self, "current_file", None)
             if not current_file:
-                raise ImportError(
-                    "Tidak dapat menggunakan relative import: file path tidak tersedia"
-                )
+                raise ImportError("Tidak dapat menggunakan relative import: file path tidak tersedia")
 
             # Resolve relative path using module manager
             try:
-                resolved_path = self.module_manager.resolve_relative_import(
-                    module, relative_level, current_file
-                )
+                resolved_path = self.module_manager.resolve_relative_import(module, relative_level, current_file)
                 # Extract module name from path for caching
                 import os
 
@@ -1318,9 +1195,7 @@ class ExecutionMethodsMixin:
             if is_wildcard:
                 # Import all from Python module
                 try:
-                    imported_module = __import__(
-                        f"renzmc.builtins.{module}", fromlist=["*"]
-                    )
+                    imported_module = __import__(f"renzmc.builtins.{module}", fromlist=["*"])
                 except ImportError:
                     imported_module = importlib.import_module(module)
 
@@ -1328,11 +1203,7 @@ class ExecutionMethodsMixin:
                 if hasattr(imported_module, "__all__"):
                     all_names = imported_module.__all__
                 else:
-                    all_names = [
-                        name
-                        for name in dir(imported_module)
-                        if not name.startswith("_")
-                    ]
+                    all_names = [name for name in dir(imported_module) if not name.startswith("_")]
 
                 for name in all_names:
                     if hasattr(imported_module, name):
@@ -1354,9 +1225,7 @@ class ExecutionMethodsMixin:
                         value = getattr(imported_module, item_name)
                         self.global_scope[actual_name] = value
                     else:
-                        raise ImportError(
-                            f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
-                        )
+                        raise ImportError(f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'")
         except ImportError as e:
             raise ImportError(f"Modul '{module}' tidak ditemukan: {str(e)}")
 
@@ -1390,11 +1259,10 @@ class ExecutionMethodsMixin:
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         source_code = f.read()
-                    from renzmc.core.lexer import Lexer
-                    from renzmc.core.parser import Parser
-
                     # Import Interpreter here to avoid circular import
                     from renzmc.core.interpreter import Interpreter
+                    from renzmc.core.lexer import Lexer
+                    from renzmc.core.parser import Parser
 
                     module_interpreter = Interpreter()
                     lexer = Lexer(source_code)
@@ -1424,9 +1292,7 @@ class ExecutionMethodsMixin:
                                         import renzmc.builtins as renzmc_builtins
 
                                         if hasattr(renzmc_builtins, name):
-                                            builtin_func = getattr(
-                                                renzmc_builtins, name
-                                            )
+                                            builtin_func = getattr(renzmc_builtins, name)
                                             if value is builtin_func:
                                                 is_builtin = True
                                     except Exception:
@@ -1522,9 +1388,7 @@ class ExecutionMethodsMixin:
                     self.modules[module_name] = loaded_module
                     return loaded_module
                 except Exception as e:
-                    raise ImportError(
-                        f"Gagal memuat modul RenzMC '{module_name}': {str(e)}"
-                    )
+                    raise ImportError(f"Gagal memuat modul RenzMC '{module_name}': {str(e)}")
         return None
 
     def visit_PythonImport(self, node):  # noqa: C901
@@ -1549,11 +1413,7 @@ class ExecutionMethodsMixin:
                         parent_module_name = ".".join(parts[: i + 1])
                         try:
                             parent_module = importlib.import_module(parent_module_name)
-                            wrapped_parent = (
-                                self.python_integration.convert_python_to_renzmc(
-                                    parent_module
-                                )
-                            )
+                            wrapped_parent = self.python_integration.convert_python_to_renzmc(parent_module)
                             current_scope[part] = wrapped_parent
                             current_modules[part] = wrapped_parent
                         except ImportError:
@@ -1575,9 +1435,7 @@ class ExecutionMethodsMixin:
                 self.modules[module] = wrapped_module
                 self.global_scope[module] = wrapped_module
         except Exception as e:
-            raise RenzmcImportError(
-                f"Modul Python '{module}' tidak ditemukan: {str(e)}"
-            )
+            raise RenzmcImportError(f"Modul Python '{module}' tidak ditemukan: {str(e)}")
 
     def visit_PythonCall(self, node):
         func = self.visit(node.func_expr)
@@ -1630,10 +1488,7 @@ class ExecutionMethodsMixin:
 
     def visit_With(self, node):
         context_manager = self.visit(node.context_expr)
-        if not (
-            hasattr(context_manager, "__enter__")
-            and hasattr(context_manager, "__exit__")
-        ):
+        if not (hasattr(context_manager, "__enter__") and hasattr(context_manager, "__exit__")):
             raise TypeError(
                 f"Objek tipe '{type(context_manager).__name__}' tidak mendukung context manager protocol"  # noqa: E501
             )
@@ -1663,9 +1518,7 @@ class ExecutionMethodsMixin:
                 f"Indeks '{index}' di luar jangkauan untuk objek tipe '{type(obj).__name__}'"  # noqa: E501
             )
         except TypeError:
-            raise TypeError(
-                f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"
-            )
+            raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")
 
     def visit_SliceAccess(self, node):
         obj = self.visit(node.obj)
@@ -1675,9 +1528,7 @@ class ExecutionMethodsMixin:
         try:
             return obj[start:end:step]
         except TypeError:
-            raise TypeError(
-                f"Objek tipe '{type(obj).__name__}' tidak mendukung slicing"
-            )
+            raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung slicing")
 
     def visit_Lambda(self, node):  # noqa: C901
         params = node.params
@@ -1696,24 +1547,16 @@ class ExecutionMethodsMixin:
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(
-                                arg, expected_type
-                            ):
-                                raise TypeHintError(
-                                    f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
-                                )
+                            if isinstance(expected_type, type) and not isinstance(arg, expected_type):
+                                raise TypeHintError(f"Parameter ke-{i + 1} harus bertipe '{type_name}'")
                         except TypeError as e:
                             # Type checking failed - this is expected for non-type objects  # noqa: E501
                             log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(
-                                arg, expected_type
-                            ):
-                                raise TypeHintError(
-                                    f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
-                                )
+                            if isinstance(expected_type, type) and not isinstance(arg, expected_type):
+                                raise TypeHintError(f"Parameter ke-{i + 1} harus bertipe '{type_name}'")
                         except TypeError as e:
                             # Type checking failed - this is expected for non-type objects  # noqa: E501
                             log_exception("type validation", e, level="debug")
@@ -1727,24 +1570,16 @@ class ExecutionMethodsMixin:
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            result, expected_type
-                        ):
-                            raise TypeHintError(
-                                f"Nilai kembali lambda harus bertipe '{type_name}'"
-                            )
+                        if isinstance(expected_type, type) and not isinstance(result, expected_type):
+                            raise TypeHintError(f"Nilai kembali lambda harus bertipe '{type_name}'")
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            result, expected_type
-                        ):
-                            raise TypeHintError(
-                                f"Nilai kembali lambda harus bertipe '{type_name}'"
-                            )
+                        if isinstance(expected_type, type) and not isinstance(result, expected_type):
+                            raise TypeHintError(f"Nilai kembali lambda harus bertipe '{type_name}'")
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
@@ -1757,9 +1592,7 @@ class ExecutionMethodsMixin:
         var_name = node.var_name
         iterable = self.visit(node.iterable)
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         result = []
         old_local_scope = self.local_scope.copy()
         for item in iterable:
@@ -1777,9 +1610,7 @@ class ExecutionMethodsMixin:
         var_name = node.var_name
         iterable = self.visit(node.iterable)
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         result = {}
         old_local_scope = self.local_scope.copy()
         for item in iterable:
@@ -1798,9 +1629,7 @@ class ExecutionMethodsMixin:
         var_name = node.var_name
         iterable = self.visit(node.iterable)
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         result = set()
         old_local_scope = self.local_scope.copy()
         for item in iterable:
@@ -1818,9 +1647,7 @@ class ExecutionMethodsMixin:
         var_name = node.var_name
         iterable = self.visit(node.iterable)
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         old_local_scope = self.local_scope.copy()
 
         def gen():
@@ -1846,9 +1673,7 @@ class ExecutionMethodsMixin:
     def visit_YieldFrom(self, node):
         iterable = self.visit(node.expr)
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         return list(iterable)
 
     def visit_Decorator(self, node):  # noqa: C901
@@ -1902,15 +1727,11 @@ class ExecutionMethodsMixin:
                         return decorated_function
 
                     # For wrapper decorators (like @profile), store the wrapped function
-                    self._decorated_functions = getattr(
-                        self, "_decorated_functions", {}
-                    )
+                    self._decorated_functions = getattr(self, "_decorated_functions", {})
 
                     def original_func_callable(*call_args, **call_kwargs):
                         if func_name in self.functions:
-                            params, body, return_type, param_types = self.functions[
-                                func_name
-                            ]
+                            params, body, return_type, param_types = self.functions[func_name]
                             return self._execute_user_function(
                                 func_name,
                                 params,
@@ -1921,9 +1742,7 @@ class ExecutionMethodsMixin:
                                 call_kwargs,
                             )
                         else:
-                            raise NameError(
-                                f"Fungsi asli '{func_name}' tidak ditemukan"
-                            )
+                            raise NameError(f"Fungsi asli '{func_name}' tidak ditemukan")
 
                     original_func_callable.__name__ = func_name
 
@@ -2017,9 +1836,7 @@ class ExecutionMethodsMixin:
     def visit_Unpacking(self, node):
         value = self.visit(node.expr)
         if not hasattr(value, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(value).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(value).__name__}' tidak dapat diiterasi")
         return value
 
     def visit_WalrusOperator(self, node):
@@ -2069,9 +1886,7 @@ class ExecutionMethodsMixin:
                 converted_value = obj._integration.convert_renzmc_to_python(value)
             else:
                 actual_obj = obj
-                converted_value = self.python_integration.convert_renzmc_to_python(
-                    value
-                )
+                converted_value = self.python_integration.convert_renzmc_to_python(value)
             setattr(actual_obj, name, converted_value)
             return True
         except Exception as e:
@@ -2159,9 +1974,7 @@ class ExecutionMethodsMixin:
         try:
             return list(value)
         except (TypeError, ValueError) as e:
-            self.error(
-                f"Nilai tidak dapat di-unpack: {type(value).__name__} - {e}", node.token
-            )
+            self.error(f"Nilai tidak dapat di-unpack: {type(value).__name__} - {e}", node.token)
 
     def visit_PropertyDecl(self, node):
         prop = property(fget=node.getter, fset=node.setter, fdel=node.deleter)

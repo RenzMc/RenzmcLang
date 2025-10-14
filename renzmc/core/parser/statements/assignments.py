@@ -176,9 +176,7 @@ class AssignmentStatements:
                 return VarDecl(targets[0][1], values[0], start_token)
             else:
                 var_names = [t[1] for t in targets]
-                value_expr = (
-                    Tuple(values, start_token) if len(values) > 1 else values[0]
-                )
+                value_expr = Tuple(values, start_token) if len(values) > 1 else values[0]
                 return MultiVarDecl(var_names, value_expr, start_token)
         elif self.current_token.type == TokenType.ASSIGNMENT:
             self.eat(TokenType.ASSIGNMENT)
@@ -188,9 +186,7 @@ class AssignmentStatements:
                 self.eat(TokenType.KOMA)
                 values.append(self.expr())
             if has_starred:
-                return ExtendedUnpacking(
-                    targets, values[0] if len(values) == 1 else values, start_token
-                )
+                return ExtendedUnpacking(targets, values[0] if len(values) == 1 else values, start_token)
             elif len(targets) == 1 and len(values) == 1:
                 return Assign(
                     Var(
@@ -216,9 +212,7 @@ class AssignmentStatements:
                     )
                     for t in targets
                 ]
-                value_expr = (
-                    Tuple(values, start_token) if len(values) > 1 else values[0]
-                )
+                value_expr = Tuple(values, start_token) if len(values) > 1 else values[0]
                 return MultiAssign(var_nodes, value_expr, start_token)
         else:
             self.error(
@@ -256,22 +250,15 @@ class AssignmentStatements:
             values.append(self.expr())
         has_starred = any((t[0] == "starred" for t in targets))
         if has_starred:
-            return ExtendedUnpacking(
-                targets, values[0] if len(values) == 1 else values, token
-            )
+            return ExtendedUnpacking(targets, values[0] if len(values) == 1 else values, token)
         elif len(targets) == 1 and len(values) == 1:
             return Assign(
-                Var(
-                    Token(TokenType.IDENTIFIER, targets[0][1], token.line, token.column)
-                ),
+                Var(Token(TokenType.IDENTIFIER, targets[0][1], token.line, token.column)),
                 values[0],
                 token,
             )
         else:
-            var_nodes = [
-                Var(Token(TokenType.IDENTIFIER, t[1], token.line, token.column))
-                for t in targets
-            ]
+            var_nodes = [Var(Token(TokenType.IDENTIFIER, t[1], token.line, token.column)) for t in targets]
             value_expr = Tuple(values, token) if len(values) > 1 else values[0]
             return MultiAssign(var_nodes, value_expr, token)
 
@@ -310,8 +297,6 @@ class AssignmentStatements:
         elif self.current_token.type == TokenType.GESER_KANAN_SAMA_DENGAN:
             self.eat(TokenType.GESER_KANAN_SAMA_DENGAN)
         else:
-            self.error(
-                f"Diharapkan operator assignment gabungan, ditemukan '{self.current_token.type}'"  # noqa: E501
-            )
+            self.error(f"Diharapkan operator assignment gabungan, ditemukan '{self.current_token.type}'")  # noqa: E501
         value = self.expr()
         return CompoundAssign(target, op_token, value, var_token)

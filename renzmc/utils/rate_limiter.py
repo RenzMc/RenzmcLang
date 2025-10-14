@@ -44,11 +44,7 @@ class RateLimiter:
             with self.lock:
                 now = time.time()
                 key = func.__name__
-                self.calls[key] = [
-                    call_time
-                    for call_time in self.calls[key]
-                    if now - call_time < self.period
-                ]
+                self.calls[key] = [call_time for call_time in self.calls[key] if now - call_time < self.period]
                 if len(self.calls[key]) >= self.max_calls:
                     raise RuntimeError(
                         f"⚠️ Rate limit tercapai untuk '{func.__name__}'\nMaksimum: {self.max_calls} panggilan per {self.period} detik\nSilakan tunggu beberapa saat sebelum mencoba lagi."  # noqa: E501

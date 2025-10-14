@@ -44,10 +44,7 @@ class ScopeManager:
     def get_variable(self, name):
         if self.current_instance is not None:
             instance_id = id(self.current_instance)
-            if (
-                instance_id in self.instance_scopes
-                and name in self.instance_scopes[instance_id]
-            ):
+            if instance_id in self.instance_scopes and name in self.instance_scopes[instance_id]:
                 return self.instance_scopes[instance_id][name]
         if name in self.local_scope:
             return self.local_scope[name]

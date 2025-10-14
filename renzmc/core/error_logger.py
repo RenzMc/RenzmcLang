@@ -73,15 +73,9 @@ class ErrorLogger:
         Path(self.log_dir).mkdir(parents=True, exist_ok=True)
 
         # Initialize loggers
-        self.error_logger = self._setup_logger(
-            "renzmc.errors", "errors.log", logging.ERROR
-        )
-        self.warning_logger = self._setup_logger(
-            "renzmc.warnings", "warnings.log", logging.WARNING
-        )
-        self.debug_logger = self._setup_logger(
-            "renzmc.debug", "debug.log", logging.DEBUG
-        )
+        self.error_logger = self._setup_logger("renzmc.errors", "errors.log", logging.ERROR)
+        self.warning_logger = self._setup_logger("renzmc.warnings", "warnings.log", logging.WARNING)
+        self.debug_logger = self._setup_logger("renzmc.debug", "debug.log", logging.DEBUG)
 
         # Error statistics
         self.error_stats = defaultdict(int)
@@ -93,9 +87,7 @@ class ErrorLogger:
         log_dir = home / ".renzmc" / "logs"
         return str(log_dir)
 
-    def _setup_logger(
-        self, name: str, filename: str, level: int
-    ) -> logging.Logger:
+    def _setup_logger(self, name: str, filename: str, level: int) -> logging.Logger:
         """
         Setup a logger with file and console handlers.
 
@@ -132,9 +124,7 @@ class ErrorLogger:
         if self.enable_console and level >= logging.WARNING:
             console_handler = logging.StreamHandler()
             console_handler.setLevel(level)
-            console_formatter = logging.Formatter(
-                "%(levelname)s: %(message)s"
-            )
+            console_formatter = logging.Formatter("%(levelname)s: %(message)s")
             console_handler.setFormatter(console_formatter)
             logger.addHandler(console_handler)
 
@@ -184,9 +174,7 @@ class ErrorLogger:
 
         # Add source code snippet if available
         if source_code and hasattr(error, "line") and error.line is not None:
-            error_record["source_snippet"] = self._get_source_snippet(
-                source_code, error.line
-            )
+            error_record["source_snippet"] = self._get_source_snippet(source_code, error.line)
 
         # Log to file
         self.error_logger.error(json.dumps(error_record, ensure_ascii=False))
@@ -218,9 +206,7 @@ class ErrorLogger:
             "message": message,
             "context": context or {},
         }
-        self.warning_logger.warning(
-            json.dumps(warning_record, ensure_ascii=False)
-        )
+        self.warning_logger.warning(json.dumps(warning_record, ensure_ascii=False))
 
     def log_debug(
         self,
@@ -241,9 +227,7 @@ class ErrorLogger:
         }
         self.debug_logger.debug(json.dumps(debug_record, ensure_ascii=False))
 
-    def _get_source_snippet(
-        self, source_code: str, line: int, context_lines: int = 3
-    ) -> Dict[str, Any]:
+    def _get_source_snippet(self, source_code: str, line: int, context_lines: int = 3) -> Dict[str, Any]:
         """
         Get source code snippet around error line.
 
@@ -283,16 +267,12 @@ class ErrorLogger:
             Dictionary with error statistics
         """
         total_errors = sum(self.error_stats.values())
-        most_common = sorted(
-            self.error_stats.items(), key=lambda x: x[1], reverse=True
-        )[:10]
+        most_common = sorted(self.error_stats.items(), key=lambda x: x[1], reverse=True)[:10]
 
         return {
             "total_errors": total_errors,
             "unique_error_codes": len(self.error_stats),
-            "most_common_errors": [
-                {"code": code, "count": count} for code, count in most_common
-            ],
+            "most_common_errors": [{"code": code, "count": count} for code, count in most_common],
             "error_breakdown": dict(self.error_stats),
         }
 

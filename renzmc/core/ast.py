@@ -120,9 +120,7 @@ class Tuple(AST):
 
 class DictComp(AST):
 
-    def __init__(
-        self, key_expr, value_expr, var_name, iterable, condition=None, token=None
-    ):
+    def __init__(self, key_expr, value_expr, var_name, iterable, condition=None, token=None):
         super().__init__(token)
         self.key_expr = key_expr
         self.value_expr = value_expr
@@ -241,9 +239,7 @@ class Continue(AST):
 
 class FuncDecl(AST):
 
-    def __init__(
-        self, name, params, body, token=None, return_type=None, param_types=None
-    ):
+    def __init__(self, name, params, body, token=None, return_type=None, param_types=None):
         super().__init__(token)
         self.name = name
         self.params = params
@@ -285,9 +281,7 @@ class ClassDecl(AST):
 
 class MethodDecl(AST):
 
-    def __init__(
-        self, name, params, body, token=None, return_type=None, param_types=None
-    ):
+    def __init__(self, name, params, body, token=None, return_type=None, param_types=None):
         super().__init__(token)
         self.name = name
         self.params = params
@@ -471,9 +465,7 @@ class Decorator(AST):
 
 class AsyncFuncDecl(AST):
 
-    def __init__(
-        self, name, params, body, token=None, return_type=None, param_types=None
-    ):
+    def __init__(self, name, params, body, token=None, return_type=None, param_types=None):
         super().__init__(token)
         self.name = name
         self.params = params
@@ -484,9 +476,7 @@ class AsyncFuncDecl(AST):
 
 class AsyncMethodDecl(AST):
 
-    def __init__(
-        self, name, params, body, token=None, return_type=None, param_types=None
-    ):
+    def __init__(self, name, params, body, token=None, return_type=None, param_types=None):
         super().__init__(token)
         self.name = name
         self.params = params

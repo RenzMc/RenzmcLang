@@ -109,9 +109,7 @@ class StatementRouter:
             elif next_token is not None and next_token.type == TokenType.BUAT:
                 return self.async_function_declaration()
             else:
-                self.error(
-                    "Kata kunci 'asinkron' hanya dapat digunakan untuk deklarasi fungsi"
-                )
+                self.error("Kata kunci 'asinkron' hanya dapat digunakan untuk deklarasi fungsi")
         elif self.current_token.type == TokenType.HASIL:
             next_token = self.lexer.peek_token()
             if next_token is not None and next_token.type == TokenType.ITU:

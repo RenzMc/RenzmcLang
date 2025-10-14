@@ -196,19 +196,12 @@ class RenzmcREPL:
         result = code
 
         for keyword in self.KEYWORDS:
-            result = result.replace(
-                f" {keyword} ", f" {self._colorize(keyword, Colors.BRIGHT_MAGENTA)} "
-            )
+            result = result.replace(f" {keyword} ", f" {self._colorize(keyword, Colors.BRIGHT_MAGENTA)} ")
             if result.startswith(keyword + " "):
-                result = (
-                    self._colorize(keyword, Colors.BRIGHT_MAGENTA)
-                    + result[len(keyword) :]
-                )
+                result = self._colorize(keyword, Colors.BRIGHT_MAGENTA) + result[len(keyword) :]
 
         for builtin in self.BUILTINS:
-            result = result.replace(
-                f"{builtin}(", f"{self._colorize(builtin, Colors.BRIGHT_BLUE)}("
-            )
+            result = result.replace(f"{builtin}(", f"{self._colorize(builtin, Colors.BRIGHT_BLUE)}(")
 
         return result
 
@@ -260,10 +253,7 @@ class RenzmcREPL:
         print()
 
     def show_variables(self):
-        if (
-            not hasattr(self.interpreter, "global_scope")
-            or not self.interpreter.global_scope
-        ):
+        if not hasattr(self.interpreter, "global_scope") or not self.interpreter.global_scope:
             print(f"{Colors.YELLOW}Tidak ada variabel yang didefinisikan{Colors.RESET}")
             return
 
@@ -287,17 +277,13 @@ class RenzmcREPL:
             return
 
         if var_name not in self.interpreter.global_scope:
-            print(
-                f"{Colors.RED}Error: Variabel '{var_name}' tidak ditemukan{Colors.RESET}"  # noqa: E501
-            )
+            print(f"{Colors.RED}Error: Variabel '{var_name}' tidak ditemukan{Colors.RESET}")  # noqa: E501
             return
 
         value = self.interpreter.global_scope[var_name]
         value_type = type(value).__name__
 
-        print(
-            f"\n{Colors.BRIGHT_CYAN}🔍 Inspeksi Variabel: {Colors.GREEN}{var_name}{Colors.RESET}"  # noqa: E501
-        )
+        print(f"\n{Colors.BRIGHT_CYAN}🔍 Inspeksi Variabel: {Colors.GREEN}{var_name}{Colors.RESET}")  # noqa: E501
         print(f"{Colors.CYAN}Tipe:{Colors.RESET} {value_type}")
         print(f"{Colors.CYAN}Nilai:{Colors.RESET} {value}")
 
@@ -315,9 +301,7 @@ class RenzmcREPL:
     def reset_interpreter(self):
         self.interpreter = Interpreter()
         self.line_number = 1
-        print(
-            f"{Colors.GREEN}✅ Interpreter direset (semua variabel dihapus){Colors.RESET}"  # noqa: E501
-        )
+        print(f"{Colors.GREEN}✅ Interpreter direset (semua variabel dihapus){Colors.RESET}")  # noqa: E501
 
     def is_multiline_start(self, line: str) -> bool:
         multiline_keywords = [
@@ -376,11 +360,7 @@ class RenzmcREPL:
 
         print(f"\n{Colors.BRIGHT_RED}Traceback (most recent call last):{Colors.RESET}")
 
-        code_to_use = (
-            error.source_code
-            if hasattr(error, "source_code") and error.source_code
-            else source_code
-        )
+        code_to_use = error.source_code if hasattr(error, "source_code") and error.source_code else source_code
 
         if code_to_use and hasattr(error, "line") and error.line is not None:
             lines = code_to_use.split("\n")
@@ -393,13 +373,9 @@ class RenzmcREPL:
 
                 if hasattr(error, "column") and error.column is not None:
                     pointer_padding = " " * (error.column + 3)
-                    pointer_length = max(
-                        1, min(10, len(line_content) - error.column + 1)
-                    )
+                    pointer_length = max(1, min(10, len(line_content) - error.column + 1))
                     pointer = "^" * pointer_length
-                    print(
-                        f"{pointer_padding}{Colors.BRIGHT_RED}{pointer}{Colors.RESET}"
-                    )
+                    print(f"{pointer_padding}{Colors.BRIGHT_RED}{pointer}{Colors.RESET}")
 
         print(f"{Colors.BRIGHT_RED}{error_type}: {Colors.RESET}{error.message}")
 
@@ -413,11 +389,7 @@ class RenzmcREPL:
 
     def _get_error_suggestions(self, error: RenzmcError) -> List[str]:  # noqa: C901
         error_type = error.__class__.__name__
-        error_msg = (
-            str(error.message).lower()
-            if hasattr(error, "message")
-            else str(error).lower()
-        )
+        error_msg = str(error.message).lower() if hasattr(error, "message") else str(error).lower()
         suggestions = []
 
         if "NameError" in error_type:
@@ -440,9 +412,7 @@ class RenzmcREPL:
                 ]
             )
             if "tidak dapat" in error_msg or "cannot" in error_msg:
-                suggestions.append(
-                    "Periksa dokumentasi fungsi untuk tipe parameter yang benar"
-                )
+                suggestions.append("Periksa dokumentasi fungsi untuk tipe parameter yang benar")
 
         elif "SyntaxError" in error_type or "ParserError" in error_type:
             suggestions.extend(
@@ -454,9 +424,7 @@ class RenzmcREPL:
                 ]
             )
             if "unexpected" in error_msg:
-                suggestions.append(
-                    "Token tidak diharapkan - periksa sintaks sebelum posisi error"
-                )
+                suggestions.append("Token tidak diharapkan - periksa sintaks sebelum posisi error")
 
         elif "IndexError" in error_type:
             suggestions.extend(
@@ -637,16 +605,11 @@ class RenzmcREPL:
 
                 if line.strip().startswith("tipe "):
                     var_name = line.strip()[5:].strip()
-                    if (
-                        hasattr(self.interpreter, "global_scope")
-                        and var_name in self.interpreter.global_scope
-                    ):
+                    if hasattr(self.interpreter, "global_scope") and var_name in self.interpreter.global_scope:
                         value = self.interpreter.global_scope[var_name]
                         print(f"{Colors.CYAN}{type(value).__name__}{Colors.RESET}")
                     else:
-                        print(
-                            f"{Colors.RED}Variabel '{var_name}' tidak ditemukan{Colors.RESET}"  # noqa: E501
-                        )
+                        print(f"{Colors.RED}Variabel '{var_name}' tidak ditemukan{Colors.RESET}")  # noqa: E501
                     continue
 
                 if self.is_multiline_start(line):

@@ -61,15 +61,11 @@ class FileOperations:
                 f"File bukan {encoding} yang valid: {filename}",
             )
         except Exception as e:
-            logger.error(
-                f"Unexpected error reading file '{filename}': {e}", exc_info=True
-            )
+            logger.error(f"Unexpected error reading file '{filename}': {e}", exc_info=True)
             raise RuntimeError(f"Error membaca file: {e}")
 
     @file_rate_limiter
-    def write_file(
-        self, filename: str, content: str, encoding: str = "utf-8", mode: str = "w"
-    ) -> None:
+    def write_file(self, filename: str, content: str, encoding: str = "utf-8", mode: str = "w") -> None:
         if mode not in ("w", "a"):
             raise ValueError(f"Mode tidak valid: {mode} (harus 'w' atau 'a')")
         try:
@@ -86,9 +82,7 @@ class FileOperations:
             logger.error(f"Permission denied writing file: {filename}")
             raise PermissionError(f"Tidak ada izin untuk menulis file: {filename}")
         except Exception as e:
-            logger.error(
-                f"Unexpected error writing file '{filename}': {e}", exc_info=True
-            )
+            logger.error(f"Unexpected error writing file '{filename}': {e}", exc_info=True)
             raise RuntimeError(f"Error menulis file: {e}")
 
     @file_rate_limiter
@@ -116,9 +110,7 @@ class FileOperations:
             logger.error(f"Permission denied deleting file: {filename}")
             raise PermissionError(f"Tidak ada izin untuk menghapus file: {filename}")
         except Exception as e:
-            logger.error(
-                f"Unexpected error deleting file '{filename}': {e}", exc_info=True
-            )
+            logger.error(f"Unexpected error deleting file '{filename}': {e}", exc_info=True)
             raise RuntimeError(f"Error menghapus file: {e}")
 
     @file_rate_limiter
@@ -129,9 +121,7 @@ class FileOperations:
             logger.debug(f"File exists check: {filename} = {exists}")
             return exists
         except ValidationError as e:
-            logger.warning(
-                f"Validation error checking file existence '{filename}': {e}"
-            )
+            logger.warning(f"Validation error checking file existence '{filename}': {e}")
             return False
         except Exception as e:
             logger.error(f"Error checking file existence '{filename}': {e}")

@@ -28,32 +28,16 @@ RenzmcLang Interpreter Statement Visitors Module
 This module contains statement visitors methods.
 """
 
-import asyncio
 import builtins as py_builtins
-import importlib
-import os
-import time
-from pathlib import Path
 
 from renzmc.core.ast import (
     AttributeRef,
-    Block,
-    Constructor,
     IndexAccess,
-    MethodDecl,
-    String,
     Var,
-    VarDecl,
 )
-from renzmc.core.error import (
-    AsyncError,
-    DivisionByZeroError,
-    RenzmcImportError,
-    RenzmcRuntimeError,
-    TypeHintError,
-)
+from renzmc.core.error import TypeHintError
 from renzmc.core.token import TokenType
-from renzmc.utils.error_handler import handle_import_error, log_exception
+from renzmc.utils.error_handler import log_exception
 
 try:
     from renzmc.jit import JITCompiler
@@ -62,6 +46,7 @@ try:
 except ImportError:
     JIT_AVAILABLE = False
     JITCompiler = None
+
 
 class StatementVisitorsMixin:
     """
@@ -72,7 +57,6 @@ class StatementVisitorsMixin:
 
     def visit_Var(self, node):
         return self.get_variable(node.name)
-
 
     def visit_VarDecl(self, node):  # noqa: C901
         value = self.visit(node.value)
@@ -85,30 +69,21 @@ class StatementVisitorsMixin:
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            value, expected_type
-                        ):
-                            raise TypeHintError(
-                                f"Nilai '{value}' bukan tipe '{type_name}'"
-                            )
+                        if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                            raise TypeHintError(f"Nilai '{value}' bukan tipe '{type_name}'")
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            value, expected_type
-                        ):
-                            raise TypeHintError(
-                                f"Nilai '{value}' bukan tipe '{type_name}'"
-                            )
+                        if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                            raise TypeHintError(f"Nilai '{value}' bukan tipe '{type_name}'")
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
                         log_exception("type validation", e, level="debug")
 
         return self.set_variable(node.var_name, value)
-
 
     def visit_Assign(self, node):
         value = self.visit(node.value)
@@ -127,9 +102,7 @@ class StatementVisitorsMixin:
                 obj[attr] = value
                 return value
             else:
-                raise AttributeError(
-                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
-                )
+                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
         elif isinstance(node.var, IndexAccess):
             obj = self.visit(node.var.obj)
             index = self.visit(node.var.index)
@@ -137,14 +110,10 @@ class StatementVisitorsMixin:
                 obj[index] = value
                 return value
             else:
-                raise TypeError(
-                    f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"
-                )
+                raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")
         raise RuntimeError(f"Tipe assignment tidak didukung: {type(node.var).__name__}")
 
-
     def visit_CompoundAssign(self, node):  # noqa: C901
-        from renzmc.core.token import TokenType
 
         if isinstance(node.var, Var):
             current_value = self.get_variable(node.var.name)
@@ -162,13 +131,9 @@ class StatementVisitorsMixin:
             elif isinstance(obj, dict):
                 current_value = obj[attr]
             else:
-                raise AttributeError(
-                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
-                )
+                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
         else:
-            raise RuntimeError(
-                f"Tipe compound assignment tidak didukung: {type(node.var).__name__}"
-            )
+            raise RuntimeError(f"Tipe compound assignment tidak didukung: {type(node.var).__name__}")
         operand = self.visit(node.value)
         if node.op.type == TokenType.TAMBAH_SAMA_DENGAN:
             new_value = current_value + operand
@@ -204,9 +169,7 @@ class StatementVisitorsMixin:
         elif node.op.type == TokenType.GESER_KANAN_SAMA_DENGAN:
             new_value = current_value >> operand
         else:
-            raise RuntimeError(
-                f"Operator compound assignment tidak dikenal: {node.op.type}"
-            )
+            raise RuntimeError(f"Operator compound assignment tidak dikenal: {node.op.type}")
         if isinstance(node.var, Var):
             return self.set_variable(node.var.name, new_value)
         elif isinstance(node.var, IndexAccess):
@@ -224,11 +187,8 @@ class StatementVisitorsMixin:
             elif isinstance(obj, dict):
                 obj[attr] = new_value
             else:
-                raise AttributeError(
-                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
-                )
+                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
             return new_value
-
 
     def visit_MultiVarDecl(self, node):
         values = self.visit(node.values)
@@ -245,10 +205,7 @@ class StatementVisitorsMixin:
         elif len(node.var_names) == 1:
             return self.set_variable(node.var_names[0], values)
         else:
-            raise ValueError(
-                f"Tidak dapat membongkar 1 nilai menjadi {len(node.var_names)} variabel"
-            )
-
+            raise ValueError(f"Tidak dapat membongkar 1 nilai menjadi {len(node.var_names)} variabel")
 
     def visit_MultiAssign(self, node):  # noqa: C901
         values = self.visit(node.values)
@@ -279,14 +236,10 @@ class StatementVisitorsMixin:
                     if isinstance(obj, (list, dict)):
                         obj[index] = value
                     else:
-                        raise TypeError(
-                            f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"  # noqa: E501
-                        )
+                        raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")  # noqa: E501
                     result = value
                 else:
-                    raise RuntimeError(
-                        f"Tipe assignment tidak didukung: {type(var_node).__name__}"
-                    )
+                    raise RuntimeError(f"Tipe assignment tidak didukung: {type(var_node).__name__}")
                 results.append(result)
             return tuple(results)
         elif len(node.vars) == 1:
@@ -299,16 +252,12 @@ class StatementVisitorsMixin:
                 temp_assign = AssignNode(var_node, node.values)
                 return self.visit_Assign(temp_assign)
         else:
-            raise ValueError(
-                f"Tidak dapat membongkar 1 nilai menjadi {len(node.vars)} variabel"
-            )
-
+            raise ValueError(f"Tidak dapat membongkar 1 nilai menjadi {len(node.vars)} variabel")
 
     def visit_Print(self, node):
         value = self.visit(node.expr)
         print(value)
         return None
-
 
     def visit_Input(self, node):
         prompt = self.visit(node.prompt)
@@ -328,7 +277,6 @@ class StatementVisitorsMixin:
                     return value
         return value
 
-
     def visit_SliceAssign(self, node):
         target = self.visit(node.target)
         start = self.visit(node.start) if node.start else None
@@ -340,5 +288,3 @@ class StatementVisitorsMixin:
             target[slice_obj] = value
         except Exception as e:
             self.error(f"Kesalahan dalam slice assignment: {str(e)}", node.token)
-
-

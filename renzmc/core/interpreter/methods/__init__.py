@@ -72,7 +72,5 @@ class ExecutionMethodsMixin(
         - ExecutionHelpersMixin: Helper methods for execution
     """
 
-    pass
-
 
 __all__ = ["ExecutionMethodsMixin"]

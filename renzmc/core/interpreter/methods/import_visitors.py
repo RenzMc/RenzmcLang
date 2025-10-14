@@ -28,32 +28,10 @@ RenzmcLang Interpreter Import Visitors Module
 This module contains import visitors methods.
 """
 
-import asyncio
-import builtins as py_builtins
 import importlib
 import os
-import time
-from pathlib import Path
 
-from renzmc.core.ast import (
-    AttributeRef,
-    Block,
-    Constructor,
-    IndexAccess,
-    MethodDecl,
-    String,
-    Var,
-    VarDecl,
-)
-from renzmc.core.error import (
-    AsyncError,
-    DivisionByZeroError,
-    RenzmcImportError,
-    RenzmcRuntimeError,
-    TypeHintError,
-)
-from renzmc.core.token import TokenType
-from renzmc.utils.error_handler import handle_import_error, log_exception
+from renzmc.core.error import RenzmcImportError
 
 try:
     from renzmc.jit import JITCompiler
@@ -62,6 +40,7 @@ try:
 except ImportError:
     JIT_AVAILABLE = False
     JITCompiler = None
+
 
 class ImportVisitorsMixin:
     """
@@ -82,16 +61,11 @@ class ImportVisitorsMixin:
                     exports = rmc_module.get_exports()
                     for name, value in exports.items():
                         self.global_scope[name] = value
-                        if (
-                            hasattr(self, "local_scope")
-                            and self.local_scope is not None
-                        ):
+                        if hasattr(self, "local_scope") and self.local_scope is not None:
                             self.local_scope[name] = value
                 return
             try:
-                imported_module = __import__(
-                    f"renzmc.builtins.{module}", fromlist=["*"]
-                )
+                imported_module = __import__(f"renzmc.builtins.{module}", fromlist=["*"])
                 self.modules[alias] = imported_module
                 self.global_scope[alias] = imported_module
             except ImportError:
@@ -100,7 +74,6 @@ class ImportVisitorsMixin:
                 self.global_scope[alias] = imported_module
         except ImportError:
             raise ImportError(f"Modul '{module}' tidak ditemukan")
-
 
     def visit_FromImport(self, node):  # noqa: C901
         """
@@ -118,7 +91,6 @@ class ImportVisitorsMixin:
         # Special handling for examples/oop_imports modules
         if module in ["Ren.renz", "Utils.helpers"]:
             # Get the current directory
-            import os
 
             current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -171,9 +143,7 @@ class ImportVisitorsMixin:
                             else:
                                 if item_name in module_scope:
                                     target_name = alias or item_name
-                                    self.global_scope[target_name] = module_scope[
-                                        item_name
-                                    ]
+                                    self.global_scope[target_name] = module_scope[item_name]
                                 else:
                                     raise ImportError(
                                         f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"  # noqa: E501
@@ -193,17 +163,12 @@ class ImportVisitorsMixin:
             # Get current file path from interpreter context
             current_file = getattr(self, "current_file", None)
             if not current_file:
-                raise ImportError(
-                    "Tidak dapat menggunakan relative import: file path tidak tersedia"
-                )
+                raise ImportError("Tidak dapat menggunakan relative import: file path tidak tersedia")
 
             # Resolve relative path using module manager
             try:
-                resolved_path = self.module_manager.resolve_relative_import(
-                    module, relative_level, current_file
-                )
+                resolved_path = self.module_manager.resolve_relative_import(module, relative_level, current_file)
                 # Extract module name from path for caching
-                import os
 
                 module = os.path.splitext(os.path.basename(resolved_path))[0]
 
@@ -254,9 +219,7 @@ class ImportVisitorsMixin:
             if is_wildcard:
                 # Import all from Python module
                 try:
-                    imported_module = __import__(
-                        f"renzmc.builtins.{module}", fromlist=["*"]
-                    )
+                    imported_module = __import__(f"renzmc.builtins.{module}", fromlist=["*"])
                 except ImportError:
                     imported_module = importlib.import_module(module)
 
@@ -264,11 +227,7 @@ class ImportVisitorsMixin:
                 if hasattr(imported_module, "__all__"):
                     all_names = imported_module.__all__
                 else:
-                    all_names = [
-                        name
-                        for name in dir(imported_module)
-                        if not name.startswith("_")
-                    ]
+                    all_names = [name for name in dir(imported_module) if not name.startswith("_")]
 
                 for name in all_names:
                     if hasattr(imported_module, name):
@@ -290,12 +249,9 @@ class ImportVisitorsMixin:
                         value = getattr(imported_module, item_name)
                         self.global_scope[actual_name] = value
                     else:
-                        raise ImportError(
-                            f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
-                        )
+                        raise ImportError(f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'")
         except ImportError as e:
             raise ImportError(f"Modul '{module}' tidak ditemukan: {str(e)}")
-
 
     def visit_PythonImport(self, node):  # noqa: C901
         module = node.module
@@ -319,11 +275,7 @@ class ImportVisitorsMixin:
                         parent_module_name = ".".join(parts[: i + 1])
                         try:
                             parent_module = importlib.import_module(parent_module_name)
-                            wrapped_parent = (
-                                self.python_integration.convert_python_to_renzmc(
-                                    parent_module
-                                )
-                            )
+                            wrapped_parent = self.python_integration.convert_python_to_renzmc(parent_module)
                             current_scope[part] = wrapped_parent
                             current_modules[part] = wrapped_parent
                         except ImportError:
@@ -345,15 +297,10 @@ class ImportVisitorsMixin:
                 self.modules[module] = wrapped_module
                 self.global_scope[module] = wrapped_module
         except Exception as e:
-            raise RenzmcImportError(
-                f"Modul Python '{module}' tidak ditemukan: {str(e)}"
-            )
-
+            raise RenzmcImportError(f"Modul Python '{module}' tidak ditemukan: {str(e)}")
 
     def visit_PythonCall(self, node):
         func = self.visit(node.func_expr)
         args = [self.visit(arg) for arg in node.args]
         kwargs = {key: self.visit(value) for key, value in node.kwargs.items()}
         return self._call_python_function(func, *args, **kwargs)
-
-

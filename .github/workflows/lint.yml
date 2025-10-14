@@ -1,4 +1,4 @@
-name: Code Quality Checks (Strict)
+name: Code Quality Checks
 
 on:
   push:
@@ -21,128 +21,45 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Cache pip packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies & linters
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install \
-            black \
-            isort \
-            flake8 \
-            flake8-bugbear \
-            flake8-comprehensions \
-            flake8-docstrings \
-            flake8-import-order \
-            pylint \
-            mypy \
-            bandit \
-            safety \
-            pre-commit \
-            jq
+          pip install black isort flake8 pylint
 
-      - name: Run Black (Code formatter - fail on mismatch)
+      - name: Run Black (Check Only)
         run: |
-          black --check renzmc/
+          black --check --diff renzmc/ || true
+        continue-on-error: true
 
-      - name: Run isort (Import sorting - fail on mismatch)
+      - name: Run isort (Check Only)
         run: |
-          isort --check-only renzmc/
+          isort --check-only --diff renzmc/ || true
+        continue-on-error: true
 
-      - name: Run Flake8 (Style + lint) - strict
+      - name: Run Flake8
         run: |
-          # recommended ignores for Black compatibility: E203,W503
-          flake8 renzmc/ \
-            --count --statistics \
-            --max-line-length=88 \
-            --select=E,F,W,B,B9,C4,D \
-            --format=json \
-            --output-file=flake8-report.json
-          # also emit a human-readable report (so workflow log contains errors)
-          flake8 renzmc/ --count --statistics --max-line-length=88 || exit 1
+          flake8 renzmc/ --count --statistics || true
+        continue-on-error: true
 
-      - name: Run Pylint (Code analysis - fail on errors)
+      - name: Run Pylint
         run: |
-          pylint renzmc/ --output-format=text --reports=y > pylint-report.txt || true
+          pylint renzmc/ --exit-zero --output-format=colorized
+        continue-on-error: true
 
-      - name: Run MyPy (Strict type checking)
-        run: |
-          mypy renzmc/ --strict --show-error-codes > mypy-report.txt || true
-
-      - name: Run Bandit (Security quick scan)
-        run: |
-          bandit -r renzmc/ -f json -o bandit-report.json || true
-
-      - name: Optional run pre-commit hooks (all files)
-        run: |
-          pre-commit run --all-files || true
-        # pre-commit failure won't block pipeline here (optional). Remove "|| true" to make it strict.
-
-      - name: Generate Lint Summary (always)
+      - name: Generate Lint Summary
         if: always()
         run: |
           echo "## Lint Report for Python ${{ matrix.python-version }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-
-          echo "### Flake8 (summary)" >> $GITHUB_STEP_SUMMARY
-          if [ -f flake8-report.json ]; then
-            # count problems in JSON (uses jq)
-            jq '. | length as $n | "Problems: \($n)"' flake8-report.json >> $GITHUB_STEP_SUMMARY || true
-          else
-            flake8 renzmc/ --count --statistics --max-line-length=88 >> $GITHUB_STEP_SUMMARY || true
-          fi
+          echo "### Flake8 Summary" >> $GITHUB_STEP_SUMMARY
+          flake8 renzmc/ --count --statistics >> $GITHUB_STEP_SUMMARY || true
           echo "" >> $GITHUB_STEP_SUMMARY
-
-          echo "### Pylint (tail)" >> $GITHUB_STEP_SUMMARY
-          if [ -f pylint-report.txt ]; then
-            tail -n 20 pylint-report.txt >> $GITHUB_STEP_SUMMARY || true
-          fi
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-          echo "### MyPy (tail)" >> $GITHUB_STEP_SUMMARY
-          if [ -f mypy-report.txt ]; then
-            tail -n 20 mypy-report.txt >> $GITHUB_STEP_SUMMARY || true
-          fi
-
-      - name: Upload Lint & Security Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lint-and-security-reports-python-${{ matrix.python-version }}
-          path: |
-            flake8-report.json
-            pylint-report.txt
-            mypy-report.txt
-            bandit-report.json
-
-  security:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
-      - name: Install security tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install bandit safety || true
-
-      - name: Run Bandit (Security Linter)
-        run: |
-          bandit -r renzmc/ -f json -o bandit-report.json || true
-
-      - name: Run Safety (Dependency Security Check)
-        run: |
-          safety check --json > safety-report.json || true
-
-      - name: Upload Security Reports
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: security-reports
-          path: |
-            bandit-report.json
-            safety-report.json

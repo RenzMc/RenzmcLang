@@ -51,9 +51,7 @@ def huruf_kecil(text):
 
 def potong(text, start, end=None):
     if not isinstance(text, str):
-        raise TypeError(
-            f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'")
     try:
         if end is None:
             return text[start:]
@@ -65,69 +63,47 @@ def potong(text, start, end=None):
 
 def gabung(separator, *items):
     if not isinstance(separator, str):
-        raise TypeError(
-            f"Pemisah harus berupa teks, bukan '{type(separator).__name__}'"
-        )
+        raise TypeError(f"Pemisah harus berupa teks, bukan '{type(separator).__name__}'")
     return separator.join((str(item) for item in items))
 
 
 def pisah(text, separator=None):
     if not isinstance(text, str):
-        raise TypeError(
-            f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'")
     return text.split(separator)
 
 
 def ganti(text, old, new):
     if not isinstance(text, str):
-        raise TypeError(
-            f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'")
     if not isinstance(old, str):
-        raise TypeError(
-            f"Argumen kedua harus berupa teks, bukan '{type(old).__name__}'"
-        )
+        raise TypeError(f"Argumen kedua harus berupa teks, bukan '{type(old).__name__}'")
     if not isinstance(new, str):
-        raise TypeError(
-            f"Argumen ketiga harus berupa teks, bukan '{type(new).__name__}'"
-        )
+        raise TypeError(f"Argumen ketiga harus berupa teks, bukan '{type(new).__name__}'")
     return text.replace(old, new)
 
 
 def mulai_dengan(text, prefix):
     if not isinstance(text, str):
-        raise TypeError(
-            f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'")
     if not isinstance(prefix, str):
-        raise TypeError(
-            f"Argumen kedua harus berupa teks, bukan '{type(prefix).__name__}'"
-        )
+        raise TypeError(f"Argumen kedua harus berupa teks, bukan '{type(prefix).__name__}'")
     return text.startswith(prefix)
 
 
 def akhir_dengan(text, suffix):
     if not isinstance(text, str):
-        raise TypeError(
-            f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'")
     if not isinstance(suffix, str):
-        raise TypeError(
-            f"Argumen kedua harus berupa teks, bukan '{type(suffix).__name__}'"
-        )
+        raise TypeError(f"Argumen kedua harus berupa teks, bukan '{type(suffix).__name__}'")
     return text.endswith(suffix)
 
 
 def berisi(text, substring):
     if not isinstance(text, str):
-        raise TypeError(
-            f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'"
-        )
+        raise TypeError(f"Argumen pertama harus berupa teks, bukan '{type(text).__name__}'")
     if not isinstance(substring, str):
-        raise TypeError(
-            f"Argumen kedua harus berupa teks, bukan '{type(substring).__name__}'"
-        )
+        raise TypeError(f"Argumen kedua harus berupa teks, bukan '{type(substring).__name__}'")
     return substring in text
 
 
@@ -139,9 +115,7 @@ def hapus_spasi(text):
 
 def format_teks(template, *args, **kwargs):
     if not isinstance(template, str):
-        raise TypeError(
-            f"Template harus berupa teks, bukan '{type(template).__name__}'"
-        )
+        raise TypeError(f"Template harus berupa teks, bukan '{type(template).__name__}'")
     try:
         return template.format(*args, **kwargs)
     except (KeyError, IndexError) as e:

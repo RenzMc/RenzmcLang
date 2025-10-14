@@ -82,7 +82,5 @@ class StatementParser(
     7. CallStatements - Call statements
     """
 
-    pass
-
 
 __all__ = ["StatementParser"]

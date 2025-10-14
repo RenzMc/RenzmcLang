@@ -298,9 +298,7 @@ class FileOperationsMixin:
         try:
             return os.path.getmtime(path)
         except Exception as e:
-            raise FileError(
-                f"Gagal mendapatkan waktu modifikasi file '{path}': {str(e)}"
-            )
+            raise FileError(f"Gagal mendapatkan waktu modifikasi file '{path}': {str(e)}")
 
     def _json_to_text(self, obj):
         """

@@ -226,11 +226,7 @@ class Lexer:
                 while True:
                     if self.current_char is None:
                         self.error("Komentar multi-baris tidak ditutup")
-                    if (
-                        self.current_char == "]"
-                        and self.peek() == "-"
-                        and (self.peek(2) == "-")
-                    ):
+                    if self.current_char == "]" and self.peek() == "-" and (self.peek(2) == "-"):
                         self.advance()
                         self.advance()
                         self.advance()
@@ -251,9 +247,7 @@ class Lexer:
         result = ""
         start_line = self.line
         start_column = self.column
-        while self.current_char is not None and (
-            self.current_char.isdigit() or self.current_char == "."
-        ):
+        while self.current_char is not None and (self.current_char.isdigit() or self.current_char == "."):
             result += self.current_char
             self.advance()
 
@@ -336,9 +330,7 @@ class Lexer:
         start_line = self.line
         start_column = self.column
 
-        while self.current_char is not None and (
-            self.current_char.isalnum() or self.current_char == "_"
-        ):
+        while self.current_char is not None and (self.current_char.isalnum() or self.current_char == "_"):
             result += self.current_char
             self.advance()
 
@@ -365,16 +357,12 @@ class Lexer:
 
             if self.current_char is not None and self.current_char.isalpha():
                 next_word = ""
-                while self.current_char is not None and (
-                    self.current_char.isalnum() or self.current_char == "_"
-                ):
+                while self.current_char is not None and (self.current_char.isalnum() or self.current_char == "_"):
                     next_word += self.current_char
                     self.advance()
 
                 if next_word == "dalam":
-                    return Token(
-                        TokenType.TIDAK_DALAM, "tidak dalam", start_line, start_column
-                    )
+                    return Token(TokenType.TIDAK_DALAM, "tidak dalam", start_line, start_column)
 
             self.pos = saved_pos
             self.current_char = saved_char
@@ -423,9 +411,7 @@ class Lexer:
                 token = Token(TokenType.TAMBAH, "+", self.line, self.column)
                 self.advance()
                 if self.current_char == "=":
-                    token = Token(
-                        TokenType.TAMBAH_SAMA_DENGAN, "+=", token.line, token.column
-                    )
+                    token = Token(TokenType.TAMBAH_SAMA_DENGAN, "+=", token.line, token.column)
                     self.advance()
                 return token
 
@@ -433,9 +419,7 @@ class Lexer:
                 token = Token(TokenType.KURANG, "-", self.line, self.column)
                 self.advance()
                 if self.current_char == "=":
-                    token = Token(
-                        TokenType.KURANG_SAMA_DENGAN, "-=", token.line, token.column
-                    )
+                    token = Token(TokenType.KURANG_SAMA_DENGAN, "-=", token.line, token.column)
                     self.advance()
                 elif self.current_char == ">":
                     token = Token(TokenType.ARROW, "->", token.line, token.column)
@@ -458,9 +442,7 @@ class Lexer:
                     else:
                         token = Token(TokenType.PANGKAT, "**", token.line, token.column)
                 elif self.current_char == "=":
-                    token = Token(
-                        TokenType.KALI_SAMA_DENGAN, "*=", token.line, token.column
-                    )
+                    token = Token(TokenType.KALI_SAMA_DENGAN, "*=", token.line, token.column)
                     self.advance()
                 return token
 
@@ -478,13 +460,9 @@ class Lexer:
                         )
                         self.advance()
                     else:
-                        token = Token(
-                            TokenType.PEMBAGIAN_BULAT, "//", token.line, token.column
-                        )
+                        token = Token(TokenType.PEMBAGIAN_BULAT, "//", token.line, token.column)
                 elif self.current_char == "=":
-                    token = Token(
-                        TokenType.BAGI_SAMA_DENGAN, "/=", token.line, token.column
-                    )
+                    token = Token(TokenType.BAGI_SAMA_DENGAN, "/=", token.line, token.column)
                     self.advance()
                 return token
 
@@ -492,9 +470,7 @@ class Lexer:
                 token = Token(TokenType.SISA_BAGI, "%", self.line, self.column)
                 self.advance()
                 if self.current_char == "=":
-                    token = Token(
-                        TokenType.SISA_SAMA_DENGAN, "%=", token.line, token.column
-                    )
+                    token = Token(TokenType.SISA_SAMA_DENGAN, "%=", token.line, token.column)
                     self.advance()
                 return token
 
@@ -531,9 +507,7 @@ class Lexer:
                         )
                         self.advance()
                     else:
-                        token = Token(
-                            TokenType.GESER_KANAN, ">>", token.line, token.column
-                        )
+                        token = Token(TokenType.GESER_KANAN, ">>", token.line, token.column)
                 elif self.current_char == "=":
                     token = Token(TokenType.LEBIH_SAMA, ">=", token.line, token.column)
                     self.advance()
@@ -553,9 +527,7 @@ class Lexer:
                         )
                         self.advance()
                     else:
-                        token = Token(
-                            TokenType.GESER_KIRI, "<<", token.line, token.column
-                        )
+                        token = Token(TokenType.GESER_KIRI, "<<", token.line, token.column)
                 elif self.current_char == "=":
                     token = Token(TokenType.KURANG_SAMA, "<=", token.line, token.column)
                     self.advance()
@@ -578,9 +550,7 @@ class Lexer:
                 token = Token(TokenType.BIT_ATAU, "|", self.line, self.column)
                 self.advance()
                 if self.current_char == "=":
-                    token = Token(
-                        TokenType.BIT_ATAU_SAMA_DENGAN, "|=", token.line, token.column
-                    )
+                    token = Token(TokenType.BIT_ATAU_SAMA_DENGAN, "|=", token.line, token.column)
                     self.advance()
                 return token
 

@@ -78,10 +78,7 @@ ERROR_CATALOG: Dict[str, ErrorInfo] = {
         code="RMC-L001",
         category="Lexer",
         title="Karakter Tidak Valid",
-        description=(
-            "Karakter yang tidak dikenali atau tidak valid "
-            "ditemukan dalam kode."
-        ),
+        description=("Karakter yang tidak dikenali atau tidak valid " "ditemukan dalam kode."),
         solutions=[
             "• Periksa apakah ada karakter khusus yang tidak didukung",
             "• Pastikan menggunakan encoding UTF-8 untuk file",
@@ -98,14 +95,9 @@ ERROR_CATALOG: Dict[str, ErrorInfo] = {
         code="RMC-L002",
         category="Lexer",
         title="String Tidak Ditutup",
-        description=(
-            "String literal tidak ditutup dengan tanda kutip yang sesuai."
-        ),
+        description=("String literal tidak ditutup dengan tanda kutip yang sesuai."),
         solutions=[
-            (
-                "• Pastikan setiap string dimulai dan diakhiri dengan "
-                "tanda kutip yang sama"
-            ),
+            ("• Pastikan setiap string dimulai dan diakhiri dengan " "tanda kutip yang sama"),
             "• Gunakan &quot; untuk string atau ' untuk karakter",
             "• Untuk string multi-baris, gunakan triple quotes (&quot;&quot;&quot;)",
             "• Escape tanda kutip di dalam string dengan backslash (\\)",
@@ -247,10 +239,7 @@ ERROR_CATALOG: Dict[str, ErrorInfo] = {
         code="RMC-P004",
         category="Parser",
         title="Reserved Keyword Sebagai Nama",
-        description=(
-            "Mencoba menggunakan reserved keyword sebagai nama "
-            "variabel atau fungsi."
-        ),
+        description=("Mencoba menggunakan reserved keyword sebagai nama " "variabel atau fungsi."),
         solutions=[
             "• Jangan gunakan keyword bahasa sebagai nama variabel",
             "• Pilih nama yang berbeda untuk variabel/fungsi",
@@ -334,9 +323,7 @@ ERROR_CATALOG: Dict[str, ErrorInfo] = {
         code="RMC-N001",
         category="Runtime",
         title="Variabel Tidak Ditemukan",
-        description=(
-            "Variabel atau fungsi yang direferensikan belum dideklarasikan."
-        ),
+        description=("Variabel atau fungsi yang direferensikan belum dideklarasikan."),
         solutions=[
             "• Pastikan variabel sudah dideklarasikan sebelum digunakan",
             "• Periksa ejaan nama variabel (case-sensitive)",
@@ -787,7 +774,7 @@ ERROR_CATALOG: Dict[str, ErrorInfo] = {
         examples=[
             "# Salah:",
             'kamus itu {"nama": "Budi"}',
-            'umur itu kamus["umur"]  # kunci \'umur\' tidak ada',
+            "umur itu kamus[\"umur\"]  # kunci 'umur' tidak ada",
             "",
             "# Benar:",
             'kamus itu {"nama": "Budi"}',
@@ -1859,10 +1846,7 @@ def search_error_by_keyword(keyword: str) -> List[ErrorInfo]:
     results = []
 
     for error_info in ERROR_CATALOG.values():
-        if (
-            keyword_lower in error_info.title.lower()
-            or keyword_lower in error_info.description.lower()
-        ):
+        if keyword_lower in error_info.title.lower() or keyword_lower in error_info.description.lower():
             results.append(error_info)
 
     return results
@@ -1878,11 +1862,7 @@ def get_errors_by_category(category: str) -> List[ErrorInfo]:
     Returns:
         List of ErrorInfo objects in the category
     """
-    return [
-        error_info
-        for error_info in ERROR_CATALOG.values()
-        if error_info.category == category
-    ]
+    return [error_info for error_info in ERROR_CATALOG.values() if error_info.category == category]
 
 
 def suggest_error_code(error_type: str, message: str) -> Optional[str]:
@@ -1939,10 +1919,7 @@ def suggest_error_code(error_type: str, message: str) -> Optional[str]:
         message_lower = message.lower()
         for error_code, error_info in ERROR_CATALOG.items():
             if error_code.startswith(code):
-                if any(
-                    keyword in message_lower
-                    for keyword in error_info.title.lower().split()
-                ):
+                if any(keyword in message_lower for keyword in error_info.title.lower().split()):
                     return error_code
 
     return None

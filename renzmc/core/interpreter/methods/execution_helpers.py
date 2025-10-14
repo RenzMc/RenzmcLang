@@ -28,32 +28,14 @@ RenzmcLang Interpreter Execution Helpers Module
 This module contains execution helpers methods.
 """
 
-import asyncio
 import builtins as py_builtins
-import importlib
 import os
 import time
 from pathlib import Path
 
-from renzmc.core.ast import (
-    AttributeRef,
-    Block,
-    Constructor,
-    IndexAccess,
-    MethodDecl,
-    String,
-    Var,
-    VarDecl,
-)
-from renzmc.core.error import (
-    AsyncError,
-    DivisionByZeroError,
-    RenzmcImportError,
-    RenzmcRuntimeError,
-    TypeHintError,
-)
-from renzmc.core.token import TokenType
-from renzmc.utils.error_handler import handle_import_error, log_exception
+from renzmc.core.ast import Block
+from renzmc.core.error import TypeHintError
+from renzmc.utils.error_handler import log_exception
 
 try:
     from renzmc.jit import JITCompiler
@@ -63,6 +45,7 @@ except ImportError:
     JIT_AVAILABLE = False
     JITCompiler = None
 
+
 class ExecutionHelpersMixin:
     """
     Mixin class for execution helpers.
@@ -70,9 +53,7 @@ class ExecutionHelpersMixin:
     Provides 10 methods for handling execution helpers.
     """
 
-    def _execute_user_function(  # noqa: C901
-        self, name, params, body, return_type, param_types, args, kwargs
-    ):
+    def _execute_user_function(self, name, params, body, return_type, param_types, args, kwargs):  # noqa: C901
         # Check if function should be force-compiled with JIT
         # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip  # noqa: E501
         if JIT_AVAILABLE and hasattr(self, "_jit_force") and name in self._jit_force:
@@ -103,9 +84,7 @@ class ExecutionHelpersMixin:
             param_values[params[i]] = arg
         for param_name, value in kwargs.items():
             if param_name not in params:
-                raise RuntimeError(
-                    f"Parameter '{param_name}' tidak ada dalam fungsi '{name}'"
-                )
+                raise RuntimeError(f"Parameter '{param_name}' tidak ada dalam fungsi '{name}'")
             if param_name in param_values:
                 raise RuntimeError(
                     f"Parameter '{param_name}' mendapat nilai ganda (posisional dan kata kunci)"  # noqa: E501
@@ -113,9 +92,7 @@ class ExecutionHelpersMixin:
             param_values[param_name] = value
         missing_params = [p for p in params if p not in param_values]
         if missing_params:
-            raise RuntimeError(
-                f"Parameter hilang dalam fungsi '{name}': {', '.join(missing_params)}"
-            )
+            raise RuntimeError(f"Parameter hilang dalam fungsi '{name}': {', '.join(missing_params)}")
         if param_types:
             for param_name, value in param_values.items():
                 if param_name in param_types:
@@ -124,9 +101,7 @@ class ExecutionHelpersMixin:
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(
-                                value, expected_type
-                            ):
+                            if isinstance(expected_type, type) and not isinstance(value, expected_type):
                                 raise TypeHintError(
                                     f"Parameter '{param_name}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
@@ -136,9 +111,7 @@ class ExecutionHelpersMixin:
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(
-                                value, expected_type
-                            ):
+                            if isinstance(expected_type, type) and not isinstance(value, expected_type):
                                 raise TypeHintError(
                                     f"Parameter '{param_name}' harus bertipe '{type_name}'"  # noqa: E501
                                 )
@@ -171,9 +144,7 @@ class ExecutionHelpersMixin:
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            return_value, expected_type
-                        ):
+                        if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                             raise TypeHintError(
                                 f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"  # noqa: E501
                             )
@@ -183,9 +154,7 @@ class ExecutionHelpersMixin:
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(
-                            return_value, expected_type
-                        ):
+                        if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                             raise TypeHintError(
                                 f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"  # noqa: E501
                             )
@@ -200,9 +169,7 @@ class ExecutionHelpersMixin:
                 else:
                     type_spec = return_type
                 if type_spec:
-                    is_valid, error_msg = AdvancedTypeValidator.validate(
-                        return_value, type_spec, "return"
-                    )
+                    is_valid, error_msg = AdvancedTypeValidator.validate(return_value, type_spec, "return")
                     if not is_valid:
                         raise TypeHintError(f"Fungsi '{name}': {error_msg}")
         self.local_scope = old_local_scope
@@ -213,10 +180,7 @@ class ExecutionHelpersMixin:
             self.jit_call_counts[name] += 1
             self.jit_execution_times[name] += execution_time
 
-            if (
-                self.jit_call_counts[name] >= self.jit_threshold
-                and name not in self.jit_compiled_functions
-            ):
+            if self.jit_call_counts[name] >= self.jit_threshold and name not in self.jit_compiled_functions:
                 # Check if function is recursive before auto-compiling
                 from renzmc.jit.type_inference import TypeInferenceEngine
 
@@ -226,7 +190,6 @@ class ExecutionHelpersMixin:
                     self._compile_function_with_jit(name, params, body)
 
         return return_value
-
 
     def _compile_function_with_jit(self, name, params, body, force=False):
         if not self.jit_compiler:
@@ -242,13 +205,9 @@ class ExecutionHelpersMixin:
 
             # Use force_compile if force flag is set
             if force:
-                compiled_func = self.jit_compiler.force_compile(
-                    name, params, body, interpreter_func
-                )
+                compiled_func = self.jit_compiler.force_compile(name, params, body, interpreter_func)
             else:
-                compiled_func = self.jit_compiler.compile_function(
-                    name, params, body, interpreter_func
-                )
+                compiled_func = self.jit_compiler.compile_function(name, params, body, interpreter_func)
 
             if compiled_func:
                 self.jit_compiled_functions[name] = compiled_func
@@ -258,7 +217,6 @@ class ExecutionHelpersMixin:
 
         except Exception:
             self.jit_compiled_functions[name] = None
-
 
     def _create_user_function_wrapper(self, name):
 
@@ -270,14 +228,11 @@ class ExecutionHelpersMixin:
                 else:
                     params, body, return_type, param_types = function_data
                 all_args = [func] + list(args)
-                return self._execute_user_function(
-                    name, params, body, return_type, param_types, all_args, kwargs
-                )
+                return self._execute_user_function(name, params, body, return_type, param_types, all_args, kwargs)
             else:
                 raise RuntimeError(f"User function '{name}' not found for decorator")
 
         return user_decorator_wrapper
-
 
     def _create_user_decorator_factory(self, name, decorator_args):
 
@@ -297,12 +252,9 @@ class ExecutionHelpersMixin:
                 else:
                     return func
             else:
-                raise RuntimeError(
-                    f"User function '{name}' not found for decorator factory"
-                )
+                raise RuntimeError(f"User function '{name}' not found for decorator factory")
 
         return decorator_factory
-
 
     def create_class_instance(self, class_name, args):
         class_info = self.classes[class_name]
@@ -316,9 +268,7 @@ class ExecutionHelpersMixin:
         instance_id = id(instance)
         self.instance_scopes[instance_id] = {}
         if class_info["constructor"]:
-            constructor_params, constructor_body, param_types = class_info[
-                "constructor"
-            ]
+            constructor_params, constructor_body, param_types = class_info["constructor"]
             if len(args) != len(constructor_params):
                 raise RuntimeError(
                     f"Konstruktor kelas '{class_name}' membutuhkan {len(constructor_params)} parameter, tetapi {len(args)} diberikan"  # noqa: E501
@@ -334,7 +284,6 @@ class ExecutionHelpersMixin:
             self.current_instance = old_instance
             self.local_scope = old_local_scope
         return instance
-
 
     def _load_rmc_module(self, module_name):  # noqa: C901
         # Check if module is already loaded in cache
@@ -366,11 +315,10 @@ class ExecutionHelpersMixin:
                 try:
                     with open(file_path, "r", encoding="utf-8") as f:
                         source_code = f.read()
-                    from renzmc.core.lexer import Lexer
-                    from renzmc.core.parser import Parser
-
                     # Import Interpreter here to avoid circular import
                     from renzmc.core.interpreter import Interpreter
+                    from renzmc.core.lexer import Lexer
+                    from renzmc.core.parser import Parser
 
                     module_interpreter = Interpreter()
                     lexer = Lexer(source_code)
@@ -400,9 +348,7 @@ class ExecutionHelpersMixin:
                                         import renzmc.builtins as renzmc_builtins
 
                                         if hasattr(renzmc_builtins, name):
-                                            builtin_func = getattr(
-                                                renzmc_builtins, name
-                                            )
+                                            builtin_func = getattr(renzmc_builtins, name)
                                             if value is builtin_func:
                                                 is_builtin = True
                                     except Exception:
@@ -498,11 +444,8 @@ class ExecutionHelpersMixin:
                     self.modules[module_name] = loaded_module
                     return loaded_module
                 except Exception as e:
-                    raise ImportError(
-                        f"Gagal memuat modul RenzMC '{module_name}': {str(e)}"
-                    )
+                    raise ImportError(f"Gagal memuat modul RenzMC '{module_name}': {str(e)}")
         return None
-
 
     def _smart_getattr(self, obj, name, default=None):
         try:
@@ -522,7 +465,6 @@ class ExecutionHelpersMixin:
                 return default
             raise AttributeError(f"Error mengakses atribut '{name}': {str(e)}")
 
-
     def _smart_setattr(self, obj, name, value):
         try:
             if hasattr(obj, "_obj"):
@@ -530,14 +472,11 @@ class ExecutionHelpersMixin:
                 converted_value = obj._integration.convert_renzmc_to_python(value)
             else:
                 actual_obj = obj
-                converted_value = self.python_integration.convert_renzmc_to_python(
-                    value
-                )
+                converted_value = self.python_integration.convert_renzmc_to_python(value)
             setattr(actual_obj, name, converted_value)
             return True
         except Exception as e:
             raise AttributeError(f"Error mengatur atribut '{name}': {str(e)}")
-
 
     def _smart_hasattr(self, obj, name):
         try:
@@ -549,8 +488,5 @@ class ExecutionHelpersMixin:
         except Exception:
             return False
 
-
     def interpret(self, tree):
         return self.visit(tree)
-
-

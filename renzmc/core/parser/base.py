@@ -48,9 +48,7 @@ class ParserBase:
 
     def error(self, message):
         line = self.current_token.line if hasattr(self.current_token, "line") else None
-        column = (
-            self.current_token.column if hasattr(self.current_token, "column") else None
-        )
+        column = self.current_token.column if hasattr(self.current_token, "column") else None
         raise ParserError(message, line, column)
 
     def eat(self, token_type):
@@ -74,9 +72,7 @@ class ParserBase:
             ]:
                 # Get the actual keyword text from lexer
                 keyword_text = (
-                    self.current_token.value
-                    if hasattr(self.current_token, "value")
-                    else str(self.current_token.type)
+                    self.current_token.value if hasattr(self.current_token, "value") else str(self.current_token.type)
                 )
                 self.error(
                     f"Kesalahan sintaks: Kata kunci '{keyword_text}' tidak dapat digunakan sebagai nama variabel. "  # noqa: E501
@@ -91,9 +87,7 @@ class ParserBase:
     def parse(self):
         node = self.program()
         if self.current_token.type != TokenType.EOF:
-            self.error(
-                f"Kesalahan sintaks: Token tidak terduga '{self.current_token.type}'"
-            )
+            self.error(f"Kesalahan sintaks: Token tidak terduga '{self.current_token.type}'")
         return node
 
     def program(self):

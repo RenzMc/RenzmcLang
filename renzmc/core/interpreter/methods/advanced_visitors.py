@@ -28,32 +28,8 @@ RenzmcLang Interpreter Advanced Visitors Module
 This module contains advanced visitors methods.
 """
 
-import asyncio
-import builtins as py_builtins
-import importlib
-import os
-import time
-from pathlib import Path
 
-from renzmc.core.ast import (
-    AttributeRef,
-    Block,
-    Constructor,
-    IndexAccess,
-    MethodDecl,
-    String,
-    Var,
-    VarDecl,
-)
-from renzmc.core.error import (
-    AsyncError,
-    DivisionByZeroError,
-    RenzmcImportError,
-    RenzmcRuntimeError,
-    TypeHintError,
-)
-from renzmc.core.token import TokenType
-from renzmc.utils.error_handler import handle_import_error, log_exception
+from renzmc.core.ast import String
 
 try:
     from renzmc.jit import JITCompiler
@@ -62,6 +38,7 @@ try:
 except ImportError:
     JIT_AVAILABLE = False
     JITCompiler = None
+
 
 class AdvancedVisitorsMixin:
     """
@@ -80,10 +57,7 @@ class AdvancedVisitorsMixin:
                 f"Indeks '{index}' di luar jangkauan untuk objek tipe '{type(obj).__name__}'"  # noqa: E501
             )
         except TypeError:
-            raise TypeError(
-                f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"
-            )
-
+            raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")
 
     def visit_SliceAccess(self, node):
         obj = self.visit(node.obj)
@@ -93,18 +67,13 @@ class AdvancedVisitorsMixin:
         try:
             return obj[start:end:step]
         except TypeError:
-            raise TypeError(
-                f"Objek tipe '{type(obj).__name__}' tidak mendukung slicing"
-            )
-
+            raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung slicing")
 
     def visit_ListComp(self, node):
         var_name = node.var_name
         iterable = self.visit(node.iterable)
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         result = []
         old_local_scope = self.local_scope.copy()
         for item in iterable:
@@ -118,14 +87,11 @@ class AdvancedVisitorsMixin:
         self.local_scope = old_local_scope
         return result
 
-
     def visit_DictComp(self, node):
         var_name = node.var_name
         iterable = self.visit(node.iterable)
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         result = {}
         old_local_scope = self.local_scope.copy()
         for item in iterable:
@@ -140,14 +106,11 @@ class AdvancedVisitorsMixin:
         self.local_scope = old_local_scope
         return result
 
-
     def visit_SetComp(self, node):
         var_name = node.var_name
         iterable = self.visit(node.iterable)
         if not hasattr(iterable, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(iterable).__name__}' tidak dapat diiterasi")
         result = set()
         old_local_scope = self.local_scope.copy()
         for item in iterable:
@@ -160,7 +123,6 @@ class AdvancedVisitorsMixin:
             result.add(expr_result)
         self.local_scope = old_local_scope
         return result
-
 
     def visit_Decorator(self, node):  # noqa: C901
         name = node.name
@@ -213,15 +175,11 @@ class AdvancedVisitorsMixin:
                         return decorated_function
 
                     # For wrapper decorators (like @profile), store the wrapped function
-                    self._decorated_functions = getattr(
-                        self, "_decorated_functions", {}
-                    )
+                    self._decorated_functions = getattr(self, "_decorated_functions", {})
 
                     def original_func_callable(*call_args, **call_kwargs):
                         if func_name in self.functions:
-                            params, body, return_type, param_types = self.functions[
-                                func_name
-                            ]
+                            params, body, return_type, param_types = self.functions[func_name]
                             return self._execute_user_function(
                                 func_name,
                                 params,
@@ -232,9 +190,7 @@ class AdvancedVisitorsMixin:
                                 call_kwargs,
                             )
                         else:
-                            raise NameError(
-                                f"Fungsi asli '{func_name}' tidak ditemukan"
-                            )
+                            raise NameError(f"Fungsi asli '{func_name}' tidak ditemukan")
 
                     original_func_callable.__name__ = func_name
 
@@ -270,23 +226,18 @@ class AdvancedVisitorsMixin:
                 raise RuntimeError(f"Error dalam dekorator '{name}': {str(e)}")
         raise NameError(f"Dekorator '{name}' tidak ditemukan")
 
-
     def visit_TypeHint(self, node):
         return node.type_name
-
 
     def visit_TypeAlias(self, node):
         self.type_registry[node.name] = node.type_expr
         return None
 
-
     def visit_LiteralType(self, node):
         return node
 
-
     def visit_TypedDictType(self, node):
         return node
-
 
     def visit_FormatString(self, node):
         result = ""
@@ -304,15 +255,11 @@ class AdvancedVisitorsMixin:
                     result += f"<Error: {str(e)}>"
         return result
 
-
     def visit_Unpacking(self, node):
         value = self.visit(node.expr)
         if not hasattr(value, "__iter__"):
-            raise TypeError(
-                f"Objek tipe '{type(value).__name__}' tidak dapat diiterasi"
-            )
+            raise TypeError(f"Objek tipe '{type(value).__name__}' tidak dapat diiterasi")
         return value
-
 
     def visit_ExtendedUnpacking(self, node):  # noqa: C901
         value = self.visit(node.value)
@@ -364,7 +311,6 @@ class AdvancedVisitorsMixin:
                 name, _ = node.targets[target_index]
                 self.current_scope.set(name, value[value_index])
 
-
     def visit_StarredExpr(self, node):
         value = self.visit(node.expr)
         if isinstance(value, (list, tuple)):
@@ -372,8 +318,4 @@ class AdvancedVisitorsMixin:
         try:
             return list(value)
         except (TypeError, ValueError) as e:
-            self.error(
-                f"Nilai tidak dapat di-unpack: {type(value).__name__} - {e}", node.token
-            )
-
-
+            self.error(f"Nilai tidak dapat di-unpack: {type(value).__name__} - {e}", node.token)

@@ -90,9 +90,7 @@ def range_impl(*args):
     elif len(args) == 3:
         return list(range(args[0], args[1], args[2]))
     else:
-        raise TypeError(
-            f"range() membutuhkan 1-3 argumen, diberikan {len(args)} argumen"
-        )
+        raise TypeError(f"range() membutuhkan 1-3 argumen, diberikan {len(args)} argumen")
 
 
 def reversed_impl(seq):

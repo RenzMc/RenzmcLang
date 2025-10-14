@@ -45,18 +45,14 @@ class SmartPythonWrapper:
             attr = getattr(self._obj, name)
             return self._integration.convert_python_to_renzmc(attr)
         except AttributeError:
-            raise RenzmcAttributeError(
-                f"Objek Python '{self._obj_type}' tidak memiliki atribut '{name}'"
-            )
+            raise RenzmcAttributeError(f"Objek Python '{self._obj_type}' tidak memiliki atribut '{name}'")
 
     def __setattr__(self, name, value):
         if name.startswith("_"):
             super().__setattr__(name, value)
         else:
             try:
-                setattr(
-                    self._obj, name, self._integration.convert_renzmc_to_python(value)
-                )
+                setattr(self._obj, name, self._integration.convert_renzmc_to_python(value))
             except AttributeError:
                 raise RenzmcAttributeError(
                     f"Tidak dapat mengatur atribut '{name}' pada objek Python '{self._obj_type}'"  # noqa: E501
@@ -65,52 +61,39 @@ class SmartPythonWrapper:
     def __call__(self, *args, **kwargs):
         if callable(self._obj):
             py_args = [self._integration.convert_renzmc_to_python(arg) for arg in args]
-            py_kwargs = {
-                k: self._integration.convert_renzmc_to_python(v)
-                for k, v in kwargs.items()
-            }
+            py_kwargs = {k: self._integration.convert_renzmc_to_python(v) for k, v in kwargs.items()}
             result = self._obj(*py_args, **py_kwargs)
             return self._integration.convert_python_to_renzmc(result)
         else:
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak dapat dipanggil"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak dapat dipanggil")
 
     def __getitem__(self, key):
         try:
             result = self._obj[self._integration.convert_renzmc_to_python(key)]
             return self._integration.convert_python_to_renzmc(result)
         except (KeyError, IndexError, TypeError) as e:
-            raise RenzmcAttributeError(
-                f"Error mengakses indeks pada objek Python: {str(e)}"
-            )
+            raise RenzmcAttributeError(f"Error mengakses indeks pada objek Python: {str(e)}")
 
     def __setitem__(self, key, value):
         try:
-            self._obj[self._integration.convert_renzmc_to_python(key)] = (
-                self._integration.convert_renzmc_to_python(value)
+            self._obj[self._integration.convert_renzmc_to_python(key)] = self._integration.convert_renzmc_to_python(
+                value
             )
         except (KeyError, IndexError, TypeError) as e:
-            raise RenzmcAttributeError(
-                f"Error mengatur indeks pada objek Python: {str(e)}"
-            )
+            raise RenzmcAttributeError(f"Error mengatur indeks pada objek Python: {str(e)}")
 
     def __delitem__(self, key):
         try:
             del self._obj[self._integration.convert_renzmc_to_python(key)]
         except (KeyError, IndexError, TypeError) as e:
-            raise RenzmcAttributeError(
-                f"Error menghapus indeks pada objek Python: {str(e)}"
-            )
+            raise RenzmcAttributeError(f"Error menghapus indeks pada objek Python: {str(e)}")
 
     def __iter__(self):
         try:
             for item in self._obj:
                 yield self._integration.convert_python_to_renzmc(item)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak dapat diiterasi"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak dapat diiterasi")
 
     def __next__(self):
         try:
@@ -125,9 +108,7 @@ class SmartPythonWrapper:
         try:
             return len(self._obj)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak memiliki panjang"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak memiliki panjang")
 
     def __contains__(self, item):
         try:
@@ -140,17 +121,13 @@ class SmartPythonWrapper:
             result = self._obj.__enter__()
             return self._integration.convert_python_to_renzmc(result)
         except AttributeError:
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak mendukung context manager"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak mendukung context manager")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         try:
             return self._obj.__exit__(exc_type, exc_val, exc_tb)
         except AttributeError:
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak mendukung context manager"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak mendukung context manager")
 
     def __eq__(self, other):
         try:
@@ -167,36 +144,28 @@ class SmartPythonWrapper:
             other_py = self._integration.convert_renzmc_to_python(other)
             return self._obj < other_py
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat membandingkan objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat membandingkan objek Python '{self._obj_type}'")
 
     def __le__(self, other):
         try:
             other_py = self._integration.convert_renzmc_to_python(other)
             return self._obj <= other_py
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat membandingkan objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat membandingkan objek Python '{self._obj_type}'")
 
     def __gt__(self, other):
         try:
             other_py = self._integration.convert_renzmc_to_python(other)
             return self._obj > other_py
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat membandingkan objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat membandingkan objek Python '{self._obj_type}'")
 
     def __ge__(self, other):
         try:
             other_py = self._integration.convert_renzmc_to_python(other)
             return self._obj >= other_py
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat membandingkan objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat membandingkan objek Python '{self._obj_type}'")
 
     def __add__(self, other):
         try:
@@ -204,9 +173,7 @@ class SmartPythonWrapper:
             result = self._obj + other_py
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat menambahkan pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat menambahkan pada objek Python '{self._obj_type}'")
 
     def __sub__(self, other):
         try:
@@ -214,9 +181,7 @@ class SmartPythonWrapper:
             result = self._obj - other_py
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat mengurangi pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat mengurangi pada objek Python '{self._obj_type}'")
 
     def __mul__(self, other):
         try:
@@ -224,9 +189,7 @@ class SmartPythonWrapper:
             result = self._obj * other_py
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat mengalikan pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat mengalikan pada objek Python '{self._obj_type}'")
 
     def __truediv__(self, other):
         try:
@@ -234,9 +197,7 @@ class SmartPythonWrapper:
             result = self._obj / other_py
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat membagi pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat membagi pada objek Python '{self._obj_type}'")
 
     def __mod__(self, other):
         try:
@@ -244,9 +205,7 @@ class SmartPythonWrapper:
             result = self._obj % other_py
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat modulo pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat modulo pada objek Python '{self._obj_type}'")
 
     def __pow__(self, other):
         try:
@@ -254,9 +213,7 @@ class SmartPythonWrapper:
             result = self._obj**other_py
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat pangkat pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat pangkat pada objek Python '{self._obj_type}'")
 
     def __bool__(self):
         try:
@@ -268,9 +225,7 @@ class SmartPythonWrapper:
         try:
             return hash(self._obj)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak dapat di-hash"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak dapat di-hash")
 
     def __str__(self):
         try:
@@ -306,9 +261,7 @@ class SmartPythonWrapper:
         try:
             return self._obj.__reduce__()
         except (TypeError, AttributeError):
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak dapat di-pickle"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak dapat di-pickle")
 
     def __reduce_ex__(self, protocol):
         try:
@@ -325,9 +278,7 @@ class SmartPythonWrapper:
             result = copy.copy(self._obj)
             return self._integration.convert_python_to_renzmc(result)
         except (TypeError, AttributeError) as e:
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak dapat di-copy: {e}"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak dapat di-copy: {e}")
 
     def __deepcopy__(self, memo):
         try:
@@ -336,18 +287,14 @@ class SmartPythonWrapper:
             result = copy.deepcopy(self._obj, memo)
             return self._integration.convert_python_to_renzmc(result)
         except (TypeError, AttributeError) as e:
-            raise RenzmcTypeError(
-                f"Objek Python '{self._obj_type}' tidak dapat di-deepcopy: {e}"
-            )
+            raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak dapat di-deepcopy: {e}")
 
     def __await__(self):
         try:
             if hasattr(self._obj, "__await__"):
                 return self._obj.__await__()
             else:
-                raise RenzmcTypeError(
-                    f"Objek Python '{self._obj_type}' tidak mendukung await"
-                )
+                raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak mendukung await")
         except Exception as e:
             raise RenzmcTypeError(f"Error dalam await: {str(e)}")
 
@@ -357,9 +304,7 @@ class SmartPythonWrapper:
                 result = self._obj.__aiter__()
                 return self._integration.convert_python_to_renzmc(result)
             else:
-                raise RenzmcTypeError(
-                    f"Objek Python '{self._obj_type}' tidak mendukung async iteration"
-                )
+                raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak mendukung async iteration")
         except Exception as e:
             raise RenzmcTypeError(f"Error dalam async iteration: {str(e)}")
 
@@ -369,9 +314,7 @@ class SmartPythonWrapper:
                 result = self._obj.__anext__()
                 return self._integration.convert_python_to_renzmc(result)
             else:
-                raise RenzmcTypeError(
-                    f"Objek Python '{self._obj_type}' tidak mendukung async next"
-                )
+                raise RenzmcTypeError(f"Objek Python '{self._obj_type}' tidak mendukung async next")
         except Exception as e:
             raise RenzmcTypeError(f"Error dalam async next: {str(e)}")
 
@@ -414,9 +357,7 @@ class SmartPythonWrapper:
             result = self._obj | other_py
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat melakukan operasi OR pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat melakukan operasi OR pada objek Python '{self._obj_type}'")
 
     def __xor__(self, other):
         try:
@@ -434,9 +375,7 @@ class SmartPythonWrapper:
             result = self._obj << other_py
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat melakukan left shift pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat melakukan left shift pada objek Python '{self._obj_type}'")
 
     def __rshift__(self, other):
         try:
@@ -464,9 +403,7 @@ class SmartPythonWrapper:
             result = divmod(self._obj, other_py)
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat melakukan divmod pada objek Python '{self._obj_type}'"
-            )
+            raise RenzmcTypeError(f"Tidak dapat melakukan divmod pada objek Python '{self._obj_type}'")
 
     def __matmul__(self, other):
         try:
@@ -484,9 +421,7 @@ class SmartPythonWrapper:
             result = other_py + self._obj
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat menambahkan objek Python '{self._obj_type}' dari kanan"
-            )
+            raise RenzmcTypeError(f"Tidak dapat menambahkan objek Python '{self._obj_type}' dari kanan")
 
     def __rsub__(self, other):
         try:
@@ -494,9 +429,7 @@ class SmartPythonWrapper:
             result = other_py - self._obj
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat mengurangi objek Python '{self._obj_type}' dari kanan"
-            )
+            raise RenzmcTypeError(f"Tidak dapat mengurangi objek Python '{self._obj_type}' dari kanan")
 
     def __rmul__(self, other):
         try:
@@ -504,9 +437,7 @@ class SmartPythonWrapper:
             result = other_py * self._obj
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat mengalikan objek Python '{self._obj_type}' dari kanan"
-            )
+            raise RenzmcTypeError(f"Tidak dapat mengalikan objek Python '{self._obj_type}' dari kanan")
 
     def __rtruediv__(self, other):
         try:
@@ -514,9 +445,7 @@ class SmartPythonWrapper:
             result = other_py / self._obj
             return self._integration.convert_python_to_renzmc(result)
         except TypeError:
-            raise RenzmcTypeError(
-                f"Tidak dapat membagi objek Python '{self._obj_type}' dari kanan"
-            )
+            raise RenzmcTypeError(f"Tidak dapat membagi objek Python '{self._obj_type}' dari kanan")
 
 
 class PythonModule:
@@ -534,18 +463,14 @@ class PythonModule:
                 return PythonModule(attr)
             return attr
         except AttributeError:
-            raise RenzmcAttributeError(
-                f"Modul Python '{self._module_name}' tidak memiliki atribut '{name}'"
-            )
+            raise RenzmcAttributeError(f"Modul Python '{self._module_name}' tidak memiliki atribut '{name}'")
 
     def __getitem__(self, key):
         try:
             if hasattr(self._module, "__getitem__"):
                 return self._module[key]
             else:
-                raise RenzmcAttributeError(
-                    f"Modul Python '{self._module_name}' tidak mendukung indexing"
-                )
+                raise RenzmcAttributeError(f"Modul Python '{self._module_name}' tidak mendukung indexing")
         except (KeyError, IndexError, TypeError) as e:
             raise RenzmcAttributeError(
                 f"Error mengakses indeks '{key}' pada modul '{self._module_name}': {str(e)}"  # noqa: E501
@@ -556,9 +481,7 @@ class PythonModule:
             if hasattr(self._module, "__setitem__"):
                 self._module[key] = value
             else:
-                raise RenzmcAttributeError(
-                    f"Modul Python '{self._module_name}' tidak mendukung assignment"
-                )
+                raise RenzmcAttributeError(f"Modul Python '{self._module_name}' tidak mendukung assignment")
         except (KeyError, IndexError, TypeError) as e:
             raise RenzmcAttributeError(
                 f"Error mengatur indeks '{key}' pada modul '{self._module_name}': {str(e)}"  # noqa: E501
@@ -568,24 +491,18 @@ class PythonModule:
         if hasattr(self._module, "__iter__"):
             return iter(self._module)
         else:
-            raise RenzmcTypeError(
-                f"Modul Python '{self._module_name}' tidak dapat diiterasi"
-            )
+            raise RenzmcTypeError(f"Modul Python '{self._module_name}' tidak dapat diiterasi")
 
     def __len__(self):
         if hasattr(self._module, "__len__"):
             return len(self._module)
         else:
-            raise RenzmcTypeError(
-                f"Modul Python '{self._module_name}' tidak memiliki panjang"
-            )
+            raise RenzmcTypeError(f"Modul Python '{self._module_name}' tidak memiliki panjang")
 
     def __call__(self, *args, **kwargs):
         if callable(self._module):
             return self._module(*args, **kwargs)
-        raise RenzmcTypeError(
-            f"Modul Python '{self._module_name}' tidak dapat dipanggil"
-        )
+        raise RenzmcTypeError(f"Modul Python '{self._module_name}' tidak dapat dipanggil")
 
     def __repr__(self):
         return f"<PythonModule '{self._module_name}'>"
@@ -632,13 +549,9 @@ class PythonIntegration:
                 self.module_aliases[alias] = wrapped_module
             return wrapped_module
         except ImportError as e:
-            raise RenzmcImportError(
-                f"Tidak dapat mengimpor modul Python '{module_name}': {str(e)}"
-            )
+            raise RenzmcImportError(f"Tidak dapat mengimpor modul Python '{module_name}': {str(e)}")
         except Exception as e:
-            raise RenzmcImportError(
-                f"Error saat mengimpor modul Python '{module_name}': {str(e)}"
-            )
+            raise RenzmcImportError(f"Error saat mengimpor modul Python '{module_name}': {str(e)}")
 
     def get_module_attribute(self, module_name, attribute_name):
         if module_name in self.module_aliases:
@@ -732,15 +645,11 @@ class PythonIntegration:
             if hasattr(module, "__all__"):
                 for name in module.__all__:
                     if hasattr(module, name):
-                        all_attrs[name] = self.convert_python_to_renzmc(
-                            getattr(module, name)
-                        )
+                        all_attrs[name] = self.convert_python_to_renzmc(getattr(module, name))
             else:
                 for name in dir(module):
                     if not name.startswith("_"):
-                        all_attrs[name] = self.convert_python_to_renzmc(
-                            getattr(module, name)
-                        )
+                        all_attrs[name] = self.convert_python_to_renzmc(getattr(module, name))
             return all_attrs
         except ImportError as e:
             raise RenzmcImportError(
@@ -760,9 +669,7 @@ class PythonIntegration:
             else:
                 raise RenzmcImportError(f"Modul Python '{module_name}' belum diimpor")
         except Exception as e:
-            raise RenzmcImportError(
-                f"Error saat reload modul Python '{module_name}': {str(e)}"
-            )
+            raise RenzmcImportError(f"Error saat reload modul Python '{module_name}': {str(e)}")
 
     def get_module_path(self, module_name):
         if module_name in self.imported_modules:
@@ -850,12 +757,7 @@ class PythonIntegration:
         if hasattr(obj, "__iter__") and (not isinstance(obj, (str, bytes))):
             try:
                 if isinstance(obj, dict):
-                    return {
-                        self.convert_python_to_renzmc(k): self.convert_python_to_renzmc(
-                            v
-                        )
-                        for k, v in obj.items()
-                    }
+                    return {self.convert_python_to_renzmc(k): self.convert_python_to_renzmc(v) for k, v in obj.items()}
                 elif isinstance(obj, list):
                     return [self.convert_python_to_renzmc(item) for item in obj]
                 elif isinstance(obj, tuple):
@@ -871,15 +773,11 @@ class PythonIntegration:
             def enhanced_wrapper(*args, **kwargs):
                 try:
                     py_args = [self.convert_renzmc_to_python(arg) for arg in args]
-                    py_kwargs = {
-                        k: self.convert_renzmc_to_python(v) for k, v in kwargs.items()
-                    }
+                    py_kwargs = {k: self.convert_renzmc_to_python(v) for k, v in kwargs.items()}
                     result = obj(*py_args, **py_kwargs)
                     return self.convert_python_to_renzmc(result)
                 except Exception as e:
-                    raise RenzmcTypeError(
-                        f"Error dalam pemanggilan fungsi Python: {str(e)}"
-                    )
+                    raise RenzmcTypeError(f"Error dalam pemanggilan fungsi Python: {str(e)}")
 
             try:
                 enhanced_wrapper.__name__ = getattr(obj, "__name__", "python_function")
@@ -937,12 +835,7 @@ class PythonIntegration:
         if hasattr(obj, "__iter__") and (not isinstance(obj, (str, bytes))):
             try:
                 if isinstance(obj, dict):
-                    return {
-                        self.convert_renzmc_to_python(k): self.convert_renzmc_to_python(
-                            v
-                        )
-                        for k, v in obj.items()
-                    }
+                    return {self.convert_renzmc_to_python(k): self.convert_renzmc_to_python(v) for k, v in obj.items()}
                 elif isinstance(obj, list):
                     return [self.convert_renzmc_to_python(item) for item in obj]
                 elif isinstance(obj, tuple):
@@ -983,14 +876,10 @@ class PythonIntegration:
             if hasattr(actual_module, "__all__"):
                 items = actual_module.__all__
             else:
-                items = [
-                    name for name in dir(actual_module) if not name.startswith("_")
-                ]
+                items = [name for name in dir(actual_module) if not name.startswith("_")]
             for item_name in items:
                 if hasattr(actual_module, item_name):
-                    global_scope[item_name] = self.convert_python_to_renzmc(
-                        getattr(actual_module, item_name)
-                    )
+                    global_scope[item_name] = self.convert_python_to_renzmc(getattr(actual_module, item_name))
                     imported_count += 1
             return imported_count
         except Exception:
@@ -1044,9 +933,7 @@ class PythonIntegration:
             "__anext__",
         ]
         for method_name in special_methods:
-            if hasattr(original_obj, method_name) and (
-                not hasattr(wrapper_obj, method_name)
-            ):
+            if hasattr(original_obj, method_name) and (not hasattr(wrapper_obj, method_name)):
 
                 def create_method_wrapper(method):
 
@@ -1055,9 +942,7 @@ class PythonIntegration:
                             result = method(*args, **kwargs)
                             return self.convert_python_to_renzmc(result)
                         except Exception as e:
-                            raise RenzmcTypeError(
-                                f"Error dalam method {method.__name__}: {str(e)}"
-                            )
+                            raise RenzmcTypeError(f"Error dalam method {method.__name__}: {str(e)}")
 
                     return wrapper_method
 

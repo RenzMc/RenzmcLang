@@ -104,9 +104,7 @@ def validate_command_safety(command):
 def jalankan_perintah(command, shell=True, capture_output=True):
     try:
         validate_command_safety(command)
-        result = subprocess.run(
-            command, shell=shell, capture_output=capture_output, text=True, timeout=30
-        )
+        result = subprocess.run(command, shell=shell, capture_output=capture_output, text=True, timeout=30)
         return {
             "stdout": result.stdout,
             "stderr": result.stderr,

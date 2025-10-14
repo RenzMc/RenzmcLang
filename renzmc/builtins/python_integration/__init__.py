@@ -25,7 +25,6 @@ SOFTWARE.
 import asyncio
 import importlib
 import inspect
-import sys
 
 
 class RenzmcBuiltinFunction:
@@ -194,8 +193,6 @@ def eksekusi_python_impl(code):
 super_func = RenzmcBuiltinFunction(super_impl, "super")
 cek_modul_python = RenzmcBuiltinFunction(cek_modul_python_impl, "cek_modul_python")
 path_modul_python = RenzmcBuiltinFunction(path_modul_python_impl, "path_modul_python")
-versi_modul_python = RenzmcBuiltinFunction(
-    versi_modul_python_impl, "versi_modul_python"
-)
+versi_modul_python = RenzmcBuiltinFunction(versi_modul_python_impl, "versi_modul_python")
 evaluasi_python = RenzmcBuiltinFunction(evaluasi_python_impl, "evaluasi_python")
 eksekusi_python = RenzmcBuiltinFunction(eksekusi_python_impl, "eksekusi_python")

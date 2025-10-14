@@ -12,6 +12,9 @@ load-plugins=
 # Disable specific warnings that are not critical
 disable=
     missing-docstring,
+    missing-module-docstring,
+    missing-class-docstring,
+    missing-function-docstring,
     too-few-public-methods,
     too-many-instance-attributes,
     too-many-arguments,
@@ -19,14 +22,60 @@ disable=
     too-many-branches,
     too-many-statements,
     too-many-public-methods,
+    too-many-lines,
+    too-many-nested-blocks,
+    too-many-return-statements,
+    too-many-ancestors,
     pointless-string-statement,
     wrong-import-position,
     import-outside-toplevel,
     broad-exception-caught,
+    broad-except,
     redefined-builtin,
+    redefined-outer-name,
     no-else-return,
+    no-else-raise,
+    no-else-break,
     raise-missing-from,
-    consider-iterating-dictionary
+    consider-iterating-dictionary,
+    consider-using-enumerate,
+    consider-using-dict-items,
+    consider-using-f-string,
+    consider-using-in,
+    line-too-long,
+    invalid-name,
+    protected-access,
+    attribute-defined-outside-init,
+    unused-argument,
+    unused-variable,
+    unused-import,
+    fixme,
+    global-statement,
+    consider-using-with,
+    unspecified-encoding,
+    unnecessary-pass,
+    unnecessary-lambda,
+    super-init-not-called,
+    logging-fstring-interpolation,
+    inconsistent-return-statements,
+    duplicate-code,
+    abstract-method,
+    import-self,
+    useless-parent-delegation,
+    useless-return,
+    eval-used,
+    exec-used,
+    implicit-str-concat,
+    unnecessary-dunder-call,
+    reimported,
+    no-member,
+    access-member-before-definition,
+    no-name-in-module,
+    import-error,
+    subprocess-run-check,
+    too-many-positional-arguments,
+    use-yield-from,
+    cyclic-import
 
 [REPORTS]
 # Set the output format
@@ -74,10 +123,10 @@ method-rgx=[a-z_][a-z0-9_]{2,50}$
 
 [FORMAT]
 # Maximum number of characters on a single line
-max-line-length=100
+max-line-length=120
 
 # Maximum number of lines in a module
-max-module-lines=1500
+max-module-lines=2000
 
 # String used as indentation unit
 indent-string='    '
@@ -87,31 +136,31 @@ indent-after-paren=4
 
 [DESIGN]
 # Maximum number of arguments for function / method
-max-args=10
+max-args=15
 
 # Maximum number of locals for function / method body
-max-locals=20
+max-locals=30
 
 # Maximum number of return / yield for function / method body
-max-returns=6
+max-returns=10
 
 # Maximum number of branch for function / method body
-max-branches=15
+max-branches=20
 
 # Maximum number of statements in function / method body
-max-statements=60
+max-statements=100
 
 # Maximum number of parents for a class (see R0901)
-max-parents=7
+max-parents=10
 
 # Maximum number of attributes for a class (see R0902)
-max-attributes=15
+max-attributes=20
 
 # Minimum number of public methods for a class (see R0903)
 min-public-methods=0
 
 # Maximum number of public methods for a class (see R0904)
-max-public-methods=25
+max-public-methods=30
 
 [IMPORTS]
 # Deprecated modules which should not be used

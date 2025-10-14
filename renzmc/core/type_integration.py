@@ -40,13 +40,9 @@ class TypeIntegrationMixin:
         if not type_hint:
             return
 
-        type_hint_str = (
-            type_hint.type_name if hasattr(type_hint, "type_name") else str(type_hint)
-        )
+        type_hint_str = type_hint.type_name if hasattr(type_hint, "type_name") else str(type_hint)
 
-        is_valid, error_msg = self.type_checker.check_variable_assignment(
-            var_name, value, type_hint_str
-        )
+        is_valid, error_msg = self.type_checker.check_variable_assignment(var_name, value, type_hint_str)
 
         if not is_valid:
             raise RenzmcRuntimeError(error_msg)
@@ -69,11 +65,7 @@ class TypeIntegrationMixin:
         for param_name, value in param_values.items():
             if param_name in param_types:
                 type_hint = param_types[param_name]
-                type_hint_str = (
-                    type_hint.type_name
-                    if hasattr(type_hint, "type_name")
-                    else str(type_hint)
-                )
+                type_hint_str = type_hint.type_name if hasattr(type_hint, "type_name") else str(type_hint)
 
                 is_valid, error_msg = self.type_checker.check_function_parameter(
                     param_name, value, type_hint_str, func_name
@@ -92,15 +84,9 @@ class TypeIntegrationMixin:
         if return_value is None:
             return
 
-        type_hint_str = (
-            return_type.type_name
-            if hasattr(return_type, "type_name")
-            else str(return_type)
-        )
+        type_hint_str = return_type.type_name if hasattr(return_type, "type_name") else str(return_type)
 
-        is_valid, error_msg = self.type_checker.check_function_return(
-            return_value, type_hint_str, func_name
-        )
+        is_valid, error_msg = self.type_checker.check_function_return(return_value, type_hint_str, func_name)
 
         if not is_valid:
             raise RenzmcRuntimeError(error_msg)

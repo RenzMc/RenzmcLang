@@ -37,9 +37,9 @@ from renzmc.core.ast import (  # noqa: E402
     String,
     Tuple,
 )
-from renzmc.core.token import Token, TokenType  # noqa: E402
 from renzmc.core.error import LexerError, ParserError  # noqa: E402
 from renzmc.core.lexer import Lexer  # noqa: E402
+from renzmc.core.token import Token, TokenType  # noqa: E402
 
 
 class LiteralParser:
@@ -55,13 +55,12 @@ class LiteralParser:
         pattern = "\\{([^{}]*)\\}"
         for match in re.finditer(pattern, text):
             if match.start() > last_end:
-                parts.append(
-                    String(Token(TokenType.TEKS, text[last_end : match.start()]))
-                )
+                parts.append(String(Token(TokenType.TEKS, text[last_end : match.start()])))
             expr_text = match.group(1)
             if expr_text.strip():
                 try:
                     from renzmc.core.parser import Parser  # noqa: E501
+
                     expr_lexer = Lexer(expr_text)
                     expr_parser = Parser(expr_lexer)
                     expr_ast = expr_parser.expr()
@@ -168,9 +167,7 @@ class LiteralParser:
                 while self.current_token.type == TokenType.NEWLINE:
                     self.eat(TokenType.NEWLINE)
                 self.eat(TokenType.KAMUS_AKHIR)
-                return DictComp(
-                    key_expr, value_expr, var_name, iterable, condition, token
-                )
+                return DictComp(key_expr, value_expr, var_name, iterable, condition, token)
             else:
                 pairs = [(key_expr, value_expr)]
                 while self.current_token.type in (TokenType.KOMA, TokenType.NEWLINE):

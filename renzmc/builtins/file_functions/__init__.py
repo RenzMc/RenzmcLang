@@ -23,8 +23,6 @@ SOFTWARE.
 """
 
 import os
-import shutil
-from pathlib import Path
 
 
 class RenzmcBuiltinFunction:
@@ -205,27 +203,19 @@ def baca_impl(file_obj, size=-1):
 
 
 direktori_ada = RenzmcBuiltinFunction(direktori_ada_impl, "direktori_ada")
-direktori_sekarang = RenzmcBuiltinFunction(
-    direktori_sekarang_impl, "direktori_sekarang"
-)
+direktori_sekarang = RenzmcBuiltinFunction(direktori_sekarang_impl, "direktori_sekarang")
 ubah_direktori = RenzmcBuiltinFunction(ubah_direktori_impl, "ubah_direktori")
 pisah_path = RenzmcBuiltinFunction(pisah_path_impl, "pisah_path")
 ekstensi_file = RenzmcBuiltinFunction(ekstensi_file_impl, "ekstensi_file")
-nama_file_tanpa_ekstensi = RenzmcBuiltinFunction(
-    nama_file_tanpa_ekstensi_impl, "nama_file_tanpa_ekstensi"
-)
+nama_file_tanpa_ekstensi = RenzmcBuiltinFunction(nama_file_tanpa_ekstensi_impl, "nama_file_tanpa_ekstensi")
 path_ada = RenzmcBuiltinFunction(path_ada_impl, "path_ada")
 adalah_file = RenzmcBuiltinFunction(adalah_file_impl, "adalah_file")
 adalah_direktori = RenzmcBuiltinFunction(adalah_direktori_impl, "adalah_direktori")
 path_absolut = RenzmcBuiltinFunction(path_absolut_impl, "path_absolut")
-waktu_modifikasi_file = RenzmcBuiltinFunction(
-    waktu_modifikasi_file_impl, "waktu_modifikasi_file"
-)
+waktu_modifikasi_file = RenzmcBuiltinFunction(waktu_modifikasi_file_impl, "waktu_modifikasi_file")
 waktu_buat_file = RenzmcBuiltinFunction(waktu_buat_file_impl, "waktu_buat_file")
 file_dapat_dibaca = RenzmcBuiltinFunction(file_dapat_dibaca_impl, "file_dapat_dibaca")
-file_dapat_ditulis = RenzmcBuiltinFunction(
-    file_dapat_ditulis_impl, "file_dapat_ditulis"
-)
+file_dapat_ditulis = RenzmcBuiltinFunction(file_dapat_ditulis_impl, "file_dapat_ditulis")
 buka = RenzmcBuiltinFunction(buka_impl, "buka")
 tutup = RenzmcBuiltinFunction(tutup_impl, "tutup")
 tulis = RenzmcBuiltinFunction(tulis_impl, "tulis")

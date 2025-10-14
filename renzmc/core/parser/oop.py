@@ -28,10 +28,8 @@ RenzmcLang Parser Oop Module
 Object-oriented programming parsing methods.
 """
 
-from renzmc.core.ast import (  # noqa: E402
-    Assign,
-)
-from renzmc.core.token import Token, TokenType  # noqa: E402
+from renzmc.core.ast import Assign  # noqa: E402
+from renzmc.core.token import TokenType  # noqa: E402
 
 
 class OOPParser:

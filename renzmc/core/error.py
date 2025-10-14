@@ -162,30 +162,16 @@ def format_error(error, source_code=None):  # noqa: C901
         result += f"🚫 Error {display_type}\n"
 
     # Handle errors without line/column information
-    if (
-        not hasattr(error, "line")
-        or not hasattr(error, "column")
-        or error.line is None
-        or error.column is None
-    ):
+    if not hasattr(error, "line") or not hasattr(error, "column") or error.line is None or error.column is None:
         result += f"💬 {error_msg}\n"
 
         # Add quick tips for common errors
         if "tidak ditemukan" in error_msg.lower():
-            result += (
-                "\n💡 Tips: Pastikan variabel atau fungsi sudah "
-                "dideklarasikan sebelum digunakan"
-            )
+            result += "\n💡 Tips: Pastikan variabel atau fungsi sudah " "dideklarasikan sebelum digunakan"
         elif "tidak dapat dipanggil" in error_msg.lower():
-            result += (
-                "\n💡 Tips: Pastikan objek yang dipanggil "
-                "adalah fungsi atau metode"
-            )
+            result += "\n💡 Tips: Pastikan objek yang dipanggil " "adalah fungsi atau metode"
         elif "server" in error_msg.lower():
-            result += (
-                "\n💡 Tips: Periksa apakah port sudah digunakan "
-                "atau coba restart aplikasi"
-            )
+            result += "\n💡 Tips: Periksa apakah port sudah digunakan " "atau coba restart aplikasi"
 
         # Add catalog solutions if available
         if error_info:
@@ -207,11 +193,7 @@ def format_error(error, source_code=None):  # noqa: C901
     result += f"📍 Lokasi: Baris {error.line}, Kolom {error.column}\n"
 
     # Source code context
-    code_to_use = (
-        error.source_code
-        if hasattr(error, "source_code") and error.source_code
-        else source_code
-    )
+    code_to_use = error.source_code if hasattr(error, "source_code") and error.source_code else source_code
 
     if code_to_use:
         lines = code_to_use.split("\n")
@@ -298,10 +280,7 @@ def _get_error_solutions(error):  # noqa: C901
     elif isinstance(error, ParserError):
         # Check if this is a reserved keyword error
         error_msg = str(error.message) if hasattr(error, "message") else str(error)
-        if (
-            "tidak dapat digunakan sebagai nama variabel" in error_msg
-            or "reserved keyword" in error_msg.lower()
-        ):
+        if "tidak dapat digunakan sebagai nama variabel" in error_msg or "reserved keyword" in error_msg.lower():
             # This is a reserved keyword error - the message already has the solution
             pass  # Don't add generic solutions
         else:
@@ -354,9 +333,7 @@ def _get_error_solutions(error):  # noqa: C901
                 ]
             )
     elif isinstance(error, (RenzmcAttributeError, type(None))):
-        if isinstance(error, RenzmcAttributeError) or "AttributeError" in str(
-            type(error)
-        ):
+        if isinstance(error, RenzmcAttributeError) or "AttributeError" in str(type(error)):
             solutions.extend(
                 [
                     "• Pastikan objek memiliki atribut yang dipanggil",

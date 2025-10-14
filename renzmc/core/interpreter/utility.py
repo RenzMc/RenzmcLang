@@ -28,6 +28,7 @@ RenzmcLang Interpreter Utility Module
 This module contains utility and helper methods.
 """
 
+
 import uuid
 
 from renzmc.utils.error_handler import log_exception
@@ -54,9 +55,7 @@ class UtilityMixin:
         """
         return require_module(module_name, operation, raise_on_missing=False)
 
-    def _safe_import_submodule(
-        self, parent_module, submodule_name, operation="submodule import"
-    ):
+    def _safe_import_submodule(self, parent_module, submodule_name, operation="submodule import"):
         """
         Safely import a submodule with proper error handling
 
@@ -146,7 +145,6 @@ class UtilityMixin:
 
     def _setup_compatibility_adapters(self):
         """Setup compatibility adapters for backward compatibility."""
-        pass
 
     def _format_string(self, template, **kwargs):
         """

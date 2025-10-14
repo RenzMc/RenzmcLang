@@ -56,9 +56,7 @@ class RenzmcModulesMixin:
             self.global_scope[module_var_name] = module
             return module
         except Exception as e:
-            raise RuntimeError(
-                f"Error mengimpor modul RenzmcLang '{module_name}': {str(e)}"
-            )
+            raise RuntimeError(f"Error mengimpor modul RenzmcLang '{module_name}': {str(e)}")
 
     def _import_from_renzmc_module(self, module_name, *items):
         """
@@ -75,16 +73,12 @@ class RenzmcModulesMixin:
             RuntimeError: If import fails
         """
         try:
-            imported_items = self.module_manager.import_from_module(
-                module_name, list(items)
-            )
+            imported_items = self.module_manager.import_from_module(module_name, list(items))
             for item_name, item_value in imported_items.items():
                 self.global_scope[item_name] = item_value
             return imported_items
         except Exception as e:
-            raise RuntimeError(
-                f"Error mengimpor dari modul RenzmcLang '{module_name}': {str(e)}"
-            )
+            raise RuntimeError(f"Error mengimpor dari modul RenzmcLang '{module_name}': {str(e)}")
 
     def _import_all_from_renzmc_module(self, module_name):
         """
@@ -106,9 +100,7 @@ class RenzmcModulesMixin:
                     self.global_scope[item_name] = item_value
             return imported_items
         except Exception as e:
-            raise RuntimeError(
-                f"Error mengimpor semua dari modul RenzmcLang '{module_name}': {str(e)}"
-            )
+            raise RuntimeError(f"Error mengimpor semua dari modul RenzmcLang '{module_name}': {str(e)}")
 
     def _reload_renzmc_module(self, module_name):
         """
@@ -126,9 +118,7 @@ class RenzmcModulesMixin:
         try:
             return self.module_manager.reload_module(module_name)
         except Exception as e:
-            raise RuntimeError(
-                f"Error memuat ulang modul RenzmcLang '{module_name}': {str(e)}"
-            )
+            raise RuntimeError(f"Error memuat ulang modul RenzmcLang '{module_name}': {str(e)}")
 
     def _list_renzmc_modules(self):
         """

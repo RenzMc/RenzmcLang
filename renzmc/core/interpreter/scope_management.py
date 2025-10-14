@@ -28,6 +28,7 @@ RenzmcLang Interpreter Scope Management Module
 This module contains scope and variable management functionality.
 """
 
+
 from renzmc.core.error import RenzmcNameError
 
 
@@ -119,10 +120,7 @@ class ScopeManagementMixin:
         Raises:
             RenzmcNameError: If variable is not found
         """
-        if (
-            self.current_instance is not None
-            and self.current_instance in self.instance_scopes
-        ):
+        if self.current_instance is not None and self.current_instance in self.instance_scopes:
             instance_scope = self.instance_scopes[self.current_instance]
             if name in instance_scope:
                 return instance_scope[name]
@@ -169,6 +167,4 @@ class ScopeManagementMixin:
         Returns:
             The created instance
         """
-        return self.scope_manager.create_class_instance(
-            class_name, *args, **kwargs
-        )
+        return self.scope_manager.create_class_instance(class_name, *args, **kwargs)

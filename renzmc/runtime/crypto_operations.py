@@ -51,9 +51,7 @@ class CryptoOperations:
                 key_bytes = key.encode("utf-8")
             else:
                 key_bytes = key
-            kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA256(), length=32, salt=b"salt_", iterations=100000
-            )
+            kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=b"salt_", iterations=100000)
             derived_key = base64.urlsafe_b64encode(kdf.derive(key_bytes))
             cipher = Fernet(derived_key)
             encrypted = cipher.encrypt(text.encode("utf-8"))
@@ -70,9 +68,7 @@ class CryptoOperations:
                 key_bytes = key.encode("utf-8")
             else:
                 key_bytes = key
-            kdf = PBKDF2HMAC(
-                algorithm=hashes.SHA256(), length=32, salt=b"salt_", iterations=100000
-            )
+            kdf = PBKDF2HMAC(algorithm=hashes.SHA256(), length=32, salt=b"salt_", iterations=100000)
             derived_key = base64.urlsafe_b64encode(kdf.derive(key_bytes))
             cipher = Fernet(derived_key)
             encrypted_bytes = base64.b64decode(encrypted_text.encode("utf-8"))

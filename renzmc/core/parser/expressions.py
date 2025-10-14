@@ -77,9 +77,7 @@ class ExpressionParser:
                 else_expr = self.walrus_expr()
                 node = Ternary(condition, if_expr, else_expr)
             else:
-                self.error(
-                    "Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'"  # noqa: E501
-                )
+                self.error("Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'")  # noqa: E501
         return node
 
     def walrus_expr(self):
@@ -289,9 +287,7 @@ class ExpressionParser:
     def factor(self):  # noqa: C901
         token = self.current_token
         if self.end_of_expression():
-            self.error(
-                f"Kesalahan sintaks: Diharapkan ekspresi, ditemukan '{token.type}'"
-            )
+            self.error(f"Kesalahan sintaks: Diharapkan ekspresi, ditemukan '{token.type}'")
         primary = None
         if token.type == TokenType.ANGKA:
             self.eat(TokenType.ANGKA)
@@ -327,9 +323,7 @@ class ExpressionParser:
                     elif self.current_token.type == TokenType.BIT_ATAU:
                         break
                     else:
-                        self.error(
-                            f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}"  # noqa: E501
-                        )
+                        self.error(f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}")  # noqa: E501
                 self.eat(TokenType.BIT_ATAU)
                 self.eat(TokenType.KURUNG_AKHIR)
                 primary = Tuple(elements, token)
@@ -353,9 +347,7 @@ class ExpressionParser:
                 primary = Var(token)
         elif token.type == TokenType.HASIL:
             self.eat(TokenType.HASIL)
-            identifier_token = Token(
-                TokenType.IDENTIFIER, token.value, token.line, token.column
-            )
+            identifier_token = Token(TokenType.IDENTIFIER, token.value, token.line, token.column)
             primary = Var(identifier_token)
         elif token.type == TokenType.SELF:
             self.eat(TokenType.SELF)

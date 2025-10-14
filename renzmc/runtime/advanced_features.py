@@ -36,17 +36,11 @@ class RenzmcDecorator:
         self.name = getattr(decorator_func, "__name__", "decorator")
         if self.decorator_args or self.decorator_kwargs:
             try:
-                self.actual_decorator = self.decorator_func(
-                    *self.decorator_args, **self.decorator_kwargs
-                )
+                self.actual_decorator = self.decorator_func(*self.decorator_args, **self.decorator_kwargs)
                 if not callable(self.actual_decorator):
-                    raise RenzmcRuntimeError(
-                        f"Decorator factory '{self.name}' must return a callable"
-                    )
+                    raise RenzmcRuntimeError(f"Decorator factory '{self.name}' must return a callable")
             except Exception as e:
-                raise RenzmcRuntimeError(
-                    f"Error creating decorator '{self.name}' with args: {str(e)}"
-                )
+                raise RenzmcRuntimeError(f"Error creating decorator '{self.name}' with args: {str(e)}")
         else:
             self.actual_decorator = self.decorator_func
 
@@ -77,9 +71,7 @@ class RenzmcDecorator:
                 wrapped = self.actual_decorator(func)
                 return wrapped if wrapped is not None else func
             except Exception as e:
-                raise RenzmcRuntimeError(
-                    f"Error dalam decorator '{self.name}': {str(e)}"
-                )
+                raise RenzmcRuntimeError(f"Error dalam decorator '{self.name}': {str(e)}")
 
         # For other decorators, use the old behavior
         @functools.wraps(func)
@@ -87,9 +79,7 @@ class RenzmcDecorator:
             try:
                 return self.actual_decorator(func, *args, **kwargs)
             except Exception as e:
-                raise RenzmcRuntimeError(
-                    f"Error dalam decorator '{self.name}': {str(e)}"
-                )
+                raise RenzmcRuntimeError(f"Error dalam decorator '{self.name}': {str(e)}")
 
         return wrapper
 
@@ -115,9 +105,7 @@ class RenzmcContextManager:
             return self
         except Exception as e:
             self.active = False
-            raise RenzmcRuntimeError(
-                f"Error masuk ke context manager '{self.name}': {str(e)}"
-            )
+            raise RenzmcRuntimeError(f"Error masuk ke context manager '{self.name}': {str(e)}")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         try:
@@ -125,9 +113,7 @@ class RenzmcContextManager:
                 self.exit_func(self.resource, exc_type, exc_val, exc_tb)
             return False
         except Exception as e:
-            raise RenzmcRuntimeError(
-                f"Error keluar dari context manager '{self.name}': {str(e)}"
-            )
+            raise RenzmcRuntimeError(f"Error keluar dari context manager '{self.name}': {str(e)}")
         finally:
             self.active = False
 
@@ -216,13 +202,9 @@ class AsyncFunction:
                     return await result
                 return result
             else:
-                raise RenzmcRuntimeError(
-                    f"'{self.name}' bukan fungsi yang dapat dipanggil"
-                )
+                raise RenzmcRuntimeError(f"'{self.name}' bukan fungsi yang dapat dipanggil")
         except Exception as e:
-            raise RenzmcRuntimeError(
-                f"Error dalam fungsi async '{self.name}': {str(e)}"
-            )
+            raise RenzmcRuntimeError(f"Error dalam fungsi async '{self.name}': {str(e)}")
 
     def __repr__(self):
         return f"<AsyncFunction '{self.name}'>"
@@ -296,9 +278,7 @@ def retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C901
                 except Exception as e:
                     if attempt == max_attempts - 1:
                         raise e
-                    print(
-                        f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."  # noqa: E501
-                    )
+                    print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")  # noqa: E501
             return None
 
         return parameterized_retry_decorator
@@ -341,9 +321,7 @@ def universal_retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C90
                 except Exception as e:
                     if attempt == max_attempts - 1:
                         raise e
-                    print(
-                        f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."  # noqa: E501
-                    )
+                    print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")  # noqa: E501
             return None
 
         return parameterized_retry_decorator
@@ -357,9 +335,7 @@ def universal_retry_decorator(*decorator_args, **decorator_kwargs):  # noqa: C90
             except Exception as e:
                 if attempt == max_attempts - 1:
                     raise e
-                print(
-                    f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."  # noqa: E501
-                )
+                print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")  # noqa: E501
         return None
     else:
         return simple_retry_decorator
@@ -374,9 +350,7 @@ def create_parameterized_retry_decorator(max_attempts):
             except Exception as e:
                 if attempt == max_attempts - 1:
                     raise e
-                print(
-                    f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi..."  # noqa: E501
-                )
+                print(f"Percobaan {attempt + 1} dari {max_attempts} gagal, mencoba lagi...")  # noqa: E501
         return None
 
     return parameterized_retry_decorator
@@ -426,9 +400,7 @@ def create_custom_decorator(decorator_name, decorator_func):
         try:
             return decorator_func(func, *args, **kwargs)
         except Exception as e:
-            raise RenzmcRuntimeError(
-                f"Error dalam decorator '{decorator_name}': {str(e)}"
-            )
+            raise RenzmcRuntimeError(f"Error dalam decorator '{decorator_name}': {str(e)}")
 
     custom_decorator_wrapper.__name__ = decorator_name
     return custom_decorator_wrapper
@@ -440,11 +412,7 @@ def web_route_decorator(path_or_func, method="GET"):
         if not hasattr(func, "_routes"):
             func._routes = []
         route_info = {
-            "path": (
-                path_or_func
-                if isinstance(path_or_func, str)
-                else args[0] if args else "/"
-            ),
+            "path": (path_or_func if isinstance(path_or_func, str) else args[0] if args else "/"),
             "method": method,
             "handler": func,
         }

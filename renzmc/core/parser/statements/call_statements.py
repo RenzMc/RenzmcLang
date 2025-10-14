@@ -69,11 +69,7 @@ class CallStatements:
         if self.current_token.type == TokenType.IDENTIFIER:
             self.eat(TokenType.IDENTIFIER)
         else:
-            self.error(
-                "Diharapkan nama fungsi atau metode, tetapi ditemukan '{}'".format(
-                    self.current_token.type
-                )
-            )
+            self.error("Diharapkan nama fungsi atau metode, tetapi ditemukan '{}'".format(self.current_token.type))
         func_expr = Var(name_token)
         while self.current_token.type == TokenType.TITIK:
             self.eat(TokenType.TITIK)
@@ -117,9 +113,7 @@ class CallStatements:
             elif self.current_token.type in self._get_allowed_method_keywords():
                 self.current_token = self.lexer.get_next_token()
             else:
-                self.error(
-                    f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'"  # noqa: E501
-                )
+                self.error(f"Diharapkan nama metode, tetapi ditemukan '{self.current_token.type}'")  # noqa: E501
             args = []
             if self.current_token.type == TokenType.KURUNG_AWAL:
                 self.eat(TokenType.KURUNG_AWAL)
@@ -136,9 +130,7 @@ class CallStatements:
                     while self.current_token.type == TokenType.KOMA:
                         self.eat(TokenType.KOMA)
                         args.append(self.expr())
-            return MethodCall(
-                Var(Token(TokenType.IDENTIFIER, name)), method_name, args, token
-            )
+            return MethodCall(Var(Token(TokenType.IDENTIFIER, name)), method_name, args, token)
         else:
             args = []
             if self.current_token.type == TokenType.DENGAN:

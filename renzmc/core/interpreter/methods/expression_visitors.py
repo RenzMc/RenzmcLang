@@ -28,32 +28,9 @@ RenzmcLang Interpreter Expression Visitors Module
 This module contains expression visitors methods.
 """
 
-import asyncio
-import builtins as py_builtins
-import importlib
-import os
-import time
-from pathlib import Path
 
-from renzmc.core.ast import (
-    AttributeRef,
-    Block,
-    Constructor,
-    IndexAccess,
-    MethodDecl,
-    String,
-    Var,
-    VarDecl,
-)
-from renzmc.core.error import (
-    AsyncError,
-    DivisionByZeroError,
-    RenzmcImportError,
-    RenzmcRuntimeError,
-    TypeHintError,
-)
+from renzmc.core.error import DivisionByZeroError
 from renzmc.core.token import TokenType
-from renzmc.utils.error_handler import handle_import_error, log_exception
 
 try:
     from renzmc.jit import JITCompiler
@@ -62,6 +39,7 @@ try:
 except ImportError:
     JIT_AVAILABLE = False
     JITCompiler = None
+
 
 class ExpressionVisitorsMixin:
     """
@@ -127,22 +105,17 @@ class ExpressionVisitorsMixin:
             return int(left) >> int(right)
         elif node.op.type in (TokenType.DALAM, TokenType.DALAM_OP):
             if not hasattr(right, "__iter__") and not hasattr(right, "__contains__"):
-                raise TypeError(
-                    f"argument of type '{type(right).__name__}' is not iterable"
-                )
+                raise TypeError(f"argument of type '{type(right).__name__}' is not iterable")
             return left in right
         elif node.op.type == TokenType.TIDAK_DALAM:
             if not hasattr(right, "__iter__") and not hasattr(right, "__contains__"):
-                raise TypeError(
-                    f"argument of type '{type(right).__name__}' is not iterable"
-                )
+                raise TypeError(f"argument of type '{type(right).__name__}' is not iterable")
             return left not in right
         elif node.op.type in (TokenType.ADALAH, TokenType.ADALAH_OP):
             return left is right
         elif node.op.type == TokenType.BUKAN:
             return left is not right
         raise RuntimeError(f"Operator tidak didukung: {node.op.type}")
-
 
     def visit_UnaryOp(self, node):
         expr = self.visit(node.expr)
@@ -156,7 +129,6 @@ class ExpressionVisitorsMixin:
             return ~int(expr)
         raise RuntimeError(f"Operator unary tidak didukung: {node.op.type}")
 
-
     def visit_Ternary(self, node):
         condition = self.visit(node.condition)
         if condition:
@@ -164,10 +136,7 @@ class ExpressionVisitorsMixin:
         else:
             return self.visit(node.else_expr)
 
-
     def visit_WalrusOperator(self, node):
         value = self.visit(node.value)
         self.set_variable(node.var_name, value)
         return value
-
-

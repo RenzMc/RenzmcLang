@@ -1,4 +1,4 @@
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Importing Python Modules](#importing-python-modules)
 2. [Calling Python Functions](#calling-python-functions)
@@ -430,7 +430,7 @@ panggil_python new_wb.save("output.xlsx")
 ### 1. Error Handling
 
 ```python
-// ✅ Good - Handle Python errors
+// - Good - Handle Python errors
 coba
     impor_python "some_module"
     hasil itu panggil_python some_module.function()
@@ -440,7 +440,7 @@ tangkap Exception sebagai e
     tampilkan f"Python error: {e}"
 selesai
 
-// ❌ Bad - No error handling
+// - Bad - No error handling
 impor_python "some_module"
 hasil itu panggil_python some_module.function()
 ```
@@ -448,7 +448,7 @@ hasil itu panggil_python some_module.function()
 ### 2. Resource Management
 
 ```python
-// ✅ Good - Close resources
+// - Good - Close resources
 impor_python "sqlite3"
 
 conn itu panggil_python sqlite3.connect("db.sqlite")
@@ -459,7 +459,7 @@ akhirnya
     panggil_python conn.close()
 selesai
 
-// ❌ Bad - No cleanup
+// - Bad - No cleanup
 conn itu panggil_python sqlite3.connect("db.sqlite")
 cursor itu panggil_python conn.cursor()
 // No close
@@ -468,11 +468,11 @@ cursor itu panggil_python conn.cursor()
 ### 3. Use Built-in Functions When Available
 
 ```python
-// ✅ Good - Use RenzMcLang built-ins (latest version+)
+// - Good - Use RenzMcLang built-ins (latest version+)
 response itu http_get("https://api.example.com")
 data itu response.json()
 
-// ❌ Less optimal - Import Python when not needed
+// - Less optimal - Import Python when not needed
 impor_python "requests"
 response itu panggil_python requests.get("https://api.example.com")
 data itu panggil_python response.json()
@@ -481,20 +481,20 @@ data itu panggil_python response.json()
 ### 4. Type Conversion
 
 ```python
-// ✅ Good - Explicit conversion
+// - Good - Explicit conversion
 impor_python "numpy" sebagai np
 
 py_array itu panggil_python np.array([1, 2, 3])
 rmc_list itu panggil_python py_array.tolist()  // Convert to RenzMcLang list
 
-// ❌ Bad - Assuming compatibility
+// - Bad - Assuming compatibility
 py_array itu panggil_python np.array([1, 2, 3])
 // Using py_array directly might cause issues
 ```
 
 ---
 
-## 💡 Tips & Tricks
+## Tips & Tricks
 
 ### 1. Check Module Availability
 
@@ -543,7 +543,7 @@ tampilkan help_text
 
 ---
 
-## 📚 See Also
+## See Also
 
 - [Syntax Basics](syntax-basics.md) - Basic syntax
 - [Built-in Functions](builtin-functions.md) - Built-in functions
@@ -552,7 +552,7 @@ tampilkan help_text
 
 ---
 
-## 🔗 Useful Python Libraries
+## Useful Python Libraries
 
 ### Data Science
 - **NumPy** - Numerical computing

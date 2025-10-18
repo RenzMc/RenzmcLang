@@ -643,7 +643,7 @@ selesai
 
 ---
 
-## 🔑 Kata Kunci
+## Kata Kunci
 
 ```
 jika, kalau, maka, tidak, lainnya, selesai, akhir
@@ -669,7 +669,7 @@ self, ini, diri
 
 ---
 
-## 📚 Tautan Cepat
+## Tautan Cepat
 
 - [Instalasi](installation.md)
 - [Dasar-dasar Sintaks](syntax-basics.md)
@@ -684,11 +684,11 @@ self, ini, diri
 **Terakhir Diperbarui: 2025-10-08**
 
 **Baru di versi terbaru:**
-   - 🚀 Sistem Import OOP baru (dari...impor)
-   - 📦 Import dari nested modules
+   - Sistem Import OOP baru (dari...impor)
+   - Import dari nested modules
    - 🏷️ Import dengan alias
-   - 📚 Module caching untuk performa
-- ✨ REPL (Shell Interaktif)
-- 🌐 HTTP Client Bawaan
-- 📦 7 fungsi HTTP baru
-- 🚀 Tidak perlu impor untuk HTTP!
+   - Module caching untuk performa
+- REPL (Shell Interaktif)
+- HTTP Client Bawaan
+- 7 fungsi HTTP baru
+- Tidak perlu impor untuk HTTP!

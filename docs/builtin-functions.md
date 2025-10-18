@@ -1,4 +1,4 @@
-## 📋 Table of Contents
+## Table of Contents
 
 1. [String Functions](#string-functions)
 2. [Math & Statistics](#math--statistics)
@@ -941,7 +941,7 @@ attrs itu dir([])
 
 ---
 
-## 💡 Usage Examples
+## Usage Examples
 
 ### Example 1: String Processing
 ```python
@@ -1004,7 +1004,7 @@ tulis_file("output.txt", hasil)
 
 ---
 
-## 📚 See Also
+## See Also
 
 - [Syntax Basics](syntax-basics.md) - Basic syntax
 - [Advanced Features](advanced-features.md) - Advanced features

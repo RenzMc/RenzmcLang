@@ -1,4 +1,4 @@
-## 📋 Daftar Isi
+## Daftar Isi
 
 1. [Advanced (Lanjutan)](#advanced)
 2. [Advanced Features (Fitur Lanjutan)](#advanced-features)

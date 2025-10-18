@@ -159,22 +159,44 @@ class ErrorLogger:
             if error_code is None:
                 error_code = "RMC-R001"  # Generic runtime error
 
+        # Extract clean error message
+        error_message = str(error)
+        if hasattr(error, "args") and error.args:
+            error_message = error.args[0] if isinstance(error.args[0], str) else str(error.args[0])
+            # Unwrap nested tuples
+            while isinstance(error_message, tuple) and len(error_message) >= 1:
+                error_message = error_message[0]
+            error_message = str(error_message)
+
+        # Extract line and column if available
+        line = None
+        column = None
+        if hasattr(error, "args") and len(error.args) >= 3:
+            if isinstance(error.args[1], int):
+                line = error.args[1]
+            if isinstance(error.args[2], int):
+                column = error.args[2]
+        if line is None:
+            line = getattr(error, "line", None)
+        if column is None:
+            column = getattr(error, "column", None)
+
         # Build error record
         error_record = {
             "timestamp": datetime.now().isoformat(),
             "error_code": error_code,
             "error_type": type(error).__name__,
-            "error_message": str(error),
+            "error_message": error_message,
             "filename": filename or "<unknown>",
-            "line": getattr(error, "line", None),
-            "column": getattr(error, "column", None),
+            "line": line,
+            "column": column,
             "traceback": traceback.format_exc(),
             "context": context or {},
         }
 
         # Add source code snippet if available
-        if source_code and hasattr(error, "line") and error.line is not None:
-            error_record["source_snippet"] = self._get_source_snippet(source_code, error.line)
+        if source_code and line is not None:
+            error_record["source_snippet"] = self._get_source_snippet(source_code, line)
 
         # Log to file
         self.error_logger.error(json.dumps(error_record, ensure_ascii=False))

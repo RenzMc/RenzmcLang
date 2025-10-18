@@ -1,4 +1,4 @@
-## 🚀 Quick Start
+## Quick Start
 
 ### Basic GET Request
 
@@ -30,7 +30,7 @@ tampilkan response.status_code  // 201
 
 ---
 
-## 📋 HTTP Methods
+## HTTP Methods
 
 ### 1. GET Request
 
@@ -180,7 +180,7 @@ response itu http_patch("https://api.example.com/users/1", json=data_patch)
 
 ---
 
-## 📦 Response Object
+## Response Object
 
 ### Properties
 
@@ -224,7 +224,7 @@ selesai
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Set Default Headers
 
@@ -250,7 +250,7 @@ response itu http_get("https://api.example.com/data")
 
 ---
 
-## 🇮🇩 Indonesian Aliases
+## Indonesian Aliases
 
 ### Available Aliases
 
@@ -289,7 +289,7 @@ response itu hapus_http("https://jsonplaceholder.typicode.com/users/1")
 
 ---
 
-## 🎯 Common Use Cases
+## Common Use Cases
 
 ### 1. REST API Client
 
@@ -548,12 +548,12 @@ data itu fetch_with_retry("https://api.example.com/data")
 
 ---
 
-## 💡 Best Practices
+## Best Practices
 
 ### 1. Always Check Response Status
 
 ```python
-// ✅ Good
+// - Good
 response itu http_get(url)
 jika response.ok()
     data itu response.json()
@@ -561,7 +561,7 @@ kalau_tidak
     tampilkan f"Error: {response.status_code}"
 selesai
 
-// ❌ Bad
+// - Bad
 response itu http_get(url)
 data itu response.json()  // Might fail if not 200
 ```
@@ -569,17 +569,17 @@ data itu response.json()  // Might fail if not 200
 ### 2. Use Timeouts
 
 ```python
-// ✅ Good
+// - Good
 response itu http_get(url, timeout=10)
 
-// ❌ Bad
+// - Bad
 response itu http_get(url)  // Might hang forever
 ```
 
 ### 3. Handle Errors
 
 ```python
-// ✅ Good
+// - Good
 coba
     response itu http_get(url)
     data itu response.json()
@@ -587,7 +587,7 @@ tangkap Exception sebagai e
     tampilkan f"Error: {e}"
 selesai
 
-// ❌ Bad
+// - Bad
 response itu http_get(url)
 data itu response.json()  // No error handling
 ```
@@ -595,30 +595,30 @@ data itu response.json()  // No error handling
 ### 4. Set Default Headers
 
 ```python
-// ✅ Good - Set once
+// - Good - Set once
 http_set_header("Authorization", "Bearer token")
 http_set_header("User-Agent", "MyApp/1.0")
 
-// ❌ Bad - Repeat in every request
+// - Bad - Repeat in every request
 response itu http_get(url, headers={"Authorization": "Bearer token"})
 ```
 
 ### 5. Use Appropriate HTTP Methods
 
 ```python
-// ✅ Good
+// - Good
 response itu http_get(url)        // For fetching
 response itu http_post(url, ...)  // For creating
 response itu http_put(url, ...)   // For updating
 response itu http_delete(url)     // For deleting
 
-// ❌ Bad
+// - Bad
 response itu http_get(url + "?action=delete")  // Use DELETE instead
 ```
 
 ---
 
-## 📚 See Also
+## See Also
 
 - [Quick Reference](quick-reference.md) - Quick syntax reference
 - [Built-in Functions](builtin-functions.md) - All built-in functions
@@ -627,7 +627,7 @@ response itu http_get(url + "?action=delete")  // Use DELETE instead
 
 ---
 
-## 🎓 Learning Path
+## Learning Path
 
 ### Beginner
 1. Simple GET request

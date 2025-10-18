@@ -4,10 +4,10 @@
 
 RenzmcLang sekarang memiliki **sistem tipe yang robust** dengan dukungan untuk type hints opsional. Sistem ini dirancang untuk:
 
-- ✅ Mendeteksi kesalahan tipe saat runtime
-- ✅ Meningkatkan keamanan kode
-- ✅ Memberikan dokumentasi yang lebih baik
-- ✅ Mempertahankan backward compatibility penuh
+- - Mendeteksi kesalahan tipe saat runtime
+- - Meningkatkan keamanan kode
+- - Memberikan dokumentasi yang lebih baik
+- - Mempertahankan backward compatibility penuh
 
 ## Fitur Phase 1
 
@@ -444,20 +444,20 @@ selesai
 ## Roadmap
 
 ### Phase 1 (Selesai) ✅
-- ✅ Basic type hints untuk variables
-- ✅ Type hints untuk function parameters
-- ✅ Runtime type validation
-- ✅ Indonesian and English type names
-- ✅ Backward compatibility
+- - Basic type hints untuk variables
+- - Type hints untuk function parameters
+- - Runtime type validation
+- - Indonesian and English type names
+- - Backward compatibility
 
 ### Phase 2 (Selesai) ✅
-- ✅ Union types: `nilai: Integer | String`
-- ✅ Optional types: `nama: String?`
-- ✅ Generic types: `List[Integer]`, `Dict[String, Integer]`
-- ✅ Type aliases: `tipe UserId = Integer`
-- ✅ Return type hints: `fungsi tambah(...) -> Integer:`
-- ✅ Literal types: `Literal["aktif", "nonaktif"]`
-- ✅ TypedDict: `TypedDict["nama": String, "umur": Integer]`
+- - Union types: `nilai: Integer | String`
+- - Optional types: `nama: String?`
+- - Generic types: `List[Integer]`, `Dict[String, Integer]`
+- - Type aliases: `tipe UserId = Integer`
+- - Return type hints: `fungsi tambah(...) -> Integer:`
+- - Literal types: `Literal["aktif", "nonaktif"]`
+- - TypedDict: `TypedDict["nama": String, "umur": Integer]`
 
 ## FAQ
 

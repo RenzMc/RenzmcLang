@@ -1,4 +1,4 @@
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Overview](#overview)
 2. [How JIT Works](#how-jit-works)
@@ -21,18 +21,18 @@
 
 RenzMcLang dilengkapi dengan **JIT (Just-In-Time) Compiler** yang menggunakan Numba untuk mengoptimasi fungsi-fungsi yang sering dipanggil (hot functions). Sistem ini bekerja secara otomatis di background tanpa memerlukan konfigurasi manual, dan sekarang mendukung manual hints, profiling, GPU acceleration, dan parallel execution.
 
-### ✨ Key Features
+### Key Features
 
-- ✅ **Automatic Detection** - Mendeteksi hot functions secara otomatis
-- ✅ **Manual JIT Hints** - Decorator untuk force JIT compilation
-- ✅ **Profile-Guided Optimization** - Optimasi berdasarkan profiling
-- ✅ **GPU Acceleration** - CUDA support via Numba
-- ✅ **Parallel Execution** - Multi-threading untuk fungsi independent
-- ✅ **Type Inference** - Sistem inferensi tipe untuk optimasi
-- ✅ **Numba Integration** - Menggunakan Numba untuk kompilasi native
-- ✅ **Fallback Mechanism** - Fallback ke interpreter jika kompilasi gagal
-- ✅ **Zero Configuration** - Tidak perlu setup atau konfigurasi
-- ✅ **Performance Boost** - Peningkatan performa hingga 10-100x untuk operasi numerik
+- - **Automatic Detection** - Mendeteksi hot functions secara otomatis
+- - **Manual JIT Hints** - Decorator untuk force JIT compilation
+- - **Profile-Guided Optimization** - Optimasi berdasarkan profiling
+- - **GPU Acceleration** - CUDA support via Numba
+- - **Parallel Execution** - Multi-threading untuk fungsi independent
+- - **Type Inference** - Sistem inferensi tipe untuk optimasi
+- - **Numba Integration** - Menggunakan Numba untuk kompilasi native
+- - **Fallback Mechanism** - Fallback ke interpreter jika kompilasi gagal
+- - **Zero Configuration** - Tidak perlu setup atau konfigurasi
+- - **Performance Boost** - Peningkatan performa hingga 10-100x untuk operasi numerik
 
 ---
 
@@ -64,10 +64,10 @@ Ketika fungsi mencapai threshold:
 
 Fungsi akan dikompilasi jika memenuhi kriteria:
 
-✅ **Numeric Operations** - Operasi matematika intensif  
-✅ **Loops** - Mengandung loop (untuk/selama)  
-✅ **High Operation Count** - Lebih dari 5 operasi  
-✅ **No External Dependencies** - Tidak bergantung pada fungsi eksternal kompleks
+- **Numeric Operations** - Operasi matematika intensif  
+- **Loops** - Mengandung loop (untuk/selama)  
+- **High Operation Count** - Lebih dari 5 operasi  
+- **No External Dependencies** - Tidak bergantung pada fungsi eksternal kompleks
 
 ---
 
@@ -109,10 +109,10 @@ tampilkan hasil
 
 ### Benefits of Manual JIT
 
-- ⚡ **Immediate Optimization** - Tidak perlu menunggu 10 panggilan
-- 🎯 **Predictable Performance** - Performa konsisten dari awal
-- 🔧 **Fine-grained Control** - Kontrol penuh atas fungsi yang dikompilasi
-- 📊 **Better for Benchmarking** - Hasil benchmark lebih akurat
+- **Immediate Optimization** - Tidak perlu menunggu 10 panggilan
+- **Predictable Performance** - Performa konsisten dari awal
+- **Fine-grained Control** - Kontrol penuh atas fungsi yang dikompilasi
+- **Better for Benchmarking** - Hasil benchmark lebih akurat
 
 ---
 
@@ -163,8 +163,8 @@ hasil itu optimized_function(1000)
 ### Profiling Metrics
 
 - ⏱️ **Execution Time** - Waktu eksekusi dalam detik
-- 💾 **Memory Usage** - Penggunaan memori dalam MB
-- 📈 **Performance Insights** - Data untuk optimasi lebih lanjut
+- **Memory Usage** - Penggunaan memori dalam MB
+- **Performance Insights** - Data untuk optimasi lebih lanjut
 
 ---
 
@@ -186,9 +186,9 @@ tampilkan hasil
 
 ### GPU Requirements
 
-- 🎮 **CUDA-capable GPU** - NVIDIA GPU dengan CUDA support
-- 🔧 **CUDA Toolkit** - CUDA Toolkit terinstal
-- 📦 **Numba CUDA** - Numba dengan CUDA support
+- **CUDA-capable GPU** - NVIDIA GPU dengan CUDA support
+- **CUDA Toolkit** - CUDA Toolkit terinstal
+- **Numba CUDA** - Numba dengan CUDA support
 
 ### GPU Fallback
 
@@ -244,17 +244,17 @@ tampilkan hasil
 
 ### Parallel Processing Benefits
 
-- 🚀 **Multi-core Utilization** - Menggunakan semua CPU cores
-- ⚡ **Faster Processing** - Pemrosesan data lebih cepat
-- 📊 **Scalable** - Performa meningkat dengan jumlah cores
-- 🔄 **Automatic Distribution** - Distribusi kerja otomatis
+- **Multi-core Utilization** - Menggunakan semua CPU cores
+- **Faster Processing** - Pemrosesan data lebih cepat
+- **Scalable** - Performa meningkat dengan jumlah cores
+- **Automatic Distribution** - Distribusi kerja otomatis
 
 ### Best Use Cases for Parallel
 
-- 📦 **Batch Processing** - Memproses banyak item
-- 🔢 **Independent Computations** - Komputasi yang tidak saling bergantung
-- 📊 **Data Analysis** - Analisis data besar
-- 🎯 **Map Operations** - Operasi map pada koleksi
+- **Batch Processing** - Memproses banyak item
+- **Independent Computations** - Komputasi yang tidak saling bergantung
+- **Data Analysis** - Analisis data besar
+- **Map Operations** - Operasi map pada koleksi
 
 ---
 
@@ -277,12 +277,12 @@ selesai
 
 | Type | JIT Support | Performance Gain |
 |------|-------------|------------------|
-| Integer | ✅ Full | 50-100x |
-| Float | ✅ Full | 50-100x |
-| Boolean | ✅ Full | 10-50x |
+| Integer | - Full | 50-100x |
+| Float | - Full | 50-100x |
+| Boolean | - Full | 10-50x |
 | String | ⚠️ Limited | 1-5x |
 | List | ⚠️ Limited | 1-10x |
-| Dict | ❌ No | N/A |
+| Dict | - No | N/A |
 
 ---
 
@@ -492,7 +492,7 @@ tampilkan hasil
 
 ## Best Practices
 
-### ✅ DO: Functions Good for JIT
+### - DO: Functions Good for JIT
 
 ```python
 @jit_compile
@@ -522,7 +522,7 @@ fungsi matrix_multiply(a):, b
 selesai
 ```
 
-### ❌ DON'T: Functions Not Suitable for JIT
+### - DON'T: Functions Not Suitable for JIT
 
 ```python
 fungsi proses_teks(teks):
@@ -536,7 +536,7 @@ fungsi fetch_data(url):
 selesai
 ```
 
-### 🎯 Optimization Tips
+### Optimization Tips
 
 1. **Use Manual JIT for Critical Functions**
    ```python
@@ -726,14 +726,14 @@ selesai
 
 JIT Compiler di RenzMcLang sekarang memberikan:
 
-✅ **Automatic Optimization** - Tidak perlu konfigurasi manual  
-✅ **Manual Control** - Decorator untuk kontrol penuh  
-✅ **Profile-Guided** - Optimasi berdasarkan profiling  
-✅ **GPU Acceleration** - CUDA support untuk performa maksimal  
-✅ **Parallel Execution** - Multi-threading otomatis  
-✅ **Significant Performance Gains** - 10-100x speedup  
-✅ **Transparent Operation** - Bekerja di background  
-✅ **Fallback Safety** - Fallback ke interpreter jika gagal  
+- **Automatic Optimization** - Tidak perlu konfigurasi manual  
+- **Manual Control** - Decorator untuk kontrol penuh  
+- **Profile-Guided** - Optimasi berdasarkan profiling  
+- **GPU Acceleration** - CUDA support untuk performa maksimal  
+- **Parallel Execution** - Multi-threading otomatis  
+- **Significant Performance Gains** - 10-100x speedup  
+- **Transparent Operation** - Bekerja di background  
+- **Fallback Safety** - Fallback ke interpreter jika gagal  
 
 **Best Use Cases:**
 - Algoritma matematika kompleks

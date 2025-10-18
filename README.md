@@ -1,4 +1,5 @@
-# RenzMcLang 🚀
+# RenzMcLang
+
 ![RenzMcLanglogo](icon.png)
 
 **Bahasa Pemrograman Berbasis Bahasa Indonesia yang Modern dan Powerful**
@@ -10,67 +11,67 @@ RenzMcLang adalah bahasa pemrograman yang menggunakan sintaks Bahasa Indonesia, 
 [![License](https://img.shields.io/badge/license-MIT-orange.svg)](LICENSE)
 [![PyPI](https://img.shields.io/badge/pypi-renzmc-blue.svg)](https://pypi.org/project/renzmc/)
 
-## ✨ Fitur Utama
+## Fitur Utama
 
-### 🎯 Sintaks Bahasa Indonesia
+### Sintaks Bahasa Indonesia
 - Keyword dalam Bahasa Indonesia yang intuitif
 - Error messages yang helpful dalam Bahasa Indonesia
 - Dokumentasi lengkap dalam Bahasa Indonesia
 
-### 🔥 Fitur Modern
+### Fitur Modern
 
-#### 🚀 JIT Compiler (Just-In-Time Compilation)
-- **Automatic Hot Function Detection** - Deteksi otomatis fungsi yang sering dipanggil
-- **Numba Integration** - Kompilasi ke native code menggunakan Numba
-- **10-100x Performance Boost** - Peningkatan performa signifikan untuk operasi numerik
-- **Zero Configuration** - Bekerja otomatis tanpa setup
-- **Smart Type Inference** - Sistem inferensi tipe untuk optimasi maksimal
-- **Fallback Safety** - Fallback ke interpreter jika kompilasi gagal
+#### JIT Compiler (Just-In-Time Compilation)
+- Automatic Hot Function Detection - Deteksi otomatis fungsi yang sering dipanggil
+- Numba Integration - Kompilasi ke native code menggunakan Numba
+- 10-100x Performance Boost - Peningkatan performa signifikan untuk operasi numerik
+- Zero Configuration - Bekerja otomatis tanpa setup
+- Smart Type Inference - Sistem inferensi tipe untuk optimasi maksimal
+- Fallback Safety - Fallback ke interpreter jika kompilasi gagal
 
-#### 💎 Robust Type System
-- **Optional Type Hints** - Type annotations opsional untuk variabel dan fungsi
-- **Runtime Type Validation** - Validasi tipe saat runtime
-- **Bilingual Type Names** - Dukungan nama tipe Indonesia dan Inggris
-- **Backward Compatible** - 100% kompatibel dengan kode tanpa type hints
-- **Smart Type Inference** - Inferensi tipe otomatis
-- **Clear Error Messages** - Pesan error tipe yang jelas dan helpful
+#### Robust Type System
+- Optional Type Hints - Type annotations opsional untuk variabel dan fungsi
+- Runtime Type Validation - Validasi tipe saat runtime
+- Bilingual Type Names - Dukungan nama tipe Indonesia dan Inggris
+- Backward Compatible - 100% kompatibel dengan kode tanpa type hints
+- Smart Type Inference - Inferensi tipe otomatis
+- Clear Error Messages - Pesan error tipe yang jelas dan helpful
 
-#### 🎨 Advanced Programming Features
-- **Lambda Functions** - Fungsi anonim untuk functional programming
-- **Comprehensions** - List dan Dict comprehension untuk kode yang ringkas
-- **Ternary Operator** - Kondisi inline yang elegant
-- **OOP** - Object-Oriented Programming dengan class dan inheritance
-- **Async/Await** - Pemrograman asynchronous
-- **Error Handling** - Try-catch-finally yang robust
-- **Pattern Matching** - Switch-case untuk control flow yang elegant
-- **Decorators** - Function dan class decorators
-- **Generators** - Yield untuk lazy evaluation
-- **Context Managers** - With statement untuk resource management
+#### Advanced Programming Features
+- Lambda Functions - Fungsi anonim untuk functional programming
+- Comprehensions - List dan Dict comprehension untuk kode yang ringkas
+- Ternary Operator - Kondisi inline yang elegant
+- OOP - Object-Oriented Programming dengan class dan inheritance
+- Async/Await - Pemrograman asynchronous
+- Error Handling - Try-catch-finally yang robust
+- Pattern Matching - Switch-case untuk control flow yang elegant
+- Decorators - Function dan class decorators
+- Generators - Yield untuk lazy evaluation
+- Context Managers - With statement untuk resource management
 
-### 🔌 Integrasi Python
+### Integrasi Python
 - Import dan gunakan library Python
 - Akses Python builtins
 - Interoperability penuh dengan ekosistem Python
 - Call Python functions dari RenzMcLang
 - Seamless data type conversion
 
-### 📦 Built-in Functions Lengkap
-- **String manipulation** (148+ functions)
-- **Math & statistics** - Operasi matematika lengkap
-- **File operations** - Read, write, manipulasi file
-- **JSON utilities** - Parse dan generate JSON
-- **HTTP functions** - HTTP client built-in
-- **System operations** - Akses sistem operasi
-- **Database operations** - SQLite, MySQL, PostgreSQL, MongoDB
-- **Crypto operations** - Enkripsi dan hashing
-- **Date/Time** - Manipulasi tanggal dan waktu
+### Built-in Functions Lengkap
+- String manipulation (148+ functions)
+- Math & statistics - Operasi matematika lengkap
+- File operations - Read, write, manipulasi file
+- JSON utilities - Parse dan generate JSON
+- HTTP functions - HTTP client built-in
+- System operations - Akses sistem operasi
+- Database operations - SQLite, MySQL, PostgreSQL, MongoDB
+- Crypto operations - Enkripsi dan hashing
+- Date/Time - Manipulasi tanggal dan waktu
 - Dan banyak lagi!
 
 [EXAMPLE WEBSITE YG PAKE BAHASA PEMROGRAMAN RENZMC](https://github.com/RenzMc/renzmc-website)
 
-🔍 Bahasa pemrograman **RenzmcLang** sekarang sudah punya ekstensi VSCode — cek di [GitHub Renzmc Extension](https://github.com/RenzMc/renzmc-extension/tree/main)
+Bahasa pemrograman **RenzmcLang** sekarang sudah punya ekstensi VSCode - cek di [GitHub Renzmc Extension](https://github.com/RenzMc/renzmc-extension/tree/main)
 
-## 📥 Instalasi
+## Instalasi
 
 ### Dari PyPI (Recommended)
 
@@ -98,7 +99,7 @@ Atau jalankan contoh program:
 renzmc examples/dasar/01_hello_world.rmc
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Hello World
 
@@ -230,31 +231,31 @@ data itu panggil_python json.loads(response.text)
 tampilkan data
 ```
 
-## 📚 Dokumentasi Lengkap
+## Dokumentasi Lengkap
 
-### 📖 Dokumentasi Online
+### Dokumentasi Online
 Kunjungi [renzmc-docs.vercel.app](https://renzmc-docs.vercel.app/) untuk dokumentasi lengkap dan interaktif.
 
-### 📁 Dokumentasi Lokal
+### Dokumentasi Lokal
 Lihat folder [docs/](docs/) untuk dokumentasi lengkap:
 
 #### Panduan Dasar
-- [📥 Panduan Instalasi](docs/installation.md) - Cara install dan setup RenzmcLang
-- [📖 Sintaks Dasar](docs/syntax-basics.md) - Pelajari sintaks dasar bahasa
-- [⚡ Quick Reference](docs/quick-reference.md) - Cheat sheet untuk referensi cepat
+- [Panduan Instalasi](docs/installation.md) - Cara install dan setup RenzmcLang
+- [Sintaks Dasar](docs/syntax-basics.md) - Pelajari sintaks dasar bahasa
+- [Quick Reference](docs/quick-reference.md) - Cheat sheet untuk referensi cepat
 
 #### Fitur & Fungsi
-- [📦 Built-in Functions](docs/builtin-functions.md) - 184+ fungsi built-in lengkap
-- [🎨 Advanced Features](docs/advanced-features.md) - OOP, async/await, decorators, dll
-- [🚀 JIT Compiler](docs/jit-compiler.md) - Kompilasi JIT untuk performa maksimal
-- [💎 Type System](docs/type-system.md) - Sistem tipe opsional dengan validasi runtime
+- [Built-in Functions](docs/builtin-functions.md) - 184+ fungsi built-in lengkap
+- [Advanced Features](docs/advanced-features.md) - OOP, async/await, decorators, dll
+- [JIT Compiler](docs/jit-compiler.md) - Kompilasi JIT untuk performa maksimal
+- [Type System](docs/type-system.md) - Sistem tipe opsional dengan validasi runtime
 
 #### Integrasi & Tools
-- [🐍 Integrasi Python](docs/python-integration.md) - Gunakan library Python di RenzmcLang
-- [🌐 HTTP Client Guide](docs/http-client-guide.md) - HTTP client built-in untuk API calls
-- [📝 Contoh Program](docs/examples.md) - 80+ contoh program siap pakai
+- [Integrasi Python](docs/python-integration.md) - Gunakan library Python di RenzmcLang
+- [HTTP Client Guide](docs/http-client-guide.md) - HTTP client built-in untuk API calls
+- [Contoh Program](docs/examples.md) - 80+ contoh program siap pakai
 
-## 📖 Contoh Program
+## Contoh Program
 
 Lihat folder [examples/](examples/) untuk 130+ contoh program yang mencakup:
 
@@ -279,35 +280,35 @@ renzmc examples/database/01_sqlite_basic.rmc
 renzmc examples/python_integration/01_web_scraping.rmc
 ```
 
-## 👥 Authors
+## Authors
 
 - **RenzMc** - *Initial work* - [RenzMc](https://github.com/RenzMc)
 
-## 📞 Contact
+## Contact
 
 - GitHub: [@RenzMc](https://github.com/RenzMc)
 - Email: renzaja11@gmail.com
 ---
 
-**Made with ❤️ for Indonesian developers**
+**Made with love for Indonesian developers**
 
 *"Coding in your native language, thinking in your native way"*
 
-## 🎯 Use Cases
+## Use Cases
 
 RenzMcLang cocok untuk:
-- 📚 **Pembelajaran**: Belajar programming dengan bahasa Indonesia
-- 🔬 **Prototyping**: Rapid application development
-- 📊 **Data Processing**: Analisis dan transformasi data dengan JIT acceleration
-- 🌐 **Web Development**: Backend API development
-- 🗄️ **Database Operations**: Database management dan queries
-- 🤖 **Automation**: Script automation dan task scheduling
-- 🧮 **Scientific Computing**: Komputasi numerik dengan JIT compiler
-- 📈 **Algorithm Implementation**: Implementasi algoritma dengan performa tinggi
-- 🎮 **Game Logic**: Game logic dengan type safety
-- 🔢 **Mathematical Modeling**: Pemodelan matematika dengan JIT optimization
+- Pembelajaran: Belajar programming dengan bahasa Indonesia
+- Prototyping: Rapid application development
+- Data Processing: Analisis dan transformasi data dengan JIT acceleration
+- Web Development: Backend API development
+- Database Operations: Database management dan queries
+- Automation: Script automation dan task scheduling
+- Scientific Computing: Komputasi numerik dengan JIT compiler
+- Algorithm Implementation: Implementasi algoritma dengan performa tinggi
+- Game Logic: Game logic dengan type safety
+- Mathematical Modeling: Pemodelan matematika dengan JIT optimization
 
-## 💡 Tips & Best Practices
+## Tips & Best Practices
 
 ### Best Practices
 1. Gunakan nama variabel yang deskriptif
@@ -319,8 +320,8 @@ RenzMcLang cocok untuk:
 7. Manfaatkan JIT compiler untuk operasi numerik intensif
 
 ### Performance Tips
-1. **Leverage JIT Compiler** - Fungsi numerik dengan loop akan otomatis dioptimasi
-2. **Use Type Hints** - Membantu JIT compiler mengoptimasi lebih baik
+1. Leverage JIT Compiler - Fungsi numerik dengan loop akan otomatis dioptimasi
+2. Use Type Hints - Membantu JIT compiler mengoptimasi lebih baik
 3. Gunakan comprehensions untuk operasi list
 4. Manfaatkan built-in functions yang sudah dioptimasi
 5. Hindari nested loops yang dalam (atau biarkan JIT mengoptimasi)
@@ -329,17 +330,17 @@ RenzMcLang cocok untuk:
 8. Pisahkan operasi numerik ke fungsi terpisah untuk JIT optimization
 
 ### JIT Optimization Tips
-1. **Keep Functions Pure** - Fungsi tanpa side effects lebih mudah dioptimasi
-2. **Use Numeric Types** - Integer dan Float mendapat benefit terbesar
-3. **Minimize External Calls** - Fungsi self-contained lebih cepat dikompilasi
-4. **Let It Warm Up** - Biarkan fungsi dipanggil 10+ kali untuk trigger JIT
-5. **Check Compilation** - Fungsi dengan loop dan operasi kompleks akan dikompilasi
+1. Keep Functions Pure - Fungsi tanpa side effects lebih mudah dioptimasi
+2. Use Numeric Types - Integer dan Float mendapat benefit terbesar
+3. Minimize External Calls - Fungsi self-contained lebih cepat dikompilasi
+4. Let It Warm Up - Biarkan fungsi dipanggil 10+ kali untuk trigger JIT
+5. Check Compilation - Fungsi dengan loop dan operasi kompleks akan dikompilasi
 
-## 🔗 Links
+## Links
 
 - [Documentation](https://github.com/RenzMc/RenzmcLang/docs)
 - [PyPI Package](https://pypi.org/project/renzmc/)
 - [Issue Tracker](https://github.com/RenzMc/RenzmcLang/issues)
 - [Changelog](CHANGELOG.md)
 
-**Star ⭐ repository ini jika bermanfaat!**
+**Star repository ini jika bermanfaat!**

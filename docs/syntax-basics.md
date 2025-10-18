@@ -1,4 +1,4 @@
-## 📋 Daftar Isi
+## Daftar Isi
 
 1. [Komentar](#komentar)
 2. [Variabel](#variabel)
@@ -48,7 +48,7 @@ y adalah 20
 
 ### Aturan Penamaan Variabel
 
-✅ **Valid:**
+- **Valid:**
 ```python
 nama itu "Budi"
 nama_lengkap itu "Budi Santoso"
@@ -56,7 +56,7 @@ umur_2024 itu 25
 _private itu "secret"
 ```
 
-❌ **Tidak Valid:**
+- **Tidak Valid:**
 ```python
 2nama itu "Budi"      // Tidak boleh dimulai dengan angka
 nama-lengkap itu "X"  // Tidak boleh menggunakan dash
@@ -786,12 +786,12 @@ dari Config.settings impor DEBUG
 
 #### Hindari Konflik Nama
 ```python
-// ❌ Hindari: nama yang sama dengan builtin
+// - Hindari: nama yang sama dengan builtin
 buat fungsi tambah dengan a, b  // tambah adalah builtin
     hasil a + b
 selesai
 
-// ✅ Gunakan: nama yang berbeda
+// - Gunakan: nama yang berbeda
 buat fungsi jumlah dengan a, b  // Nama yang unik
     hasil a + b
 selesai
@@ -997,16 +997,16 @@ dari Config.settings impor DEBUG
 
 **Hindari Konflik Nama:**
 ```python
-// ❌ Hindari: nama yang sama dengan builtin
+// - Hindari: nama yang sama dengan builtin
 dari math impor tambah  // 'tambah' adalah builtin
 
-// ✅ Gunakan: nama yang unik
+// - Gunakan: nama yang unik
 dari math impor jumlah  // Nama yang berbeda
 ```
 
 ---
 
-## 📚 Langkah Selanjutnya
+## Langkah Selanjutnya
 
 ### 1. Pemanggilan Fungsi Multi-baris
 
@@ -1086,14 +1086,14 @@ selesai
 ### 5. Praktik Terbaik untuk Multi-baris
 
 ```python
-// ✅ Baik - Jelas dan mudah dibaca
+// - Baik - Jelas dan mudah dibaca
 hasil itu text.format(
     title="Document",
     content="Content here",
     author="John Doe"
 )
 
-// ✅ Baik - Indentasi konsisten
+// - Baik - Indentasi konsisten
 data itu {
     "user": {
         "name": "John",
@@ -1105,24 +1105,24 @@ data itu {
     }
 }
 
-// ❌ Buruk - Pemformatan tidak konsisten
+// - Buruk - Pemformatan tidak konsisten
 hasil itu text.format(title="Document",
 content="Content",author="John")
 ```
 
 ---
 
-## 💡 Praktik Terbaik
+## Praktik Terbaik
 
 ### 1. Konvensi Penamaan
 
 ```python
-// ✅ Baik
+// - Baik
 nama_lengkap itu "Budi Santoso"
 total_harga itu 100000
 is_valid itu benar
 
-// ❌ Buruk
+// - Buruk
 n itu "Budi"
 x itu 100000
 flag itu benar
@@ -1131,7 +1131,7 @@ flag itu benar
 ### 2. Organisasi Kode
 
 ```python
-// ✅ Baik - Jelas dan terorganisir
+// - Baik - Jelas dan terorganisir
 fungsi hitung_total(harga, pajak):
     subtotal itu harga
     pajak_amount itu harga * pajak
@@ -1139,7 +1139,7 @@ fungsi hitung_total(harga, pajak):
     hasil total
 selesai
 
-// ❌ Buruk - Tidak jelas
+// - Buruk - Tidak jelas
 fungsi h(x, y):
     hasil x + x * y
 selesai
@@ -1148,18 +1148,18 @@ selesai
 ### 3. Komentar
 
 ```python
-// ✅ Baik - Komentar yang membantu
+// - Baik - Komentar yang membantu
 // Hitung total harga dengan pajak 10%
 total itu harga * 1.1
 
-// ❌ Buruk - Komentar yang jelas
+// - Buruk - Komentar yang jelas
 // Tambah 1 ke x
 x itu x + 1
 ```
 
 ---
 
-## 📚 Langkah Selanjutnya
+## Langkah Selanjutnya
 
 Setelah mempelajari dasar-dasar:
 

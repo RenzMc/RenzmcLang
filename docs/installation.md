@@ -1,8 +1,8 @@
-# 📦 Instalasi RenzmcLang
+# Instalasi RenzmcLang
 
 Panduan lengkap instalasi RenzmcLang di berbagai platform dan setup development environment.
 
-## 🚀 Instalasi Cepat
+## Instalasi Cepat
 
 ### Dari PyPI (Direkomendasikan)
 
@@ -25,7 +25,7 @@ Anda akan melihat output seperti:
 RenzmcLang version (0.0.8)
 ```
 
-## 🔧 Instalasi dari Source
+## Instalasi dari Source
 
 Untuk development atau ingin versi terbaru:
 
@@ -50,7 +50,7 @@ Mode development (`-e`) memungkinkan Anda mengedit source code dan perubahan lan
 pip install -r requirements.txt
 ```
 
-## 💻 Setup Extension VSCode
+## Setup Extension VSCode
 
 Extension VSCode memberikan syntax highlighting, auto-completion, dan fitur lainnya untuk pengalaman coding yang lebih baik.
 
@@ -97,11 +97,11 @@ code --install-extension renzmc-language-support-1.0.0.vsix
 
 Setelah terinstall, Anda akan mendapatkan:
 
-✅ **Syntax Highlighting** - Warna untuk keywords, functions, strings, dll
-✅ **Auto-Completion** - Auto-closing brackets dan quotes
-✅ **Smart Indentation** - Auto-indent setelah keywords
-✅ **File Icons** - Icon khusus untuk file `.rmc`
-✅ **Code Snippets** - Template code siap pakai
+- Syntax Highlighting - Warna untuk keywords, functions, strings, dll
+- Auto-Completion - Auto-closing brackets dan quotes
+- Smart Indentation - Auto-indent setelah keywords
+- File Icons - Icon khusus untuk file `.rmc`
+- Code Snippets - Template code siap pakai
 
 ### Verifikasi Extension
 
@@ -118,7 +118,7 @@ fungsi tambah(a, b):
 selesai
 ```
 
-## 🐍 Requirements
+## Requirements
 
 ### Minimum Requirements
 
@@ -154,7 +154,7 @@ Untuk fitur tambahan:
   pip install pymongo
   ```
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Problem: Command 'renzmc' not found
 
@@ -189,7 +189,7 @@ pip install --force-reinstall renzmc
 2. Klik kanan file → "Change Language Mode" → "RenzmcLang"
 3. Reload VSCode
 
-## 🧪 Testing Instalasi
+## Testing Instalasi
 
 ### Test 1: Hello World
 
@@ -228,15 +228,15 @@ hasil itu panggil_python math.sqrt(16)
 tampilkan f"Akar 16 = {hasil}"
 ```
 
-## 📚 Langkah Selanjutnya
+## Langkah Selanjutnya
 
 Setelah instalasi berhasil:
 
-1. **[Sintaks Dasar](sintaks-dasar)** - Pelajari sintaks fundamental
-2. **[Contoh Program](contoh)** - Jalankan contoh-contoh yang ada
-3. **[Fungsi Built-in](fungsi-builtin)** - Eksplorasi fungsi bawaan
+1. **Sintaks Dasar** - Pelajari sintaks fundamental
+2. **Contoh Program** - Jalankan contoh-contoh yang ada
+3. **Fungsi Built-in** - Eksplorasi fungsi bawaan
 
-## 💡 Tips
+## Tips
 
 1. **Gunakan Virtual Environment**
    ```bash
@@ -256,7 +256,7 @@ Setelah instalasi berhasil:
    pip install pytest black flake8
    ```
 
-## 🆘 Bantuan Lebih Lanjut
+## Bantuan Lebih Lanjut
 
 Jika masih ada masalah:
 
@@ -266,4 +266,4 @@ Jika masih ada masalah:
 
 ---
 
-**Instalasi selesai? Mari mulai coding! 🚀**
+**Instalasi selesai? Mari mulai coding!**

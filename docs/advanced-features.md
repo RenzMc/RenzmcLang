@@ -1,4 +1,4 @@
-## 📋 Table of Contents
+## Table of Contents
 
 1. [Object-Oriented Programming (OOP)](#object-oriented-programming-oop)
 2. [Async/Await](#asyncawait)
@@ -118,12 +118,12 @@ dari Config.settings impor DEBUG
 
 **Hindari Konflik Nama:**
 ```python
-// ❌ Hindari: nama yang sama dengan builtin
+// - Hindari: nama yang sama dengan builtin
 buat fungsi tambah dengan a, b  // 'tambah' adalah builtin
     hasil a + b
 selesai
 
-// ✅ Gunakan: nama yang unik
+// - Gunakan: nama yang unik
 buat fungsi jumlah dengan a, b  // Nama yang berbeda
     hasil a + b
 selesai
@@ -785,12 +785,12 @@ data: Dict[String, Integer] itu {"Budi": 85, "Ani": 90}
 
 ---
 
-## 💡 Best Practices
+## Best Practices
 
 ### 1. OOP Best Practices
 
 ```python
-// ✅ Good - Clear class structure
+// - Good - Clear class structure
 kelas User:
     konstruktor(username, email):
         diri.username itu username
@@ -808,7 +808,7 @@ kelas User:
     selesai
 selesai
 
-// ❌ Bad - Exposing internal state
+// - Bad - Exposing internal state
 kelas User:
     konstruktor(username, email, password):
         diri.username itu username
@@ -821,13 +821,13 @@ selesai
 ### 2. Async Best Practices
 
 ```python
-// ✅ Good - Proper async usage
+// - Good - Proper async usage
 async fungsi fetch_all_users():
     users itu await http_get("/api/users")
     hasil users.json()
 selesai
 
-// ❌ Bad - Blocking in async
+// - Bad - Blocking in async
 async fungsi fetch_all_users():
     users itu http_get("/api/users")  // Missing await
     hasil users.json()
@@ -837,7 +837,7 @@ selesai
 ### 3. Error Handling Best Practices
 
 ```python
-// ✅ Good - Specific error handling
+// - Good - Specific error handling
 coba
     data itu json_parse(content)
 tangkap JSONDecodeError sebagai e
@@ -846,7 +846,7 @@ tangkap FileNotFoundError sebagai e
     tampilkan f"File not found: {e}"
 selesai
 
-// ❌ Bad - Catching all errors
+// - Bad - Catching all errors
 coba
     data itu json_parse(content)
 tangkap Exception sebagai e
@@ -856,7 +856,7 @@ selesai
 
 ---
 
-## 📚 See Also
+## See Also
 
 - [Syntax Basics](syntax-basics.md) - Basic syntax
 - [Built-in Functions](builtin-functions.md) - Built-in functions

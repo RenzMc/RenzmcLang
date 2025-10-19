@@ -14,13 +14,13 @@ tampilkan ""
 
 coba
     impor_python "pymongo"
-    impor_python "pymongo.MongoClient"
     impor_python "datetime"
     
     tampilkan "[1] Koneksi ke MongoDB..."
     
     coba
         // Koneksi ke MongoDB
+        MongoClient itu panggil_python pymongo.MongoClient
         client itu MongoClient("mongodb://localhost:27017/")
         
         // Pilih database

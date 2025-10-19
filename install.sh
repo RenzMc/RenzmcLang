@@ -48,8 +48,8 @@ else
     mkdir -p "$BIN_DIR"
 fi
 
-# Create renzmc-plus command
-cat > "$BIN_DIR/renzmc-plus" << EOF
+# Create renzmc command
+cat > "$BIN_DIR/renzmc" << EOF
 #!/bin/bash
 $PYTHON -m renzmc "\$@"
 EOF
@@ -73,9 +73,9 @@ if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
 fi
 
 echo "=== Installation Complete ==="
-echo "You can now run RenzmcLang using either the 'renzmc-plus' or 'rmc' command."
+echo "You can now run RenzmcLang using either the 'renzmc' or 'rmc' command."
 echo "Examples:"
-echo "  renzmc-plus examples/hello_world.rmc"
+echo "  renzmc examples/hello_world.rmc"
 echo "  rmc examples/hello_world.rmc"
 echo ""
 echo "Thank you for installing RenzmcLang!"

@@ -431,6 +431,69 @@ tampilkan data   // [1, 2, 3, 4] - list asli tidak berubah
 tampilkan hasil  // [4, 3, 2, 1]
 ```
 
+#### List Slicing (Pemotongan List)
+Mengambil subset dari list menggunakan sintaks `[start:end:step]`.
+
+**Sintaks:**
+- `list[start:end]` - Elemen dari index start sampai end-1
+- `list[:end]` - Elemen dari awal sampai end-1
+- `list[start:]` - Elemen dari start sampai akhir
+- `list[::step]` - Setiap step elemen
+- `list[start:end:step]` - Kombinasi start, end, dan step
+- `list[::-1]` - Reverse list
+- `list[:]` - Copy list
+
+**Contoh:**
+
+```python
+nums itu [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+// Basic slicing
+tampilkan nums[2:5]      // [2, 3, 4]
+tampilkan nums[1:8]      // [1, 2, 3, 4, 5, 6, 7]
+
+// Dari awal
+tampilkan nums[:5]       // [0, 1, 2, 3, 4]
+tampilkan nums[:3]       // [0, 1, 2]
+
+// Sampai akhir
+tampilkan nums[5:]       // [5, 6, 7, 8, 9]
+tampilkan nums[7:]       // [7, 8, 9]
+
+// Dengan step
+tampilkan nums[::2]      // [0, 2, 4, 6, 8] - setiap 2 elemen
+tampilkan nums[1::2]     // [1, 3, 5, 7, 9] - mulai dari 1, setiap 2
+tampilkan nums[::3]      // [0, 3, 6, 9] - setiap 3 elemen
+
+// Kombinasi
+tampilkan nums[1:8:2]    // [1, 3, 5, 7]
+tampilkan nums[0:9:3]    // [0, 3, 6]
+
+// Negative indices (dari belakang)
+tampilkan nums[-3:]      // [7, 8, 9] - 3 terakhir
+tampilkan nums[:-3]      // [0, 1, 2, 3, 4, 5, 6] - kecuali 3 terakhir
+tampilkan nums[-5:-2]    // [5, 6, 7]
+
+// Reverse
+tampilkan nums[::-1]     // [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+
+// Copy
+copy itu nums[:]         // Salinan lengkap
+
+// String slicing juga didukung
+text itu "RenzmcLang"
+tampilkan text[0:5]      // "Renzm"
+tampilkan text[:6]       // "Renzmc"
+tampilkan text[6:]       // "Lang"
+tampilkan text[::-1]     // "gnaLcmzneR"
+```
+
+**Catatan:**
+- Index end tidak termasuk dalam hasil
+- Negative index menghitung dari belakang (-1 = elemen terakhir)
+- Slicing tidak error jika index melebihi panjang list
+- Step negatif membalik urutan
+
 #### `jumlah(list)` / `sum(list)`
 Menjumlahkan semua elemen.
 

@@ -39,6 +39,7 @@ from renzmc.core.ast import (
     NoneValue,
     Num,
     SelfVar,
+    SliceAccess,
     String,
     Ternary,
     Tuple,
@@ -415,9 +416,39 @@ class ExpressionParser:
             elif self.current_token.type == TokenType.DAFTAR_AWAL:
                 index_token = self.current_token
                 self.eat(TokenType.DAFTAR_AWAL)
-                index_expr = self.expr()
+
+                # Check if this is a slice or simple index
+                start = None
+                end = None
+                step = None
+                is_slice = False
+
+                # Parse start (or check for leading colon)
+                if self.current_token.type != TokenType.TITIK_DUA:
+                    start = self.expr()
+
+                # Check for colon (indicates slice)
+                if self.current_token.type == TokenType.TITIK_DUA:
+                    is_slice = True
+                    self.eat(TokenType.TITIK_DUA)
+
+                    # Parse end (or check for another colon)
+                    if self.current_token.type != TokenType.TITIK_DUA and self.current_token.type != TokenType.DAFTAR_AKHIR:
+                        end = self.expr()
+
+                    # Check for step (second colon)
+                    if self.current_token.type == TokenType.TITIK_DUA:
+                        self.eat(TokenType.TITIK_DUA)
+                        if self.current_token.type != TokenType.DAFTAR_AKHIR:
+                            step = self.expr()
+
                 self.eat(TokenType.DAFTAR_AKHIR)
-                obj = IndexAccess(obj, index_expr, index_token)
+
+                # Create appropriate AST node
+                if is_slice:
+                    obj = SliceAccess(obj, start, end, step, index_token)
+                else:
+                    obj = IndexAccess(obj, start, index_token)
         return obj
 
     def apply_postfix_operations(self, primary):
@@ -449,9 +480,39 @@ class ExpressionParser:
             elif self.current_token.type == TokenType.DAFTAR_AWAL:
                 index_token = self.current_token
                 self.eat(TokenType.DAFTAR_AWAL)
-                index_expr = self.expr()
+
+                # Check if this is a slice or simple index
+                start = None
+                end = None
+                step = None
+                is_slice = False
+
+                # Parse start (or check for leading colon)
+                if self.current_token.type != TokenType.TITIK_DUA:
+                    start = self.expr()
+
+                # Check for colon (indicates slice)
+                if self.current_token.type == TokenType.TITIK_DUA:
+                    is_slice = True
+                    self.eat(TokenType.TITIK_DUA)
+
+                    # Parse end (or check for another colon)
+                    if self.current_token.type != TokenType.TITIK_DUA and self.current_token.type != TokenType.DAFTAR_AKHIR:
+                        end = self.expr()
+
+                    # Check for step (second colon)
+                    if self.current_token.type == TokenType.TITIK_DUA:
+                        self.eat(TokenType.TITIK_DUA)
+                        if self.current_token.type != TokenType.DAFTAR_AKHIR:
+                            step = self.expr()
+
                 self.eat(TokenType.DAFTAR_AKHIR)
-                expr = IndexAccess(expr, index_expr, index_token)
+
+                # Create appropriate AST node
+                if is_slice:
+                    expr = SliceAccess(expr, start, end, step, index_token)
+                else:
+                    expr = IndexAccess(expr, start, index_token)
             elif self.current_token.type == TokenType.KURUNG_AWAL:
                 call_token = self.current_token
                 self.eat(TokenType.KURUNG_AWAL)

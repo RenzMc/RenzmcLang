@@ -183,6 +183,40 @@ angka.hapus(3)            // Hapus elemen
 panjang itu panjang(angka)  // Dapatkan panjang
 pertama itu angka[0]      // Akses elemen
 terakhir itu angka[-1]    // Elemen terakhir
+
+// List Slicing (Pemotongan List)
+nums itu [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+// Basic slicing [start:end]
+nums[2:5]      // [2, 3, 4] - dari index 2 sampai 4
+nums[1:8]      // [1, 2, 3, 4, 5, 6, 7]
+
+// Slicing dari awal [:end]
+nums[:5]       // [0, 1, 2, 3, 4] - 5 elemen pertama
+nums[:3]       // [0, 1, 2] - 3 elemen pertama
+
+// Slicing sampai akhir [start:]
+nums[5:]       // [5, 6, 7, 8, 9] - dari index 5 ke akhir
+nums[7:]       // [7, 8, 9]
+
+// Slicing dengan step [::step]
+nums[::2]      // [0, 2, 4, 6, 8] - setiap 2 elemen
+nums[::3]      // [0, 3, 6, 9] - setiap 3 elemen
+
+// Kombinasi [start:end:step]
+nums[1:8:2]    // [1, 3, 5, 7] - dari 1 ke 7, setiap 2
+nums[0:9:3]    // [0, 3, 6] - dari 0 ke 8, setiap 3
+
+// Negative indices (dari belakang)
+nums[-3:]      // [7, 8, 9] - 3 elemen terakhir
+nums[:-3]      // [0, 1, 2, 3, 4, 5, 6] - kecuali 3 terakhir
+nums[-5:-2]    // [5, 6, 7] - dari -5 sampai -3
+
+// Reverse list
+nums[::-1]     // [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+
+// Copy list
+nums[:]        // Salinan lengkap list
 ```
 
 ### 5. Dictionary (Kamus)

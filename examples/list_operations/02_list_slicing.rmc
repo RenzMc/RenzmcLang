@@ -1,0 +1,229 @@
+# ===================================
+# List Slicing - Comprehensive Guide
+# ===================================
+# Demonstrasi lengkap fitur slicing list di RenzmcLang
+
+tampilkan "=== List Slicing Examples ==="
+tampilkan ""
+
+# ===================================
+# 1. Basic List Creation
+# ===================================
+tampilkan "1. Basic List Creation:"
+
+nums itu [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+tampilkan "List asli: " + ke_teks(nums)
+
+buah itu ["apel", "jeruk", "mangga", "pisang", "anggur", "melon"]
+tampilkan "List buah: " + ke_teks(buah)
+
+tampilkan ""
+
+# ===================================
+# 2. Basic Slicing [start:end]
+# ===================================
+tampilkan "2. Basic Slicing [start:end]:"
+tampilkan "Mengambil elemen dari index start sampai end-1"
+
+tampilkan "nums[2:5]: " + ke_teks(nums[2:5])
+tampilkan "nums[1:8]: " + ke_teks(nums[1:8])
+tampilkan "nums[0:3]: " + ke_teks(nums[0:3])
+
+tampilkan "buah[1:4]: " + ke_teks(buah[1:4])
+tampilkan "buah[2:5]: " + ke_teks(buah[2:5])
+
+tampilkan ""
+
+# ===================================
+# 3. Slicing From Start [:end]
+# ===================================
+tampilkan "3. Slicing From Start [:end]:"
+tampilkan "Mengambil elemen dari awal sampai end-1"
+
+tampilkan "nums[:5]: " + ke_teks(nums[:5])
+tampilkan "nums[:3]: " + ke_teks(nums[:3])
+tampilkan "nums[:7]: " + ke_teks(nums[:7])
+
+tampilkan "buah[:3]: " + ke_teks(buah[:3])
+tampilkan "buah[:2]: " + ke_teks(buah[:2])
+
+tampilkan ""
+
+# ===================================
+# 4. Slicing To End [start:]
+# ===================================
+tampilkan "4. Slicing To End [start:]:"
+tampilkan "Mengambil elemen dari start sampai akhir"
+
+tampilkan "nums[5:]: " + ke_teks(nums[5:])
+tampilkan "nums[7:]: " + ke_teks(nums[7:])
+tampilkan "nums[3:]: " + ke_teks(nums[3:])
+
+tampilkan "buah[3:]: " + ke_teks(buah[3:])
+tampilkan "buah[4:]: " + ke_teks(buah[4:])
+
+tampilkan ""
+
+# ===================================
+# 5. Slicing With Step [::step]
+# ===================================
+tampilkan "5. Slicing With Step [::step]:"
+tampilkan "Mengambil setiap step elemen"
+
+tampilkan "nums[::2]: " + ke_teks(nums[::2])
+tampilkan "nums[::3]: " + ke_teks(nums[::3])
+tampilkan "nums[::4]: " + ke_teks(nums[::4])
+
+tampilkan "buah[::2]: " + ke_teks(buah[::2])
+
+tampilkan ""
+
+# ===================================
+# 6. Slicing With Start and Step [start::step]
+# ===================================
+tampilkan "6. Slicing With Start and Step [start::step]:"
+tampilkan "Mengambil dari start dengan step tertentu"
+
+tampilkan "nums[1::2]: " + ke_teks(nums[1::2])
+tampilkan "nums[2::3]: " + ke_teks(nums[2::3])
+tampilkan "nums[0::4]: " + ke_teks(nums[0::4])
+
+tampilkan "buah[1::2]: " + ke_teks(buah[1::2])
+
+tampilkan ""
+
+# ===================================
+# 7. Complex Slicing [start:end:step]
+# ===================================
+tampilkan "7. Complex Slicing [start:end:step]:"
+tampilkan "Kombinasi start, end, dan step"
+
+tampilkan "nums[1:8:2]: " + ke_teks(nums[1:8:2])
+tampilkan "nums[0:9:3]: " + ke_teks(nums[0:9:3])
+tampilkan "nums[2:10:2]: " + ke_teks(nums[2:10:2])
+
+tampilkan "buah[1:5:2]: " + ke_teks(buah[1:5:2])
+
+tampilkan ""
+
+# ===================================
+# 8. Negative Indices
+# ===================================
+tampilkan "8. Negative Indices:"
+tampilkan "Menggunakan index negatif (dari belakang)"
+
+tampilkan "nums[-3:]: " + ke_teks(nums[-3:])
+tampilkan "nums[:-3]: " + ke_teks(nums[:-3])
+tampilkan "nums[-5:-2]: " + ke_teks(nums[-5:-2])
+tampilkan "nums[-8:-3]: " + ke_teks(nums[-8:-3])
+
+tampilkan "buah[-3:]: " + ke_teks(buah[-3:])
+tampilkan "buah[:-2]: " + ke_teks(buah[:-2])
+tampilkan "buah[-4:-1]: " + ke_teks(buah[-4:-1])
+
+tampilkan ""
+
+# ===================================
+# 9. Reverse List [::-1]
+# ===================================
+tampilkan "9. Reverse List [::-1]:"
+tampilkan "Membalik urutan list dengan step negatif"
+
+tampilkan "nums[::-1]: " + ke_teks(nums[::-1])
+tampilkan "buah[::-1]: " + ke_teks(buah[::-1])
+
+tampilkan "nums[::-2]: " + ke_teks(nums[::-2])
+tampilkan "buah[::-2]: " + ke_teks(buah[::-2])
+
+tampilkan ""
+
+# ===================================
+# 10. Full Copy [:]
+# ===================================
+tampilkan "10. Full Copy [:]:"
+tampilkan "Membuat salinan lengkap list"
+
+nums_copy itu nums[:]
+tampilkan "nums[:]: " + ke_teks(nums_copy)
+
+buah_copy itu buah[:]
+tampilkan "buah[:]: " + ke_teks(buah_copy)
+
+tampilkan ""
+
+# ===================================
+# 11. Practical Examples
+# ===================================
+tampilkan "11. Practical Examples:"
+
+# Ambil 3 elemen pertama
+first_three itu nums[:3]
+tampilkan "3 elemen pertama: " + ke_teks(first_three)
+
+# Ambil 3 elemen terakhir
+last_three itu nums[-3:]
+tampilkan "3 elemen terakhir: " + ke_teks(last_three)
+
+# Ambil elemen genap (index genap)
+even_indices itu nums[::2]
+tampilkan "Index genap: " + ke_teks(even_indices)
+
+# Ambil elemen ganjil (index ganjil)
+odd_indices itu nums[1::2]
+tampilkan "Index ganjil: " + ke_teks(odd_indices)
+
+# Ambil tengah list
+mid_start itu 3
+mid_end itu 7
+middle itu nums[mid_start:mid_end]
+tampilkan "Elemen tengah [3:7]: " + ke_teks(middle)
+
+tampilkan ""
+
+# ===================================
+# 12. String Slicing
+# ===================================
+tampilkan "12. String Slicing:"
+tampilkan "Slicing juga bekerja pada string!"
+
+text itu "RenzmcLang"
+tampilkan "String asli: " + text
+
+tampilkan "text[0:5]: " + text[0:5]
+tampilkan "text[:6]: " + text[:6]
+tampilkan "text[6:]: " + text[6:]
+tampilkan "text[::2]: " + text[::2]
+tampilkan "text[::-1]: " + text[::-1]
+
+tampilkan ""
+
+# ===================================
+# 13. Slicing in Comprehensions
+# ===================================
+tampilkan "13. Slicing in Comprehensions:"
+
+# Kuadratkan 5 angka pertama
+first_five_squared itu [x * x untuk setiap x dari nums[:5]]
+tampilkan "Kuadrat 5 pertama: " + ke_teks(first_five_squared)
+
+# Gandakan elemen genap
+doubled_evens itu [x * 2 untuk setiap x dari nums[::2]]
+tampilkan "Gandakan index genap: " + ke_teks(doubled_evens)
+
+tampilkan ""
+
+# ===================================
+# 14. Best Practices
+# ===================================
+tampilkan "14. Best Practices & Tips:"
+tampilkan "✓ [start:end] - end tidak termasuk"
+tampilkan "✓ [:n] - n elemen pertama"
+tampilkan "✓ [n:] - dari index n sampai akhir"
+tampilkan "✓ [::step] - setiap step elemen"
+tampilkan "✓ [::-1] - reverse list"
+tampilkan "✓ [:] - copy list"
+tampilkan "✓ Negative index - hitung dari belakang"
+tampilkan "✓ Slicing tidak error jika index > panjang"
+
+tampilkan ""
+tampilkan "=== List Slicing Examples Complete ==="

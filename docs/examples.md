@@ -315,8 +315,8 @@ Contoh-contoh operasi daftar dalam RenzMcLang.
 
 ### Contoh Tersedia:
 
-- **01_list_basics.rmc** - Dasar-dasar operasi daftar
-- **02_list_advanced.rmc** - Operasi daftar lanjutan
+- **01_list_advanced.rmc** - Operasi daftar lanjutan
+- **02_list_slicing.rmc** - List slicing lengkap (pemotongan list)
 
 ## Logging
 

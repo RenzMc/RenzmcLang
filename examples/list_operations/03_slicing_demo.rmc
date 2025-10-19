@@ -1,0 +1,56 @@
+# ===================================
+# Quick Slicing Demo
+# ===================================
+# Demonstrasi cepat fitur slicing
+
+tampilkan "=== RenzmcLang List Slicing Demo ==="
+tampilkan ""
+
+# Data
+nums itu [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+buah itu ["apel", "jeruk", "mangga", "pisang", "anggur"]
+
+tampilkan "Data:"
+tampilkan "nums = " + ke_teks(nums)
+tampilkan "buah = " + ke_teks(buah)
+tampilkan ""
+
+# Basic slicing
+tampilkan "Basic Slicing:"
+tampilkan "nums[2:5] = " + ke_teks(nums[2:5])
+tampilkan "buah[1:4] = " + ke_teks(buah[1:4])
+tampilkan ""
+
+# From start / to end
+tampilkan "From Start / To End:"
+tampilkan "nums[:5] = " + ke_teks(nums[:5])
+tampilkan "nums[5:] = " + ke_teks(nums[5:])
+tampilkan ""
+
+# With step
+tampilkan "With Step:"
+tampilkan "nums[::2] = " + ke_teks(nums[::2])
+tampilkan "nums[1:8:2] = " + ke_teks(nums[1:8:2])
+tampilkan ""
+
+# Negative indices
+tampilkan "Negative Indices:"
+tampilkan "nums[-3:] = " + ke_teks(nums[-3:])
+tampilkan "buah[-2:] = " + ke_teks(buah[-2:])
+tampilkan ""
+
+# Reverse
+tampilkan "Reverse:"
+tampilkan "nums[::-1] = " + ke_teks(nums[::-1])
+tampilkan "buah[::-1] = " + ke_teks(buah[::-1])
+tampilkan ""
+
+# String slicing
+tampilkan "String Slicing:"
+text itu "RenzmcLang"
+tampilkan "text = " + text
+tampilkan "text[0:5] = " + text[0:5]
+tampilkan "text[::-1] = " + text[::-1]
+tampilkan ""
+
+tampilkan "✓ Slicing works perfectly!"

@@ -280,6 +280,16 @@ jumlah(list)               // Jumlah
 min(list)                  // Minimum
 max(list)                  // Maksimum
 
+// Slicing (Pemotongan)
+list[2:5]                  // Elemen 2 sampai 4
+list[:5]                   // 5 elemen pertama
+list[5:]                   // Dari index 5 ke akhir
+list[::2]                  // Setiap 2 elemen
+list[1:8:2]                // Index 1-7, setiap 2
+list[-3:]                  // 3 elemen terakhir
+list[::-1]                 // Reverse list
+list[:]                    // Copy list
+
 // Comprehension
 [x * 2 untuk setiap x dari list]
 [x untuk setiap x dari list jika x > 0]

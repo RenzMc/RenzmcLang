@@ -388,21 +388,27 @@ class Lexer:
                 return Token(TokenType.NEWLINE, "\n", line, column)
 
             # FIX BUG #2: Handle // operator vs // comment disambiguation
-            # Strategy: // is a comment ONLY if it appears at the start of a statement
-            # or after whitespace with no preceding operand
-            # Otherwise, it's the floor division operator
+            # Strategy: Check if there's whitespace immediately before //
+            # If there's whitespace before //, it's almost always a comment
+            # Only if // immediately follows an operand (no space) is it an operator
             if self.current_char == "/" and self.peek() == "/":
-                # Look back to see if there's a potential left operand
-                # Check if we just processed a number, identifier, or closing bracket
-                # This is a heuristic: if column > 1, we might have an operand before
-                if self.column > 1:
-                    # Likely floor division operator in an expression
-                    # Let it fall through to operator handling
-                    pass
-                else:
-                    # At start of line, likely a comment
+                # Check the character immediately before // (at pos-1)
+                is_comment = True  # Default to comment
+                
+                if self.pos > 0:
+                    prev_char = self.text[self.pos - 1]
+                    # If previous character is an operand (number, letter, ), ]) with NO space
+                    # then it might be an operator
+                    if prev_char.isalnum() or prev_char in (')', ']'):
+                        # It's an operator only if there's no space before //
+                        is_comment = False
+                    # If previous character is whitespace or anything else, it's a comment
+                
+                if is_comment:
+                    # It's a comment
                     self.skip_comment()
                     continue
+                # Otherwise, let it fall through to operator handling
             elif self.current_char == "/" and self.peek() == "*":
                 # /* comment
                 self.skip_comment()

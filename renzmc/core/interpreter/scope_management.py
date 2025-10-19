@@ -155,16 +155,45 @@ class ScopeManagementMixin:
             self.global_scope[name] = value
         return value
 
-    def create_class_instance(self, class_name, *args, **kwargs):
+    def create_class_instance(self, class_name, args, **kwargs):
         """
         Create an instance of a class.
 
         Args:
             class_name: Name of the class
-            *args: Positional arguments for constructor
+            args: List of positional arguments for constructor
             **kwargs: Keyword arguments for constructor
 
         Returns:
             The created instance
         """
-        return self.scope_manager.create_class_instance(class_name, *args, **kwargs)
+        from renzmc.core.ast import Block
+        
+        class_info = self.classes[class_name]
+
+        class Instance:
+            def __init__(self, class_name):
+                self.__class__.__name__ = class_name
+
+        instance = Instance(class_name)
+        instance_id = id(instance)
+        self.instance_scopes[instance_id] = {}
+        
+        if class_info["constructor"]:
+            constructor_params, constructor_body, param_types = class_info["constructor"]
+            if len(args) != len(constructor_params):
+                raise RuntimeError(
+                    f"Konstruktor kelas '{class_name}' membutuhkan {len(constructor_params)} parameter, tetapi {len(args)} diberikan"
+                )
+            old_instance = self.current_instance
+            old_local_scope = self.local_scope.copy()
+            self.current_instance = instance_id
+            self.local_scope = {}
+            self.local_scope["diri"] = instance
+            for i, param in enumerate(constructor_params):
+                self.set_variable(param, args[i], is_local=True)
+            self.visit_Block(Block(constructor_body))
+            self.current_instance = old_instance
+            self.local_scope = old_local_scope
+        
+        return instance

@@ -316,6 +316,52 @@ ERROR_CATALOG: Dict[str, ErrorInfo] = {
         ],
         related_errors=["RMC-P001", "RMC-P005"],
     ),
+    "RMC-P008": ErrorInfo(
+        code="RMC-P008",
+        category="Parser",
+        title="Slice Step Tidak Boleh Nol",
+        description="Nilai step dalam slice operation tidak boleh nol (0).",
+        solutions=[
+            "• Gunakan nilai step selain 0",
+            "• Untuk slice normal, gunakan step positif (1, 2, 3, ...)",
+            "• Untuk reverse slice, gunakan step negatif (-1, -2, -3, ...)",
+            "• Jika tidak perlu step, hilangkan parameter step",
+        ],
+        examples=[
+            "# Salah: daftar[::0]",
+            "# Benar: daftar[::1]  # setiap elemen",
+            "",
+            "# Salah: daftar[1:5:0]",
+            "# Benar: daftar[1:5:2]  # setiap 2 elemen",
+            "",
+            "# Benar: daftar[::-1]  # reverse dengan step -1",
+        ],
+        related_errors=["RMC-P009", "RMC-R001"],
+    ),
+    "RMC-P009": ErrorInfo(
+        code="RMC-P009",
+        category="Parser",
+        title="Indeks Slice Harus Integer",
+        description="Indeks slice (start, end, step) harus berupa bilangan bulat (integer), bukan float.",
+        solutions=[
+            "• Gunakan bilangan bulat untuk indeks slice",
+            "• Konversi float ke integer jika diperlukan",
+            "• Periksa tipe data yang digunakan untuk indeks",
+            "• Gunakan fungsi ke_bulat() untuk konversi",
+        ],
+        examples=[
+            "# Salah: daftar[1.5:5]",
+            "# Benar: daftar[1:5]",
+            "",
+            "# Salah: daftar[::2.5]",
+            "# Benar: daftar[::2]",
+            "",
+            "# Jika perlu konversi:",
+            "# x itu 1.5",
+            "# daftar[ke_bulat(x):5]  # konversi ke integer",
+        ],
+        related_errors=["RMC-P008", "RMC-T001"],
+    ),
     # ========================================
     # NAME ERRORS (RMC-N001 - RMC-N099)
     # ========================================

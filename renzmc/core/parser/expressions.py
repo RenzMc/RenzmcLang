@@ -55,6 +55,49 @@ class ExpressionParser:
     Expression parsing methods for handling operators and precedence.
     """
 
+    def _validate_slice_index(self, node, param_name):
+        """
+        Validate that a slice index is an integer, not a float.
+
+        Args:
+            node: The AST node to validate
+            param_name: Name of the parameter (for error message)
+
+
+        Raises:
+            Exception: If the index is a float literal
+        """
+        if node is None:
+            return
+
+        if isinstance(node, Num):
+            if isinstance(node.value, float):
+                self.error(
+                    f"[RMC-P009] Indeks slice '{param_name}' harus integer, bukan float. "
+                    f"Gunakan {int(node.value)} atau konversi dengan ke_bulat().",
+                )
+
+    def _validate_slice_step(self, step_node):
+        """
+        Validate that slice step is not zero.
+
+        Args:
+            step_node: The AST node for the step parameter
+
+
+        Raises:
+            Exception: If step is zero
+        """
+        if step_node is None:
+            return
+
+        if isinstance(step_node, Num):
+            if step_node.value == 0:
+                self.error(
+                    "[RMC-P008] Slice step tidak boleh nol (0). "
+                    "Gunakan step positif (1, 2, ...) atau negatif (-1, -2, ...) untuk reverse.",
+                )
+
     def expr(self):
         return self.ternary()
 
@@ -446,10 +489,13 @@ class ExpressionParser:
 
                 # Create appropriate AST node
                 if is_slice:
+                    self._validate_slice_index(start, "start")
+                    self._validate_slice_index(end, "end")
+                    self._validate_slice_index(step, "step")
+                    self._validate_slice_step(step)
                     obj = SliceAccess(obj, start, end, step, index_token)
                 else:
                     obj = IndexAccess(obj, start, index_token)
-        return obj
 
     def apply_postfix_operations(self, primary):
         expr = primary
@@ -510,6 +556,11 @@ class ExpressionParser:
 
                 # Create appropriate AST node
                 if is_slice:
+                    # Validate slice parameters
+                    self._validate_slice_index(start, "start")
+                    self._validate_slice_index(end, "end")
+                    self._validate_slice_index(step, "step")
+                    self._validate_slice_step(step)
                     expr = SliceAccess(expr, start, end, step, index_token)
                 else:
                     expr = IndexAccess(expr, start, index_token)

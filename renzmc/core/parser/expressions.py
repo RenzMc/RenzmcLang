@@ -228,6 +228,7 @@ class ExpressionParser:
             TokenType.KALI_OP,
             TokenType.BAGI,
             TokenType.SISA_BAGI,
+            TokenType.PEMBAGIAN_BULAT,  # FIX BUG #2: Add floor division operator
         ):
             token = self.current_token
             if token.type == TokenType.KALI_OP:
@@ -236,6 +237,8 @@ class ExpressionParser:
                 self.eat(TokenType.BAGI)
             elif token.type == TokenType.SISA_BAGI:
                 self.eat(TokenType.SISA_BAGI)
+            elif token.type == TokenType.PEMBAGIAN_BULAT:  # FIX BUG #2: Handle floor division
+                self.eat(TokenType.PEMBAGIAN_BULAT)
             node = BinOp(node, token, self.unary())
         return node
 
@@ -304,10 +307,14 @@ class ExpressionParser:
             primary = Boolean(token)
         elif token.type == TokenType.BENAR:
             self.eat(TokenType.BENAR)
-            primary = Boolean(token)
+            # FIX: Convert string "benar" to Python boolean True
+            bool_token = Token(TokenType.BENAR, True, token.line, token.column)
+            primary = Boolean(bool_token)
         elif token.type == TokenType.SALAH:
             self.eat(TokenType.SALAH)
-            primary = Boolean(token)
+            # FIX: Convert string "salah" to Python boolean False
+            bool_token = Token(TokenType.SALAH, False, token.line, token.column)
+            primary = Boolean(bool_token)
         elif token.type == TokenType.NONE:
             self.eat(TokenType.NONE)
             primary = NoneValue(token)

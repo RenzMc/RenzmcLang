@@ -387,9 +387,29 @@ class Lexer:
                 self.advance()
                 return Token(TokenType.NEWLINE, "\n", line, column)
 
+            # FIX BUG #2: Handle // operator vs // comment disambiguation
+            # Strategy: // is a comment ONLY if it appears at the start of a statement
+            # or after whitespace with no preceding operand
+            # Otherwise, it's the floor division operator
+            if self.current_char == "/" and self.peek() == "/":
+                # Look back to see if there's a potential left operand
+                # Check if we just processed a number, identifier, or closing bracket
+                # This is a heuristic: if column > 1, we might have an operand before
+                if self.column > 1:
+                    # Likely floor division operator in an expression
+                    # Let it fall through to operator handling
+                    pass
+                else:
+                    # At start of line, likely a comment
+                    self.skip_comment()
+                    continue
+            elif self.current_char == "/" and self.peek() == "*":
+                # /* comment
+                self.skip_comment()
+                continue
+
             if (
                 self.current_char == "#"
-                or (self.current_char == "/" and self.peek() in ("/", "*"))
                 or (self.current_char == "-" and self.peek() == "-")
             ):
                 self.skip_comment()

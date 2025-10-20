@@ -54,7 +54,7 @@ cat > "$BIN_DIR/renzmc" << EOF
 $PYTHON -m renzmc "\$@"
 EOF
 
-chmod +x "$BIN_DIR/renzmc-plus"
+chmod +x "$BIN_DIR/renzmc"
 
 # Create rmc command (shorthand)
 cat > "$BIN_DIR/rmc" << EOF

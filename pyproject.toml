@@ -1,0 +1,138 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "renzmc"
+version = "0.0.8"
+description = "Bahasa pemrograman berbasis Bahasa Indonesia yang powerful dan modern"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "RenzMc", email = "renzaja11@gmail.com"}
+]
+maintainers = [
+    {name = "RenzMc", email = "renzaja11@gmail.com"}
+]
+keywords = [
+    "programming-language",
+    "indonesian",
+    "bahasa-indonesia",
+    "interpreter",
+    "compiler",
+    "education",
+    "learning"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Interpreters",
+    "Topic :: Software Development :: Compilers",
+    "Topic :: Education",
+]
+dependencies = [
+    "aiohttp>=3.8.1",
+    "requests>=2.27.1",
+    "cryptography>=36.0.0",
+    "python-dateutil>=2.8.2",
+    "pytz>=2021.3",
+    "pyyaml>=6.0",
+    "ujson>=5.1.0",
+    "regex>=2022.1.18",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.18.0",
+    "black>=22.1.0",
+    "isort>=5.10.1",
+    "mypy>=0.931",
+    "flake8>=4.0.1",
+    "pylint",
+]
+docs = [
+    "sphinx>=4.0.0",
+    "sphinx-rtd-theme>=1.0.0",
+]
+jit = [
+    "numba>=0.55.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/RenzMc/RenzmcLang"
+Documentation = "https://github.com/RenzMc/RenzmcLang/tree/main/docs"
+Repository = "https://github.com/RenzMc/RenzmcLang"
+"Bug Tracker" = "https://github.com/RenzMc/RenzmcLang/issues"
+Examples = "https://github.com/RenzMc/RenzmcLang/tree/main/examples"
+
+[project.scripts]
+rmc = "renzmc.__main__:main"
+renzmc = "renzmc.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["renzmc*"]
+exclude = ["tests*", "examples*", "docs*"]
+
+[tool.setuptools.package-data]
+renzmc = ["*.py"]
+
+[tool.black]
+line-length = 120
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+  | examples
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 120
+skip_gitignore = true
+known_first_party = ["renzmc"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+
+[tool.pylint.messages_control]
+max-line-length = 120
+disable = [
+    "C0111",  # missing-docstring
+    "C0103",  # invalid-name
+    "R0913",  # too-many-arguments
+    "R0914",  # too-many-locals
+]

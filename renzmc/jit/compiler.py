@@ -131,6 +131,9 @@ class JITCompiler:
                             f"Kedalaman rekursi maksimum terlampaui dalam fungsi JIT '{name}'. "
                             f"Periksa apakah fungsi memiliki kondisi berhenti yang benar."
                         ) from e
+                    except RuntimeError:
+                        # RuntimeError (possibly from RecursionError) - re-raise without logging
+                        raise
                     except Exception as e:
                         # Log JIT compilation issues only once, then silently fallback
                         if not hasattr(jit_wrapper, '_jit_error_logged'):

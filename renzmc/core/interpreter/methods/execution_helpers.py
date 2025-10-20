@@ -92,6 +92,9 @@ class ExecutionHelpersMixin:
                             f"Kedalaman rekursi maksimum terlampaui dalam fungsi '{name}'. "
                             f"Periksa apakah fungsi memiliki kondisi berhenti yang benar."
                         ) from e
+                    except RuntimeError:
+                        # RuntimeError (possibly from RecursionError) - re-raise without logging
+                        raise
                     except Exception as e:
                         # Unexpected exception - logging for debugging
                         log_exception("operation", e, level="warning")

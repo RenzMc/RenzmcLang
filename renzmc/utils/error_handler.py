@@ -144,9 +144,10 @@ def log_exception(
     if context:
         message += f"\nContext: {context}"
 
-    # Special handling for RecursionError to prevent infinite loop in logging
-    if isinstance(exception, RecursionError):
-        # Don't include exc_info for RecursionError as it causes another recursion
+    # Special handling for RecursionError and RuntimeError to prevent infinite loop in logging
+    # RuntimeError can be raised from RecursionError, so we need to check both
+    if isinstance(exception, (RecursionError, RuntimeError)):
+        # Don't include exc_info for these errors as they can cause recursion in logging
         log_func(message)
     else:
         log_func(message, exc_info=True)

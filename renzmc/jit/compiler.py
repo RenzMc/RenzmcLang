@@ -125,7 +125,21 @@ class JITCompiler:
                 def jit_wrapper(*args, **kwargs):
                     try:
                         return jit_func(*args, **kwargs)
-                    except Exception:
+                    except RecursionError as e:
+                        # RecursionError - handle specially to avoid logging recursion
+                        raise RuntimeError(
+                            f"Kedalaman rekursi maksimum terlampaui dalam fungsi JIT '{name}'. "
+                            f"Periksa apakah fungsi memiliki kondisi berhenti yang benar."
+                        ) from e
+                    except Exception as e:
+                        # Log JIT compilation issues only once, then silently fallback
+                        if not hasattr(jit_wrapper, '_jit_error_logged'):
+                            # Only log the first JIT error to avoid spam
+                            import logging
+                            logging.getLogger("renzmc.jit").debug(
+                                f"JIT function '{name}' failed, falling back to interpreter: {type(e).__name__}: {e}"
+                            )
+                            jit_wrapper._jit_error_logged = True
                         return fallback_func(*args, **kwargs)
 
                 jit_wrapper.__name__ = name
@@ -140,7 +154,21 @@ class JITCompiler:
                     def jit_wrapper(*args, **kwargs):
                         try:
                             return jit_func(*args, **kwargs)
-                        except Exception:
+                        except RecursionError as e:
+                            # RecursionError - handle specially to avoid logging recursion
+                            raise RuntimeError(
+                                f"Kedalaman rekursi maksimum terlampaui dalam fungsi JIT '{name}'. "
+                                f"Periksa apakah fungsi memiliki kondisi berhenti yang benar."
+                            ) from e
+                        except Exception as e:
+                            # Log JIT compilation issues only once, then silently fallback
+                            if not hasattr(jit_wrapper, '_jit_error_logged'):
+                                # Only log the first JIT error to avoid spam
+                                import logging
+                                logging.getLogger("renzmc.jit").debug(
+                                    f"JIT function '{name}' failed, falling back to interpreter: {type(e).__name__}: {e}"
+                                )
+                                jit_wrapper._jit_error_logged = True
                             return fallback_func(*args, **kwargs)
 
                     jit_wrapper.__name__ = name

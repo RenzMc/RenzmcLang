@@ -898,10 +898,6 @@ Math: 15, Currency: Rp 1,000,000, Valid: true
 PI = 3.14159
 ```
 
-## Dukungan Multi-baris
-
-RenzMcLang mendukung sintaks multi-baris untuk keterbacaan kode yang lebih baik, terutama ketika berurusan dengan pemanggilan fungsi yang panjang atau struktur data yang kompleks.
-
 ### 1. Wildcard Import (Import Semua Item)
 
 **Sintaks:** `dari module impor *`
@@ -1040,7 +1036,10 @@ dari math impor jumlah  // Nama yang berbeda
 
 ---
 
-## Langkah Selanjutnya
+
+## Dukungan Multi-baris
+
+RenzMcLang mendukung sintaks multi-baris untuk keterbacaan kode yang lebih baik, terutama ketika berurusan dengan pemanggilan fungsi yang panjang atau struktur data yang kompleks.
 
 ### 1. Pemanggilan Fungsi Multi-baris
 

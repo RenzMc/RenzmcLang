@@ -24,7 +24,7 @@ SOFTWARE.
 
 """RenzmcLang version information."""
 
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 __author__ = "RenzMc"
 __email__ = "renzaja11@gmail.com"
 __license__ = "MIT"

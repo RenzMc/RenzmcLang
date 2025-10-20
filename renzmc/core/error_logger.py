@@ -201,6 +201,9 @@ class ErrorLogger:
         # Log to file
         self.error_logger.error(json.dumps(error_record, ensure_ascii=False))
 
+        # Save error to individual text file
+        error_file_path = self._save_error_to_file(error_record)
+
         # Update statistics
         self.error_stats[error_code] += 1
         self.error_history.append(error_record)
@@ -208,6 +211,9 @@ class ErrorLogger:
         # Keep only last 1000 errors in memory
         if len(self.error_history) > 1000:
             self.error_history = self.error_history[-1000:]
+
+        # Print suggestion to clean error logs
+        self._print_cleanup_suggestion(error_file_path)
 
         return error_code
 
@@ -280,6 +286,136 @@ class ErrorLogger:
             "end_line": end_line,
             "lines": snippet_lines,
         }
+
+    def _save_error_to_file(self, error_record: Dict[str, Any]) -> str:
+        """
+        Save error to individual text file.
+
+        Args:
+            error_record: Error record dictionary
+
+        Returns:
+            Path to the saved error file
+        """
+        # Create error logs directory
+        error_logs_dir = os.path.join(self.log_dir, "error_logs")
+        Path(error_logs_dir).mkdir(parents=True, exist_ok=True)
+
+        # Generate unique filename with timestamp
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+        error_code = error_record.get("error_code", "UNKNOWN")
+        error_type = error_record.get("error_type", "Error")
+        filename = f"error_{error_code}_{error_type}_{timestamp}.txt"
+        filepath = os.path.join(error_logs_dir, filename)
+
+        # Format error content for text file
+        content_lines = [
+            "=" * 80,
+            "RENZMC ERROR LOG",
+            "=" * 80,
+            "",
+            f"Timestamp: {error_record.get('timestamp', 'N/A')}",
+            f"Error Code: {error_record.get('error_code', 'N/A')}",
+            f"Error Type: {error_record.get('error_type', 'N/A')}",
+            f"File: {error_record.get('filename', 'N/A')}",
+            f"Line: {error_record.get('line', 'N/A')}",
+            f"Column: {error_record.get('column', 'N/A')}",
+            "",
+            "-" * 80,
+            "ERROR MESSAGE:",
+            "-" * 80,
+            error_record.get("error_message", "N/A"),
+            "",
+        ]
+
+        # Add source snippet if available
+        if "source_snippet" in error_record:
+            snippet = error_record["source_snippet"]
+            content_lines.extend([
+                "-" * 80,
+                "SOURCE CODE SNIPPET:",
+                "-" * 80,
+            ])
+            for line_info in snippet.get("lines", []):
+                marker = ">>>" if line_info.get("is_error_line") else "   "
+                content_lines.append(f"{marker} {line_info.get('line_number', 0):4d} | {line_info.get('content', '')}")
+            content_lines.append("")
+
+        # Add traceback
+        content_lines.extend([
+            "-" * 80,
+            "TRACEBACK:",
+            "-" * 80,
+            error_record.get("traceback", "N/A"),
+            "",
+        ])
+
+        # Add context if available
+        if error_record.get("context"):
+            content_lines.extend([
+                "-" * 80,
+                "CONTEXT:",
+                "-" * 80,
+                json.dumps(error_record["context"], indent=2, ensure_ascii=False),
+                "",
+            ])
+
+        content_lines.append("=" * 80)
+
+        # Write to file
+        with open(filepath, "w", encoding="utf-8") as f:
+            f.write("\n".join(content_lines))
+
+        return filepath
+
+    def _print_cleanup_suggestion(self, error_file_path: str) -> None:
+        """
+        Print suggestion to clean up error logs.
+
+        Args:
+            error_file_path: Path to the error file that was just created
+        """
+        error_logs_dir = os.path.dirname(error_file_path)
+        error_files = [f for f in os.listdir(error_logs_dir) if f.startswith("error_") and f.endswith(".txt")]
+        num_errors = len(error_files)
+
+        if num_errors > 0:
+            print(f"\n💡 Error log disimpan di: {error_file_path}")
+            print(f"📁 Total error logs: {num_errors} file")
+            print("🧹 Untuk menghapus semua error logs, jalankan: rmc --hapussampaherror\n")
+
+    def get_error_logs_dir(self) -> str:
+        """
+        Get the directory where error log files are stored.
+
+        Returns:
+            Path to error logs directory
+        """
+        return os.path.join(self.log_dir, "error_logs")
+
+    def clear_error_logs(self) -> int:
+        """
+        Clear all error log files.
+
+        Returns:
+            Number of files deleted
+        """
+        error_logs_dir = self.get_error_logs_dir()
+        if not os.path.exists(error_logs_dir):
+            return 0
+
+        error_files = [f for f in os.listdir(error_logs_dir) if f.startswith("error_") and f.endswith(".txt")]
+        count = 0
+
+        for filename in error_files:
+            filepath = os.path.join(error_logs_dir, filename)
+            try:
+                os.remove(filepath)
+                count += 1
+            except Exception:
+                pass
+
+        return count
 
     def get_error_statistics(self) -> Dict[str, Any]:
         """
@@ -418,3 +554,25 @@ def get_error_statistics() -> Dict[str, Any]:
     """
     logger = get_error_logger()
     return logger.get_error_statistics()
+
+
+def clear_error_logs() -> int:
+    """
+    Clear all error log files using global logger.
+
+    Returns:
+        Number of files deleted
+    """
+    logger = get_error_logger()
+    return logger.clear_error_logs()
+
+
+def get_error_logs_dir() -> str:
+    """
+    Get the directory where error log files are stored.
+
+    Returns:
+        Path to error logs directory
+    """
+    logger = get_error_logger()
+    return logger.get_error_logs_dir()

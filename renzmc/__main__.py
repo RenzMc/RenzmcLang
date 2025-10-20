@@ -119,10 +119,26 @@ def main():
     parser.add_argument("file", nargs="?", help="File RenzmcLang untuk dijalankan")
     parser.add_argument("-v", "--version", action="store_true", help="Tampilkan versi RenzmcLang")
     parser.add_argument("-c", "--code", help="Jalankan kode RenzmcLang")
+    parser.add_argument("--hapussampaherror", action="store_true", help="Hapus semua error log files")
     args = parser.parse_args()
 
     if args.version:
         print(f"RenzmcLang {__version__}")
+        return
+
+    if args.hapussampaherror:
+        from renzmc.core.error_logger import clear_error_logs, get_error_logs_dir
+
+        error_logs_dir = get_error_logs_dir()
+        print(f"🗑️  Menghapus error logs dari: {error_logs_dir}")
+        print("⏳ Mohon tunggu...")
+
+        deleted_count = clear_error_logs()
+
+        if deleted_count > 0:
+            print(f"✅ Berhasil menghapus {deleted_count} error log file(s)")
+        else:
+            print("ℹ️  Tidak ada error log yang perlu dihapus")
         return
 
     if args.code:

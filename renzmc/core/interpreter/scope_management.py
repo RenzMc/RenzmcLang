@@ -29,9 +29,6 @@ This module contains scope and variable management functionality.
 """
 
 
-from renzmc.core.error import RenzmcNameError
-
-
 class ScopeManagementMixin:
     """
     Mixin class for scope management functionality.
@@ -120,17 +117,7 @@ class ScopeManagementMixin:
         Raises:
             RenzmcNameError: If variable is not found
         """
-        if self.current_instance is not None and self.current_instance in self.instance_scopes:
-            instance_scope = self.instance_scopes[self.current_instance]
-            if name in instance_scope:
-                return instance_scope[name]
-        if name in self.local_scope:
-            return self.local_scope[name]
-        if name in self.global_scope:
-            return self.global_scope[name]
-        if name in self.builtin_functions:
-            return self.builtin_functions[name]
-        raise RenzmcNameError(f"Variabel '{name}' tidak ditemukan")
+        return self.scope_manager.get_variable(name)
 
     def set_variable(self, name, value, is_local=False):
         """
@@ -144,15 +131,7 @@ class ScopeManagementMixin:
         Returns:
             The set value
         """
-        if self.current_instance is not None:
-            if self.current_instance not in self.instance_scopes:
-                self.instance_scopes[self.current_instance] = {}
-            self.instance_scopes[self.current_instance][name] = value
-            return value
-        if is_local or name in self.local_scope:
-            self.local_scope[name] = value
-        else:
-            self.global_scope[name] = value
+        self.scope_manager.set_variable(name, value, is_local)
         return value
 
     def create_class_instance(self, class_name, args, **kwargs):
@@ -168,7 +147,7 @@ class ScopeManagementMixin:
             The created instance
         """
         from renzmc.core.ast import Block
-        
+
         class_info = self.classes[class_name]
 
         class Instance:
@@ -178,7 +157,7 @@ class ScopeManagementMixin:
         instance = Instance(class_name)
         instance_id = id(instance)
         self.instance_scopes[instance_id] = {}
-        
+
         if class_info["constructor"]:
             constructor_params, constructor_body, param_types = class_info["constructor"]
             if len(args) != len(constructor_params):
@@ -195,5 +174,5 @@ class ScopeManagementMixin:
             self.visit_Block(Block(constructor_body))
             self.current_instance = old_instance
             self.local_scope = old_local_scope
-        
+
         return instance

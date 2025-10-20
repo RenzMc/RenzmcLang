@@ -854,6 +854,54 @@ tangkap Exception sebagai e
 selesai
 ```
 
+### Built-in Cache Functions
+
+RenzmcLang provides functions to monitor and manage the inline cache:
+
+#### 1. Get Cache Statistics
+
+```python
+// Get detailed cache statistics
+stats itu info_cache_inline()
+tampilkan f"Hit rate: {stats['hit_rate']}"
+tampilkan f"Total lookups: {stats['total_lookups']}"
+tampilkan f"Cache size: {stats['cache_size']}"
+```
+
+**Returns:**
+- `hits`: Number of cache hits
+- `misses`: Number of cache misses
+- `total_lookups`: Total variable lookups
+- `hit_rate`: Cache hit rate percentage
+- `cache_size`: Current number of cached entries
+- `enabled`: Whether cache is enabled
+
+#### 2. Reset Cache Statistics
+
+```python
+// Reset statistics without clearing cache
+reset_cache_inline()
+tampilkan "Cache statistics reset"
+```
+
+#### 3. Clear Cache
+
+```python
+// Clear all cached entries and reset statistics
+bersihkan_cache_inline()
+tampilkan "Cache cleared"
+```
+
+#### 4. Enable/Disable Cache
+
+```python
+// Disable cache (for debugging)
+nonaktifkan_cache_inline()
+
+// Enable cache (default state)
+aktifkan_cache_inline()
+```
+
 ---
 
 ## See Also

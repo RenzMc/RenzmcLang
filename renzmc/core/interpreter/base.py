@@ -126,6 +126,7 @@ class InterpreterBase(NodeVisitor, TypeIntegrationMixin):
         self._register_renzmc_module_builtins()
         self._register_advanced_feature_builtins()
         self._register_safety_builtins()
+        self._register_inline_cache_builtins()
 
         self.scope_manager.builtin_functions = self.builtin_functions
         self._setup_python_builtins()
@@ -196,5 +197,17 @@ class InterpreterBase(NodeVisitor, TypeIntegrationMixin):
             {
                 "atur_mode_aman": self._set_safe_mode,
                 "cek_mode_aman": self._check_safe_mode,
+            }
+        )
+
+    def _register_inline_cache_builtins(self):
+        """Register inline cache builtin functions."""
+        self.builtin_functions.update(
+            {
+                "info_cache_inline": self._get_inline_cache_stats,
+                "reset_cache_inline": self._reset_inline_cache,
+                "bersihkan_cache_inline": self._clear_inline_cache,
+                "aktifkan_cache_inline": self._enable_inline_cache,
+                "nonaktifkan_cache_inline": self._disable_inline_cache,
             }
         )

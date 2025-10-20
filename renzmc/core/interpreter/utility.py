@@ -219,3 +219,52 @@ class UtilityMixin:
             return hasattr(obj, attr_name)
         except Exception:
             return False
+
+    def _get_inline_cache_stats(self):
+        """
+        Get inline cache statistics.
+
+        Returns:
+            Dictionary with cache statistics
+        """
+        return self.scope_manager.inline_cache.get_stats()
+
+    def _reset_inline_cache(self):
+        """
+        Reset inline cache statistics.
+
+        Returns:
+            Success message
+        """
+        self.scope_manager.inline_cache.reset_stats()
+        return "Statistik cache inline telah direset"
+
+    def _clear_inline_cache(self):
+        """
+        Clear all inline cache entries.
+
+        Returns:
+            Success message
+        """
+        self.scope_manager.inline_cache.clear()
+        return "Cache inline telah dibersihkan"
+
+    def _enable_inline_cache(self):
+        """
+        Enable inline cache.
+
+        Returns:
+            Success message
+        """
+        self.scope_manager.inline_cache.enable()
+        return "Cache inline diaktifkan"
+
+    def _disable_inline_cache(self):
+        """
+        Disable inline cache.
+
+        Returns:
+            Success message
+        """
+        self.scope_manager.inline_cache.disable()
+        return "Cache inline dinonaktifkan"

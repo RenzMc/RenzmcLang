@@ -144,7 +144,12 @@ def log_exception(
     if context:
         message += f"\nContext: {context}"
 
-    log_func(message, exc_info=True)
+    # Special handling for RecursionError to prevent infinite loop in logging
+    if isinstance(exception, RecursionError):
+        # Don't include exc_info for RecursionError as it causes another recursion
+        log_func(message)
+    else:
+        log_func(message, exc_info=True)
 
 
 def handle_type_error(obj: Any, expected_type: str, operation: str) -> bool:

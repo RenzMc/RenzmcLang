@@ -24,7 +24,6 @@ SOFTWARE.
 """
 
 
-
 import builtins as py_builtins
 import os
 import time
@@ -51,56 +50,125 @@ class ExecutionHelpersMixin:
     """
 
     def _execute_user_function(self, name, params, body, return_type, param_types, args, kwargs):
-        # Check if function should be force-compiled with JIT
-        # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip
-        if JIT_AVAILABLE and hasattr(self, "_jit_force") and name in self._jit_force:
-            if name not in self.jit_compiled_functions:
-                self._compile_function_with_jit(name, params, body, force=True)
+        # Initialize recursion tracking if not exists
+        if not hasattr(self, '_recursion_depth'):
+            self._recursion_depth = {}
 
-        # Check if function has JIT hint and should be compiled
-        if JIT_AVAILABLE and hasattr(self, "_jit_hints") and name in self._jit_hints:
-            if name not in self.jit_compiled_functions:
-                self._compile_function_with_jit(name, params, body, force=True)
+        # Track recursion depth for this function
+        if name not in self._recursion_depth:
+            self._recursion_depth[name] = 0
 
-        if JIT_AVAILABLE and name in self.jit_compiled_functions:
-            compiled_func = self.jit_compiled_functions[name]
-            if compiled_func is not None:
-                try:
-                    return compiled_func(*args, **kwargs)
-                except Exception as e:
-                    # Unexpected exception - logging for debugging
-                    log_exception("operation", e, level="warning")
+        # Check recursion depth limit (default Python limit is ~1000)
+        MAX_RECURSION_DEPTH = 950  # Set slightly lower than Python's limit
+        if self._recursion_depth[name] >= MAX_RECURSION_DEPTH:
+            raise RuntimeError(
+                f"Kedalaman rekursi maksimum terlampaui dalam fungsi '{name}'. "
+                f"Periksa apakah fungsi memiliki kondisi berhenti yang benar."
+            )
 
-        start_time = time.time()
-        param_values = {}
-        for i, arg in enumerate(args):
-            if i >= len(params):
-                raise RuntimeError(
-                    f"Fungsi '{name}' membutuhkan {len(params)} parameter, tetapi {len(args)} posisional diberikan"
-                )
-            param_values[params[i]] = arg
-        for param_name, value in kwargs.items():
-            if param_name not in params:
-                raise RuntimeError(f"Parameter '{param_name}' tidak ada dalam fungsi '{name}'")
-            if param_name in param_values:
-                raise RuntimeError(
-                    f"Parameter '{param_name}' mendapat nilai ganda (posisional dan kata kunci)"
-                )
-            param_values[param_name] = value
-        missing_params = [p for p in params if p not in param_values]
-        if missing_params:
-            raise RuntimeError(f"Parameter hilang dalam fungsi '{name}': {', '.join(missing_params)}")
-        if param_types:
+        # Increment recursion depth
+        self._recursion_depth[name] += 1
+
+        try:
+            # Check if function should be force-compiled with JIT
+            # Only try to compile once - if it's already in jit_compiled_functions (even if None), skip
+            if JIT_AVAILABLE and hasattr(self, "_jit_force") and name in self._jit_force:
+                if name not in self.jit_compiled_functions:
+                    self._compile_function_with_jit(name, params, body, force=True)
+
+            # Check if function has JIT hint and should be compiled
+            if JIT_AVAILABLE and hasattr(self, "_jit_hints") and name in self._jit_hints:
+                if name not in self.jit_compiled_functions:
+                    self._compile_function_with_jit(name, params, body, force=True)
+
+            if JIT_AVAILABLE and name in self.jit_compiled_functions:
+                compiled_func = self.jit_compiled_functions[name]
+                if compiled_func is not None:
+                    try:
+                        return compiled_func(*args, **kwargs)
+                    except RecursionError as e:
+                        # RecursionError - handle specially to avoid logging recursion
+                        raise RuntimeError(
+                            f"Kedalaman rekursi maksimum terlampaui dalam fungsi '{name}'. "
+                            f"Periksa apakah fungsi memiliki kondisi berhenti yang benar."
+                        ) from e
+                    except Exception as e:
+                        # Unexpected exception - logging for debugging
+                        log_exception("operation", e, level="warning")
+
+            start_time = time.time()
+            param_values = {}
+            for i, arg in enumerate(args):
+                if i >= len(params):
+                    raise RuntimeError(
+                        f"Fungsi '{name}' membutuhkan {len(params)} parameter, tetapi {len(args)} posisional diberikan"
+                    )
+                param_values[params[i]] = arg
+            for param_name, value in kwargs.items():
+                if param_name not in params:
+                    raise RuntimeError(f"Parameter '{param_name}' tidak ada dalam fungsi '{name}'")
+                if param_name in param_values:
+                    raise RuntimeError(
+                        f"Parameter '{param_name}' mendapat nilai ganda (posisional dan kata kunci)"
+                    )
+                param_values[param_name] = value
+            missing_params = [p for p in params if p not in param_values]
+            if missing_params:
+                raise RuntimeError(f"Parameter hilang dalam fungsi '{name}': {', '.join(missing_params)}")
+            if param_types:
+                for param_name, value in param_values.items():
+                    if param_name in param_types:
+                        type_hint = param_types[param_name]
+                        type_name = type_hint.type_name
+                        if type_name in self.type_registry:
+                            expected_type = self.type_registry[type_name]
+                            try:
+                                if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                                    raise TypeHintError(
+                                        f"Parameter '{param_name}' harus bertipe '{type_name}'"
+                                    )
+                            except TypeError as e:
+                                # Type checking failed - this is expected for non-type objects
+                                log_exception("type validation", e, level="debug")
+                        elif hasattr(py_builtins, type_name):
+                            expected_type = getattr(py_builtins, type_name)
+                            try:
+                                if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                                    raise TypeHintError(
+                                        f"Parameter '{param_name}' harus bertipe '{type_name}'"
+                                    )
+                            except TypeError as e:
+                                # Type checking failed - this is expected for non-type objects
+                                log_exception("type validation", e, level="debug")
+            old_local_scope = self.local_scope.copy()
+            self.local_scope = {}
             for param_name, value in param_values.items():
-                if param_name in param_types:
-                    type_hint = param_types[param_name]
-                    type_name = type_hint.type_name
+                self.set_variable(param_name, value, is_local=True)
+            self.return_value = None
+            for stmt in body:
+                self.visit(stmt)
+                if hasattr(self, "return_flag") and self.return_flag:
+                    break
+                if (
+                    hasattr(self, "break_flag")
+                    and self.break_flag
+                    or (hasattr(self, "continue_flag") and self.continue_flag)
+                ):
+                    if hasattr(self, "break_flag"):
+                        self.break_flag = False
+                    if hasattr(self, "continue_flag"):
+                        self.continue_flag = False
+                    break
+            return_value = self.return_value
+            if return_type and return_value is not None:
+                if hasattr(return_type, "type_name"):
+                    type_name = return_type.type_name
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                                 raise TypeHintError(
-                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"
+                                    f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                                 )
                         except TypeError as e:
                             # Type checking failed - this is expected for non-type objects
@@ -108,85 +176,46 @@ class ExecutionHelpersMixin:
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
                                 raise TypeHintError(
-                                    f"Parameter '{param_name}' harus bertipe '{type_name}'"
+                                    f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                                 )
                         except TypeError as e:
                             # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
-        old_local_scope = self.local_scope.copy()
-        self.local_scope = {}
-        for param_name, value in param_values.items():
-            self.set_variable(param_name, value, is_local=True)
-        self.return_value = None
-        for stmt in body:
-            self.visit(stmt)
-            if hasattr(self, "return_flag") and self.return_flag:
-                break
-            if (
-                hasattr(self, "break_flag")
-                and self.break_flag
-                or (hasattr(self, "continue_flag") and self.continue_flag)
-            ):
-                if hasattr(self, "break_flag"):
-                    self.break_flag = False
-                if hasattr(self, "continue_flag"):
-                    self.continue_flag = False
-                break
-        return_value = self.return_value
-        if return_type and return_value is not None:
-            if hasattr(return_type, "type_name"):
-                type_name = return_type.type_name
-                if type_name in self.type_registry:
-                    expected_type = self.type_registry[type_name]
-                    try:
-                        if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
-                            raise TypeHintError(
-                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
-                            )
-                    except TypeError as e:
-                        # Type checking failed - this is expected for non-type objects
-                        log_exception("type validation", e, level="debug")
-                elif hasattr(py_builtins, type_name):
-                    expected_type = getattr(py_builtins, type_name)
-                    try:
-                        if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
-                            raise TypeHintError(
-                                f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
-                            )
-                    except TypeError as e:
-                        # Type checking failed - this is expected for non-type objects
-                        log_exception("type validation", e, level="debug")
-            else:
-                from renzmc.core.advanced_types import AdvancedTypeValidator, TypeParser
-
-                if isinstance(return_type, str):
-                    type_spec = TypeParser.parse_type_string(return_type)
                 else:
-                    type_spec = return_type
-                if type_spec:
-                    is_valid, error_msg = AdvancedTypeValidator.validate(return_value, type_spec, "return")
-                    if not is_valid:
-                        raise TypeHintError(f"Fungsi '{name}': {error_msg}")
-        self.local_scope = old_local_scope
-        self.return_value = None
+                    from renzmc.core.advanced_types import AdvancedTypeValidator, TypeParser
 
-        if JIT_AVAILABLE and name in self.jit_call_counts:
-            execution_time = time.time() - start_time
-            self.jit_call_counts[name] += 1
-            self.jit_execution_times[name] += execution_time
+                    if isinstance(return_type, str):
+                        type_spec = TypeParser.parse_type_string(return_type)
+                    else:
+                        type_spec = return_type
+                    if type_spec:
+                        is_valid, error_msg = AdvancedTypeValidator.validate(return_value, type_spec, "return")
+                        if not is_valid:
+                            raise TypeHintError(f"Fungsi '{name}': {error_msg}")
+            self.local_scope = old_local_scope
+            self.return_value = None
 
-            if self.jit_call_counts[name] >= self.jit_threshold and name not in self.jit_compiled_functions:
-                # Check if function is recursive before auto-compiling
-                from renzmc.jit.type_inference import TypeInferenceEngine
+            if JIT_AVAILABLE and name in self.jit_call_counts:
+                execution_time = time.time() - start_time
+                self.jit_call_counts[name] += 1
+                self.jit_execution_times[name] += execution_time
 
-                type_inference = TypeInferenceEngine()
-                complexity = type_inference.analyze_function_complexity(body, name)
-                if not complexity["has_recursion"]:
-                    self._compile_function_with_jit(name, params, body)
+                if self.jit_call_counts[name] >= self.jit_threshold and name not in self.jit_compiled_functions:
+                    # Check if function is recursive before auto-compiling
+                    from renzmc.jit.type_inference import TypeInferenceEngine
 
-        return return_value
+                    type_inference = TypeInferenceEngine()
+                    complexity = type_inference.analyze_function_complexity(body, name)
+                    if not complexity["has_recursion"]:
+                        self._compile_function_with_jit(name, params, body)
+
+            return return_value
+        finally:
+            # Always decrement recursion depth counter
+            if hasattr(self, '_recursion_depth') and name in self._recursion_depth:
+                self._recursion_depth[name] -= 1
 
     def _compile_function_with_jit(self, name, params, body, force=False):
         if not self.jit_compiler:

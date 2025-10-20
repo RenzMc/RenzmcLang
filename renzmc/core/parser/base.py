@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,11 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Parser Base Module
 
-This module contains the base Parser class with core functionality.
-"""
 
 from renzmc.core.ast import Program
 from renzmc.core.error import ParserError

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,12 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Interpreter Module
 
-This module provides a modular interpreter implementation by combining
-multiple mixin classes for different functionality areas.
-"""
 
 from renzmc.core.interpreter.advanced_features import AdvancedFeaturesMixin
 from renzmc.core.interpreter.base import InterpreterBase

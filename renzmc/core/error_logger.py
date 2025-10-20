@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,12 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Advanced Error Logger Module
 
-Provides comprehensive error logging with structured logging, file rotation,
-error statistics, and analytics capabilities.
-"""
 
 import json
 import logging

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,11 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Parser Special Statements Module
 
-Special statement parsing methods (print, with, decorator, type_alias).
-"""
 
 from renzmc.core.ast import Decorator, Print, Tuple, TypeAlias, With
 from renzmc.core.parser_type_helpers import parse_type_hint_advanced

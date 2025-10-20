@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,11 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Parser Literals Module
 
-Literal parsing methods for data structures.
-"""
 
 from renzmc.core.ast import (
     Dict,

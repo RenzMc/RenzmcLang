@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,10 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-Type Helper Utilities for RenzmcLang
-Provides reusable type checking and validation functions
-"""
+
 import builtins as py_builtins
 from typing import Any, Optional, Type
 

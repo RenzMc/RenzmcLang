@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,18 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang AST Cache Module
 
-This module provides AST caching functionality to improve performance by
-avoiding repeated parsing of the same source files. The cache stores parsed
-AST trees and retrieves them based on source code hash.
-
-Benefits:
-    - 10-20x faster startup for cached files
-    - Reduced parsing overhead
-    - Automatic cache invalidation on source changes
-"""
 
 import hashlib
 import os

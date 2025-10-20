@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,10 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-Error Handler Utility for RenzmcLang
-Provides centralized exception handling with proper logging and context
-"""
+
 import logging
 from functools import wraps
 from typing import Any, Callable, Optional

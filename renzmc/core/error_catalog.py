@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,12 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Error Catalog Module
 
-Comprehensive error catalog with 100+ unique error codes, detailed descriptions,
-solutions, and examples for all error types in RenzmcLang.
-"""
 
 from typing import Dict, List, Optional
 

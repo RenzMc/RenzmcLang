@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,20 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Parser Statements Package
 
-This package provides modular statement parsing for RenzmcLang.
-The statements module is split into multiple files for better maintainability:
-
-- router: Main statement routing logic
-- control_flow: Control flow statements (if, while, for, switch)
-- assignments: Assignment statements (simple, compound, multi)
-- flow_control: Flow control statements (return, yield, break, continue)
-- error_handling: Error handling statements (try-catch)
-- special_statements: Special statements (print, with, decorator, type_alias)
-- call_statements: Call statements (python_call, call)
-"""
 
 from renzmc.core.parser.statements.assignments import (
     AssignmentStatements,

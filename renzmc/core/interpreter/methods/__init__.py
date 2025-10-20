@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,11 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Interpreter Methods Module
 
-This module combines all visitor and execution method mixins.
-"""
 
 from renzmc.core.interpreter.methods.advanced_visitors import AdvancedVisitorsMixin
 from renzmc.core.interpreter.methods.basic_visitors import BasicVisitorsMixin

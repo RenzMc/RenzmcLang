@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,12 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Error Module
 
-This module defines all error types and error formatting functionality
-for the RenzmcLang programming language.
-"""
 
 from renzmc.core.error_catalog import get_error_info, suggest_error_code
 

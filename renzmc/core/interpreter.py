@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,13 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Interpreter
 
-This module provides the main Interpreter class by importing from the
-modular interpreter package. All functionality is now organized into
-separate modules for better maintainability.
-"""
 
 
 from renzmc.core.interpreter import Interpreter

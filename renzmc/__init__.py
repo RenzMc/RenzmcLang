@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,12 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang - Bahasa Pemrograman Berbasis Bahasa Indonesia
 
-A modern programming language with Indonesian syntax, designed to make
-programming more accessible for Indonesian speakers.
-"""
 
 
 from renzmc.version import __author__, __email__, __license__, __version__

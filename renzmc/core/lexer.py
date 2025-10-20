@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,12 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Lexer Module
 
-This module implements the lexical analyzer (tokenizer) for RenzmcLang.
-It converts source code text into a stream of tokens.
-"""
 
 from renzmc.core.error import LexerError
 from renzmc.core.token import Token, TokenType

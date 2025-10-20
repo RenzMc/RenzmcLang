@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,11 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Parser Control Flow Statements Module
 
-Control flow statement parsing methods (if, while, for, foreach, switch).
-"""
 
 from renzmc.core.ast import Case, For, ForEach, If, Switch, While
 from renzmc.core.token import TokenType

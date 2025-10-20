@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,12 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Inline Cache Module
 
-This module provides inline caching for variable lookups to significantly
-improve performance by reducing scope traversal overhead.
-"""
 
 
 class InlineCache:

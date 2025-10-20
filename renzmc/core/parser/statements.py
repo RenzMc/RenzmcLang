@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,14 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Parser Statements Module
 
-Statement parsing methods for control flow and assignments.
-
-This module has been modularized into separate files for better maintainability.
-All statement parsing functionality is now organized in the statements package.
-"""
 
 from renzmc.core.parser.statements import StatementParser
 

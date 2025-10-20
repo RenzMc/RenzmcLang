@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,21 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Parser Package
 
-This package provides a modular parser implementation for RenzmcLang.
-The parser is split into multiple modules for better maintainability:
-
-- base: Core parser functionality
-- expressions: Expression parsing with operator precedence
-- statements: Statement parsing (control flow, assignments)
-- declarations: Variable, function, and class declarations
-- literals: Literal parsing (lists, dicts, sets, tuples)
-- oop: Object-oriented programming features
-- utilities: Utility methods for parsing
-- imports: Import statement parsing
-"""
 
 from renzmc.core.parser.base import ParserBase
 from renzmc.core.parser.declarations import DeclarationParser

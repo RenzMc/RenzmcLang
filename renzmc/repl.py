@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,9 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-""" REPL (Read-Eval-Print Loop) untuk RenzMcLang
-Interactive shell dengan fitur modern seperti Python REPL
-"""
+
 
 import atexit
 import os

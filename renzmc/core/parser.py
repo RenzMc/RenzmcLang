@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,16 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-RenzmcLang Parser Module
 
-This module implements the parser for RenzmcLang, converting tokens
-into an Abstract Syntax Tree (AST).
-
-The parser is now modularized into separate components for better
-maintainability and extensibility. All functionality is imported
-from the parser package.
-"""
 
 from renzmc.core.parser import Parser
 

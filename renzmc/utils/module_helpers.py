@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 MIT License
 
@@ -22,10 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-"""
-Module Helper Utilities for RenzmcLang
-Provides reusable module import and requirement checking functions
-"""
+
 import importlib
 import sys
 from typing import Any, List, Optional

@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 from renzmc.core.parser.base import ParserBase
 from renzmc.core.parser.declarations import DeclarationParser
 from renzmc.core.parser.expressions import ExpressionParser

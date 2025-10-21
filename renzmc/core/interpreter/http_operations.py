@@ -24,8 +24,6 @@ SOFTWARE.
 """
 
 
-
-
 class HTTPOperationsMixin:
     """
     Mixin class for HTTP operations functionality.

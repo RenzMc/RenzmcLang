@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 from renzmc.core.interpreter.advanced_features import AdvancedFeaturesMixin
 from renzmc.core.interpreter.base import InterpreterBase
 from renzmc.core.interpreter.builtin_setup import BuiltinSetupMixin

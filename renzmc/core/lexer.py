@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 from renzmc.core.error import LexerError
 from renzmc.core.token import Token, TokenType
 
@@ -390,7 +388,7 @@ class Lexer:
             if self.current_char == "/" and self.peek() == "/":
                 # Check the character immediately before // (at pos-1)
                 is_comment = True  # Default to comment
-                
+
                 if self.pos > 0:
                     prev_char = self.text[self.pos - 1]
                     # If previous character is an operand (number, letter, ), ]) with NO space
@@ -399,7 +397,7 @@ class Lexer:
                         # It's an operator only if there's no space before //
                         is_comment = False
                     # If previous character is whitespace or anything else, it's a comment
-                
+
                 if is_comment:
                     # It's a comment
                     self.skip_comment()

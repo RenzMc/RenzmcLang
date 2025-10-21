@@ -24,8 +24,6 @@ SOFTWARE.
 """
 
 
-
-
 class ScopeManagementMixin:
     """
     Mixin class for scope management functionality.

@@ -24,8 +24,6 @@ SOFTWARE.
 """
 
 
-
-
 class InlineCache:
     """
     Inline cache for variable lookups.

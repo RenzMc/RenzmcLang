@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 from renzmc.core.ast import Decorator, Print, Tuple, TypeAlias, With
 from renzmc.core.parser_type_helpers import parse_type_hint_advanced
 from renzmc.core.token import TokenType

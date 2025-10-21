@@ -23,9 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
-
 from renzmc.version import __author__, __email__, __license__, __version__
 
 __all__ = ["__version__", "__author__", "__email__", "__license__"]

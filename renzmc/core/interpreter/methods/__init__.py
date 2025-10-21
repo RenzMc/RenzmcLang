@@ -23,8 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
 
-
-
 from renzmc.core.interpreter.methods.advanced_visitors import AdvancedVisitorsMixin
 from renzmc.core.interpreter.methods.basic_visitors import BasicVisitorsMixin
 from renzmc.core.interpreter.methods.class_visitors import ClassVisitorsMixin

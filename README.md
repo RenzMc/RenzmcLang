@@ -56,7 +56,7 @@ RenzMcLang adalah bahasa pemrograman yang menggunakan sintaks Bahasa Indonesia, 
 - Seamless data type conversion
 
 ### Built-in Functions Lengkap
-- String manipulation (148+ functions)
+- String manipulation (184+ functions)
 - Math & statistics - Operasi matematika lengkap
 - File operations - Read, write, manipulasi file
 - JSON utilities - Parse dan generate JSON

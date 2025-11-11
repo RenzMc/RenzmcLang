@@ -308,34 +308,6 @@ RenzMcLang cocok untuk:
 - Game Logic: Game logic dengan type safety
 - Mathematical Modeling: Pemodelan matematika dengan JIT optimization
 
-## Tips & Best Practices
-
-### Best Practices
-1. Gunakan nama variabel yang deskriptif
-2. Tambahkan komentar untuk kode kompleks
-3. Manfaatkan built-in functions
-4. Gunakan error handling yang proper
-5. Test kode secara berkala
-6. Gunakan type hints untuk fungsi publik
-7. Manfaatkan JIT compiler untuk operasi numerik intensif
-
-### Performance Tips
-1. Leverage JIT Compiler - Fungsi numerik dengan loop akan otomatis dioptimasi
-2. Use Type Hints - Membantu JIT compiler mengoptimasi lebih baik
-3. Gunakan comprehensions untuk operasi list
-4. Manfaatkan built-in functions yang sudah dioptimasi
-5. Hindari nested loops yang dalam (atau biarkan JIT mengoptimasi)
-6. Gunakan generator untuk data besar
-7. Profile kode untuk menemukan bottleneck
-8. Pisahkan operasi numerik ke fungsi terpisah untuk JIT optimization
-
-### JIT Optimization Tips
-1. Keep Functions Pure - Fungsi tanpa side effects lebih mudah dioptimasi
-2. Use Numeric Types - Integer dan Float mendapat benefit terbesar
-3. Minimize External Calls - Fungsi self-contained lebih cepat dikompilasi
-4. Let It Warm Up - Biarkan fungsi dipanggil 10+ kali untuk trigger JIT
-5. Check Compilation - Fungsi dengan loop dan operasi kompleks akan dikompilasi
-
 ## Links
 
 - [Documentation](https://github.com/RenzMc/RenzmcLang/docs)

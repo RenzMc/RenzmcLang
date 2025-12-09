@@ -35,35 +35,6 @@ from renzmc.core.parser import Parser
 from renzmc.version import __version__
 
 
-class Colors:
-    RESET = "\033[0m"
-    BOLD = "\033[1m"
-    DIM = "\033[2m"
-
-    BLACK = "\033[30m"
-    RED = "\033[31m"
-    GREEN = "\033[32m"
-    YELLOW = "\033[33m"
-    BLUE = "\033[34m"
-    MAGENTA = "\033[35m"
-    CYAN = "\033[36m"
-    WHITE = "\033[37m"
-
-    BRIGHT_BLACK = "\033[90m"
-    BRIGHT_RED = "\033[91m"
-    BRIGHT_GREEN = "\033[92m"
-    BRIGHT_YELLOW = "\033[93m"
-    BRIGHT_BLUE = "\033[94m"
-    BRIGHT_MAGENTA = "\033[95m"
-    BRIGHT_CYAN = "\033[96m"
-    BRIGHT_WHITE = "\033[97m"
-
-    BG_RED = "\033[41m"
-    BG_GREEN = "\033[42m"
-    BG_YELLOW = "\033[43m"
-    BG_BLUE = "\033[44m"
-
-
 class RenzmcREPL:
 
     KEYWORDS = [
@@ -187,51 +158,52 @@ class RenzmcREPL:
             return None
 
     def _colorize(self, text: str, color: str) -> str:
-        return f"{color}{text}{Colors.RESET}"
+        # Colors removed — return text unchanged.
+        return text
 
     def _syntax_highlight(self, code: str) -> str:
         result = code
 
         for keyword in self.KEYWORDS:
-            result = result.replace(f" {keyword} ", f" {self._colorize(keyword, Colors.BRIGHT_MAGENTA)} ")
+            result = result.replace(f" {keyword} ", f" {self._colorize(keyword, '')} ")
             if result.startswith(keyword + " "):
-                result = self._colorize(keyword, Colors.BRIGHT_MAGENTA) + result[len(keyword) :]
+                result = self._colorize(keyword, "") + result[len(keyword) :]
 
         for builtin in self.BUILTINS:
-            result = result.replace(f"{builtin}(", f"{self._colorize(builtin, Colors.BRIGHT_BLUE)}(")
+            result = result.replace(f"{builtin}(", f"{self._colorize(builtin, '')}(")
 
         return result
 
     def print_banner(self):
         banner = f"""
-{Colors.BRIGHT_CYAN}RenzMcLang {Colors.BRIGHT_YELLOW}v{__version__}{Colors.RESET}
-{Colors.BRIGHT_GREEN}Selamat datang di RenzMcLang Interactive Shell!{Colors.RESET}
+RenzMcLang v{__version__}
+Selamat datang di RenzMcLang Interactive Shell!
 
-{Colors.YELLOW}Ketik 'bantuan' untuk melihat perintah | 'keluar' untuk keluar{Colors.RESET}
+Ketik 'bantuan' untuk melihat perintah | 'keluar' untuk keluar
 """
         print(banner)
 
     def print_help(self):
         help_text = f"""
-{Colors.BRIGHT_CYAN}📚 Perintah REPL:{Colors.RESET}
-  {Colors.GREEN}bantuan{Colors.RESET}      - Tampilkan pesan bantuan ini
-  {Colors.GREEN}keluar{Colors.RESET}       - Keluar dari REPL
-  {Colors.GREEN}bersih{Colors.RESET}       - Bersihkan layar
-  {Colors.GREEN}riwayat{Colors.RESET}      - Tampilkan riwayat perintah
-  {Colors.GREEN}reset{Colors.RESET}        - Reset interpreter (hapus semua variabel)
-  {Colors.GREEN}variabel{Colors.RESET}     - Tampilkan semua variabel yang ada
-  {Colors.GREEN}inspect{Colors.RESET} <var> - Inspect variabel dengan detail
-  {Colors.GREEN}tipe{Colors.RESET} <var>    - Tampilkan tipe variabel
-     {Colors.GREEN}jit{Colors.RESET}          - Tampilkan statistik JIT compilation
+Perintah REPL:
+  bantuan      - Tampilkan pesan bantuan ini
+  keluar       - Keluar dari REPL
+  bersih       - Bersihkan layar
+  riwayat      - Tampilkan riwayat perintah
+  reset        - Reset interpreter (hapus semua variabel)
+  variabel     - Tampilkan semua variabel yang ada
+  inspect <var> - Inspect variabel dengan detail
+  tipe <var>    - Tampilkan tipe variabel
+     jit          - Tampilkan statistik JIT compilation
 
-{Colors.BRIGHT_CYAN}💡 Tips:{Colors.RESET}
-  • Gunakan {Colors.YELLOW}Tab{Colors.RESET} untuk auto-completion
-  • Gunakan {Colors.YELLOW}↑/↓{Colors.RESET} untuk navigasi history
-  • Gunakan {Colors.YELLOW}←/→{Colors.RESET} untuk edit baris
-  • Gunakan {Colors.YELLOW}'selesai'{Colors.RESET} untuk mengakhiri blok multiline
-  • Tekan {Colors.YELLOW}Enter dua kali{Colors.RESET} untuk mengeksekusi blok multiline
-  • Gunakan {Colors.YELLOW}Ctrl+C{Colors.RESET} untuk membatalkan input
-  • Gunakan {Colors.YELLOW}f-string{Colors.RESET} untuk string interpolation: f"Nilai: {{x}}"
+Tips:
+  - Gunakan Tab untuk auto-completion
+  - Gunakan ↑/↓ untuk navigasi history
+  - Gunakan ←/→ untuk edit baris
+  - Gunakan 'selesai' untuk mengakhiri blok multiline
+  - Tekan Enter dua kali untuk mengeksekusi blok multiline
+  - Gunakan Ctrl+C untuk membatalkan input
+  - Gunakan f-string untuk string interpolation: f"Nilai: { { 'x' } }"
 """
         print(help_text)
 
@@ -240,21 +212,21 @@ class RenzmcREPL:
 
     def show_history(self):
         if not self.history:
-            print(f"{Colors.YELLOW}Tidak ada riwayat perintah{Colors.RESET}")
+            print("Tidak ada riwayat perintah")
             return
 
-        print(f"\n{Colors.BRIGHT_CYAN}📜 Riwayat Perintah:{Colors.RESET}")
+        print("\nRiwayat Perintah:")
         for i, cmd in enumerate(self.history[-20:], max(1, len(self.history) - 19)):
             cmd_preview = cmd[:60] + ("..." if len(cmd) > 60 else "")
-            print(f"  {Colors.BRIGHT_BLACK}{i:3d}{Colors.RESET} │ {cmd_preview}")
+            print(f"  {i:3d} │ {cmd_preview}")
         print()
 
     def show_variables(self):
         if not hasattr(self.interpreter, "global_scope") or not self.interpreter.global_scope:
-            print(f"{Colors.YELLOW}Tidak ada variabel yang didefinisikan{Colors.RESET}")
+            print("Tidak ada variabel yang didefinisikan")
             return
 
-        print(f"\n{Colors.BRIGHT_CYAN}📦 Variabel yang Didefinisikan:{Colors.RESET}")
+        print("\nVariabel yang Didefinisikan:")
         for name, value in sorted(self.interpreter.global_scope.items()):
             if not name.startswith("__"):
                 value_str = str(value)
@@ -263,42 +235,43 @@ class RenzmcREPL:
                 if len(value_str) > 50:
                     value_str = value_str[:50] + "..."
 
-                print(
-                    f"  {Colors.GREEN}{name}{Colors.RESET} : {Colors.CYAN}{value_type}{Colors.RESET} = {Colors.YELLOW}{value_str}{Colors.RESET}"
-                )
+                print(f"  {name} : {value_type} = {value_str}")
         print()
 
     def inspect_variable(self, var_name: str):
         if not hasattr(self.interpreter, "global_scope"):
-            print(f"{Colors.RED}Error: Tidak ada scope yang tersedia{Colors.RESET}")
+            print("Error: Tidak ada scope yang tersedia")
             return
 
         if var_name not in self.interpreter.global_scope:
-            print(f"{Colors.RED}Error: Variabel '{var_name}' tidak ditemukan{Colors.RESET}")
+            print(f"Error: Variabel '{var_name}' tidak ditemukan")
             return
 
         value = self.interpreter.global_scope[var_name]
         value_type = type(value).__name__
 
-        print(f"\n{Colors.BRIGHT_CYAN}🔍 Inspeksi Variabel: {Colors.GREEN}{var_name}{Colors.RESET}")
-        print(f"{Colors.CYAN}Tipe:{Colors.RESET} {value_type}")
-        print(f"{Colors.CYAN}Nilai:{Colors.RESET} {value}")
+        print(f"\nInspeksi Variabel: {var_name}")
+        print(f"Tipe: {value_type}")
+        print(f"Nilai: {value}")
 
         if hasattr(value, "__len__"):
-            print(f"{Colors.CYAN}Panjang:{Colors.RESET} {len(value)}")
+            try:
+                print(f"Panjang: {len(value)}")
+            except Exception:
+                pass
 
         if hasattr(value, "__dict__"):
-            print(f"{Colors.CYAN}Atribut:{Colors.RESET}")
+            print("Atribut:")
             for attr in dir(value):
                 if not attr.startswith("_"):
-                    print(f"  • {attr}")
+                    print(f"  - {attr}")
 
         print()
 
     def reset_interpreter(self):
         self.interpreter = Interpreter()
         self.line_number = 1
-        print(f"{Colors.GREEN}✅ Interpreter direset (semua variabel dihapus){Colors.RESET}")
+        print("Interpreter direset (semua variabel dihapus)")
 
     def is_multiline_start(self, line: str) -> bool:
         multiline_keywords = [
@@ -335,7 +308,7 @@ class RenzmcREPL:
             result = self.interpreter.interpret(ast)
 
             if result is not None and result != "":
-                print(f"{Colors.BRIGHT_WHITE}{result}{Colors.RESET}")
+                print(result)
 
             return True
 
@@ -343,10 +316,10 @@ class RenzmcREPL:
             self._print_enhanced_error(e, code)
             return False
         except KeyboardInterrupt:
-            print(f"\n{Colors.YELLOW}KeyboardInterrupt{Colors.RESET}")
+            print("\nKeyboardInterrupt")
             return False
         except Exception as e:
-            print(f"{Colors.RED}❌ Unexpected error: {e}{Colors.RESET}")
+            print(f"Unexpected error: {e}")
             import traceback
 
             traceback.print_exc()
@@ -355,7 +328,7 @@ class RenzmcREPL:
     def _print_enhanced_error(self, error: RenzmcError, source_code: str):
         error_type = error.__class__.__name__
 
-        print(f"\n{Colors.BRIGHT_RED}Traceback (most recent call last):{Colors.RESET}")
+        print("\nTraceback (most recent call last):")
 
         code_to_use = error.source_code if hasattr(error, "source_code") and error.source_code else source_code
 
@@ -372,15 +345,15 @@ class RenzmcREPL:
                     pointer_padding = " " * (error.column + 3)
                     pointer_length = max(1, min(10, len(line_content) - error.column + 1))
                     pointer = "^" * pointer_length
-                    print(f"{pointer_padding}{Colors.BRIGHT_RED}{pointer}{Colors.RESET}")
+                    print(f"{pointer_padding}{pointer}")
 
-        print(f"{Colors.BRIGHT_RED}{error_type}: {Colors.RESET}{error.message}")
+        print(f"{error_type}: {error.message}")
 
         suggestions = self._get_error_suggestions(error)
         if suggestions:
-            print(f"\n{Colors.BRIGHT_YELLOW}Suggestions:{Colors.RESET}")
+            print("\nSuggestions:")
             for suggestion in suggestions:
-                print(f"  • {suggestion}")
+                print(f"  - {suggestion}")
 
         print()
 
@@ -549,14 +522,14 @@ class RenzmcREPL:
         while True:
             try:
                 if self.in_multiline:
-                    prompt = f"{Colors.BRIGHT_BLACK}... {Colors.RESET}"
+                    prompt = "... "
                 else:
-                    prompt = f"{Colors.BRIGHT_GREEN}>>> {Colors.RESET}"
+                    prompt = ">>> "
 
                 try:
                     line = input(prompt)
                 except EOFError:
-                    print(f"\n{Colors.CYAN}Keluar dari REPL...{Colors.RESET}")
+                    print("\nKeluar dari REPL...")
                     break
 
                 if not line.strip():
@@ -571,7 +544,7 @@ class RenzmcREPL:
                     continue
 
                 if line.strip() in ["keluar", "exit", "quit"]:
-                    print(f"{Colors.CYAN}Keluar dari REPL...{Colors.RESET}")
+                    print("Keluar dari REPL...")
                     break
 
                 if line.strip() == "bantuan":
@@ -604,9 +577,9 @@ class RenzmcREPL:
                     var_name = line.strip()[5:].strip()
                     if hasattr(self.interpreter, "global_scope") and var_name in self.interpreter.global_scope:
                         value = self.interpreter.global_scope[var_name]
-                        print(f"{Colors.CYAN}{type(value).__name__}{Colors.RESET}")
+                        print(type(value).__name__)
                     else:
-                        print(f"{Colors.RED}Variabel '{var_name}' tidak ditemukan{Colors.RESET}")
+                        print(f"Variabel '{var_name}' tidak ditemukan")
                     continue
 
                 if self.is_multiline_start(line):
@@ -633,12 +606,12 @@ class RenzmcREPL:
                 self.line_number += 1
 
             except KeyboardInterrupt:
-                print(f"\n{Colors.YELLOW}KeyboardInterrupt{Colors.RESET}")
+                print("\nKeyboardInterrupt")
                 self.multiline_buffer = []
                 self.in_multiline = False
                 continue
             except Exception as e:
-                print(f"{Colors.RED}❌ Unexpected error: {e}{Colors.RESET}")
+                print(f"Unexpected error: {e}")
                 import traceback
 
                 traceback.print_exc()

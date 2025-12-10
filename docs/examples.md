@@ -272,6 +272,8 @@ Contoh-contoh penggunaan klien HTTP dalam RenzMcLang.
 - **02_http_post_put_delete.rmc** - Permintaan POST, PUT, dan DELETE
 - **03_http_advanced.rmc** - Fitur HTTP lanjutan
 
+📝 **Note**: Contoh-contoh ini menggunakan standard library modern. Fungsi seperti `http_get()`, `json_ke_teks()`, dll sekarang diimpor dari library masing-masing.
+
 ## Image Processing
 
 Contoh-contoh pemrosesan gambar dengan RenzMcLang.

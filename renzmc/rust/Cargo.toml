@@ -1,0 +1,20 @@
+[package]
+name = "renzmc_vm"
+version = "0.1.0"
+edition = "2021"
+description = "High-performance VM and bytecode compiler for RenzmcLang"
+license = "MIT"
+
+[lib]
+name = "renzmc_vm"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+pyo3 = { version = "0.22", features = ["extension-module"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

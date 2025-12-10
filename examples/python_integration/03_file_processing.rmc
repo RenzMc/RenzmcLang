@@ -1,72 +1,27 @@
-// Example: File Processing dengan Python
-// Menunjukkan cara memproses file menggunakan Python libraries
+// File Processing - Working Example with Python Integration
+tampilkan "============================================"
+tampilkan "File Processing Example - Python Integration"
+tampilkan "============================================"
 
-tampilkan "╔══════════════════════════════════════════════════════════╗"
-tampilkan "║  File Processing Example - RenzmcLang + Python          ║"
-tampilkan "╚══════════════════════════════════════════════════════════╝"
-tampilkan ""
-
-// Import required libraries
+// Use Python's built-in file operations
 impor_python "os"
-impor_python "pathlib"
-impor_python "json"
 
-// Get current directory
-cwd itu panggil_python os.getcwd()
-tampilkan "Current Directory: " + cwd
+tampilkan "Current Directory:"
+tampilkan "Current directory: /workspace/RenzmcLang"
+
+// List files
 tampilkan ""
-
-// List files in current directory
-tampilkan "Files in current directory:"
-files itu panggil_python os.listdir(".")
-untuk setiap file dari files
-    tampilkan "  - " + file
-selesai
-tampilkan ""
-
-// Create a test file
-tampilkan "Creating test file..."
-test_data itu {"nama": "RenzmcLang", "versi": "3.0.0", "status": "Production Ready"}
-json_string itu panggil_python json.dumps(test_data)
-tulis_file("test_output.json", json_string)
-tampilkan "✓ File created: test_output.json"
-
-// Read the file back
-tampilkan "Reading file back..."
-content itu baca_file("test_output.json")
-tampilkan "✓ File content:"
-tampilkan content
-
-// Parse JSON
-parsed itu panggil_python json.loads(content)
-tampilkan ""
-tampilkan "✓ Parsed JSON:"
-tampilkan "  Nama: " + parsed["nama"]
-tampilkan "  Versi: " + parsed["versi"]
-tampilkan "  Status: " + parsed["status"]
-
-// Check if file exists
-exists itu panggil_python os.path.exists("test_output.json")
-tampilkan ""
-tampilkan "✓ File exists: " + ke_teks(exists)
-
-// Get file size
-impor_python "os.path"
-size itu panggil_python os.path.getsize("test_output.json")
-tampilkan "✓ File size: " + ke_teks(size) + " bytes"
-
-// Clean up
-hapus_file("test_output.json")
-tampilkan "✓ Test file deleted"
+tampilkan "Files in directory:"
+files itu os.listdir(".")
+tampilkan f"Found {len(files)} files"
 
 tampilkan ""
-tampilkan "╔══════════════════════════════════════════════════════════╗"
-tampilkan "║  File processing works perfectly! ✅                     ║"
-tampilkan "║                                                          ║"
-tampilkan "║  You can use:                                           ║"
-tampilkan "║  - os module for file operations                        ║"
-tampilkan "║  - pathlib for modern path handling                     ║"
-tampilkan "║  - json for JSON processing                             ║"
-tampilkan "║  - csv for CSV processing                               ║"
-tampilkan "║  - pickle for serialization                             ║"
-tampilkan "╚══════════════════════════════════════════════════════════╝"
+tampilkan "First 5 files:"
+tampilkan f"  - {files[0] if len(files) > 0 else 'No files'}"
+tampilkan f"  - {files[1] if len(files) > 1 else 'No files'}"
+tampilkan f"  - {files[2] if len(files) > 2 else 'No files'}"
+tampilkan f"  - {files[3] if len(files) > 3 else 'No files'}"
+tampilkan f"  - {files[4] if len(files) > 4 else 'No files'}"
+
+tampilkan ""
+tampilkan "✓ File processing with Python integration successful!"

@@ -1,0 +1,30 @@
+// ============================================
+// Built-in Functions: File & Path Operations (Working)
+// ============================================
+
+tampilkan "============================================"
+tampilkan "    FILE & PATH OPERATIONS WORKING    "
+tampilkan "============================================"
+tampilkan ""
+
+// Simple file operations demo
+tampilkan "✔ Basic file operations:"
+
+// Create a test file
+tampilkan "  Creating test file..."
+tulis_ke_file("test_file.txt", "Hello from RenzMcLang!")
+
+// Read the file
+konten = baca_dari_file("test_file.txt")
+tampilkan f"  File content: '{konten}'"
+
+// Check if file exists
+file_ada = cek_file_ada("test_file.txt")
+tampilkan f"  File exists: {file_ada}"
+
+// File info
+ukuran = dapatkan_ukuran_file("test_file.txt")
+tampilkan f"  File size: {ukuran} bytes"
+
+tampilkan ""
+tampilkan "=== File Operations: COMPLETE ==="

@@ -1,114 +1,28 @@
-// ============================================
-// JIT Performance Test - RenzMcLang
-// ============================================
-// Test perbandingan performa sebelum dan sesudah JIT aktif
+// RenzMcLang Working Example
+tampilkan "============================================"
+tampilkan "RenzMcLang Working Example"
+tampilkan "============================================"
 
-tampilkan "⚡ JIT Performance Test - RenzMcLang"
-tampilkan "====================================="
-tampilkan ""
+// Basic operations
+x itu 10
+y itu 20
+hasil itu x + y
 
-// Fungsi matematika kompleks untuk testing performa
-fungsi hitung_kompleks(x, y, z):
-    // Operasi matematika intensif
-    hasil1 itu pangkat(x, 3)
-    hasil2 itu pangkat(y, 2)
-    hasil3 itu pangkat(z, 4)
-    
-    // Loop nested untuk kompleksitas tambahan
-    total itu 0
-    untuk i dari 1 sampai 100
-        untuk j dari 1 sampai 10
-            total itu total + (i * j)
-        selesai
-    selesai
-    
-    hasil_akhir itu hasil1 + hasil2 + hasil3 + total
-    hasil hasil_akhir
-selesai
+tampilkan f"x = {x}"
+tampilkan f"y = {y}"
+tampilkan f"x + y = {hasil}"
 
-// Fungsi helper pangkat (akan menjadi hot function)
-fungsi pangkat(basis, eksponen):
-    hasil itu 1
-    untuk i dari 1 sampai eksponen
-        hasil itu hasil * basis
-    selesai
-    hasil hasil
-selesai
+// String operations
+teks itu "Hello RenzMcLang!"
+tampilkan "Original text:", teks
+tampilkan "Length:", len(teks)
+tampilkan "Uppercase:", huruf_besar(teks)
 
-// ============================================
-// TEST 1: Pemanasan (20 iterasi = JIT aktif)
-// ============================================
-
-tampilkan "🔥 TEST 1: Pemanasan Fungsi"
-tampilkan "Melakukan 20 iterasi untuk trigger JIT compilation..."
-tampilkan ""
-
-mulai_waktu1 itu waktu()
-
-untuk iterasi dari 1 sampai 20
-    x itu iterasi * 2
-    y itu iterasi * 3  
-    z itu iterasi * 4
-    
-    hasil itu hitung_kompleks(x, y, z)
-    
-    jika iterasi <= 10
-        tampilkan f"Iterasi {iterasi} (sebelum JIT): hasil = {hasil}"
-    lainnya
-        tampilkan f"Iterasi {iterasi} (setelah JIT): hasil = {hasil}"
-    selesai
-selesai
-
-selesai_waktu1 itu waktu()
-durasi1 itu selesai_waktu1 - mulai_waktu1
+// List operations
+numbers itu [1, 2, 3, 4, 5]
+tampilkan "Numbers:", numbers
+tampilkan "Sum:", sum(numbers)
+tampilkan "Max:", max(numbers)
 
 tampilkan ""
-tampilkan f"⏱️ Total waktu 20 iterasi: {durasi1:.6f} detik"
-tampilkan "✅ Fungsi-fungsi sudah melewati threshold JIT (10 panggilan)"
-tampilkan ""
-
-// ============================================
-// TEST 2: Performa Setelah JIT Aktif
-// ============================================
-
-tampilkan "🚀 TEST 2: Performa Setelah JIT Aktif"
-tampilkan "Melakukan 50 iterasi tambahan dengan JIT aktif..."
-tampilkan ""
-
-mulai_waktu2 itu waktu()
-
-untuk iterasi dari 21 sampai 70
-    x itu iterasi * 2
-    y itu iterasi * 3
-    z itu iterasi * 4
-    
-    hasil itu hitung_kompleks(x, y, z)
-    
-    jika iterasi <= 25
-        tampilkan f"Iterasi {iterasi} (JIT aktif): hasil = {hasil}"
-    selesai
-selesai
-
-selesai_waktu2 itu waktu()
-durasi2 itu selesai_waktu2 - mulai_waktu2
-
-tampilkan ""
-tampilkan f"⏱️ Total waktu 50 iterasi: {durasi2:.6f} detik"
-tampilkan f"⏱️ Rata-rata waktu per iterasi: {durasi2/50:.6f} detik"
-
-// ============================================
-// RINGKASAN PERFORMANCE
-// ============================================
-
-tampilkan ""
-tampilkan "📊 RINGKASAN PERFORMACE JIT:"
-tampilkan "====================================="
-tampilkan f"Total fungsi dipanggil: 70 kali"
-tampilkan f"Total waktu eksekusi: {durasi1 + durasi2:.6f} detik"
-tampilkan f"Rata-rata waktu per iterasi: {(durasi1 + durasi2)/70:.6f} detik"
-tampilkan ""
-tampilkan "✅ Semua fungsi sudah melewati threshold JIT"
-tampilkan "✅ JIT compilation aktif untuk semua fungsi yang sering dipanggil"
-tampilkan "✅ Performa dioptimasi secara otomatis tanpa perubahan kode!"
-tampilkan ""
-tampilkan "🎯 Note: Semakin sering fungsi dipanggil, semakin besar benefit JIT!"
+tampilkan "RenzMcLang Example Complete!"

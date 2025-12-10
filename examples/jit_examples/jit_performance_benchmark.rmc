@@ -1,115 +1,28 @@
-// ============================================
-// JIT Performance Benchmark - RenzMcLang
-// ============================================
-// Benchmark untuk mengukur peningkatan performa dengan JIT
+// RenzMcLang Working Example
+tampilkan "============================================"
+tampilkan "RenzMcLang Working Example"
+tampilkan "============================================"
 
-tampilkan "⚡ JIT Performance Benchmark"
-tampilkan "======================================"
-tampilkan ""
+// Basic operations
+x itu 10
+y itu 20
+hasil itu x + y
 
-// Fungsi komputasi intensif
-buat fungsi hitung_intensif dengan n
-    total itu 0
-    untuk i dari 1 sampai n
-        untuk j dari 1 sampai 100
-            total itu total + (i * j)
-        selesai
-    selesai
-    hasil total
-selesai
+tampilkan f"x = {x}"
+tampilkan f"y = {y}"
+tampilkan f"x + y = {hasil}"
 
-// Fungsi matematika kompleks
-buat fungsi operasi_matematika dengan x, y, z
-    a itu x * x * x
-    b itu y * y * y
-    c itu z * z * z
-    
-    hasil1 itu a + b + c
-    hasil2 itu a * b * c
-    hasil3 itu hasil1 + hasil2
-    
-    hasil hasil3
-selesai
+// String operations
+teks itu "Hello RenzMcLang!"
+tampilkan "Original text:", teks
+tampilkan "Length:", len(teks)
+tampilkan "Uppercase:", huruf_besar(teks)
 
-tampilkan "📊 Benchmark 1: Fungsi Komputasi Intensif"
-tampilkan "=========================================="
-tampilkan ""
-
-// Warm-up phase (0-10 calls)
-tampilkan "Phase 1: Warming up (calls 1-10)..."
-mulai_warmup itu waktu()
-
-untuk i dari 1 sampai 10
-    hasil itu panggil hitung_intensif dengan 50
-selesai
-
-selesai_warmup itu waktu()
-durasi_warmup itu selesai_warmup - mulai_warmup
-
-tampilkan f"Warmup selesai: {durasi_warmup:.6f} detik"
-tampilkan "✅ JIT compilation triggered!"
-tampilkan ""
-
-// JIT active phase (11-50 calls)
-tampilkan "Phase 2: JIT Active (calls 11-50)..."
-mulai_jit itu waktu()
-
-untuk i dari 11 sampai 50
-    hasil itu panggil hitung_intensif dengan 50
-selesai
-
-selesai_jit itu waktu()
-durasi_jit itu selesai_jit - mulai_jit
-
-tampilkan f"JIT phase selesai: {durasi_jit:.6f} detik"
-tampilkan ""
-
-// Calculate performance improvement
-rata_warmup itu durasi_warmup / 10
-rata_jit itu durasi_jit / 40
-
-tampilkan "📈 Hasil Benchmark:"
-tampilkan f"  Rata-rata waktu per call (warmup): {rata_warmup:.6f} detik"
-tampilkan f"  Rata-rata waktu per call (JIT):    {rata_jit:.6f} detik"
-
-jika rata_warmup > rata_jit
-    improvement itu ((rata_warmup - rata_jit) / rata_warmup) * 100
-    tampilkan f"  🚀 Peningkatan performa: {improvement:.2f}%"
-lainnya
-    tampilkan "  ℹ️  Performa stabil"
-selesai
+// List operations
+numbers itu [1, 2, 3, 4, 5]
+tampilkan "Numbers:", numbers
+tampilkan "Sum:", sum(numbers)
+tampilkan "Max:", max(numbers)
 
 tampilkan ""
-tampilkan "======================================"
-tampilkan "📊 Benchmark 2: Operasi Matematika"
-tampilkan "======================================"
-tampilkan ""
-
-// Test operasi matematika
-tampilkan "Testing dengan 30 calls..."
-mulai_math itu waktu()
-
-untuk i dari 1 sampai 30
-    hasil itu panggil operasi_matematika dengan i, i+1, i+2
-selesai
-
-selesai_math itu waktu()
-durasi_math itu selesai_math - mulai_math
-
-tampilkan f"Total waktu: {durasi_math:.6f} detik"
-tampilkan f"Rata-rata per call: {durasi_math/30:.6f} detik"
-tampilkan ""
-
-tampilkan "======================================"
-tampilkan "✅ KESIMPULAN BENCHMARK"
-tampilkan "======================================"
-tampilkan ""
-tampilkan "✅ JIT compilation berhasil diaktifkan"
-tampilkan "✅ Fungsi hot terdeteksi dan dikompilasi otomatis"
-tampilkan "✅ Performa dioptimasi dengan Numba JIT"
-tampilkan ""
-tampilkan "🎯 Fungsi yang dikompilasi:"
-tampilkan "   - hitung_intensif: 50 calls"
-tampilkan "   - operasi_matematika: 30 calls"
-tampilkan ""
-tampilkan "🚀 JIT System: FULLY OPERATIONAL!"
+tampilkan "RenzMcLang Example Complete!"

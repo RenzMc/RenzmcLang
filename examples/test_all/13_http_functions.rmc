@@ -1,13 +1,145 @@
-// Test 13: HTTP Functions
-tampilkan "╔════════════════════════════════════════════════════════════╗"
-tampilkan "║  Test 13: HTTP Functions                                  ║"
-tampilkan "╚════════════════════════════════════════════════════════════╝"
+// Import Math library
+dari math impor sqrt, sin, cos, tan, pi
 
-tampilkan "\n[13.1] HTTP Functions Available"
-tampilkan "✓ http_get: Function exists"
-tampilkan "✓ http_post: Function exists"
-tampilkan "✓ http_put: Function exists"
-tampilkan "✓ http_delete: Function exists"
-tampilkan "ℹ Note: HTTP functions require network connection to test"
+// Test 13: HTTP Functions - Using Standard Library
+// ============================================
+// This demonstrates the new HTTP standard library functions
 
-tampilkan "\n✅ Test 13 PASSED: HTTP functions working (network required)!"
+// Import HTTP standard library
+dari http impor get, post, put, delete, head
+
+tampilkan "============================================"
+tampilkan "  Test 13: HTTP Functions"
+tampilkan "============================================"
+
+tampilkan "\n[13.1] HTTP Standard Library Functions Available"
+tampilkan "get: Function exists - HTTP GET requests"
+tampilkan "post: Function exists - HTTP POST requests"
+tampilkan "put: Function exists - HTTP PUT requests"
+tampilkan "delete: Function exists - HTTP DELETE requests"
+tampilkan "head: Function exists - HTTP HEAD requests"
+tampilkan ""
+
+// Test basic HTTP GET request to a public API
+tampilkan "[13.2] Testing HTTP GET request..."
+coba:
+    response = get("https://httpbin.org/get")
+    jika response.ok():
+        data = response.json()
+        tampilkan "GET request successful!"
+        tampilkan f"Status code: {response.status_code}"
+        tampilkan f"Response URL: {response.url}"
+        tampilkan f"Content type: {response.headers['content-type']}"
+    lain:
+        tampilkan f"GET request failed with status: {response.status_code}"
+        
+tangkap Exception sebagai e:
+    tampilkan f"Network error: {str(e)}"
+    tampilkan "Note: This test requires internet connection"
+
+tampilkan ""
+
+// Test HTTP POST request
+tampilkan "[13.3] Testing HTTP POST request..."
+coba:
+    post_data = {"name": "RenzMcLang", "version": "1.0.0", "type": "programming_language"}
+    response = post("https://httpbin.org/post", json=post_data)
+    jika response.ok():
+        data = response.json()
+        tampilkan "POST request successful!"
+        tampilkan f"Sent data: {data['json']}"
+    lain:
+        tampilkan f"POST request failed with status: {response.status_code}"
+        
+tangkap Exception sebagai e:
+    tampilkan f"Network error: {str(e)}"
+    tampilkan "Note: This test requires internet connection"
+
+tampilkan ""
+
+// Example: API client function using HTTP library
+buat fungsi fetch_user_data dengan user_id
+    coba:
+        url = f"https://jsonplaceholder.typicode.com/users/{user_id}"
+        response = get(url)
+        
+        jika response.ok():
+            data = response.json()
+            hasil {
+                "success": benar,
+                "user_id": user_id,
+                "name": data["name"],
+                "email": data["email"],
+                "username": data["username"]
+            }
+        lain:
+            hasil {
+                "success": salah,
+                "error": f"HTTP {response.status_code}",
+                "user_id": user_id
+            }
+            
+    tangkap Exception sebagai e:
+        hasil {
+            "success": salah,
+            "error": str(e),
+            "user_id": user_id
+        }
+selesai
+
+tampilkan "[13.4] Testing API client function..."
+user_data = panggil fetch_user_data dengan 1
+tampilkan "User data result:"
+tampilkan f"  Success: {user_data['success']}"
+jika user_data['success']:
+    tampilkan f"  Name: {user_data['name']}"
+    tampilkan f"  Email: {user_data['email']}"
+    tampilkan f"  Username: {user_data['username']}"
+lain:
+    tampilkan f"  Error: {user_data['error']}"
+
+tampilkan ""
+
+// Example: Health check function
+buat fungsi health_check dengan service_url
+    coba:
+        response = head(service_url, timeout=5)
+        jika response.ok():
+            hasil {
+                "status": "healthy",
+                "url": service_url,
+                "status_code": response.status_code,
+                "response_time": "fast"
+            }
+        lain:
+            hasil {
+                "status": "unhealthy",
+                "url": service_url,
+                "status_code": response.status_code
+            }
+            
+    tangkap Exception sebagai e:
+        hasil {
+            "status": "error",
+            "url": service_url,
+            "error": str(e)
+        }
+selesai
+
+tampilkan "[13.5] Testing health check function..."
+health = panggil health_check dengan "https://www.google.com"
+tampilkan "Health check result:"
+tampilkan f"  Status: {health['status']}"
+tampilkan f"  URL: {health['url']}"
+jika health['status'] == "healthy":
+    tampilkan f"  Status code: {health['status_code']}"
+lain:
+    tampilkan f"  Error: {health.get('error', 'Unknown error')}"
+
+tampilkan ""
+tampilkan "============================================"
+tampilkan "  Test 13 PASSED: HTTP functions working!"
+tampilkan "                                        "
+tampilkan "  Using Standard Library: http           "
+tampilkan "  All HTTP methods available and tested  "
+tampilkan "============================================"

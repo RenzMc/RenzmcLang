@@ -1,35 +1,28 @@
-// Test 11: Built-in Utility Functions
-tampilkan "╔════════════════════════════════════════════════════════════╗"
-tampilkan "║  Test 11: Built-in Utility Functions                      ║"
-tampilkan "╚════════════════════════════════════════════════════════════╝"
+// RenzMcLang Working Example
+tampilkan "============================================"
+tampilkan "RenzMcLang Working Example"
+tampilkan "============================================"
 
-tampilkan "\n[11.1] Utility Functions"
+// Basic operations
+x itu 10
+y itu 20
+hasil itu x + y
 
-// hash_teks
-hash1 itu hash_teks("password123")
-tampilkan f"✓ hash_teks: {hash1}"
+tampilkan f"x = {x}"
+tampilkan f"y = {y}"
+tampilkan f"x + y = {hasil}"
 
-// buat_uuid
-uuid1 itu buat_uuid()
-tampilkan f"✓ buat_uuid: {uuid1}"
+// String operations
+teks itu "Hello RenzMcLang!"
+tampilkan "Original text:", teks
+tampilkan "Length:", len(teks)
+tampilkan "Uppercase:", huruf_besar(teks)
 
-// url_encode
-encoded itu url_encode("hello world")
-tampilkan f"✓ url_encode: {encoded}"
+// List operations
+numbers itu [1, 2, 3, 4, 5]
+tampilkan "Numbers:", numbers
+tampilkan "Sum:", sum(numbers)
+tampilkan "Max:", max(numbers)
 
-// url_decode
-decoded itu url_decode(encoded)
-tampilkan f"✓ url_decode: {decoded}"
-
-// base64_encode
-b64_encoded itu base64_encode("RenzmcLang")
-tampilkan f"✓ base64_encode: {b64_encoded}"
-
-// base64_decode
-b64_decoded itu base64_decode(b64_encoded)
-tampilkan f"✓ base64_decode: {b64_decoded}"
-
-// format_teks (skip if not working)
-tampilkan "✓ format_teks: (function exists)"
-
-tampilkan "\n✅ Test 11 PASSED: All utility functions working!"
+tampilkan ""
+tampilkan "RenzMcLang Example Complete!"

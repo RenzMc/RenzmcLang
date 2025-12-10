@@ -1,3 +1,12 @@
+// Import Math library
+dari math impor sqrt, sin, cos, tan, pi
+
+// Import HTTP library
+dari http impor get
+dari http impor post
+dari http impor put
+dari http impor delete
+
 // ============================================================================
 // HTTP Client - Basic GET Request
 // Demonstrasi penggunaan built-in HTTP client tanpa perlu import

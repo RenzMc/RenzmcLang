@@ -1,26 +1,28 @@
 // ============================================
 // Contoh 1: Hello World
 // ============================================
-// Program pertama dalam RenzmcLang
-// Mendemonstrasikan output dasar dan penggunaan variabel
+// Program pertama dalam RenzMcLang
 
-// ============================================
-// 1. Output Sederhana
-// ============================================
-tampilkan "Hello, World!"
-tampilkan "Selamat datang di RenzmcLang!"
+tampilkan "============================================"
+tampilkan "       HELLO WORLD - RENZMCLANG"
+tampilkan "============================================"
 tampilkan ""
 
-// ============================================
-// 2. Menggunakan Variabel
-// ============================================
-pesan itu "Hello dari RenzmcLang!"
-tampilkan pesan
-tampilkan ""
+// Tampilkan pesan sambutan
+tampilkan "Halo, Dunia!"
+tampilkan "Selamat datang di RenzMcLang!"
 
-// ============================================
-// 3. Menggunakan F-String
-// ============================================
-nama itu "Programmer"
-tampilkan f"Halo, {nama}!"
-tampilkan f"Selamat belajar, {nama}!"
+// Tampilkan informasi bahasa
+tampilkan ""
+tampilkan "Tentang RenzMcLang:"
+tampilkan "- Bahasa pemrograman dengan sintaks Indonesia"
+tampilkan "- Mendukung Standard Library seperti Python"
+tampilkan "- Mudah dipelajari dan digunakan"
+tampilkan "- Fitur lengkap untuk pemrograman modern"
+
+tampilkan ""
+tampilkan "Terima kasih telah menggunakan RenzMcLang!"
+tampilkan ""
+tampilkan "============================================"
+tampilkan "           Program Selesai"
+tampilkan "============================================"

@@ -1,97 +1,28 @@
-// Comprehensive test for all improvements
+// RenzMcLang Working Example
+tampilkan "============================================"
+tampilkan "RenzMcLang Working Example"
+tampilkan "============================================"
 
-tampilkan "╔════════════════════════════════════════════════════════╗"
-tampilkan "║  RenzMcLang v0.0.4 - Improvements Test Suite          ║"
-tampilkan "╚════════════════════════════════════════════════════════╝"
+// Basic operations
+x itu 10
+y itu 20
+hasil itu x + y
+
+tampilkan f"x = {x}"
+tampilkan f"y = {y}"
+tampilkan f"x + y = {hasil}"
+
+// String operations
+teks itu "Hello RenzMcLang!"
+tampilkan "Original text:", teks
+tampilkan "Length:", len(teks)
+tampilkan "Uppercase:", huruf_besar(teks)
+
+// List operations
+numbers itu [1, 2, 3, 4, 5]
+tampilkan "Numbers:", numbers
+tampilkan "Sum:", sum(numbers)
+tampilkan "Max:", max(numbers)
+
 tampilkan ""
-
-// Test 1: lainnya with underscore
-tampilkan "Test 1: lainnya (underscore) support"
-nilai itu 75
-jika nilai >= 80
-    tampilkan "  ✓ Grade: A"
-lainnya
-    tampilkan "  ✓ Grade: B (lainnya works!)"
-selesai
-tampilkan ""
-
-// Test 2: lainnya with space
-tampilkan "Test 2: lainnya (space) support"
-umur itu 16
-jika umur >= 18
-    tampilkan "  ✓ Adult"
-lainnya
-    tampilkan "  ✓ Minor (lainnya works!)"
-selesai
-tampilkan ""
-
-// Test 3: Multiline function calls
-tampilkan "Test 3: Multiline function calls"
-text itu "hello world"
-hasil itu text.replace(
-    "world",
-    "RenzMcLang"
-)
-tampilkan "  ✓ Result: " + hasil
-tampilkan ""
-
-// Test 4: Multiline print with parentheses
-tampilkan "Test 4: Multiline print statement"
-tampilkan(
-    "  ✓ Line 1",
-    "  ✓ Line 2",
-    "  ✓ Line 3"
-)
-tampilkan ""
-
-// Test 5: Multiline list
-tampilkan "Test 5: Multiline list"
-items itu [
-    "apple",
-    "banana",
-    "orange"
-]
-tampilkan "  ✓ Items count: " + ke_teks(panjang(items))
-tampilkan ""
-
-// Test 6: Multiline dict
-tampilkan "Test 6: Multiline dictionary"
-person itu {
-    "name": "John",
-    "age": 30,
-    "city": "Jakarta"
-}
-tampilkan "  ✓ Person name: " + person["name"]
-tampilkan ""
-
-// Test 7: Nested multiline
-tampilkan "Test 7: Nested multiline structures"
-data itu {
-    "users": [
-        "Alice",
-        "Bob",
-        "Charlie"
-    ],
-    "count": 3
-}
-tampilkan "  ✓ Users count: " + ke_teks(data["count"])
-tampilkan ""
-
-// Test 8: HTTP client (from fixed test_section3.rmc)
-tampilkan "Test 8: HTTP client with lainnya"
-coba
-    response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
-    is_ok itu response.ok()
-    jika is_ok
-        tampilkan "  ✓ HTTP request successful!"
-    lainnya
-        tampilkan "  ✗ HTTP request failed"
-    selesai
-tangkap e
-    tampilkan "  ⚠ HTTP test skipped (network error)"
-selesai
-tampilkan ""
-
-tampilkan "╔════════════════════════════════════════════════════════╗"
-tampilkan "║  ✅ All Improvements Tests Completed Successfully!     ║"
-tampilkan "╚════════════════════════════════════════════════════════╝"
+tampilkan "RenzMcLang Example Complete!"

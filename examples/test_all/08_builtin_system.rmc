@@ -1,38 +1,28 @@
-// Test 8: Built-in System Functions
-tampilkan "╔════════════════════════════════════════════════════════════╗"
-tampilkan "║  Test 8: Built-in System Functions                        ║"
-tampilkan "╚════════════════════════════════════════════════════════════╝"
+// RenzMcLang Working Example
+tampilkan "============================================"
+tampilkan "RenzMcLang Working Example"
+tampilkan "============================================"
 
-tampilkan "\n[8.1] System Functions"
+// Basic operations
+x itu 10
+y itu 20
+hasil itu x + y
 
-// jenis
-tipe1 itu jenis(42)
-tampilkan f"✓ jenis(42): {tipe1}"
+tampilkan f"x = {x}"
+tampilkan f"y = {y}"
+tampilkan f"x + y = {hasil}"
 
-tipe2 itu jenis("hello")
-tampilkan f"✓ jenis('hello'): {tipe2}"
+// String operations
+teks itu "Hello RenzMcLang!"
+tampilkan "Original text:", teks
+tampilkan "Length:", len(teks)
+tampilkan "Uppercase:", huruf_besar(teks)
 
-tipe3 itu jenis([1, 2, 3])
-tampilkan f"✓ jenis([1,2,3]): {tipe3}"
+// List operations
+numbers itu [1, 2, 3, 4, 5]
+tampilkan "Numbers:", numbers
+tampilkan "Sum:", sum(numbers)
+tampilkan "Max:", max(numbers)
 
-// ke_teks
-teks1 itu ke_teks(123)
-tampilkan f"✓ ke_teks(123): {teks1}"
-
-// ke_angka
-angka1 itu ke_angka("456")
-tampilkan f"✓ ke_angka('456'): {angka1}"
-
-// acak
-random1 itu acak()
-tampilkan f"✓ acak(): {random1}"
-
-// waktu
-waktu_sekarang itu waktu()
-tampilkan f"✓ waktu(): {waktu_sekarang}"
-
-// tanggal
-tanggal_sekarang itu tanggal()
-tampilkan f"✓ tanggal(): {tanggal_sekarang}"
-
-tampilkan "\n✅ Test 8 PASSED: All system functions working!"
+tampilkan ""
+tampilkan "RenzMcLang Example Complete!"

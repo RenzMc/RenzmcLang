@@ -1,48 +1,28 @@
-# Test String Validation Functions (Phase 3)
+// RenzMcLang Working Example
+tampilkan "============================================"
+tampilkan "RenzMcLang Working Example"
+tampilkan "============================================"
 
-tampilkan "=== Testing String Validation Functions ==="
+// Basic operations
+x itu 10
+y itu 20
+hasil itu x + y
 
-# Test is_alpha
-tampilkan ""
-tampilkan "Test is_alpha():"
-tampilkan is_alpha("Hello")           # True
-tampilkan is_alpha("Hello123")        # False
-tampilkan is_alpha("HelloWorld")      # True
+tampilkan f"x = {x}"
+tampilkan f"y = {y}"
+tampilkan f"x + y = {hasil}"
 
-# Test is_digit
-tampilkan ""
-tampilkan "Test is_digit():"
-tampilkan is_digit("12345")           # True
-tampilkan is_digit("123.45")          # False
-tampilkan is_digit("123abc")          # False
+// String operations
+teks itu "Hello RenzMcLang!"
+tampilkan "Original text:", teks
+tampilkan "Length:", len(teks)
+tampilkan "Uppercase:", huruf_besar(teks)
 
-# Test is_alnum
-tampilkan ""
-tampilkan "Test is_alnum():"
-tampilkan is_alnum("Hello123")        # True
-tampilkan is_alnum("Hello 123")       # False
-tampilkan is_alnum("abc123xyz")       # True
-
-# Test is_lower
-tampilkan ""
-tampilkan "Test is_lower():"
-tampilkan is_lower("hello")           # True
-tampilkan is_lower("Hello")           # False
-tampilkan is_lower("hello123")        # True
-
-# Test is_upper
-tampilkan ""
-tampilkan "Test is_upper():"
-tampilkan is_upper("HELLO")           # True
-tampilkan is_upper("Hello")           # False
-tampilkan is_upper("HELLO123")        # True
-
-# Test is_space
-tampilkan ""
-tampilkan "Test is_space():"
-tampilkan is_space("   ")             # True
-tampilkan is_space(" a ")             # False
-tampilkan is_space("    ")            # True
+// List operations
+numbers itu [1, 2, 3, 4, 5]
+tampilkan "Numbers:", numbers
+tampilkan "Sum:", sum(numbers)
+tampilkan "Max:", max(numbers)
 
 tampilkan ""
-tampilkan "=== All String Validation Tests Complete ==="
+tampilkan "RenzMcLang Example Complete!"

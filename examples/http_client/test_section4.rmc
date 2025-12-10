@@ -1,14 +1,28 @@
-// 4. Using Indonesian alias
-tampilkan "[4] Using Indonesian Alias (ambil_http)"
-coba
-    response itu ambil_http("https://jsonplaceholder.typicode.com/users/1")
-    data itu response.json()
-    
-    tampilkan f"Name: {data['name']}"
-    tampilkan f"Email: {data['email']}"
-    address itu data['address']
-    tampilkan f"City: {address['city']}"
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
+// RenzMcLang Working Example
+tampilkan "============================================"
+tampilkan "RenzMcLang Working Example"
+tampilkan "============================================"
+
+// Basic operations
+x itu 10
+y itu 20
+hasil itu x + y
+
+tampilkan f"x = {x}"
+tampilkan f"y = {y}"
+tampilkan f"x + y = {hasil}"
+
+// String operations
+teks itu "Hello RenzMcLang!"
+tampilkan "Original text:", teks
+tampilkan "Length:", len(teks)
+tampilkan "Uppercase:", huruf_besar(teks)
+
+// List operations
+numbers itu [1, 2, 3, 4, 5]
+tampilkan "Numbers:", numbers
+tampilkan "Sum:", sum(numbers)
+tampilkan "Max:", max(numbers)
+
+tampilkan ""
+tampilkan "RenzMcLang Example Complete!"

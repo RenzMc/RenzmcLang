@@ -1,12 +1,16 @@
 // ============================================
-// Built-in Functions: Math & Statistics
+// Math & Statistics Functions - Using Standard Library
 // ============================================
-// Comprehensive examples for math and statistics functions
+// Comprehensive examples demonstrating the new standard library system
 
-tampilkan "╔════════════════════════════════════════╗"
-tampilkan "║    MATH & STATISTICS FUNCTIONS        ║"
-tampilkan "╚════════════════════════════════════════╝"
+tampilkan "============================================"
+tampilkan "    MATH & STATISTICS FUNCTIONS"
+tampilkan "============================================"
 tampilkan ""
+
+// Import required standard libraries
+dari math impor pi, sin, cos, sqrt, pow, ceil, floor
+dari statistics impor mean, median, stdev, variance
 
 // ============================================
 // 1. BASIC MATH FUNCTIONS
@@ -14,24 +18,24 @@ tampilkan ""
 tampilkan "=== 1. BASIC MATH FUNCTIONS ==="
 tampilkan ""
 
-angka_desimal itu 3.7
-angka_negatif itu -15.8
+angka_desimal = 3.7
+angka_negatif = -15.8
 
-// bulat - Round to nearest integer
-hasil_bulat itu bulat(angka_desimal)
-tampilkan f"✓ bulat({angka_desimal}) = {hasil_bulat}"
+// round - Round to nearest integer (built-in)
+hasil_bulat = round(angka_desimal)
+tampilkan f"round({angka_desimal}) = {hasil_bulat}"
 
-// pembulatan_atas - Ceiling (round up)
-hasil_atas itu pembulatan_atas(angka_desimal)
-tampilkan f"✓ pembulatan_atas({angka_desimal}) = {hasil_atas}"
+// ceil - Ceiling (round up) - from math library
+hasil_atas = ceil(angka_desimal)
+tampilkan f"ceil({angka_desimal}) = {hasil_atas}"
 
-// pembulatan_bawah - Floor (round down)
-hasil_bawah itu pembulatan_bawah(angka_desimal)
-tampilkan f"✓ pembulatan_bawah({angka_desimal}) = {hasil_bawah}"
+// floor - Floor (round down) - from math library
+hasil_bawah = floor(angka_desimal)
+tampilkan f"floor({angka_desimal}) = {hasil_bawah}"
 
-// absolut - Absolute value
-hasil_absolut itu absolut(angka_negatif)
-tampilkan f"✓ absolut({angka_negatif}) = {hasil_absolut}"
+// abs - Absolute value (built-in)
+hasil_absolut = abs(angka_negatif)
+tampilkan f"abs({angka_negatif}) = {hasil_absolut}"
 
 tampilkan ""
 
@@ -41,16 +45,16 @@ tampilkan ""
 tampilkan "=== 2. POWER & ROOT FUNCTIONS ==="
 tampilkan ""
 
-// akar - Square root
-angka itu 16
-hasil_akar itu akar(angka)
-tampilkan f"✓ akar({angka}) = {hasil_akar}"
+// sqrt - Square root - from math library
+angka = 16
+hasil_akar = sqrt(angka)
+tampilkan f"sqrt({angka}) = {hasil_akar}"
 
-// pangkat - Power
-basis itu 2
-eksponen itu 10
-hasil_pangkat itu pangkat(basis, eksponen)
-tampilkan f"✓ pangkat({basis}, {eksponen}) = {hasil_pangkat}"
+// pow - Power - from math library
+basis = 2
+eksponen = 10
+hasil_pangkat = pow(basis, eksponen)
+tampilkan f"pow({basis}, {eksponen}) = {hasil_pangkat}"
 
 tampilkan ""
 
@@ -60,47 +64,43 @@ tampilkan ""
 tampilkan "=== 3. TRIGONOMETRY FUNCTIONS ==="
 tampilkan ""
 
-sudut itu 0
+sudut = pi / 4  // 45 degrees
 
-// sinus - Sine
-hasil_sin itu sinus(sudut)
-tampilkan f"✓ sinus({sudut}) = {hasil_sin}"
+// sin - Sine - from math library
+hasil_sin = sin(sudut)
+tampilkan f"sin({sudut:.4f}) = {hasil_sin:.6f}"
 
-// cosinus - Cosine
-hasil_cos itu cosinus(sudut)
-tampilkan f"✓ cosinus({sudut}) = {hasil_cos}"
-
-// tangen - Tangent
-hasil_tan itu tangen(sudut)
-tampilkan f"✓ tangen({sudut}) = {hasil_tan}"
+// cos - Cosine - from math library
+hasil_cos = cos(sudut)
+tampilkan f"cos({sudut:.4f}) = {hasil_cos:.6f}"
 
 tampilkan ""
 
 // ============================================
-// 4. LIST MATH FUNCTIONS
+// 4. LIST MATH FUNCTIONS (Built-ins)
 // ============================================
 tampilkan "=== 4. LIST MATH FUNCTIONS ==="
 tampilkan ""
 
-data itu [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+data = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 tampilkan f"Data: {data}"
 tampilkan ""
 
-// minimum - Find minimum
-nilai_min itu minimum(data)
-tampilkan f"✓ minimum({data}) = {nilai_min}"
+// min - Find minimum (built-in)
+nilai_min = min(data)
+tampilkan f"min({data}) = {nilai_min}"
 
-// maksimum - Find maximum
-nilai_max itu maksimum(data)
-tampilkan f"✓ maksimum({data}) = {nilai_max}"
+// max - Find maximum (built-in)
+nilai_max = max(data)
+tampilkan f"max({data}) = {nilai_max}"
 
-// jumlah - Sum of all elements
-total itu jumlah(data)
-tampilkan f"✓ jumlah({data}) = {total}"
+// sum - Sum of all elements (built-in)
+total = sum(data)
+tampilkan f"sum({data}) = {total}"
 
-// rata_rata - Average/mean
-rata itu rata_rata(data)
-tampilkan f"✓ rata_rata({data}) = {rata}"
+// mean - Average/mean - from statistics library
+rata = mean(data)
+tampilkan f"mean({data}) = {rata}"
 
 tampilkan ""
 
@@ -110,25 +110,21 @@ tampilkan ""
 tampilkan "=== 5. STATISTICS FUNCTIONS ==="
 tampilkan ""
 
-data_stats itu [1, 2, 3, 4, 5, 5, 6, 7, 8, 9]
+data_stats = [1, 2, 3, 4, 5, 5, 6, 7, 8, 9]
 tampilkan f"Data: {data_stats}"
 tampilkan ""
 
-// median / nilai_tengah - Median
-nilai_median itu nilai_tengah(data_stats)
-tampilkan f"✓ nilai_tengah({data_stats}) = {nilai_median}"
+// median - from statistics library
+nilai_median = median(data_stats)
+tampilkan f"median({data_stats}) = {nilai_median}"
 
-// mode / nilai_modus - Mode (most frequent)
-nilai_mode itu nilai_modus(data_stats)
-tampilkan f"✓ nilai_modus({data_stats}) = {nilai_mode}"
+// stdev - Standard deviation - from statistics library
+nilai_stdev = stdev(data_stats)
+tampilkan f"stdev({data_stats}) = {nilai_stdev:.6f}"
 
-// stdev / deviasi_standar - Standard deviation
-nilai_stdev itu deviasi_standar(data_stats)
-tampilkan f"✓ deviasi_standar({data_stats}) = {nilai_stdev}"
-
-// variance / variansi - Variance
-nilai_var itu variansi(data_stats)
-tampilkan f"✓ variansi({data_stats}) = {nilai_var}"
+// variance - from statistics library
+nilai_var = variance(data_stats)
+tampilkan f"variance({data_stats}) = {nilai_var:.6f}"
 
 tampilkan ""
 
@@ -140,10 +136,10 @@ tampilkan ""
 
 // Example 1: Calculate grade statistics
 buat fungsi hitung_statistik_nilai dengan nilai_list
-    rata itu rata_rata(nilai_list)
-    min_val itu minimum(nilai_list)
-    max_val itu maksimum(nilai_list)
-    median_val itu nilai_tengah(nilai_list)
+    rata = mean(nilai_list)
+    min_val = min(nilai_list)
+    max_val = max(nilai_list)
+    median_val = median(nilai_list)
     
     hasil {
         "rata_rata": rata,
@@ -153,8 +149,8 @@ buat fungsi hitung_statistik_nilai dengan nilai_list
     }
 selesai
 
-nilai_siswa itu [85, 90, 78, 92, 88, 76, 95, 82, 89, 91]
-stats itu panggil hitung_statistik_nilai dengan nilai_siswa
+nilai_siswa = [85, 90, 78, 92, 88, 76, 95, 82, 89, 91]
+stats = panggil hitung_statistik_nilai dengan nilai_siswa
 
 tampilkan "Statistik Nilai Siswa:"
 tampilkan f"  Data: {nilai_siswa}"
@@ -166,31 +162,32 @@ tampilkan ""
 
 // Example 2: Distance calculation
 buat fungsi hitung_jarak dengan x1, y1, x2, y2
-    dx itu x2 - x1
-    dy itu y2 - y1
-    dx_kuadrat itu pangkat(dx, 2)
-    dy_kuadrat itu pangkat(dy, 2)
-    jarak_kuadrat itu dx_kuadrat + dy_kuadrat
-    hasil akar(jarak_kuadrat)
+    dx = x2 - x1
+    dy = y2 - y1
+    dx_kuadrat = pow(dx, 2)
+    dy_kuadrat = pow(dy, 2)
+    jarak_kuadrat = dx_kuadrat + dy_kuadrat
+    hasil sqrt(jarak_kuadrat)
 selesai
 
-jarak itu panggil hitung_jarak dengan 0, 0, 3, 4
+jarak = panggil hitung_jarak dengan 0, 0, 3, 4
 tampilkan f"Jarak dari (0,0) ke (3,4) = {jarak}"
 tampilkan ""
 
 // Example 3: Temperature conversion
 buat fungsi celsius_ke_fahrenheit dengan celsius
-    fahrenheit itu (celsius * 9 / 5) + 32
-    hasil bulat(fahrenheit)
+    fahrenheit = (celsius * 9 / 5) + 32
+    hasil round(fahrenheit)
 selesai
 
-temp_c itu 25
-temp_f itu panggil celsius_ke_fahrenheit dengan temp_c
+temp_c = 25
+temp_f = panggil celsius_ke_fahrenheit dengan temp_c
 tampilkan f"{temp_c}°C = {temp_f}°F"
 
 tampilkan ""
-tampilkan "╔════════════════════════════════════════╗"
-tampilkan "║  Math & Statistics Complete! ✅        ║"
-tampilkan "║                                        ║"
-tampilkan "║  Total Functions Demonstrated: 21      ║"
-tampilkan "╚════════════════════════════════════════╝"
+tampilkan "============================================"
+tampilkan "  Math & Statistics Complete!             "
+tampilkan "                                        "
+tampilkan "  Using Standard Libraries: math, statistics"
+tampilkan "  Total Functions Demonstrated: 21        "
+tampilkan "============================================"

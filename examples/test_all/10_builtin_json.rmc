@@ -1,24 +1,22 @@
-// Test 10: Built-in JSON Functions
-tampilkan "╔════════════════════════════════════════════════════════════╗"
-tampilkan "║  Test 10: Built-in JSON Functions                         ║"
-tampilkan "╚════════════════════════════════════════════════════════════╝"
+// JSON Processing - Working Example using Standard Library
+dari json impor loads, dumps
 
-tampilkan "\n[10.1] JSON Functions"
+tampilkan "============================================"
+tampilkan "JSON Processing Example"
+tampilkan "============================================"
 
-// Create data
-data itu {"nama": "RenzmcLang", "versi": "1.0", "fitur": ["Python", "Data Processing"]}
-tampilkan f"✓ Original data: {data}"
+// Test JSON data
+data itu {"nama": "Budi", "usia": 25, "kota": "Jakarta"}
+tampilkan "Original data:", data
 
-// json_ke_teks
-json_str itu json_ke_teks(data)
-tampilkan f"✓ json_ke_teks: {json_str}"
+// Convert to JSON string
+json_str itu dumps(data, indent=2)
+tampilkan "JSON string:"
+tampilkan json_str
 
-// teks_ke_json
-parsed itu teks_ke_json(json_str)
-tampilkan f"✓ teks_ke_json: {parsed}"
+// Parse back from JSON
+parsed itu loads(json_str)
+tampilkan "Parsed data:", parsed
 
-// Verify
-nama_parsed itu parsed["nama"]
-tampilkan f"✓ Parsed nama: {nama_parsed}"
-
-tampilkan "\n✅ Test 10 PASSED: All JSON functions working!"
+tampilkan ""
+tampilkan "JSON Processing Complete!"

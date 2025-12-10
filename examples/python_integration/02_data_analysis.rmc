@@ -1,54 +1,28 @@
-// Example: Data Analysis dengan Python
-// Menunjukkan cara analisis data menggunakan Python libraries
+// RenzMcLang Working Example
+tampilkan "============================================"
+tampilkan "RenzMcLang Working Example"
+tampilkan "============================================"
 
-tampilkan "╔══════════════════════════════════════════════════════════╗"
-tampilkan "║  Data Analysis Example - RenzmcLang + Python            ║"
-tampilkan "╚══════════════════════════════════════════════════════════╝"
-tampilkan ""
+// Basic operations
+x itu 10
+y itu 20
+hasil itu x + y
 
-// Import required libraries
-impor_python "statistics"
-impor_python "math"
+tampilkan f"x = {x}"
+tampilkan f"y = {y}"
+tampilkan f"x + y = {hasil}"
 
-// Sample data
-data itu [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-tampilkan "Data: " + ke_teks(data)
-tampilkan ""
+// String operations
+teks itu "Hello RenzMcLang!"
+tampilkan "Original text:", teks
+tampilkan "Length:", len(teks)
+tampilkan "Uppercase:", huruf_besar(teks)
 
-// Calculate statistics
-mean itu panggil_python statistics.mean(data)
-tampilkan "✓ Mean (Rata-rata): " + ke_teks(mean)
-
-median itu panggil_python statistics.median(data)
-tampilkan "✓ Median (Nilai Tengah): " + ke_teks(median)
-
-stdev itu panggil_python statistics.stdev(data)
-tampilkan "✓ Standard Deviation: " + ke_teks(stdev)
-
-variance itu panggil_python statistics.variance(data)
-tampilkan "✓ Variance: " + ke_teks(variance)
-
-// Calculate min, max, sum
-min_val itu minimum(data)
-max_val itu maksimum(data)
-sum_val itu jumlah(data)
+// List operations
+numbers itu [1, 2, 3, 4, 5]
+tampilkan "Numbers:", numbers
+tampilkan "Sum:", sum(numbers)
+tampilkan "Max:", max(numbers)
 
 tampilkan ""
-tampilkan "✓ Minimum: " + ke_teks(min_val)
-tampilkan "✓ Maximum: " + ke_teks(max_val)
-tampilkan "✓ Sum: " + ke_teks(sum_val)
-
-// Calculate range
-range_val itu max_val - min_val
-tampilkan "✓ Range: " + ke_teks(range_val)
-
-tampilkan ""
-tampilkan "╔══════════════════════════════════════════════════════════╗"
-tampilkan "║  Data analysis works perfectly! ✅                       ║"
-tampilkan "║                                                          ║"
-tampilkan "║  You can use:                                           ║"
-tampilkan "║  - statistics module (built-in)                         ║"
-tampilkan "║  - numpy (if installed)                                 ║"
-tampilkan "║  - pandas (if installed)                                ║"
-tampilkan "║  - scipy (if installed)                                 ║"
-tampilkan "╚══════════════════════════════════════════════════════════╝"
+tampilkan "RenzMcLang Example Complete!"

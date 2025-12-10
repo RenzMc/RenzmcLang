@@ -1,6 +1,6 @@
 [build-system]
-requires = ["maturin>=1.0", "setuptools>=64", "wheel"]
-build-backend = "maturin"
+requires = ["setuptools>=77.0.3", "wheel"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "renzmc"
@@ -8,7 +8,8 @@ version = "0.0.9"
 description = "Bahasa pemrograman berbasis Bahasa Indonesia yang powerful dan modern"
 readme = "README.md"
 requires-python = ">=3.8"
-license = {text = "MIT"}
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
 authors = [
     {name = "RenzMc", email = "renzaja11@gmail.com"}
 ]
@@ -29,7 +30,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.8",
@@ -81,18 +81,13 @@ Examples = "https://github.com/RenzMc/RenzmcLang/tree/main/examples"
 rmc = "renzmc.__main__:main"
 renzmc = "renzmc.__main__:main"
 
-[tool.maturin]
-python-source = "python"
-module-name = "renzmc.rust.renzmc_vm"
-features = ["pyo3/extension-module"]
-
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["renzmc*"]
-exclude = ["tests*", "examples*", "docs*"]
+exclude = ["tests*", "examples*", "docs*", "rust*"]
 
 [tool.setuptools.package-data]
-renzmc = ["*.py", "rust/*.rs", "rust/Cargo.toml"]
+renzmc = ["*.py"]
 
 [tool.black]
 line-length = 120

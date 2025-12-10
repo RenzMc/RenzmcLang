@@ -34,15 +34,20 @@ try:
         RenzmcVM = renzmc_vm.RenzmcVM
         is_available = lambda: True
         version = renzmc_vm.version
+        rust_version = renzmc_vm.version()
     except ImportError:
         from ..rust.renzmc_vm import RenzmcVM, is_available, version as rust_version
-        version = rust_version
     RUST_AVAILABLE = True
 except ImportError:
-    warnings.warn("Rust components not available. Falling back to Python implementation.")
-    RUST_AVAILABLE = False
-    RenzmcVM = None
-    rust_version = "0.0.0"
+    try:
+        from ..rust import RenzmcVM, is_available, version
+        rust_version = version()
+        RUST_AVAILABLE = True
+    except ImportError:
+        warnings.warn("Rust components not available. Falling back to Python implementation.")
+        RUST_AVAILABLE = False
+        RenzmcVM = None
+        rust_version = "0.0.0"
 
 
 class RustIntegration:
@@ -82,7 +87,7 @@ class RustIntegration:
         return {
             "available": RUST_AVAILABLE,
             "enabled": self.is_rust_enabled,
-            "version": version if RUST_AVAILABLE else None
+            "version": version() if RUST_AVAILABLE and callable(version) else str(version) if RUST_AVAILABLE else None
         }
     
     def compile_to_bytecode(self, ast_json: str) -> Optional[bytes]:

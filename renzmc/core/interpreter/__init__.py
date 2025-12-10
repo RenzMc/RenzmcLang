@@ -32,6 +32,7 @@ from renzmc.core.interpreter.http_operations import HTTPOperationsMixin
 from renzmc.core.interpreter.methods import ExecutionMethodsMixin
 from renzmc.core.interpreter.python_integration import PythonIntegrationMixin
 from renzmc.core.interpreter.renzmc_modules import RenzmcModulesMixin
+from renzmc.core.interpreter.rust_execution import RustExecutionMixin
 from renzmc.core.interpreter.scope_management import ScopeManagementMixin
 from renzmc.core.interpreter.type_system import TypeSystemMixin
 from renzmc.core.interpreter.utility import UtilityMixin
@@ -50,6 +51,7 @@ class Interpreter(
     HTTPOperationsMixin,
     AdvancedFeaturesMixin,
     ExecutionMethodsMixin,
+    RustExecutionMixin,
 ):
     """
     Main Interpreter class for RenzmcLang.
@@ -83,7 +85,7 @@ class Interpreter(
         Returns:
             The result of interpretation
         """
-        return self.visit(tree)
+        return self.visit_with_rust(tree)
 
 
 __all__ = ["Interpreter"]

@@ -50,7 +50,7 @@ def run_file(filename, use_cache=True):
     try:
         with open(filename, "r", encoding="utf-8") as f:
             source_code = f.read()
-        run_code(source_code, filename, use_cache=use_cache)
+        return run_code(source_code, filename, use_cache=use_cache)
     except FileNotFoundError:
         print(f"Error: File '{filename}' tidak ditemukan.")
         sys.exit(1)
@@ -97,7 +97,12 @@ def run_code(source_code, filename="<stdin>", interpreter=None, use_cache=True):
                 cache_key = _ast_cache.get_cache_key(source_code)
                 _ast_cache.save(cache_key, ast)
 
-        interpreter.visit(ast)
+        # Use Rust-aware execution (automatic)
+        if hasattr(interpreter, 'visit_with_rust'):
+            interpreter.visit_with_rust(ast)
+        else:
+            interpreter.visit(ast)
+            
         return interpreter
     except Exception as e:
         # Log error to file with full context
@@ -171,6 +176,7 @@ def main():
         action="store_true",
         help="Hapus semua cache AST files dari direktori .rmc_cache",
     )
+    
     args = parser.parse_args()
 
     if args.version:

@@ -167,7 +167,7 @@ class RenzmcREPL:
         for keyword in self.KEYWORDS:
             result = result.replace(f" {keyword} ", f" {self._colorize(keyword, '')} ")
             if result.startswith(keyword + " "):
-                result = self._colorize(keyword, "") + result[len(keyword) :]
+                result = self._colorize(keyword, "") + result[len(keyword):]
 
         for builtin in self.BUILTINS:
             result = result.replace(f"{builtin}(", f"{self._colorize(builtin, '')}(")

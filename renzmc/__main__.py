@@ -104,7 +104,7 @@ def run_code(source_code, filename="<stdin>", interpreter=None, use_cache=True):
             interpreter.visit_with_rust(ast)
         else:
             interpreter.visit(ast)
-            
+
         return interpreter
     except Exception as e:
         # Log error to file with full context
@@ -140,34 +140,34 @@ def lint_file(filename):
         print(f"🔍 Memeriksa file: {filename}")
         linter = RenzmcLinter()
         messages = linter.lint_file(filename)
-        
+
         if not messages:
             print("✅ Tidak ada masalah yang ditemukan!")
             return
-        
+
         errors = linter.get_errors()
         warnings = linter.get_warnings()
         info = linter.get_info()
-        
+
         if errors:
             print(f"\n❌ Ditemukan {len(errors)} error:")
             for error in errors:
                 print(f"  {error}")
-        
+
         if warnings:
             print(f"\n⚠️  Ditemukan {len(warnings)} warning:")
             for warning in warnings:
                 print(f"  {warning}")
-        
+
         if info:
             print(f"\nℹ️  Informasi ({len(info)}):")
             for msg in info:
                 print(f"  {msg}")
-        
+
         if errors:
             print(f"\n💡 Gunakan --format untuk memperbaiki beberapa masalah secara otomatis")
             sys.exit(1)
-            
+
     except Exception as e:
         print(f"❌ Error saat linting: {str(e)}")
         sys.exit(1)
@@ -177,22 +177,22 @@ def format_file(filename, save_changes=False):
     """Format a RenzmcLang file."""
     try:
         print(f"📝 Memformat file: {filename}")
-        
+
         with open(filename, 'r', encoding='utf-8') as f:
             original_code = f.read()
-        
+
         formatter = RenzmcFormatter()
         formatted_code = formatter.format_code(original_code)
-        
+
         if original_code == formatted_code:
             print("✅ File sudah diformat dengan benar!")
             return
-        
+
         print("🔧 Perubahan yang akan dilakukan:")
-        
+
         original_lines = original_code.split('\n')
         formatted_lines = formatted_code.split('\n')
-        
+
         changes_count = 0
         for i, (orig, fmt) in enumerate(zip(original_lines, formatted_lines)):
             if orig != fmt:
@@ -200,13 +200,13 @@ def format_file(filename, save_changes=False):
                 print(f"  Baris {i+1}:")
                 print(f"    - {orig}")
                 print(f"    + {fmt}")
-        
+
         if len(original_lines) != len(formatted_lines):
             changes_count += abs(len(original_lines) - len(formatted_lines))
             print(f"  Jumlah baris berubah: {len(original_lines)} → {len(formatted_lines)}")
-        
+
         print(f"\n📊 Total {changes_count} perubahan")
-        
+
         if save_changes:
             with open(filename, 'w', encoding='utf-8') as f:
                 f.write(formatted_code)
@@ -217,7 +217,7 @@ def format_file(filename, save_changes=False):
             print("-" * 50)
             print(formatted_code)
             print("-" * 50)
-            
+
     except Exception as e:
         print(f"❌ Error saat formatting: {str(e)}")
         sys.exit(1)
@@ -282,7 +282,7 @@ def main():
         action="store_true",
         help="Format dan simpan perubahan ke file (gunakan dengan --format)",
     )
-    
+
     args = parser.parse_args()
 
     if args.version:
@@ -328,7 +328,7 @@ def main():
             print("Error: --lint memerlukan file yang akan diperiksa")
             sys.exit(1)
         return
-    
+
     # Handle formatting
     if args.format:
         if args.file:

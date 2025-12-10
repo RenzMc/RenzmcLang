@@ -287,7 +287,7 @@ class TypeParser:
             bracket_end = type_str.rindex("]")
 
             container_str = type_str[:bracket_start].strip()
-            elements_str = type_str[bracket_start + 1 : bracket_end].strip()
+            elements_str = type_str[bracket_start + 1: bracket_end].strip()
 
             if container_str in ["Literal", "literal"]:
                 values = []

@@ -151,3 +151,31 @@ def tanggal():
 
 def buat_uuid():
     return str(uuid.uuid4())
+
+
+def buka(nama_file, mode='r'):
+    """
+    Buka file untuk membaca atau menulis.
+    
+    Args:
+        nama_file: Nama file yang akan dibuka
+        mode: Mode pembukaan ('r', 'w', 'a', dll)
+        
+    Returns:
+        File object
+    """
+    return open(nama_file, mode)
+
+
+def open_file(nama_file, mode='r'):
+    """
+    Open file for reading or writing (English alias).
+    
+    Args:
+        nama_file: File name to open
+        mode: Opening mode ('r', 'w', 'a', etc.)
+        
+    Returns:
+        File object
+    """
+    return open(nama_file, mode)

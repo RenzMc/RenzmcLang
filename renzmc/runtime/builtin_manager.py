@@ -1,40 +1,38 @@
-#!/usr/bin/env python3
-"""
-MIT License
-
-Copyright (c) 2025 RenzMc
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-"""
-
 import renzmc.builtins as renzmc_builtins
+from renzmc.library.manager import get_library_manager
 
 
 class BuiltinManager:
 
     @staticmethod
     def setup_builtin_functions():
+        # Core built-in functions - only essential ones
         builtin_functions = {
-            "panjang": renzmc_builtins.panjang,
-            "jenis": renzmc_builtins.jenis,
-            "ke_teks": renzmc_builtins.ke_teks,
-            "ke_angka": renzmc_builtins.ke_angka,
+            # Core Python built-ins
+            "len": len,
+            "str": str,
+            "int": int,
+            "float": float,
+            "bool": bool,
+            "list": list,
+            "dict": dict,
+            "set": set,
+            "tuple": tuple,
+            "type": type,
+            "isinstance": isinstance,
+            "range": range,
+            "enumerate": enumerate,
+            "zip": zip,
+            "all": all,
+            "any": any,
+            "sum": sum,
+            "min": min,
+            "max": max,
+            "abs": abs,
+            "round": round,
+            "pow": pow,
+
+            # RenzMcLang string functions
             "huruf_besar": renzmc_builtins.huruf_besar,
             "huruf_kecil": renzmc_builtins.huruf_kecil,
             "potong": renzmc_builtins.potong,
@@ -45,189 +43,143 @@ class BuiltinManager:
             "akhir_dengan": renzmc_builtins.akhir_dengan,
             "berisi": renzmc_builtins.berisi,
             "hapus_spasi": renzmc_builtins.hapus_spasi,
-            "bulat": renzmc_builtins.bulat,
-            "desimal": renzmc_builtins.desimal,
-            "akar": renzmc_builtins.akar,
-            "pangkat": renzmc_builtins.pangkat,
-            "absolut": renzmc_builtins.absolut,
-            "pembulatan": renzmc_builtins.pembulatan,
-            "pembulatan_atas": renzmc_builtins.pembulatan_atas,
-            "pembulatan_bawah": renzmc_builtins.pembulatan_bawah,
-            "sinus": renzmc_builtins.sinus,
-            "cosinus": renzmc_builtins.cosinus,
-            "tangen": renzmc_builtins.tangen,
-            "tambah": renzmc_builtins.tambah,
-            "hapus": renzmc_builtins.hapus,
-            "hapus_pada": renzmc_builtins.hapus_pada,
-            "masukkan": renzmc_builtins.masukkan,
-            "urutkan": renzmc_builtins.urutkan,
-            "balikkan": renzmc_builtins.balikkan,
-            "hitung": renzmc_builtins.hitung,
-            "indeks": renzmc_builtins.indeks,
-            "extend": renzmc_builtins.extend,
-            "gabung_daftar": renzmc_builtins.extend,
-            "salin": renzmc_builtins.salin,
-            "salin_dalam": renzmc_builtins.salin_dalam,
-            "minimum": renzmc_builtins.minimum,
-            "maksimum": renzmc_builtins.maksimum,
-            "jumlah": renzmc_builtins.jumlah,
-            "rata_rata": renzmc_builtins.rata_rata,
-            "zip": renzmc_builtins.zip,
-            "enumerate": renzmc_builtins.enumerate,
-            "filter": renzmc_builtins.filter,
-            "saring": renzmc_builtins.saring,
-            "map": renzmc_builtins.map,
-            "peta": renzmc_builtins.peta,
-            "reduce": renzmc_builtins.reduce,
-            "kurangi": renzmc_builtins.kurangi,
-            "all": renzmc_builtins.all,
-            "semua": renzmc_builtins.semua,
-            "any": renzmc_builtins.any,
-            "ada": renzmc_builtins.ada,
-            "sorted": renzmc_builtins.sorted,
-            "terurut": renzmc_builtins.terurut,
-            "is_alpha": renzmc_builtins.is_alpha,
+            "format_teks": renzmc_builtins.format_teks,
             "adalah_huruf": renzmc_builtins.adalah_huruf,
-            "is_digit": renzmc_builtins.is_digit,
             "adalah_angka": renzmc_builtins.adalah_angka,
-            "is_alnum": renzmc_builtins.is_alnum,
             "adalah_alfanumerik": renzmc_builtins.adalah_alfanumerik,
-            "is_lower": renzmc_builtins.is_lower,
-            "adalah_huruf_kecil": renzmc_builtins.adalah_huruf_kecil,
-            "is_upper": renzmc_builtins.is_upper,
             "adalah_huruf_besar": renzmc_builtins.adalah_huruf_besar,
-            "is_space": renzmc_builtins.is_space,
+            "adalah_huruf_kecil": renzmc_builtins.adalah_huruf_kecil,
             "adalah_spasi": renzmc_builtins.adalah_spasi,
-            "direktori_ada": renzmc_builtins.direktori_ada,
-            "direktori_sekarang": renzmc_builtins.direktori_sekarang,
-            "ubah_direktori": renzmc_builtins.ubah_direktori,
-            "pisah_path": renzmc_builtins.pisah_path,
-            "ekstensi_file": renzmc_builtins.ekstensi_file,
-            "nama_file_tanpa_ekstensi": renzmc_builtins.nama_file_tanpa_ekstensi,
-            "path_ada": renzmc_builtins.path_ada,
-            "adalah_file": renzmc_builtins.adalah_file,
-            "adalah_direktori": renzmc_builtins.adalah_direktori,
-            "path_absolut": renzmc_builtins.path_absolut,
-            "waktu_modifikasi_file": renzmc_builtins.waktu_modifikasi_file,
-            "waktu_buat_file": renzmc_builtins.waktu_buat_file,
-            "file_dapat_dibaca": renzmc_builtins.file_dapat_dibaca,
-            "file_dapat_ditulis": renzmc_builtins.file_dapat_ditulis,
-            "median": renzmc_builtins.median,
-            "nilai_tengah": renzmc_builtins.nilai_tengah,
-            "mode": renzmc_builtins.mode,
-            "nilai_modus": renzmc_builtins.nilai_modus,
-            "stdev": renzmc_builtins.stdev,
-            "deviasi_standar": renzmc_builtins.deviasi_standar,
-            "variance": renzmc_builtins.variance,
-            "variansi": renzmc_builtins.variansi,
-            "quantiles": renzmc_builtins.quantiles,
-            "kuantil": renzmc_builtins.kuantil,
+
+            # Type functions
+            "panjang": renzmc_builtins.panjang,
+            "jenis": renzmc_builtins.jenis,
+            "ke_teks": renzmc_builtins.ke_teks,
+            "ke_angka": renzmc_builtins.ke_angka,
+
+            # Dict functions
+            "hapus_kunci": renzmc_builtins.hapus_kunci,
+            "item": renzmc_builtins.item,
             "kunci": renzmc_builtins.kunci,
             "nilai": renzmc_builtins.nilai,
-            "item": renzmc_builtins.item,
-            "hapus_kunci": renzmc_builtins.hapus_kunci,
-            "acak": renzmc_builtins.acak,
-            "waktu": renzmc_builtins.waktu,
-            "tidur": renzmc_builtins.tidur,
-            "tanggal": renzmc_builtins.tanggal,
-            "baca_file": renzmc_builtins.baca_file,
-            "tulis_file": renzmc_builtins.tulis_file,
-            "tambah_file": renzmc_builtins.tambah_file,
-            "hapus_file": renzmc_builtins.hapus_file,
-            "jalankan_perintah": renzmc_builtins.jalankan_perintah,
-            "atur_sandbox": renzmc_builtins.atur_sandbox,
-            "tambah_perintah_aman": renzmc_builtins.tambah_perintah_aman,
-            "hapus_perintah_aman": renzmc_builtins.hapus_perintah_aman,
-            "json_ke_teks": renzmc_builtins.json_ke_teks,
-            "teks_ke_json": renzmc_builtins.teks_ke_json,
-            "gabung_path": renzmc_builtins.gabung_path,
-            "file_exists": renzmc_builtins.file_exists,
-            "buat_direktori": renzmc_builtins.buat_direktori,
-            "daftar_direktori": renzmc_builtins.daftar_direktori,
+
+            # Iteration functions
+            "ada": renzmc_builtins.ada,
+            "all_func": renzmc_builtins.all_func,
+            "any_func": renzmc_builtins.any_func,
+            "enumerate_func": renzmc_builtins.enumerate_func,
+            "filter_func": renzmc_builtins.filter_func,
+            "kurangi": renzmc_builtins.kurangi,
+            "map_func": renzmc_builtins.map_func,
+            "peta": renzmc_builtins.peta,
+            "range_func": renzmc_builtins.range_func,
+            "reduce_func": renzmc_builtins.reduce_func,
+            "rentang": renzmc_builtins.rentang,
+            "reversed": renzmc_builtins.reversed_renzmc,
+            "saring": renzmc_builtins.saring,
+            "semua": renzmc_builtins.semua,
+            "sorted_func": renzmc_builtins.sorted_func,
+            "terbalik": renzmc_builtins.terbalik,
+            "terurut": renzmc_builtins.terurut,
+            "zip_func": renzmc_builtins.zip_func,
+
+            # List functions
+            "balikkan": renzmc_builtins.balikkan,
+            "extend": renzmc_builtins.extend,
+            "hapus": renzmc_builtins.hapus,
+            "hapus_pada": renzmc_builtins.hapus_pada,
+            "hitung": renzmc_builtins.hitung,
+            "indeks": renzmc_builtins.indeks,
+            "masukkan": renzmc_builtins.masukkan,
+            "salin": renzmc_builtins.salin,
+            "salin_dalam": renzmc_builtins.salin_dalam,
+            "tambah": renzmc_builtins.tambah,
+            "urutkan": renzmc_builtins.urutkan,
+
+            # Utility functions
             "hash_teks": renzmc_builtins.hash_teks,
-            "buat_uuid": renzmc_builtins.buat_uuid,
             "url_encode": renzmc_builtins.url_encode,
             "url_decode": renzmc_builtins.url_decode,
+            "regex_match": renzmc_builtins.regex_match,
+            "regex_replace": renzmc_builtins.regex_replace,
             "base64_encode": renzmc_builtins.base64_encode,
             "base64_decode": renzmc_builtins.base64_decode,
-            "regex_match": renzmc_builtins.regex_match,
-            "http_get": renzmc_builtins.http_get,
-            "http_post": renzmc_builtins.http_post,
-            "http_put": renzmc_builtins.http_put,
-            "http_delete": renzmc_builtins.http_delete,
-            "http_patch": renzmc_builtins.http_patch,
-            "ambil_http": renzmc_builtins.ambil_http,
-            "kirim_http": renzmc_builtins.kirim_http,
-            "perbarui_http": renzmc_builtins.perbarui_http,
-            "hapus_http": renzmc_builtins.hapus_http,
-            "http_set_header": renzmc_builtins.http_set_header,
-            "http_set_timeout": renzmc_builtins.http_set_timeout,
-            "regex_replace": renzmc_builtins.regex_replace,
-            "format_teks": renzmc_builtins.format_teks,
-            "super": renzmc_builtins.super,
-            "range": renzmc_builtins.range,
-            "rentang": renzmc_builtins.rentang,
-            "buka": renzmc_builtins.buka,
-            "open_file": renzmc_builtins.open_file,
-            "tutup": renzmc_builtins.tutup,
-            "close_file": renzmc_builtins.close_file,
-            "tulis": renzmc_builtins.tulis,
-            "write_to_file": renzmc_builtins.write_to_file,
-            "baca": renzmc_builtins.baca,
-            "read_from_file": renzmc_builtins.read_from_file,
-            "tulis_json": renzmc_builtins.tulis_json,
-            "write_json": renzmc_builtins.write_json,
-            "baca_json": renzmc_builtins.baca_json,
-            "read_json": renzmc_builtins.read_json,
-            "ke_json": renzmc_builtins.ke_json,
-            "to_json": renzmc_builtins.to_json,
-            "dari_json": renzmc_builtins.dari_json,
-            "from_json": renzmc_builtins.from_json,
-            "cek_modul_python": renzmc_builtins.cek_modul_python,
-            "check_python_module": renzmc_builtins.check_python_module,
-            "path_modul_python": renzmc_builtins.path_modul_python,
-            "get_python_module_path": renzmc_builtins.get_python_module_path,
-            "versi_modul_python": renzmc_builtins.versi_modul_python,
-            "get_python_module_version": renzmc_builtins.get_python_module_version,
-            "evaluasi_python": renzmc_builtins.evaluasi_python,
-            "eval_python": renzmc_builtins.eval_python,
-            "eksekusi_python": renzmc_builtins.eksekusi_python,
-            "exec_python": renzmc_builtins.exec_python,
-            "input": renzmc_builtins.input,
-            "masukan": renzmc_builtins.masukan,
-            "print": renzmc_builtins.print,
-            "cetak": renzmc_builtins.cetak,
-            "tampilkan": renzmc_builtins.tampilkan,
-            "list": renzmc_builtins.list_renzmc,
-            "daftar": renzmc_builtins.daftar,
-            "dict": renzmc_builtins.dict_renzmc,
-            "kamus": renzmc_builtins.kamus,
-            "set": renzmc_builtins.set_renzmc,
-            "himpunan": renzmc_builtins.himpunan,
-            "tuple": renzmc_builtins.tuple_renzmc,
-            "tupel": renzmc_builtins.tupel,
-            "str": renzmc_builtins.str_renzmc,
-            "teks": renzmc_builtins.teks_convert,
-            "int": renzmc_builtins.int_renzmc,
-            "bulat_int": renzmc_builtins.bulat_int,
-            "float": renzmc_builtins.float_renzmc,
-            "pecahan": renzmc_builtins.pecahan,
-            "bool": renzmc_builtins.bool_renzmc,
-            "boolean": renzmc_builtins.boolean,
-            "sum": renzmc_builtins.sum_renzmc,
-            "len": renzmc_builtins.len_renzmc,
-            "panjang_len": renzmc_builtins.panjang_len,
-            "min": renzmc_builtins.min_renzmc,
-            "min_nilai": renzmc_builtins.min_nilai,
-            "max": renzmc_builtins.max_renzmc,
-            "max_nilai": renzmc_builtins.max_nilai,
-            "abs": renzmc_builtins.abs_renzmc,
-            "nilai_absolut": renzmc_builtins.nilai_absolut,
-            "round": renzmc_builtins.round_renzmc,
-            "bulatkan": renzmc_builtins.bulatkan,
-            "pow": renzmc_builtins.pow_renzmc,
-            "pangkat_pow": renzmc_builtins.pangkat_pow,
-            "reversed": renzmc_builtins.reversed_renzmc,
-            "terbalik": renzmc_builtins.terbalik,
+
+            # Python integration
+            "daftar_modul_python": renzmc_builtins.daftar_modul_python,
+            "jalankan_python": renzmc_builtins.jalankan_python,
+            "is_async_function": renzmc_builtins.is_async_function,
+            "impor_semua_python": renzmc_builtins.impor_semua_python,
+            "reload_python": renzmc_builtins.reload_python,
         }
+
+        # Add library management functions
+        builtin_functions.update({
+            "impor_library": BuiltinManager._import_library,
+            "dapatkan_library": BuiltinManager._get_libraries,
+            "info_library": BuiltinManager._get_library_info,
+            # Indonesian aliases
+            "impor_stdlib": BuiltinManager._import_library,
+            "daftar_library": BuiltinManager._get_libraries,
+        })
+
         return builtin_functions
+
+    @staticmethod
+    def _import_library(library_name, function_names=None):
+        """
+        Import library or specific functions from library.
+
+        Args:
+            library_name: Name of the library to import
+            function_names: Optional list of specific function names to import
+
+        Returns:
+            Library module or dictionary of functions
+        """
+        try:
+            manager = get_library_manager()
+
+            if function_names is None:
+                # Import entire library
+                return manager.import_library(library_name)
+            else:
+                # Import specific functions
+                result = {}
+                for func_name in function_names:
+                    result[func_name] = manager.import_function(library_name, func_name)
+                return result
+
+        except Exception as e:
+            raise ImportError(f"Gagal import library '{library_name}': {str(e)}")
+
+    @staticmethod
+    def _get_libraries():
+        """
+        Get list of available libraries.
+
+        Returns:
+            List of available library names
+        """
+        try:
+            manager = get_library_manager()
+            return manager.get_libraries()
+        except Exception as e:
+            return []
+
+    @staticmethod
+    def _get_library_info(library_name):
+        """
+        Get information about a library.
+
+        Args:
+            library_name: Name of the library
+
+        Returns:
+            Dictionary with library information
+        """
+        try:
+            manager = get_library_manager()
+            return manager.get_library_info(library_name)
+        except Exception as e:
+            return {"error": str(e)}

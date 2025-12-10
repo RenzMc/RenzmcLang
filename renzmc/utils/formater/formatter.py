@@ -55,11 +55,11 @@ class RenzmcFormatter:
         self.lines = []
         self.current_line = ""
         self.source_code = ""
-        
+
         self.block_keywords = {
             'jika', 'kalau', 'selama', 'untuk', 'setiap', 'coba', 'fungsi', 'kelas', 'cocok'
         }
-        
+
         self.end_keywords = {
             'selesai', 'akhir', 'akhirnya'
         }
@@ -79,18 +79,18 @@ class RenzmcFormatter:
         self.lines = []
         self.current_line = ""
         self.current_indent = 0
-        
+
         try:
             lexer = Lexer(source_code)
             parser = Parser(lexer)
             ast = parser.parse()
-            
+
             self._format_ast(ast)
             self._flush_current_line()
-            
+
             formatted_code = '\n'.join(self.lines)
             return self._post_process(formatted_code)
-            
+
         except Exception as e:
             return self._fallback_format(source_code)
 
@@ -171,7 +171,7 @@ class RenzmcFormatter:
         self._flush_current_line()
         self._format_ast(node.if_body)
         self._add_line("selesai")
-        
+
         if node.else_body:
             self._add_line("lainnya")
             self._format_ast(node.else_body)
@@ -223,20 +223,20 @@ class RenzmcFormatter:
     def _format_params(self, params):
         if not params:
             return ""
-        
+
         param_names = []
         for param in params:
             if hasattr(param, 'name'):
                 param_names.append(param.name)
             else:
                 param_names.append(str(param))
-        
+
         return ", ".join(param_names)
 
     def _format_args(self, args):
         if not args:
             return ""
-        
+
         arg_values = []
         for arg in args:
             if hasattr(arg, 'value'):
@@ -245,7 +245,7 @@ class RenzmcFormatter:
                 arg_values.append(arg.name)
             else:
                 arg_values.append(str(arg))
-        
+
         return ", ".join(arg_values)
 
     def _add_to_current_line(self, text):
@@ -270,27 +270,27 @@ class RenzmcFormatter:
     def _post_process(self, code):
         lines = code.split('\n')
         processed_lines = []
-        
+
         for line in lines:
             stripped = line.strip()
-            
+
             if not stripped or stripped.startswith('//'):
                 processed_lines.append("")
                 continue
-            
+
             if self.config.max_line_length > 0 and len(stripped) > self.config.max_line_length:
                 wrapped_lines = self._wrap_long_line(line)
                 processed_lines.extend(wrapped_lines)
             else:
                 processed_lines.append(line)
-        
+
         return '\n'.join(processed_lines).strip() + '\n'
 
     def _wrap_long_line(self, line):
         indent_match = re.match(r'^(\s*)', line)
         indent = indent_match.group(1) if indent_match else ""
         content = line[len(indent):]
-        
+
         if ' itu ' in content:
             parts = content.split(' itu ', 1)
             return [
@@ -310,25 +310,25 @@ class RenzmcFormatter:
         lines = source_code.split('\n')
         formatted_lines = []
         indent_level = 0
-        
+
         for line in lines:
             stripped = line.strip()
-            
+
             if not stripped or stripped.startswith('//'):
                 formatted_lines.append(line)
                 continue
-            
+
             if stripped.startswith(tuple(self.end_keywords)):
                 indent_level = max(0, indent_level - 1)
-            
+
             if indent_level > 0:
                 formatted_lines.append(self.indent_string * indent_level + stripped)
             else:
                 formatted_lines.append(stripped)
-            
+
             if stripped.startswith(tuple(self.block_keywords)) and 'selesai' not in stripped:
                 indent_level += 1
-        
+
         return '\n'.join(formatted_lines)
 
 

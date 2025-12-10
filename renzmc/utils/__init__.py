@@ -174,27 +174,27 @@ def parse_type_annotation(annotation):
     elif annotation == "Any" or annotation == "apapun":
         return Any
     elif annotation.startswith("List[") or annotation.startswith("Daftar["):
-        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
         return List[parse_type_annotation(inner)]
     elif annotation.startswith("Dict[") or annotation.startswith("Kamus["):
-        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
         key_type, value_type = inner.split(",")
         return Dict[
             parse_type_annotation(key_type.strip()),
             parse_type_annotation(value_type.strip()),
         ]
     elif annotation.startswith("Set[") or annotation.startswith("Himpunan["):
-        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
         return Set[parse_type_annotation(inner)]
     elif annotation.startswith("Tuple[") or annotation.startswith("Tupel["):
-        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
         types = [parse_type_annotation(t.strip()) for t in inner.split(",")]
         return Tuple[tuple(types)]
     elif annotation.startswith("Optional[") or annotation.startswith("Opsional["):
-        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
         return Optional[parse_type_annotation(inner)]
     elif annotation.startswith("Union[") or annotation.startswith("Gabungan["):
-        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
         types = [parse_type_annotation(t.strip()) for t in inner.split(",")]
         return Union[tuple(types)]
     elif annotation.startswith("Callable[") or annotation.startswith("Fungsi["):

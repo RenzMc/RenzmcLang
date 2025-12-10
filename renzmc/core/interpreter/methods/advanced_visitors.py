@@ -297,7 +297,7 @@ class AdvancedVisitorsMixin:
             num_after_starred = num_targets - starred_index - 1
             starred_count = num_values - num_required
             starred_name, _ = node.targets[starred_index]
-            starred_values = value[starred_index : starred_index + starred_count]
+            starred_values = value[starred_index: starred_index + starred_count]
             self.current_scope.set(starred_name, list(starred_values))
             for i in range(num_after_starred):
                 target_index = starred_index + 1 + i

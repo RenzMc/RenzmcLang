@@ -14,20 +14,20 @@ tampilkan "1. Tuple Unpacking:"
 tampilkan ""
 
 # Basic tuple unpacking
-koordinat itu (10, 20)
-x, y itu koordinat
+koordinat = (10, 20)
+x, y = koordinat
 tampilkan "   Basic unpacking:"
 tampilkan "   x = " + ke_teks(x) + ", y = " + ke_teks(y)
 tampilkan ""
 
 # Multiple assignment
-a, b, c itu 1, 2, 3
+a, b, c = 1, 2, 3
 tampilkan "   Multiple assignment:"
 tampilkan "   a = " + ke_teks(a) + ", b = " + ke_teks(b) + ", c = " + ke_teks(c)
 tampilkan ""
 
 # Swapping values using tuple unpacking
-nilai1 itu 100
+nilai1 = 100
 nilai2 itu 200
 tampilkan "   Before swap: nilai1 = " + ke_teks(nilai1) + ", nilai2 = " + ke_teks(nilai2)
 nilai1, nilai2 itu nilai2, nilai1
@@ -134,7 +134,7 @@ tampilkan ""
 
 # Filter even numbers
 all_nums itu [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-evens itu [x untuk setiap x dari all_nums jika x % 2 == 0]
+evens = [x untuk setiap x dari all_nums jika x % 2 == 0]
 tampilkan "   All numbers: " + ke_teks(all_nums)
 tampilkan "   Even numbers: " + ke_teks(evens)
 tampilkan ""

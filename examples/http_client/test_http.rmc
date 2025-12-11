@@ -1,5 +1,5 @@
 // Import HTTP library
-dari http impor get, post, put, delete
+// dari http impor get, post, put, delete
 
 response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
 status_ok itu response.ok()

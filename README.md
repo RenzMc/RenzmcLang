@@ -55,17 +55,27 @@ RenzMcLang adalah bahasa pemrograman yang menggunakan sintaks Bahasa Indonesia, 
 - Call Python functions dari RenzMcLang
 - Seamless data type conversion
 
-### Built-in Functions Lengkap
-- String manipulation (184+ functions)
-- Math & statistics - Operasi matematika lengkap
-- File operations - Read, write, manipulasi file
-- JSON utilities - Parse dan generate JSON
-- HTTP functions - HTTP client built-in
-- System operations - Akses sistem operasi
-- Database operations - SQLite, MySQL, PostgreSQL, MongoDB
-- Crypto operations - Enkripsi dan hashing
-- Date/Time - Manipulasi tanggal dan waktu
-- Dan banyak lagi!
+### Built-in Functions Lengkap - 180+ Functions
+
+#### Core Functions (95+ selalu tersedia):
+- **Type Conversion** (8 functions): `str()`, `int()`, `float()`, `bool()`, `list()`, `dict()`, `tuple()`, `set()`
+- **Input/Output** (12 functions): `tampilkan()`, `input()`, `baca_file()`, `tulis_file()`, `hapus_file()`, dll
+- **String Manipulation** (25+ functions): `panjang()`, `huruf_besar()`, `huruf_kecil()`, `potong()`, `ganti()`, dll
+- **Mathematics** (30+ functions): `abs()`, `round()`, `pow()`, `sqrt()`, `sin()`, `cos()`, `tan()`, `min()`, `max()`, dll
+- **List & Dictionary** (20+ functions): `tambah()`, `hapus()`, `urutkan()`, `balik()`, dll
+
+#### Standard Library Functions (85+ dengan import):
+- **UUID** (9 functions): `buat_uuid4()`, `buat_uuid1()`, `uuid_valid()`, dll
+- **Base64** (8 functions): `encode_base64()`, `decode_base64()`, dll
+- **Hashlib** (18 functions): `hash_md5()`, `hash_sha256()`, `hash_sha512()`, `hmac_hash()`, dll
+- **Urllib** (15 functions): `parse_url()`, `encode_url()`, `gabung_url()`, dll
+- **Regular Expression** (25 functions): `validasi_email()`, `extract_angka()`, `cari_semua()`, dll
+- **String Advanced** (30+ functions): `acak_alphanumeric()`, `caesar()`, `rot13()`, dll
+- **Pathlib** (20+ functions): `Path()`, `path_current()`, `parse_url()`, dll
+- **Itertools** (25+ functions): `hitung()`, `siklus()`, `permutasi()`, `kombinasi()`, dll
+- **Collections** (20+ functions): `Antrian()`, `Tumpukan()`, `Counter()`, dll
+
+**Total: 180+ fungsi dalam Bahasa Indonesia!**
 
 [EXAMPLE WEBSITE YG PAKE BAHASA PEMROGRAMAN RENZMC](https://github.com/RenzMc/renzmc-website)
 

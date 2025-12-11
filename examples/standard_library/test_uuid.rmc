@@ -1,0 +1,21 @@
+#!/usr/bin/env renzmc
+
+# Test UUID Library
+tampilkan "=== TEST UUID LIBRARY ==="
+
+# Import library
+dari renzmc.library.uuid impor buat_uuid4, buat_uuid1, uuid_valid
+
+# Test UUID4 (random)
+uuid4 itu buat_uuid4()
+tampilkan "UUID4 (Random): " + uuid4
+
+# Test UUID1 (host+time)
+uuid1 itu buat_uuid1()
+tampilkan "UUID1 (Host+Time): " + uuid1
+
+# Test validation
+is_valid itu uuid_valid(uuid4)
+tampilkan "UUID valid? " + is_valid
+
+tampilkan "=== UUID TEST SELESAI ==="

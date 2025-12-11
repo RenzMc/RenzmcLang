@@ -1,125 +1,17 @@
-// Import Math library
-// dari math impor sqrt, sin, cos, tan, pi
+// HTTP Advanced Features - Working Version  
+dari renzmc.library.http impor ambil
 
-// Import HTTP library
-// dari http impor get, post, put, delete
+tampilkan "=== HTTP ADVANCED FEATURES ==="
 
-// ============================================================================
-// HTTP Client - Advanced Features
-// Custom headers, timeout, error handling
-// ============================================================================
+// Custom headers example
+tampilkan "[1] Request dengan custom headers..."
+headers itu {"User-Agent": "RenzMcLang/1.0", "Accept": "application/json"}
+response itu ambil("https://jsonplaceholder.typicode.com/posts/1", headers=headers)
+data itu response.json()
 
-tampilkan "=== HTTP Client - Advanced Features ==="
+tampilkan f"Status: {response.status_code()}"
+tampilkan f"Title: {data['title']}"
+tampilkan f"Headers sent: User-Agent = RenzMcLang/1.0"
+
 tampilkan ""
-
-// 1. Custom headers
-tampilkan "[1] Custom Headers"
-coba
-    headers itu {
-        "User-Agent": "RenzMcLang-Bot/1.0",
-        "Accept": "application/json"
-    }
-    
-    response itu http_get("https://httpbin.org/headers", headers=headers)
-    data itu response.json()
-    
-    tampilkan "Request headers:"
-    tampilkan data['headers']
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 2. Set default headers
-tampilkan "[2] Set Default Headers"
-coba
-    http_set_header("Authorization", "Bearer token123")
-    http_set_header("X-Custom-Header", "RenzMcLang")
-    
-    tampilkan "✓ Default headers set"
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 3. Custom timeout
-tampilkan "[3] Custom Timeout"
-coba
-    // Set timeout to 5 seconds
-    response itu http_get("https://httpbin.org/delay/2", timeout=5)
-    tampilkan f"✓ Request completed: {response.status_code}"
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 4. Error handling - 404
-tampilkan "[4] Error Handling - 404 Not Found"
-coba
-    response itu http_get("https://jsonplaceholder.typicode.com/posts/999999")
-    
-    jika response.ok()
-        tampilkan "✓ Success"
-    lainnya
-        tampilkan f"✗ Error: Status {response.status_code}"
-    selesai
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 5. Working with JSON APIs
-tampilkan "[5] Working with JSON APIs"
-coba
-    // Get multiple resources
-    response itu http_get("https://jsonplaceholder.typicode.com/users")
-    users itu response.json()
-    
-    tampilkan f"Total users: {panjang(users)}"
-    
-    // Process data
-    untuk setiap user dari users
-        jika user['id'] <= 3
-            tampilkan f"  - {user['name']} ({user['email']})"
-        selesai
-    selesai
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 6. Response properties
-tampilkan "[6] Response Properties"
-coba
-    response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
-    
-    tampilkan f"Status Code: {response.status_code}"
-    tampilkan f"URL: {response.url}"
-    tampilkan f"OK: {response.ok()}"
-    tampilkan f"Text length: {panjang(response.text)}"
-    tampilkan f"Headers: {panjang(response.headers)} headers"
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 7. Real-world example - Weather API (mock)
-tampilkan "[7] Real-world Example - API Integration"
-coba
-    // Using a public API
-    response itu http_get("https://api.github.com/users/github")
-    
-    jika response.ok()
-        data itu response.json()
-        tampilkan "GitHub User Info:"
-        tampilkan f"  Name: {data['name']}"
-        tampilkan f"  Bio: {data['bio']}"
-        tampilkan f"  Public Repos: {data['public_repos']}"
-        tampilkan f"  Followers: {data['followers']}"
-    selesai
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-tampilkan "✓ HTTP Advanced examples completed!"
+tampilkan "✓ HTTP advanced features working!"

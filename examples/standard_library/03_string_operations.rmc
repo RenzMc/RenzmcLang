@@ -1,0 +1,50 @@
+#!/usr/bin/env renzmc
+
+# String Operations Example
+tampilkan "=== STRING OPERATIONS EXAMPLE ==="
+
+# Import string library
+dari renzmc.library.string impor *
+
+# Test basic string operations
+text itu "Hello RenzMcLang World!"
+tampilkan "Original text: " + text
+
+# Case conversion
+tampilkan "Uppercase: " + huruf_besar(text)
+tampilkan "Lowercase: " + huruf_kecil(text)
+tampilkan "Title case: " + judul(text)
+tampilkan "Capitalize: " + huruf_besar_awal(text)
+
+# String manipulation
+trimmed itu hapus_spasi("   spasi di sisi   ")
+tampilkan "Trimmed: '" + trimmed + "'"
+
+centered itu tengah("RenzMcLang", 20, '-')
+tampilkan "Centered: '" + centered + "'"
+
+# String validation
+tampilkan "Is alpha? " + is_alpha("Hello")
+tampilkan "Is digit? " + is_digit("123")
+tampilkan "Is alnum? " + is_alnum("Hello123")
+
+# Random string generation
+random_str itu acak_alphanumeric(10)
+tampilkan "Random string: " + random_str
+
+# Count operations
+tampilkan "Vowel count: " + hitung_vokal(text)
+tampilkan "Consonant count: " + hitung_konsonan(text)
+tampilkan "Word count: " + hitung_kata(text)
+
+# Extract operations
+tampilkan "Numbers only: " + extract_angka("Harga 150.000")
+tampilkan "Letters only: " + extract_huruf("Abc123Def")
+
+# Caesar cipher
+encrypted itu caesar("Hello World", 3)
+tampilkan "Encrypted: " + encrypted
+decrypted itu caesar(encrypted, -3)
+tampilkan "Decrypted: " + decrypted
+
+tampilkan "=== STRING OPERATIONS COMPLETE ==="

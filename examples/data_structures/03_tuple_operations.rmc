@@ -4,6 +4,7 @@
 // Tuple adalah collection yang immutable (tidak bisa diubah)
 // Sintaks: (element1, element2, ...) - Fixed syntax
 
+dari renzmc.library.fileio impor exists
 tampilkan "=== Tuple Operations Examples ==="
 tampilkan ""
 

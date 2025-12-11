@@ -14,6 +14,15 @@
    - [statistics](#statistics)
    - [random](#random)
    - [fileio](#fileio)
+   - **[NEW] uuid](#uuid)**
+   - **[NEW] base64](#base64)**
+   - **[NEW] hashlib](#hashlib)**
+   - **[NEW] urllib](#urllib)**
+   - **[NEW] re (Regular Expressions)](#re-regular-expressions)**
+   - **[NEW] string](#string)**
+   - **[NEW] pathlib](#pathlib)**
+   - **[NEW] itertools](#itertools)**
+   - **[NEW] collections](#collections)**
 5. [Migration Guide](#migration-guide)
 6. [Examples](#examples)
 
@@ -614,10 +623,278 @@ kalau_tidak:
 
 ---
 
+## New Standard Libraries (Available in v1.0+)
+
+### uuid
+Library untuk generating UUID (Universally Unique Identifier).
+
+```python
+dari renzmc.library.uuid impor buat_uuid4, buat_uuid1, uuid_valid
+
+# Generate UUID4 (random)
+uuid_random itu buat_uuid4()
+
+# Generate UUID1 (host+time)  
+uuid_time itu buat_uuid1()
+
+# Validate UUID
+is_valid itu uuid_valid(uuid_random)
+```
+
+**Available Functions:**
+- `buat_uuid4()` - Generate random UUID
+- `buat_uuid1()` - Generate UUID based on host+time
+- `buat_uuid3(namespace, name)` - Generate UUID from MD5 hash
+- `buat_uuid5(namespace, name)` - Generate UUID from SHA-1 hash
+- `uuid_valid(string)` - Validate UUID format
+- `parse_uuid(string)` - Parse UUID string
+
+### base64
+Library untuk Base64 encoding dan decoding.
+
+```python
+dari renzmc.library.base64 impor encode_base64, decode_base64
+
+# Encode string
+encoded itu encode_base64("Hello RenzMcLang!")
+
+# Decode Base64
+decoded itu decode_base64(encoded)
+```
+
+**Available Functions:**
+- `encode_base64(data)` - Encode ke Base64
+- `decode_base64(encoded)` - Decode Base64
+- `encode_base64_urlsafe(data)` - URL-safe encoding
+- `decode_base64_urlsafe(encoded)` - URL-safe decoding
+- `encode_base64_file(path)` - Encode file
+- `decode_base64_ke_file(encoded, path)` - Decode ke file
+- `base64_valid(data)` - Validate Base64 format
+
+### hashlib
+Library untuk hash functions dan cryptography.
+
+```python
+dari renzmc.library.hashlib impor hash_md5, hash_sha256, hmac_hash
+
+# Hash strings
+md5_hash itu hash_md5("secret data")
+sha256_hash itu hash_sha256("important message")
+
+# HMAC for security
+signature itu hmac_hash("data", "secret_key")
+```
+
+**Available Functions:**
+- `hash_md5(data)` - MD5 hash
+- `hash_sha1(data)` - SHA1 hash
+- `hash_sha256(data)` - SHA256 hash
+- `hash_sha512(data)` - SHA512 hash
+- `hash_file_md5(path)` - Hash file MD5
+- `hmac_hash(data, key)` - HMAC signature
+- `buat_salt(length)` - Generate random salt
+- `hash_with_salt(data, salt)` - Hash dengan salt
+
+### urllib
+Library untuk URL handling dan manipulation.
+
+```python
+dari renzmc.library.urllib impor parse_url, gabung_url, encode_url
+
+# Parse URL components
+parsed itu parse_url("https://example.com/path?query=value")
+
+# Join URLs
+full_url itu gabung_url("https://api.com", "v1", "users")
+
+# Encode parameters
+encoded itu encode_url({"name": "John", "age": 25})
+```
+
+**Available Functions:**
+- `parse_url(url)` - Parse URL components
+- `buat_url(scheme, netloc, path, query)` - Build URL
+- `encode_url(params)` - Encode URL parameters
+- `decode_url(encoded)` - Decode URL parameters
+- `gabung_url(base, *paths)` - Join multiple URLs
+- `download_url(url, path)` - Download content from URL
+
+### re (Regular Expressions)
+Library untuk regular expression operations.
+
+```python
+dari renzmc.library.re impor validasi_email, extract_angka, cari_semua
+
+# Validate email
+is_valid_email itu validasi_email("user@example.com")
+
+# Extract numbers from text
+numbers itu extract_angka("Harga: Rp 150.000")
+
+# Find all matches
+matches itu cari_semua(r"\bword\b", text_content)
+```
+
+**Available Functions:**
+- `validasi_email(email)` - Validate email format
+- `validasi_telepon(phone)` - Validate Indonesian phone
+- `validasi_url(url)` - Validate URL format
+- `extract_email(text)` - Extract all emails
+- `extract_url(text)` - Extract all URLs
+- `extract_angka(text)` - Extract numbers
+- `cari(pattern, string)` - Search pattern
+- `cari_semua(pattern, string)` - Find all matches
+- `ganti(pattern, replacement, string)` - Replace all
+
+### string (Advanced)
+Library untuk advanced string operations.
+
+```python
+dari renzmc.library.string impor acak_alphanumeric, caesar, rot13
+
+# Generate random string
+random_str itu acak_alphanumeric(10)
+
+# Caesar cipher
+encrypted itu caesar("Secret Message", 3)
+decrypted itu caesar(encrypted, -3)
+
+# ROT13 encoding
+encoded itu rot13("Hidden text")
+```
+
+**Available Functions:**
+- `acak_alphanumeric(length)` - Random alphanumeric string
+- `acak_huruf(length)` - Random letters string
+- `acak_angka(length)` - Random numbers string
+- `caesar(text, shift)` - Caesar cipher
+- `rot13(text)` - ROT13 encoding
+- `hitung_vokal(text)` - Count vowels
+- `hitung_konsonan(text)` - Count consonants
+- `extract_angka(text)` - Extract numbers only
+- `bersihkan_spasi(text)` - Clean whitespace
+
+### pathlib
+Library untuk object-oriented path manipulation.
+
+```python
+dari renzmc.library.pathlib impor Path, path_current, path_home
+
+# Create path object
+file_path itu Path("documents", "report.pdf")
+
+# Get current/home directories
+current_dir itu path_current()
+home_dir itu path_home()
+
+# Path operations
+nama_file itu file_path.dapatkan_nama()  # "report.pdf"
+extension itu file_path.dapatkan_extension()  # ".pdf"
+parent_dir itu file_path.dapatkan_parent()  # "documents"
+```
+
+**Available Functions:**
+- `Path(*segments)` - Path object constructor
+- `path_current()` - Current working directory
+- `path_home()` - Home directory
+- `path_temp()` - Temporary directory
+- `gabung_path(*paths)` - Join multiple paths
+- `get_extension(path)` - Get file extension
+- `get_filename(path)` - Get filename
+- `get_basename(path)` - Get basename without extension
+
+### itertools
+Library untuk iterator operations dan utilities.
+
+```python
+dari renzmc.library.itertools impor hitung, siklus, permutasi, kombinasi
+
+# Infinite counter
+counter itu hitung(0, 2)  # 0, 2, 4, 6, 8, ...
+
+# Cycle through list
+cycler itu siklus([1, 2, 3])  # 1, 2, 3, 1, 2, 3, ...
+
+# Generate permutations
+perms itu permutasi([1, 2, 3])
+
+# Generate combinations
+combs itu kombinasi([1, 2, 3, 4], 2)
+```
+
+**Available Functions:**
+- `hitung(start, step)` - Infinite counter
+- `siklus(iterable)` - Cycle through iterable
+- `ulangi(object, times)` - Repeat object
+- `akumulasi(iterable, func)` - Accumulate results
+- `rantai(*iterables)` - Chain multiple iterables
+- `permutasi(iterable, r)` - Generate permutations
+- `kombinasi(iterable, r)` - Generate combinations
+- `islice(iterable, start, stop, step)` - Slice iterator
+- `batched(iterable, n)` - Batch into groups
+
+### collections
+Library untuk advanced data structures.
+
+```python
+dari renzmc.library.collections impor Antrian, Tumpukan, Counter, buat_counter
+
+# Queue (FIFO)
+queue itu Antrian()
+queue.masuk("item1")
+item itu queue.keluar()
+
+# Stack (LIFO)
+stack itu Tumpukan()
+stack.dorong("item1")
+item itu stack.ambil()
+
+# Counter (like multiset)
+counter itu buat_counter(["a", "b", "a", "c"])
+count_a itu counter.dapatkan("a")  # 2
+```
+
+**Available Functions:**
+- `Antrian(iterable)` - Queue (FIFO) with enqueue/dequeue
+- `Tumpukan(iterable)` - Stack (LIFO) with push/pop
+- `Counter(iterable)` - Counter for counting elements
+- `DefaultDict(factory)` - Dictionary with default values
+- `OrderedDict()` - Dictionary that preserves insertion order
+- `buat_antrian(iterable)` - Create queue
+- `buat_tumpukan(iterable)` - Create stack
+- `buat_counter(iterable)` - Create counter
+
+---
+
 ## See Also
 
-- [Built-in Functions](builtin-functions.md) - Built-in functions yang masih available
+- [Built-in Functions](builtin-functions.md) - 180+ built-in functions lengkap
 - [Syntax Basics](syntax-basics.md) - Basic syntax RenzMcLang
 - [Advanced Features](advanced-features.md) - Advanced language features
 - [Examples](examples.md) - More code examples
 - [Installation](installation.md) - Installation guide
+
+---
+
+## Complete Library List
+
+**Total Standard Libraries: 17**
+1. math - Mathematics functions
+2. json - JSON operations
+3. http - HTTP client
+4. os - Operating system interface
+5. datetime - Date and time operations
+6. statistics - Statistical functions
+7. random - Random number generation
+8. fileio - File I/O operations
+9. **uuid** - UUID generation *(NEW)*
+10. **base64** - Base64 encoding *(NEW)*
+11. **hashlib** - Hash functions *(NEW)*
+12. **urllib** - URL handling *(NEW)*
+13. **re** - Regular expressions *(NEW)*
+14. **string** - Advanced string operations *(NEW)*
+15. **pathlib** - Path manipulation *(NEW)*
+16. **itertools** - Iterator utilities *(NEW)*
+17. **collections** - Advanced data structures *(NEW)*
+
+**Total Functions: 180+** (95 core functions + 85+ standard library functions)

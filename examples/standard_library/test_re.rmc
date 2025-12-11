@@ -1,0 +1,29 @@
+#!/usr/bin/env renzmc
+
+# Test Regular Expression Library
+tampilkan "=== TEST REGEX LIBRARY ==="
+
+# Import library
+dari renzmc.library.re impor validasi_email, extract_angka, cari_semua
+
+# Test email validation
+email1 itu "user@example.com"
+email2 itu "invalid-email"
+valid1 itu validasi_email(email1)
+valid2 itu validasi_email(email2)
+
+tampilkan "Email " + email1 + " valid? " + valid1
+tampilkan "Email " + email2 + " valid? " + valid2
+
+# Test number extraction
+text itu "Harga: Rp 150.000, Diskon: 25%, Total: Rp 112.500"
+angka itu extract_angka(text)
+tampilkan "Text: " + text
+tampilkan "Numbers extracted: " + angka
+
+# Test pattern matching
+pattern itu "[A-Za-z]+"
+matches itu cari_semua(pattern, text)
+tampilkan "Words found: " + matches
+
+tampilkan "=== REGEX TEST SELESAI ==="

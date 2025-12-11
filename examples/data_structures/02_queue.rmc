@@ -4,6 +4,7 @@
 // Queue adalah struktur data FIFO (First In First Out)
 // Elemen pertama yang masuk adalah yang pertama keluar
 
+dari renzmc.library.fileio impor size
 tampilkan "╔════════════════════════════════════════╗"
 tampilkan "║      IMPLEMENTASI QUEUE (ANTRIAN)     ║"
 tampilkan "╚════════════════════════════════════════╝"

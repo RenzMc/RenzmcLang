@@ -1,0 +1,56 @@
+dari renzmc.library.fileio impor size
+#!/usr/bin/env renzmc
+
+# Collections Examples
+tampilkan "=== COLLECTIONS EXAMPLES ==="
+
+# Import collections library
+dari renzmc.library.collections impor Antrian, Tumpukan, buat_counter
+
+# 1. Queue (Antrian)
+tampilkan "1. Queue (FIFO):"
+queue itu Antrian()
+tampilkan "Queue kosong? " + queue.kosong()
+
+# Masukkan items
+queue.masuk("Item 1")
+queue.masuk("Item 2") 
+queue.masuk("Item 3")
+tampilkan "Queue size: " + queue.ukuran()
+tampilkan "Front item: " + queue.lihat_depan()
+
+# Keluarkan items
+item1 itu queue.keluar()
+tampilkan "Keluar: " + item1
+item2 itu queue.keluar()
+tampilkan "Keluar: " + item2
+tampilkan "Queue size sekarang: " + queue.ukuran()
+
+# 2. Stack (Tumpukan)
+tampilkan "2. Stack (LIFO):"
+stack itu Tumpukan()
+tampilkan "Stack kosong? " + stack.kosong()
+
+# Push items
+stack.dorong("Book 1")
+stack.dorong("Book 2")
+stack.dorong("Book 3")
+tampilkan "Stack size: " + stack.ukuran()
+tampilkan "Top item: " + stack.lihat_atas()
+
+# Pop items
+item1 itu stack.ambil()
+tampilkan "Ambil: " + item1
+item2 itu stack.ambil()
+tampilkan "Ambil: " + item2
+tampilkan "Stack size sekarang: " + stack.ukuran()
+
+# 3. Counter
+tampilkan "3. Counter:"
+data itu ["apple", "banana", "apple", "orange", "banana", "apple"]
+counter itu buat_counter(data)
+tampilkan "Data: " + str(data)
+tampilkan "Counter result: " + str(counter.dapatkan_elements())
+tampilkan "Most common: " + str(counter.paling_umum(2))
+
+tampilkan "=== COLLECTIONS EXAMPLES COMPLETE ==="

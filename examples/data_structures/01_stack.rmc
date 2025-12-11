@@ -4,6 +4,7 @@
 // Stack adalah struktur data LIFO (Last In First Out)
 // Elemen terakhir yang masuk adalah yang pertama keluar
 
+dari renzmc.library.fileio impor size
 tampilkan "╔════════════════════════════════════════╗"
 tampilkan "║     IMPLEMENTASI STACK (TUMPUKAN)     ║"
 tampilkan "╚════════════════════════════════════════╝"

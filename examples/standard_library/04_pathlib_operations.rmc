@@ -1,0 +1,63 @@
+dari renzmc.library.fileio impor exists, size
+#!/usr/bin/env renzmc
+
+# Pathlib Operations Example
+tampilkan "=== PATHLIB OPERATIONS EXAMPLE ==="
+
+# Import pathlib library
+dari renzmc.library.pathlib impor Path, path_current, path_home, get_extension, get_filename, get_basename, get_directory
+
+# Test current directory
+current_dir itu path_current()
+tampilkan "Current directory: " + current_dir
+
+# Test home directory
+home_dir itu path_home()
+tampilkan "Home directory: " + home_dir
+
+# Create path object
+test_path itu Path("test", "example.txt")
+tampilkan "Test path: " + test_path
+
+# Test path operations
+tampilkan "Path name: " + test_path.dapatkan_nama()
+tampilkan "Path stem: " + test_path.dapatkan_stem()
+tampilkan "Path extension: " + test_path.dapatkan_extension()
+tampilkan "Parent path: " + test_path.dapatkan_parent()
+
+# Test path joining
+joined_path itu test_path.gabung("subdir", "file.txt")
+tampilkan "Joined path: " + joined_path
+
+# Test absolute path
+abs_path itu test_path.dapatkan_absolute()
+tampilkan "Absolute path: " + abs_path
+
+# Test file operations
+# Create a test file
+test_file itu Path("test_file.txt")
+test_file.tulis_teks("Hello from RenzMcLang pathlib!")
+
+# Read the file
+content itu test_file.baca_teks()
+tampilkan "File content: " + content
+
+# Check if file exists
+tampilkan "File exists? " + test_file.ada()
+
+# Get file stats
+stats itu test_file.dapatkan_stat()
+tampilkan "File size: " + stats["size"] + " bytes"
+
+# Clean up test file
+test_file.hapus_file()
+tampilkan "Test file deleted"
+
+# Test path utilities
+tampilkan "=== PATH UTILITIES ==="
+tampilkan "Extension of 'document.pdf': " + get_extension("document.pdf")
+tampilkan "Filename of '/path/to/file.txt': " + get_filename("/path/to/file.txt")
+tampilkan "Basename of 'script.py': " + get_basename("script.py")
+tampilkan "Directory of '/home/user/docs/file.txt': " + get_directory("/home/user/docs/file.txt")
+
+tampilkan "=== PATHLIB OPERATIONS COMPLETE ==="

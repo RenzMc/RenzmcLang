@@ -1,11 +1,5 @@
-// Import Math library
-// dari math impor sqrt, sin, cos, tan, pi
-
 // Import HTTP library
-// dari http impor get
-// dari http impor post
-// dari http impor put
-// dari http impor delete
+dari renzmc.library.http impor ambil, kirim, perbarui, hapus
 
 // ============================================================================
 // HTTP Client - Basic GET Request
@@ -18,7 +12,7 @@ tampilkan ""
 // 1. Simple GET request
 tampilkan "[1] Simple GET Request"
 coba
-    response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
+    response itu ambil("https://jsonplaceholder.typicode.com/posts/1")
     tampilkan f"Status: {response.status_code}"
     tampilkan f"URL: {response.url}"
     
@@ -36,7 +30,7 @@ selesai
 tampilkan "[2] GET with Query Parameters"
 coba
     params itu {"userId": 1}
-    response itu http_get("https://jsonplaceholder.typicode.com/posts", params=params)
+    response itu ambil("https://jsonplaceholder.typicode.com/posts", params=params)
     
     data itu response.json()
     tampilkan f"Found {panjang(data)} posts for user 1"
@@ -49,7 +43,7 @@ selesai
 // 3. Check response status
 tampilkan "[3] Check Response Status"
 coba
-    response itu http_get("https://jsonplaceholder.typicode.com/posts/1")
+    response itu ambil("https://jsonplaceholder.typicode.com/posts/1")
     
     is_ok itu response.ok()
     jika is_ok
@@ -66,7 +60,7 @@ tampilkan ""
 // 4. Using Indonesian alias
 tampilkan "[4] Using Indonesian Alias (ambil_http)"
 coba
-    response itu ambil_http("https://jsonplaceholder.typicode.com/users/1")
+    response itu ambil("https://jsonplaceholder.typicode.com/users/1")
     data itu response.json()
     
     tampilkan f"Name: {data['name']}"

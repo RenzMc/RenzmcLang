@@ -3,6 +3,7 @@
 // ============================================
 // Contoh pengolahan gambar dengan Pillow
 
+dari renzmc.library.fileio impor exists, size
 tampilkan "=== Image Processing with Pillow ==="
 tampilkan ""
 

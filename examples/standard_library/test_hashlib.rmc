@@ -1,0 +1,20 @@
+#!/usr/bin/env renzmc
+
+# Test Hashlib Library
+tampilkan "=== TEST HASHLIB LIBRARY ==="
+
+# Import library
+dari renzmc.library.hashlib impor hash_md5, hash_sha256, hash_sha512
+
+# Test hashing
+text itu "Hello RenzMcLang!"
+md5_hash itu hash_md5(text)
+sha256_hash itu hash_sha256(text)
+sha512_hash itu hash_sha512(text)
+
+tampilkan "Original: " + text
+tampilkan "MD5: " + md5_hash
+tampilkan "SHA256: " + sha256_hash
+tampilkan "SHA512: " + sha512_hash
+
+tampilkan "=== HASHLIB TEST SELESAI ==="

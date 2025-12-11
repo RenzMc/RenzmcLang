@@ -1,0 +1,23 @@
+#!/usr/bin/env renzmc
+
+# Test Base64 Library
+tampilkan "=== TEST BASE64 LIBRARY ==="
+
+# Import library
+dari renzmc.library.base64 impor encode_base64, decode_base64, base64_valid
+
+# Test encoding
+original_text itu "Hello RenzMcLang!"
+encoded itu encode_base64(original_text)
+tampilkan "Original: " + original_text
+tampilkan "Encoded: " + encoded
+
+# Test decoding
+decoded itu decode_base64(encoded)
+tampilkan "Decoded: " + decoded
+
+# Test validation
+is_valid itu base64_valid(encoded)
+tampilkan "Base64 valid? " + is_valid
+
+tampilkan "=== BASE64 TEST SELESAI ==="

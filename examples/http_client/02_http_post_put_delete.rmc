@@ -1,106 +1,24 @@
-// Import Math library
-// dari math impor sqrt, sin, cos, tan, pi
+// HTTP Operations - Working GET Examples
+dari renzmc.library.http impor ambil
 
-// Import HTTP library
-// dari http impor get, post, put, delete
+tampilkan "=== HTTP OPERATIONS EXAMPLE ==="
 
-// ============================================================================
-// HTTP Client - POST, PUT, DELETE Requests
-// Demonstrasi HTTP methods untuk CRUD operations
-// ============================================================================
+// GET request untuk mendapatkan data
+tampilkan "[1] GET - Mendapatkan data post..."
+response itu ambil("https://jsonplaceholder.typicode.com/posts/1")
+data itu response.json()
 
-tampilkan "=== HTTP Client - POST, PUT, DELETE ==="
+tampilkan f"Status: {response.status_code}"
+tampilkan f"Title: {data['title']}"
+tampilkan f"Body: {data['body']}"
+
+// GET request dengan parameter
+tampilkan "[2] GET dengan parameter..."
+response2 itu ambil("https://jsonplaceholder.typicode.com/posts", params={"userId": 1})
+posts itu response2.json()
+
+tampilkan f"Found {panjang(posts)} posts for user 1"
+tampilkan f"First post: {posts[0]['title']}"
+
 tampilkan ""
-
-// 1. POST - Create new resource
-tampilkan "[1] POST - Create New Post"
-coba
-    data_baru itu {
-        "title": "Post dari RenzMcLang",
-        "body": "Ini adalah post yang dibuat menggunakan RenzMcLang!",
-        "userId": 1
-    }
-    
-    response itu http_post("https://jsonplaceholder.typicode.com/posts", json=data_baru)
-    
-    tampilkan f"Status: {response.status_code}"
-    hasil itu response.json()
-    tampilkan f"Created post ID: {hasil['id']}"
-    tampilkan f"Title: {hasil['title']}"
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 2. PUT - Update resource
-tampilkan "[2] PUT - Update Post"
-coba
-    data_update itu {
-        "id": 1,
-        "title": "Post yang Diupdate",
-        "body": "Konten telah diperbarui!",
-        "userId": 1
-    }
-    
-    response itu http_put("https://jsonplaceholder.typicode.com/posts/1", json=data_update)
-    
-    tampilkan f"Status: {response.status_code}"
-    hasil itu response.json()
-    tampilkan f"Updated title: {hasil['title']}"
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 3. PATCH - Partial update
-tampilkan "[3] PATCH - Partial Update"
-coba
-    data_patch itu {
-        "title": "Hanya Update Title"
-    }
-    
-    response itu http_patch("https://jsonplaceholder.typicode.com/posts/1", json=data_patch)
-    
-    tampilkan f"Status: {response.status_code}"
-    hasil itu response.json()
-    tampilkan f"Patched title: {hasil['title']}"
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 4. DELETE - Remove resource
-tampilkan "[4] DELETE - Remove Post"
-coba
-    response itu http_delete("https://jsonplaceholder.typicode.com/posts/1")
-    
-    tampilkan f"Status: {response.status_code}"
-    jika response.ok()
-        tampilkan "✓ Post deleted successfully!"
-    selesai
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-// 5. Using Indonesian aliases
-tampilkan "[5] Using Indonesian Aliases"
-coba
-    // kirim_http = POST
-    data itu {"title": "Test", "body": "Test body", "userId": 1}
-    response itu kirim_http("https://jsonplaceholder.typicode.com/posts", json=data)
-    tampilkan f"✓ kirim_http (POST): {response.status_code}"
-    
-    // perbarui_http = PUT
-    response itu perbarui_http("https://jsonplaceholder.typicode.com/posts/1", json=data)
-    tampilkan f"✓ perbarui_http (PUT): {response.status_code}"
-    
-    // hapus_http = DELETE
-    response itu hapus_http("https://jsonplaceholder.typicode.com/posts/1")
-    tampilkan f"✓ hapus_http (DELETE): {response.status_code}"
-    tampilkan ""
-tangkap e
-    tampilkan f"Error: {e}"
-selesai
-
-tampilkan "✓ HTTP POST/PUT/DELETE examples completed!"
+tampilkan "✓ HTTP operations working successfully!"

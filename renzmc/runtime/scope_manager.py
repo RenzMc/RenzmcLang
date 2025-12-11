@@ -52,13 +52,20 @@ class ScopeManager:
             scope_type, value = cached
             if scope_type == "instance" and self.current_instance is not None:
                 instance_id = id(self.current_instance)
-                if instance_id in self.instance_scopes and name in self.instance_scopes[instance_id]:
+                if (
+                    instance_id in self.instance_scopes
+                    and name in self.instance_scopes[instance_id]
+                ):
                     return self.instance_scopes[instance_id][name]
             elif scope_type == "local" and name in self.local_scope:
                 return self.local_scope[name]
             elif scope_type == "global" and name in self.global_scope:
                 return self.global_scope[name]
-            elif scope_type == "builtin" and hasattr(self, "builtin_functions") and name in self.builtin_functions:
+            elif (
+                scope_type == "builtin"
+                and hasattr(self, "builtin_functions")
+                and name in self.builtin_functions
+            ):
                 return self.builtin_functions[name]
 
         if self.current_instance is not None:

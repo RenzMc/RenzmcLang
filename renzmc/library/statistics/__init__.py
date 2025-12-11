@@ -250,6 +250,7 @@ def quantiles(data: Sequence[Number], n: int = 4) -> List[float]:
     """
     return py_statistics.quantiles(data, n=n)
 
+
 # Additional statistical functions
 
 
@@ -294,6 +295,7 @@ def geometric_mean_high(data: Sequence[Number]) -> float:
         Upper bound geometric mean
     """
     return py_statistics.geometric_mean(data)
+
 
 # Custom functions
 
@@ -381,26 +383,47 @@ class StatisticsError(py_statistics.StatisticsError):
     """
     Exception untuk error statistika.
     """
+
     pass
 
 
 __all__ = [
     # Basic Statistics
-    "mean", "median", "mode", "multimode",
+    "mean",
+    "median",
+    "mode",
+    "multimode",
     # Spread Measures
-    "stdev", "pstdev", "variance", "pvariance",
+    "stdev",
+    "pstdev",
+    "variance",
+    "pvariance",
     # Other Means
-    "geometric_mean", "harmonic_mean", "fmean",
+    "geometric_mean",
+    "harmonic_mean",
+    "fmean",
     # Quantiles
     "quantiles",
     # Custom Functions
-    "range_data", "cv", "z_score",
+    "range_data",
+    "cv",
+    "z_score",
     # Exception
     "StatisticsError",
     # Indonesian Aliases
-    "rata_rata", "nilai_tengah", "modus", "banyak_modus",
-    "deviasi_standar", "deviasi_standar_populasi", "variansi",
-    "variansi_populasi", "rata_rata_geometrik", "rata_rata_harmonik",
-    "kuantil", "rata_rata_cepat", "rentang_data", "koefisien_variasi",
-    "nilai_z"
+    "rata_rata",
+    "nilai_tengah",
+    "modus",
+    "banyak_modus",
+    "deviasi_standar",
+    "deviasi_standar_populasi",
+    "variansi",
+    "variansi_populasi",
+    "rata_rata_geometrik",
+    "rata_rata_harmonik",
+    "kuantil",
+    "rata_rata_cepat",
+    "rentang_data",
+    "koefisien_variasi",
+    "nilai_z",
 ]

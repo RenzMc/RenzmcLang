@@ -161,7 +161,9 @@ class RenzmcModuleManager:
             if hasattr(module, item):
                 imported_items[item] = getattr(module, item)
             else:
-                raise RenzmcImportError(f"Tidak dapat mengimpor '{item}' dari modul '{module_name}'")
+                raise RenzmcImportError(
+                    f"Tidak dapat mengimpor '{item}' dari modul '{module_name}'"
+                )
         return imported_items
 
     def get_module_info(self, module_name):
@@ -228,7 +230,9 @@ class RenzmcModuleManager:
             if os.path.isfile(init_path):
                 return init_path
 
-        raise RenzmcImportError(f"Tidak dapat menemukan modul relatif: {module_name} " f"(level: {relative_level})")
+        raise RenzmcImportError(
+            f"Tidak dapat menemukan modul relatif: {module_name} " f"(level: {relative_level})"
+        )
 
     def import_all_from_module(self, module_name):
         """

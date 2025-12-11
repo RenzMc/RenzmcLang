@@ -99,11 +99,16 @@ def get_module_attribute(module: Any, attr_name: str, default: Any = None) -> An
     try:
         return getattr(module, attr_name, default)
     except AttributeError:
-        logger.debug(f"Attribute '{attr_name}' not found in module " f"'{getattr(module, '__name__', 'unknown')}'")
+        logger.debug(
+            f"Attribute '{attr_name}' not found in module "
+            f"'{getattr(module, '__name__', 'unknown')}'"
+        )
         return default
 
 
-def import_submodule(parent_module: Any, submodule_name: str, operation: str = "submodule import") -> Optional[Any]:
+def import_submodule(
+    parent_module: Any, submodule_name: str, operation: str = "submodule import"
+) -> Optional[Any]:
     """
     Import a submodule from a parent module
 

@@ -58,7 +58,9 @@ class JITCompiler:
         if complexity["has_recursion"]:
             return False
 
-        should_compile = is_numeric and (complexity["has_loops"] or complexity["operation_count"] > 5)
+        should_compile = is_numeric and (
+            complexity["has_loops"] or complexity["operation_count"] > 5
+        )
 
         return should_compile
 
@@ -86,7 +88,9 @@ class JITCompiler:
                 self._record_compilation(name, success=True, code=python_code)
                 return compiled_func
             else:
-                self._record_compilation(name, success=False, reason="compilation_failed", code=python_code)
+                self._record_compilation(
+                    name, success=False, reason="compilation_failed", code=python_code
+                )
                 return None
 
         except Exception as e:
@@ -136,9 +140,10 @@ class JITCompiler:
                         raise
                     except Exception as e:
                         # Log JIT compilation issues only once, then silently fallback
-                        if not hasattr(jit_wrapper, '_jit_error_logged'):
+                        if not hasattr(jit_wrapper, "_jit_error_logged"):
                             # Only log the first JIT error to avoid spam
                             import logging
+
                             logging.getLogger("renzmc.jit").debug(
                                 f"JIT function '{name}' failed, falling back to interpreter: {type(e).__name__}: {e}"
                             )
@@ -165,9 +170,10 @@ class JITCompiler:
                             ) from e
                         except Exception as e:
                             # Log JIT compilation issues only once, then silently fallback
-                            if not hasattr(jit_wrapper, '_jit_error_logged'):
+                            if not hasattr(jit_wrapper, "_jit_error_logged"):
                                 # Only log the first JIT error to avoid spam
                                 import logging
+
                                 logging.getLogger("renzmc.jit").debug(
                                     f"JIT function '{name}' failed, falling back to interpreter: {type(e).__name__}: {e}"
                                 )
@@ -201,7 +207,9 @@ class JITCompiler:
         self.compiled_cache.clear()
         self.compilation_stats.clear()
 
-    def force_compile(self, name: str, params: List[str], body: List, interpreter_func: Callable) -> Optional[Callable]:
+    def force_compile(
+        self, name: str, params: List[str], body: List, interpreter_func: Callable
+    ) -> Optional[Callable]:
         if name in self.compiled_cache:
             return self.compiled_cache[name]
 
@@ -209,7 +217,9 @@ class JITCompiler:
             # Check for recursion even in force compile
             complexity = self.type_inference.analyze_function_complexity(body, name)
             if complexity["has_recursion"]:
-                self._record_compilation(name, success=False, reason="recursive_function_not_supported")
+                self._record_compilation(
+                    name, success=False, reason="recursive_function_not_supported"
+                )
                 return None
 
             python_code = self.code_generator.generate_function(name, params, body)
@@ -225,7 +235,9 @@ class JITCompiler:
                 self._record_compilation(name, success=True, code=python_code)
                 return compiled_func
             else:
-                self._record_compilation(name, success=False, reason="compilation_failed", code=python_code)
+                self._record_compilation(
+                    name, success=False, reason="compilation_failed", code=python_code
+                )
                 return None
 
         except Exception as e:

@@ -58,7 +58,7 @@ from typing import List, Dict, Any, Optional, Union, TextIO, BinaryIO
 # File Reading Functions
 
 
-def read_text(file_path: str, encoding: str = 'utf-8') -> str:
+def read_text(file_path: str, encoding: str = "utf-8") -> str:
     """
     Baca file sebagai text.
 
@@ -76,11 +76,11 @@ def read_text(file_path: str, encoding: str = 'utf-8') -> str:
     Example:
         content = read_text('data.txt')
     """
-    with open(file_path, 'r', encoding=encoding) as f:
+    with open(file_path, "r", encoding=encoding) as f:
         return f.read()
 
 
-def read_lines(file_path: str, encoding: str = 'utf-8') -> List[str]:
+def read_lines(file_path: str, encoding: str = "utf-8") -> List[str]:
     """
     Baca file sebagai list of lines.
 
@@ -94,7 +94,7 @@ def read_lines(file_path: str, encoding: str = 'utf-8') -> List[str]:
     Example:
         lines = read_lines('data.txt')  # ['line1', 'line2', ...]
     """
-    with open(file_path, 'r', encoding=encoding) as f:
+    with open(file_path, "r", encoding=encoding) as f:
         return f.readlines()
 
 
@@ -111,11 +111,11 @@ def read_bytes(file_path: str) -> bytes:
     Example:
         data = read_bytes('image.png')
     """
-    with open(file_path, 'rb') as f:
+    with open(file_path, "rb") as f:
         return f.read()
 
 
-def read_json(file_path: str, encoding: str = 'utf-8') -> Dict[str, Any]:
+def read_json(file_path: str, encoding: str = "utf-8") -> Dict[str, Any]:
     """
     Baca JSON file.
 
@@ -129,11 +129,11 @@ def read_json(file_path: str, encoding: str = 'utf-8') -> Dict[str, Any]:
     Example:
         data = read_json('config.json')
     """
-    with open(file_path, 'r', encoding=encoding) as f:
+    with open(file_path, "r", encoding=encoding) as f:
         return py_json.load(f)
 
 
-def read_csv(file_path: str, delimiter: str = ',', encoding: str = 'utf-8') -> List[List[str]]:
+def read_csv(file_path: str, delimiter: str = ",", encoding: str = "utf-8") -> List[List[str]]:
     """
     Baca CSV file.
 
@@ -148,14 +148,15 @@ def read_csv(file_path: str, delimiter: str = ',', encoding: str = 'utf-8') -> L
     Example:
         rows = read_csv('data.csv', delimiter=';')
     """
-    with open(file_path, 'r', encoding=encoding, newline='') as f:
+    with open(file_path, "r", encoding=encoding, newline="") as f:
         reader = py_csv.reader(f, delimiter=delimiter)
         return list(reader)
+
 
 # File Writing Functions
 
 
-def write_text(file_path: str, content: str, encoding: str = 'utf-8'):
+def write_text(file_path: str, content: str, encoding: str = "utf-8"):
     """
     Tulis text ke file.
 
@@ -167,11 +168,11 @@ def write_text(file_path: str, content: str, encoding: str = 'utf-8'):
     Example:
         write_text('output.txt', 'Hello World')
     """
-    with open(file_path, 'w', encoding=encoding) as f:
+    with open(file_path, "w", encoding=encoding) as f:
         f.write(content)
 
 
-def write_lines(file_path: str, lines: List[str], encoding: str = 'utf-8'):
+def write_lines(file_path: str, lines: List[str], encoding: str = "utf-8"):
     """
     Tulis list of lines ke file.
 
@@ -183,7 +184,7 @@ def write_lines(file_path: str, lines: List[str], encoding: str = 'utf-8'):
     Example:
         write_lines('output.txt', ['line1', 'line2'])
     """
-    with open(file_path, 'w', encoding=encoding) as f:
+    with open(file_path, "w", encoding=encoding) as f:
         f.writelines(lines)
 
 
@@ -198,12 +199,13 @@ def write_bytes(file_path: str, content: bytes):
     Example:
         write_bytes('output.bin', b'\\x00\\x01\\x02')
     """
-    with open(file_path, 'wb') as f:
+    with open(file_path, "wb") as f:
         f.write(content)
 
 
-def write_json(file_path: str, data: Dict[str, Any], indent: Optional[int] = None,
-               encoding: str = 'utf-8'):
+def write_json(
+    file_path: str, data: Dict[str, Any], indent: Optional[int] = None, encoding: str = "utf-8"
+):
     """
     Tulis data ke JSON file.
 
@@ -216,12 +218,11 @@ def write_json(file_path: str, data: Dict[str, Any], indent: Optional[int] = Non
     Example:
         write_json('config.json', {'name': 'Budi'}, indent=2)
     """
-    with open(file_path, 'w', encoding=encoding) as f:
+    with open(file_path, "w", encoding=encoding) as f:
         py_json.dump(data, f, indent=indent, ensure_ascii=False)
 
 
-def write_csv(file_path: str, rows: List[List[str]], delimiter: str = ',',
-              encoding: str = 'utf-8'):
+def write_csv(file_path: str, rows: List[List[str]], delimiter: str = ",", encoding: str = "utf-8"):
     """
     Tulis data ke CSV file.
 
@@ -234,9 +235,10 @@ def write_csv(file_path: str, rows: List[List[str]], delimiter: str = ',',
     Example:
         write_csv('output.csv', [['Name', 'Age'], ['Budi', '25']])
     """
-    with open(file_path, 'w', encoding=encoding, newline='') as f:
+    with open(file_path, "w", encoding=encoding, newline="") as f:
         writer = py_csv.writer(f, delimiter=delimiter)
         writer.writerows(rows)
+
 
 # File Operations
 
@@ -333,6 +335,7 @@ def is_dir(file_path: str) -> bool:
     """
     return py_os.path.isdir(file_path)
 
+
 # Directory Operations
 
 
@@ -364,7 +367,7 @@ def remove_dir(dir_path: str, ignore_errors: bool = False):
     py_shutil.rmtree(dir_path, ignore_errors=ignore_errors)
 
 
-def list_dir(dir_path: str = '.') -> List[str]:
+def list_dir(dir_path: str = ".") -> List[str]:
     """
     Daftar file dan directory dalam directory.
 
@@ -399,10 +402,11 @@ def walk_dir(dir_path: str):
     for dirpath, dirnames, filenames in py_os.walk(dir_path):
         yield (dirpath, dirnames, filenames)
 
+
 # File Context Managers
 
 
-def open_text(file_path: str, mode: str = 'r', encoding: str = 'utf-8') -> TextIO:
+def open_text(file_path: str, mode: str = "r", encoding: str = "utf-8") -> TextIO:
     """
     Buka text file dengan mode tertentu.
 
@@ -421,7 +425,7 @@ def open_text(file_path: str, mode: str = 'r', encoding: str = 'utf-8') -> TextI
     return open(file_path, mode, encoding=encoding)
 
 
-def open_binary(file_path: str, mode: str = 'rb') -> BinaryIO:
+def open_binary(file_path: str, mode: str = "rb") -> BinaryIO:
     """
     Buka binary file dengan mode tertentu.
 
@@ -437,6 +441,7 @@ def open_binary(file_path: str, mode: str = 'rb') -> BinaryIO:
             f.write(b'Hello')
     """
     return open(file_path, mode)
+
 
 # Utility Functions
 
@@ -567,23 +572,68 @@ path_absolut = absolute_path
 
 __all__ = [
     # Reading Functions
-    "read_text", "read_lines", "read_bytes", "read_json", "read_csv",
+    "read_text",
+    "read_lines",
+    "read_bytes",
+    "read_json",
+    "read_csv",
     # Writing Functions
-    "write_text", "write_lines", "write_bytes", "write_json", "write_csv",
+    "write_text",
+    "write_lines",
+    "write_bytes",
+    "write_json",
+    "write_csv",
     # File Operations
-    "copy", "move", "delete", "exists", "size", "is_file", "is_dir",
+    "copy",
+    "move",
+    "delete",
+    "exists",
+    "size",
+    "is_file",
+    "is_dir",
     # Directory Operations
-    "create_dir", "remove_dir", "list_dir", "walk_dir",
+    "create_dir",
+    "remove_dir",
+    "list_dir",
+    "walk_dir",
     # Context Managers
-    "open_text", "open_binary",
+    "open_text",
+    "open_binary",
     # Utility Functions
-    "get_extension", "get_basename", "get_stem", "get_parent",
-    "join_paths", "absolute_path",
+    "get_extension",
+    "get_basename",
+    "get_stem",
+    "get_parent",
+    "join_paths",
+    "absolute_path",
     # Indonesian Aliases
-    "baca_teks", "baca_baris", "baca_bytes", "baca_json", "baca_csv",
-    "tulis_teks", "tulis_baris", "tulis_bytes", "tulis_json", "tulis_csv",
-    "salin", "pindahkan", "hapus", "ada", "ukuran", "adalah_file",
-    "adalah_dir", "buat_dir", "hapus_dir", "daftar_dir", "jelajahi_dir",
-    "buka_teks", "buka_binary", "dapatkan_ekstensi", "dapatkan_nama_file",
-    "dapatkan_stem", "dapatkan_induk", "gabungkan_path", "path_absolut"
+    "baca_teks",
+    "baca_baris",
+    "baca_bytes",
+    "baca_json",
+    "baca_csv",
+    "tulis_teks",
+    "tulis_baris",
+    "tulis_bytes",
+    "tulis_json",
+    "tulis_csv",
+    "salin",
+    "pindahkan",
+    "hapus",
+    "ada",
+    "ukuran",
+    "adalah_file",
+    "adalah_dir",
+    "buat_dir",
+    "hapus_dir",
+    "daftar_dir",
+    "jelajahi_dir",
+    "buka_teks",
+    "buka_binary",
+    "dapatkan_ekstensi",
+    "dapatkan_nama_file",
+    "dapatkan_stem",
+    "dapatkan_induk",
+    "gabungkan_path",
+    "path_absolut",
 ]

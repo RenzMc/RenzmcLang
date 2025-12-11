@@ -35,7 +35,7 @@ class PythonRenzmcVM:
             ast_data = json.loads(ast_json)
             # Create compiled Python code from AST
             python_code = self._ast_to_python(ast_data)
-            compiled_code = compile(python_code, '<renzmc>', 'exec')
+            compiled_code = compile(python_code, "<renzmc>", "exec")
             return marshal.dumps(compiled_code)
         except Exception as e:
             raise RuntimeError(f"Compilation failed: {e}")
@@ -47,7 +47,7 @@ class PythonRenzmcVM:
             compiled_code = marshal.loads(bytecode)
 
             # Prepare execution environment
-            exec_globals = {'__builtins__': __builtins__}
+            exec_globals = {"__builtins__": __builtins__}
             exec_globals.update(self._globals)
 
             if globals_json:
@@ -62,14 +62,19 @@ class PythonRenzmcVM:
             exec(compiled_code, exec_globals, exec_locals)
 
             # Update globals
-            self._globals.update({k: v for k, v in exec_globals.items()
-                                  if k != '__builtins__' and not k.startswith('__')})
+            self._globals.update(
+                {
+                    k: v
+                    for k, v in exec_globals.items()
+                    if k != "__builtins__" and not k.startswith("__")
+                }
+            )
 
             self._stats["instructions_executed"] += 1
             self._stats["memory_used"] = len(str(exec_globals)) + len(str(exec_locals))
 
             # Return the last evaluated expression or None
-            return exec_locals.get('__return__', None)
+            return exec_locals.get("__return__", None)
 
         except Exception as e:
             raise RuntimeError(f"Execution failed: {e}")
@@ -101,72 +106,83 @@ class PythonRenzmcVM:
 
     def _ast_to_python(self, ast_node: Dict[str, Any]) -> str:
         """Convert AST JSON to Python code."""
-        node_type = ast_node.get('type', '')
+        node_type = ast_node.get("type", "")
 
-        if node_type == 'program':
-            statements = ast_node.get('statements', [])
-            python_code = '\n'.join([self._ast_to_python(stmt) for stmt in statements])
+        if node_type == "program":
+            statements = ast_node.get("statements", [])
+            python_code = "\n".join([self._ast_to_python(stmt) for stmt in statements])
             return python_code
 
-        elif node_type == 'assignment':
+        elif node_type == "assignment":
             # Handle "variable itu value" syntax
-            target = ast_node.get('target', '')
-            value = self._ast_to_python(ast_node.get('value', {}))
+            target = ast_node.get("target", "")
+            value = self._ast_to_python(ast_node.get("value", {}))
             return f"{target} = {value}"
 
-        elif node_type == 'print_statement':
+        elif node_type == "print_statement":
             # Handle "tampilkan" syntax
-            value = self._ast_to_python(ast_node.get('value', {}))
+            value = self._ast_to_python(ast_node.get("value", {}))
             return f"print({value})"
 
-        elif node_type == 'binary_op':
-            left = self._ast_to_python(ast_node.get('left', {}))
-            right = self._ast_to_python(ast_node.get('right', {}))
-            op = ast_node.get('operator', '')
+        elif node_type == "binary_op":
+            left = self._ast_to_python(ast_node.get("left", {}))
+            right = self._ast_to_python(ast_node.get("right", {}))
+            op = ast_node.get("operator", "")
 
             python_op_map = {
-                '+': '+', '-': '-', '*': '*', '/': '/', '%': '%', '**': '**',
-                '==': '==', '!=': '!=', '<': '<', '<=': '<=', '>': '>', '>=': '>=',
-                'and': 'and', 'or': 'or'
+                "+": "+",
+                "-": "-",
+                "*": "*",
+                "/": "/",
+                "%": "%",
+                "**": "**",
+                "==": "==",
+                "!=": "!=",
+                "<": "<",
+                "<=": "<=",
+                ">": ">",
+                ">=": ">=",
+                "and": "and",
+                "or": "or",
             }
 
             python_op = python_op_map.get(op, op)
             return f"({left} {python_op} {right})"
 
-        elif node_type == 'unary_op':
-            operand = self._ast_to_python(ast_node.get('operand', {}))
-            op = ast_node.get('operator', '')
+        elif node_type == "unary_op":
+            operand = self._ast_to_python(ast_node.get("operand", {}))
+            op = ast_node.get("operator", "")
 
-            if op == 'not':
+            if op == "not":
                 return f"(not {operand})"
-            elif op == '-':
+            elif op == "-":
                 return f"(-{operand})"
             else:
                 return f"{op}{operand}"
 
-        elif node_type == 'identifier':
-            return ast_node.get('value', '')
+        elif node_type == "identifier":
+            return ast_node.get("value", "")
 
-        elif node_type == 'literal':
-            value = ast_node.get('value', '')
-            literal_type = ast_node.get('literal_type', 'string')
+        elif node_type == "literal":
+            value = ast_node.get("value", "")
+            literal_type = ast_node.get("literal_type", "string")
 
-            if literal_type == 'number':
+            if literal_type == "number":
                 return str(value)
-            elif literal_type == 'boolean':
-                return 'True' if value == 'benar' else 'False'
-            elif literal_type == 'string':
+            elif literal_type == "boolean":
+                return "True" if value == "benar" else "False"
+            elif literal_type == "string":
                 return repr(str(value))
             else:
                 return repr(value)
 
-        elif node_type == 'list_literal':
-            elements = ast_node.get('elements', [])
+        elif node_type == "list_literal":
+            elements = ast_node.get("elements", [])
             python_elements = [self._ast_to_python(elem) for elem in elements]
             return f"[{', '.join(python_elements)}]"
 
-        elif node_type == 'dict_literal':
-            pairs = ast_node.get('pairs', [])
+        elif node_type == "dict_literal":
+            pairs = ast_node.get("pairs", [])
             python_pairs = []
             for key, value in pairs:
                 python_key = self._ast_to_python(key)
@@ -174,10 +190,10 @@ class PythonRenzmcVM:
                 python_pairs.append(f"{python_key}: {python_value}")
             return f"{{{', '.join(python_pairs)}}}"
 
-        elif node_type == 'if_statement':
-            condition = self._ast_to_python(ast_node.get('condition', {}))
-            then_block = self._ast_to_python(ast_node.get('then_block', {}))
-            else_block = ast_node.get('else_block')
+        elif node_type == "if_statement":
+            condition = self._ast_to_python(ast_node.get("condition", {}))
+            then_block = self._ast_to_python(ast_node.get("then_block", {}))
+            else_block = ast_node.get("else_block")
 
             if else_block:
                 else_code = self._ast_to_python(else_block)
@@ -185,41 +201,41 @@ class PythonRenzmcVM:
             else:
                 return f"if {condition}:\n    {then_block}"
 
-        elif node_type == 'while_loop':
-            condition = self._ast_to_python(ast_node.get('condition', {}))
-            body = self._ast_to_python(ast_node.get('body', {}))
+        elif node_type == "while_loop":
+            condition = self._ast_to_python(ast_node.get("condition", {}))
+            body = self._ast_to_python(ast_node.get("body", {}))
             return f"while {condition}:\n    {body}"
 
-        elif node_type == 'for_loop':
-            variable = ast_node.get('variable', '')
-            iterable = self._ast_to_python(ast_node.get('iterable', {}))
-            body = self._ast_to_python(ast_node.get('body', {}))
+        elif node_type == "for_loop":
+            variable = ast_node.get("variable", "")
+            iterable = self._ast_to_python(ast_node.get("iterable", {}))
+            body = self._ast_to_python(ast_node.get("body", {}))
             return f"for {variable} in {iterable}:\n    {body}"
 
-        elif node_type == 'function_definition':
-            name = ast_node.get('name', '')
-            params = ast_node.get('parameters', [])
-            body = self._ast_to_python(ast_node.get('body', {}))
-            param_list = ', '.join(params)
+        elif node_type == "function_definition":
+            name = ast_node.get("name", "")
+            params = ast_node.get("parameters", [])
+            body = self._ast_to_python(ast_node.get("body", {}))
+            param_list = ", ".join(params)
             return f"def {name}({param_list}):\n    {body}"
 
-        elif node_type == 'function_call':
-            function = self._ast_to_python(ast_node.get('function', {}))
-            args = ast_node.get('arguments', [])
+        elif node_type == "function_call":
+            function = self._ast_to_python(ast_node.get("function", {}))
+            args = ast_node.get("arguments", [])
             python_args = [self._ast_to_python(arg) for arg in args]
             return f"{function}({', '.join(python_args)})"
 
-        elif node_type == 'f_string':
+        elif node_type == "f_string":
             # Handle f-string syntax
-            parts = ast_node.get('parts', [])
+            parts = ast_node.get("parts", [])
             python_parts = []
             for part in parts:
-                if part.get('type') == 'literal':
-                    python_parts.append(repr(part.get('value', '')))
-                elif part.get('type') == 'expression':
+                if part.get("type") == "literal":
+                    python_parts.append(repr(part.get("value", "")))
+                elif part.get("type") == "expression":
                     python_parts.append(f"{{{self._ast_to_python(part.get('expression', {}))}}}")
 
-            return 'f' + '+'.join(python_parts)
+            return "f" + "+".join(python_parts)
 
         else:
             return f"# Unknown AST node type: {node_type}"

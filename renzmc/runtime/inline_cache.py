@@ -101,7 +101,9 @@ class InlineCache:
         keys_to_remove = []
         for cache_key in self.cache:
             key_name, key_scope_id = cache_key
-            if (name is None or key_name == name) and (scope_id is None or key_scope_id == scope_id):
+            if (name is None or key_name == name) and (
+                scope_id is None or key_scope_id == scope_id
+            ):
                 keys_to_remove.append(cache_key)
 
         for key in keys_to_remove:

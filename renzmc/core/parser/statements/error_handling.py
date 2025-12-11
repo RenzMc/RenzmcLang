@@ -37,7 +37,9 @@ class ErrorHandlingStatements:
         self.eat(TokenType.COBA)
         if self.current_token.type == TokenType.TITIK_DUA:
             self.eat(TokenType.TITIK_DUA)
-        try_block = self.parse_block_until([TokenType.TANGKAP, TokenType.AKHIRNYA, TokenType.SELESAI])
+        try_block = self.parse_block_until(
+            [TokenType.TANGKAP, TokenType.AKHIRNYA, TokenType.SELESAI]
+        )
         except_blocks = []
         while self.current_token.type == TokenType.TANGKAP:
             self.eat(TokenType.TANGKAP)
@@ -60,7 +62,9 @@ class ErrorHandlingStatements:
                     self.eat(TokenType.IDENTIFIER)
             if self.current_token.type == TokenType.TITIK_DUA:
                 self.eat(TokenType.TITIK_DUA)
-            except_block = self.parse_block_until([TokenType.TANGKAP, TokenType.AKHIRNYA, TokenType.SELESAI])
+            except_block = self.parse_block_until(
+                [TokenType.TANGKAP, TokenType.AKHIRNYA, TokenType.SELESAI]
+            )
             except_blocks.append((exception_type, var_name, except_block))
         finally_block = None
         if self.current_token.type == TokenType.AKHIRNYA:

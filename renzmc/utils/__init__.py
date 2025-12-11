@@ -174,27 +174,27 @@ def parse_type_annotation(annotation):
     elif annotation == "Any" or annotation == "apapun":
         return Any
     elif annotation.startswith("List[") or annotation.startswith("Daftar["):
-        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
         return List[parse_type_annotation(inner)]
     elif annotation.startswith("Dict[") or annotation.startswith("Kamus["):
-        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
         key_type, value_type = inner.split(",")
         return Dict[
             parse_type_annotation(key_type.strip()),
             parse_type_annotation(value_type.strip()),
         ]
     elif annotation.startswith("Set[") or annotation.startswith("Himpunan["):
-        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
         return Set[parse_type_annotation(inner)]
     elif annotation.startswith("Tuple[") or annotation.startswith("Tupel["):
-        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
         types = [parse_type_annotation(t.strip()) for t in inner.split(",")]
         return Tuple[tuple(types)]
     elif annotation.startswith("Optional[") or annotation.startswith("Opsional["):
-        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
         return Optional[parse_type_annotation(inner)]
     elif annotation.startswith("Union[") or annotation.startswith("Gabungan["):
-        inner = annotation[annotation.index("[") + 1: annotation.rindex("]")]
+        inner = annotation[annotation.index("[") + 1 : annotation.rindex("]")]
         types = [parse_type_annotation(t.strip()) for t in inner.split(",")]
         return Union[tuple(types)]
     elif annotation.startswith("Callable[") or annotation.startswith("Fungsi["):
@@ -236,11 +236,18 @@ def check_type(value, type_annotation):
 
 
 def format_error_message(error, source_code=None):
-    if not hasattr(error, "line") or not hasattr(error, "column") or error.line is None or (error.column is None):
+    if (
+        not hasattr(error, "line")
+        or not hasattr(error, "column")
+        or error.line is None
+        or (error.column is None)
+    ):
         return str(error)
     result = f"Error: {error.message}\n"
     result += f"Pada baris {error.line}, kolom {error.column}\n"
-    code_to_use = error.source_code if hasattr(error, "source_code") and error.source_code else source_code
+    code_to_use = (
+        error.source_code if hasattr(error, "source_code") and error.source_code else source_code
+    )
     if code_to_use:
         lines = code_to_use.split("\n")
         if 0 <= error.line - 1 < len(lines):
@@ -269,11 +276,19 @@ def load_module(module_name):
 
 
 def get_module_functions(module):
-    return {name: obj for name, obj in inspect.getmembers(module, inspect.isfunction) if not name.startswith("_")}
+    return {
+        name: obj
+        for name, obj in inspect.getmembers(module, inspect.isfunction)
+        if not name.startswith("_")
+    }
 
 
 def get_module_classes(module):
-    return {name: obj for name, obj in inspect.getmembers(module, inspect.isclass) if not name.startswith("_")}
+    return {
+        name: obj
+        for name, obj in inspect.getmembers(module, inspect.isclass)
+        if not name.startswith("_")
+    }
 
 
 def get_module_variables(module):
@@ -285,14 +300,20 @@ def get_module_variables(module):
 
 
 def get_class_methods(cls):
-    return {name: obj for name, obj in inspect.getmembers(cls, inspect.isfunction) if not name.startswith("_")}
+    return {
+        name: obj
+        for name, obj in inspect.getmembers(cls, inspect.isfunction)
+        if not name.startswith("_")
+    }
 
 
 def get_class_attributes(cls):
     return {
         name: obj
         for name, obj in inspect.getmembers(cls)
-        if not name.startswith("_") and (not inspect.isfunction(obj)) and (not inspect.ismethod(obj))
+        if not name.startswith("_")
+        and (not inspect.isfunction(obj))
+        and (not inspect.ismethod(obj))
     }
 
 

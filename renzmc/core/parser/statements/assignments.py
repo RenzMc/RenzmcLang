@@ -181,7 +181,9 @@ class AssignmentStatements:
                 self.eat(TokenType.KOMA)
                 values.append(self.expr())
             if has_starred:
-                return ExtendedUnpacking(targets, values[0] if len(values) == 1 else values, start_token)
+                return ExtendedUnpacking(
+                    targets, values[0] if len(values) == 1 else values, start_token
+                )
             elif len(targets) == 1 and len(values) == 1:
                 return Assign(
                     Var(
@@ -253,7 +255,9 @@ class AssignmentStatements:
                 token,
             )
         else:
-            var_nodes = [Var(Token(TokenType.IDENTIFIER, t[1], token.line, token.column)) for t in targets]
+            var_nodes = [
+                Var(Token(TokenType.IDENTIFIER, t[1], token.line, token.column)) for t in targets
+            ]
             value_expr = Tuple(values, token) if len(values) > 1 else values[0]
             return MultiAssign(var_nodes, value_expr, token)
 
@@ -292,6 +296,8 @@ class AssignmentStatements:
         elif self.current_token.type == TokenType.GESER_KANAN_SAMA_DENGAN:
             self.eat(TokenType.GESER_KANAN_SAMA_DENGAN)
         else:
-            self.error(f"Diharapkan operator assignment gabungan, ditemukan '{self.current_token.type}'")
+            self.error(
+                f"Diharapkan operator assignment gabungan, ditemukan '{self.current_token.type}'"
+            )
         value = self.expr()
         return CompoundAssign(target, op_token, value, var_token)

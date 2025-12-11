@@ -104,6 +104,7 @@ def utc_sekarang() -> py_datetime.datetime:
     """
     return py_datetime.datetime.utcnow()
 
+
 # String parsing
 
 
@@ -138,6 +139,7 @@ def strptime(date_string: str, format_string: str) -> py_datetime.datetime:
         dt = strptime('01/01/2025', '%d/%m/%Y')
     """
     return py_datetime.datetime.strptime(date_string, format_string)
+
 
 # Time functions
 
@@ -186,14 +188,31 @@ tahun_maksimum = MAXYEAR
 
 __all__ = [
     # Classes
-    "datetime", "date", "time", "timedelta", "timezone", "tzinfo",
+    "datetime",
+    "date",
+    "time",
+    "timedelta",
+    "timezone",
+    "tzinfo",
     # Functions
-    "sekarang", "hari_ini", "utc_sekarang", "parse_isoformat",
-    "strptime", "waktu", "sleep",
+    "sekarang",
+    "hari_ini",
+    "utc_sekarang",
+    "parse_isoformat",
+    "strptime",
+    "waktu",
+    "sleep",
     # Constants
-    "MINYEAR", "MAXYEAR",
+    "MINYEAR",
+    "MAXYEAR",
     # Indonesian Aliases
-    "waktu_sekarang", "tanggal_sekarang", "utc_waktu_sekarang",
-    "pars_format_iso", "pars_string_waktu", "waktu_epoch", "tidur",
-    "tahun_minimum", "tahun_maksimum"
+    "waktu_sekarang",
+    "tanggal_sekarang",
+    "utc_waktu_sekarang",
+    "pars_format_iso",
+    "pars_string_waktu",
+    "waktu_epoch",
+    "tidur",
+    "tahun_minimum",
+    "tahun_maksimum",
 ]

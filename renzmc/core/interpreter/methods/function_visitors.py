@@ -68,7 +68,9 @@ class FunctionVisitorsMixin:
                 self.jit_execution_times[name] = 0.0
 
         def renzmc_function(*args, **kwargs):
-            return self._execute_user_function(name, params, body, return_type, param_types, list(args), kwargs)
+            return self._execute_user_function(
+                name, params, body, return_type, param_types, list(args), kwargs
+            )
 
         renzmc_function.__name__ = name
         renzmc_function.__renzmc_function__ = True
@@ -91,7 +93,9 @@ class FunctionVisitorsMixin:
                         return func(*args, **kwargs)
                     except Exception as e:
                         func_name = getattr(func, "__name__", str(type(func).__name__))
-                        raise RuntimeError(f"Error dalam pemanggilan fungsi '{func_name}': {str(e)}")
+                        raise RuntimeError(
+                            f"Error dalam pemanggilan fungsi '{func_name}': {str(e)}"
+                        )
                 else:
                     raise RuntimeError(f"Objek '{type(func).__name__}' tidak dapat dipanggil")
             except NameError:
@@ -176,12 +180,16 @@ class FunctionVisitorsMixin:
                 params, body, return_type, param_types, _ = function_data
 
                 async def async_coroutine():
-                    return self._execute_user_function(name, params, body, return_type, param_types, args, kwargs)
+                    return self._execute_user_function(
+                        name, params, body, return_type, param_types, args, kwargs
+                    )
 
                 return async_coroutine()
             else:
                 params, body, return_type, param_types = function_data
-                return self._execute_user_function(name, params, body, return_type, param_types, args, kwargs)
+                return self._execute_user_function(
+                    name, params, body, return_type, param_types, args, kwargs
+                )
 
     def visit_Return(self, node):
         if node.expr:
@@ -207,16 +215,24 @@ class FunctionVisitorsMixin:
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(arg, expected_type):
-                                raise TypeHintError(f"Parameter ke-{i + 1} harus bertipe '{type_name}'")
+                            if isinstance(expected_type, type) and not isinstance(
+                                arg, expected_type
+                            ):
+                                raise TypeHintError(
+                                    f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
+                                )
                         except TypeError as e:
                             # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(arg, expected_type):
-                                raise TypeHintError(f"Parameter ke-{i + 1} harus bertipe '{type_name}'")
+                            if isinstance(expected_type, type) and not isinstance(
+                                arg, expected_type
+                            ):
+                                raise TypeHintError(
+                                    f"Parameter ke-{i + 1} harus bertipe '{type_name}'"
+                                )
                         except TypeError as e:
                             # Type checking failed - this is expected for non-type objects
                             log_exception("type validation", e, level="debug")
@@ -230,7 +246,9 @@ class FunctionVisitorsMixin:
                 if type_name in self.type_registry:
                     expected_type = self.type_registry[type_name]
                     try:
-                        if isinstance(expected_type, type) and not isinstance(result, expected_type):
+                        if isinstance(expected_type, type) and not isinstance(
+                            result, expected_type
+                        ):
                             raise TypeHintError(f"Nilai kembali lambda harus bertipe '{type_name}'")
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects
@@ -238,7 +256,9 @@ class FunctionVisitorsMixin:
                 elif hasattr(py_builtins, type_name):
                     expected_type = getattr(py_builtins, type_name)
                     try:
-                        if isinstance(expected_type, type) and not isinstance(result, expected_type):
+                        if isinstance(expected_type, type) and not isinstance(
+                            result, expected_type
+                        ):
                             raise TypeHintError(f"Nilai kembali lambda harus bertipe '{type_name}'")
                     except TypeError as e:
                         # Type checking failed - this is expected for non-type objects

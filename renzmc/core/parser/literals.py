@@ -50,7 +50,7 @@ class LiteralParser:
         pattern = "\\{([^{}]*)\\}"
         for match in re.finditer(pattern, text):
             if match.start() > last_end:
-                parts.append(String(Token(TokenType.TEKS, text[last_end: match.start()])))
+                parts.append(String(Token(TokenType.TEKS, text[last_end : match.start()])))
             expr_text = match.group(1)
             if expr_text.strip():
                 try:

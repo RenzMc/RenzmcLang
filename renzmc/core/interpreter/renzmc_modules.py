@@ -95,7 +95,9 @@ class RenzmcModulesMixin:
                     self.global_scope[item_name] = item_value
             return imported_items
         except Exception as e:
-            raise RuntimeError(f"Error mengimpor semua dari modul RenzmcLang '{module_name}': {str(e)}")
+            raise RuntimeError(
+                f"Error mengimpor semua dari modul RenzmcLang '{module_name}': {str(e)}"
+            )
 
     def _reload_renzmc_module(self, module_name):
         """

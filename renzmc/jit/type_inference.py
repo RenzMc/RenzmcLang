@@ -104,7 +104,9 @@ class TypeInferenceEngine:
 
         return None
 
-    def is_numeric_function(self, params: List[str], body: List[AST], context: Dict[str, Any] = None) -> bool:
+    def is_numeric_function(
+        self, params: List[str], body: List[AST], context: Dict[str, Any] = None
+    ) -> bool:
         if context is None:
             context = {}
 

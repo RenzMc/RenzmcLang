@@ -42,9 +42,23 @@ Available standard libraries:
 
 # Import string functions that actually exist
 from renzmc.builtins.string_functions import (
-    huruf_besar, huruf_kecil, potong, gabung, pisah, ganti, mulai_dengan, 
-    akhir_dengan, berisi, hapus_spasi, format_teks, adalah_huruf, adalah_angka,
-    adalah_alfanumerik, adalah_huruf_besar, adalah_huruf_kecil, adalah_spasi
+    huruf_besar,
+    huruf_kecil,
+    potong,
+    gabung,
+    pisah,
+    ganti,
+    mulai_dengan,
+    akhir_dengan,
+    berisi,
+    hapus_spasi,
+    format_teks,
+    adalah_huruf,
+    adalah_angka,
+    adalah_alfanumerik,
+    adalah_huruf_besar,
+    adalah_huruf_kecil,
+    adalah_spasi,
 )
 
 # Import type functions that actually exist
@@ -55,15 +69,39 @@ from renzmc.builtins.dict_functions import hapus_kunci, item, kunci, nilai
 
 # Import iteration functions that actually exist
 from renzmc.builtins.iteration_functions import (
-    ada, all_func, any_func, enumerate_func, filter_func, kurangi, 
-    map_func, peta, range_func, reduce_func, rentang, reversed_renzmc,
-    saring, semua, sorted_func, terbalik, terurut, zip_func
+    ada,
+    all_func,
+    any_func,
+    enumerate_func,
+    filter_func,
+    kurangi,
+    map_func,
+    peta,
+    range_func,
+    reduce_func,
+    rentang,
+    reversed_renzmc,
+    saring,
+    semua,
+    sorted_func,
+    terbalik,
+    terurut,
+    zip_func,
 )
 
 # Import list functions that actually exist
 from renzmc.builtins.list_functions import (
-    balikkan, extend, hapus, hapus_pada, hitung, indeks, masukkan, 
-    salin, salin_dalam, tambah, urutkan
+    balikkan,
+    extend,
+    hapus,
+    hapus_pada,
+    hitung,
+    indeks,
+    masukkan,
+    salin,
+    salin_dalam,
+    tambah,
+    urutkan,
 )
 
 # Import system functions that actually exist
@@ -71,14 +109,22 @@ from renzmc.builtins.system_functions import buka, open_file
 
 # Import utility functions that actually exist
 from renzmc.builtins.utility_functions import (
-    hash_teks, url_encode, url_decode, regex_match, regex_replace,
-    base64_encode, base64_decode
+    hash_teks,
+    url_encode,
+    url_decode,
+    regex_match,
+    regex_replace,
+    base64_encode,
+    base64_decode,
 )
 
 # Import Python integration functions that actually exist
 from renzmc.builtins.python_integration import (
-    daftar_modul_python, jalankan_python, is_async_function,
-    impor_semua_python, reload_python
+    daftar_modul_python,
+    jalankan_python,
+    is_async_function,
+    impor_semua_python,
+    reload_python,
 )
 
 # Note: The following function groups have been moved to standard library:
@@ -93,34 +139,80 @@ from renzmc.builtins.python_integration import (
 # Core built-in function exports
 __all__ = [
     # Type functions
-    "panjang", "jenis", "ke_teks", "ke_angka",
-
+    "panjang",
+    "jenis",
+    "ke_teks",
+    "ke_angka",
     # File functions
-    "buka", "buka_file", "open_file",
-
+    "buka",
+    "buka_file",
+    "open_file",
     # String functions
-    "huruf_besar", "huruf_kecil", "potong", "gabung", "pisah",
-    "ganti", "mulai_dengan", "akhir_dengan", "berisi", "hapus_spasi", "format_teks",
-    "adalah_huruf", "adalah_angka", "adalah_alfanumerik", "adalah_huruf_besar", "adalah_huruf_kecil", "adalah_spasi",
-
+    "huruf_besar",
+    "huruf_kecil",
+    "potong",
+    "gabung",
+    "pisah",
+    "ganti",
+    "mulai_dengan",
+    "akhir_dengan",
+    "berisi",
+    "hapus_spasi",
+    "format_teks",
+    "adalah_huruf",
+    "adalah_angka",
+    "adalah_alfanumerik",
+    "adalah_huruf_besar",
+    "adalah_huruf_kecil",
+    "adalah_spasi",
     # Dict functions
-    "hapus_kunci", "item", "kunci", "nilai",
-
+    "hapus_kunci",
+    "item",
+    "kunci",
+    "nilai",
     # Iteration functions
-    "ada", "all_func", "any_func", "enumerate_func", "filter_func",
-    "kurangi", "map_func", "peta", "range_func", "reduce_func",
-    "rentang", "reversed_renzmc", "saring", "semua", "sorted_func",
-    "terbalik", "terurut", "zip_func",
-
+    "ada",
+    "all_func",
+    "any_func",
+    "enumerate_func",
+    "filter_func",
+    "kurangi",
+    "map_func",
+    "peta",
+    "range_func",
+    "reduce_func",
+    "rentang",
+    "reversed_renzmc",
+    "saring",
+    "semua",
+    "sorted_func",
+    "terbalik",
+    "terurut",
+    "zip_func",
     # List functions
-    "balikkan", "extend", "hapus", "hapus_pada", "hitung", "indeks",
-    "masukkan", "salin", "salin_dalam", "tambah", "urutkan",
-
+    "balikkan",
+    "extend",
+    "hapus",
+    "hapus_pada",
+    "hitung",
+    "indeks",
+    "masukkan",
+    "salin",
+    "salin_dalam",
+    "tambah",
+    "urutkan",
     # Utility functions
-    "hash_teks", "url_encode", "url_decode", "regex_match",
-    "regex_replace", "base64_encode", "base64_decode",
-
+    "hash_teks",
+    "url_encode",
+    "url_decode",
+    "regex_match",
+    "regex_replace",
+    "base64_encode",
+    "base64_decode",
     # Python integration
-    "daftar_modul_python", "jalankan_python", "is_async_function",
-    "impor_semua_python", "reload_python",
+    "daftar_modul_python",
+    "jalankan_python",
+    "is_async_function",
+    "impor_semua_python",
+    "reload_python",
 ]

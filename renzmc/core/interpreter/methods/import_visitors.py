@@ -158,11 +158,15 @@ class ImportVisitorsMixin:
             # Get current file path from interpreter context
             current_file = getattr(self, "current_file", None)
             if not current_file:
-                raise ImportError("Tidak dapat menggunakan relative import: file path tidak tersedia")
+                raise ImportError(
+                    "Tidak dapat menggunakan relative import: file path tidak tersedia"
+                )
 
             # Resolve relative path using module manager
             try:
-                resolved_path = self.module_manager.resolve_relative_import(module, relative_level, current_file)
+                resolved_path = self.module_manager.resolve_relative_import(
+                    module, relative_level, current_file
+                )
                 # Extract module name from path for caching
 
                 module = os.path.splitext(os.path.basename(resolved_path))[0]
@@ -244,7 +248,9 @@ class ImportVisitorsMixin:
                         value = getattr(imported_module, item_name)
                         self.global_scope[actual_name] = value
                     else:
-                        raise ImportError(f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'")
+                        raise ImportError(
+                            f"Tidak dapat mengimpor '{item_name}' dari modul '{module}'"
+                        )
         except ImportError as e:
             raise ImportError(f"Modul '{module}' tidak ditemukan: {str(e)}")
 
@@ -270,7 +276,9 @@ class ImportVisitorsMixin:
                         parent_module_name = ".".join(parts[: i + 1])
                         try:
                             parent_module = importlib.import_module(parent_module_name)
-                            wrapped_parent = self.python_integration.convert_python_to_renzmc(parent_module)
+                            wrapped_parent = self.python_integration.convert_python_to_renzmc(
+                                parent_module
+                            )
                             current_scope[part] = wrapped_parent
                             current_modules[part] = wrapped_parent
                         except ImportError:

@@ -241,7 +241,9 @@ class Lexer:
         result = ""
         start_line = self.line
         start_column = self.column
-        while self.current_char is not None and (self.current_char.isdigit() or self.current_char == "."):
+        while self.current_char is not None and (
+            self.current_char.isdigit() or self.current_char == "."
+        ):
             result += self.current_char
             self.advance()
 
@@ -324,7 +326,9 @@ class Lexer:
         start_line = self.line
         start_column = self.column
 
-        while self.current_char is not None and (self.current_char.isalnum() or self.current_char == "_"):
+        while self.current_char is not None and (
+            self.current_char.isalnum() or self.current_char == "_"
+        ):
             result += self.current_char
             self.advance()
 
@@ -351,7 +355,9 @@ class Lexer:
 
             if self.current_char is not None and self.current_char.isalpha():
                 next_word = ""
-                while self.current_char is not None and (self.current_char.isalnum() or self.current_char == "_"):
+                while self.current_char is not None and (
+                    self.current_char.isalnum() or self.current_char == "_"
+                ):
                     next_word += self.current_char
                     self.advance()
 
@@ -393,7 +399,7 @@ class Lexer:
                     prev_char = self.text[self.pos - 1]
                     # If previous character is an operand (number, letter, ), ]) with NO space
                     # then it might be an operator
-                    if prev_char.isalnum() or prev_char in (')', ']'):
+                    if prev_char.isalnum() or prev_char in (")", "]"):
                         # It's an operator only if there's no space before //
                         is_comment = False
                     # If previous character is whitespace or anything else, it's a comment
@@ -408,10 +414,7 @@ class Lexer:
                 self.skip_comment()
                 continue
 
-            if (
-                self.current_char == "#"
-                or (self.current_char == "-" and self.peek() == "-")
-            ):
+            if self.current_char == "#" or (self.current_char == "-" and self.peek() == "-"):
                 self.skip_comment()
                 continue
 

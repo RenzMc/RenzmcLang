@@ -59,7 +59,7 @@ class RustExecutionMixin:
 
     def _ensure_rust_initialized(self):
         """Ensure Rust integration is properly initialized."""
-        if not hasattr(self, '_rust_integration'):
+        if not hasattr(self, "_rust_integration"):
             self._rust_integration = get_rust_integration()
             # Otomatis enable Rust jika tersedia
             self._use_rust = self._rust_integration.is_rust_enabled
@@ -111,8 +111,9 @@ class RustExecutionMixin:
             "rust_failures": self._rust_failures,
             "success_rate": (
                 self._rust_executions / (self._rust_executions + self._rust_failures)
-                if (self._rust_executions + self._rust_failures) > 0 else 0.0
-            )
+                if (self._rust_executions + self._rust_failures) > 0
+                else 0.0
+            ),
         }
 
     def _should_use_rust(self, ast_node) -> bool:
@@ -126,7 +127,7 @@ class RustExecutionMixin:
             True if Rust should be used, False otherwise
         """
         # Auto-initialize Rust if not already done
-        if not hasattr(self, '_rust_integration'):
+        if not hasattr(self, "_rust_integration"):
             self._auto_enable_rust()
             return False
 
@@ -164,9 +165,7 @@ class RustExecutionMixin:
             globals_dict = self._get_global_variables_for_rust()
 
             # Execute with Rust
-            result = self._rust_integration.compile_and_execute(
-                ast_json, globals_dict
-            )
+            result = self._rust_integration.compile_and_execute(ast_json, globals_dict)
 
             if result is not None:
                 self._rust_executions += 1
@@ -195,7 +194,7 @@ class RustExecutionMixin:
         """
         globals_dict = {}
 
-        if hasattr(self, 'GLOBAL_SCOPE'):
+        if hasattr(self, "GLOBAL_SCOPE"):
             for name, value in self.GLOBAL_SCOPE.items():
                 # Filter out non-serializable objects
                 try:
@@ -253,6 +252,7 @@ class RustExecutionMixin:
         """
         # Import the base visitor and use its visit method directly
         from renzmc.core.base_visitor import NodeVisitor
+
         return NodeVisitor.visit(self, ast_node)
 
     def execute_program_with_rust(self, statements: list) -> Any:
@@ -313,7 +313,7 @@ class RustExecutionMixin:
             results["rust_time"] = rust_time
 
             if "python_time" in results:
-                results["speedup"] = python_time / rust_time if rust_time > 0 else float('inf')
+                results["speedup"] = python_time / rust_time if rust_time > 0 else float("inf")
 
         results["iterations"] = iterations
         return results
@@ -361,6 +361,4 @@ class RustExecutionMixin:
         return self._rust_integration.clear_vm()
 
 
-__all__ = [
-    "RustExecutionMixin"
-]
+__all__ = ["RustExecutionMixin"]

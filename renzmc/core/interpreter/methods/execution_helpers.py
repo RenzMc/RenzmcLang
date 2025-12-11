@@ -51,7 +51,7 @@ class ExecutionHelpersMixin:
 
     def _execute_user_function(self, name, params, body, return_type, param_types, args, kwargs):
         # Initialize recursion tracking if not exists
-        if not hasattr(self, '_recursion_depth'):
+        if not hasattr(self, "_recursion_depth"):
             self._recursion_depth = {}
 
         # Track recursion depth for this function
@@ -117,7 +117,9 @@ class ExecutionHelpersMixin:
                 param_values[param_name] = value
             missing_params = [p for p in params if p not in param_values]
             if missing_params:
-                raise RuntimeError(f"Parameter hilang dalam fungsi '{name}': {', '.join(missing_params)}")
+                raise RuntimeError(
+                    f"Parameter hilang dalam fungsi '{name}': {', '.join(missing_params)}"
+                )
             if param_types:
                 for param_name, value in param_values.items():
                     if param_name in param_types:
@@ -126,7 +128,9 @@ class ExecutionHelpersMixin:
                         if type_name in self.type_registry:
                             expected_type = self.type_registry[type_name]
                             try:
-                                if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                                if isinstance(expected_type, type) and not isinstance(
+                                    value, expected_type
+                                ):
                                     raise TypeHintError(
                                         f"Parameter '{param_name}' harus bertipe '{type_name}'"
                                     )
@@ -136,7 +140,9 @@ class ExecutionHelpersMixin:
                         elif hasattr(py_builtins, type_name):
                             expected_type = getattr(py_builtins, type_name)
                             try:
-                                if isinstance(expected_type, type) and not isinstance(value, expected_type):
+                                if isinstance(expected_type, type) and not isinstance(
+                                    value, expected_type
+                                ):
                                     raise TypeHintError(
                                         f"Parameter '{param_name}' harus bertipe '{type_name}'"
                                     )
@@ -169,7 +175,9 @@ class ExecutionHelpersMixin:
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                return_value, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                                 )
@@ -179,7 +187,9 @@ class ExecutionHelpersMixin:
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                return_value, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Nilai kembali fungsi '{name}' harus bertipe '{type_name}'"
                                 )
@@ -194,7 +204,9 @@ class ExecutionHelpersMixin:
                     else:
                         type_spec = return_type
                     if type_spec:
-                        is_valid, error_msg = AdvancedTypeValidator.validate(return_value, type_spec, "return")
+                        is_valid, error_msg = AdvancedTypeValidator.validate(
+                            return_value, type_spec, "return"
+                        )
                         if not is_valid:
                             raise TypeHintError(f"Fungsi '{name}': {error_msg}")
             self.local_scope = old_local_scope
@@ -205,7 +217,10 @@ class ExecutionHelpersMixin:
                 self.jit_call_counts[name] += 1
                 self.jit_execution_times[name] += execution_time
 
-                if self.jit_call_counts[name] >= self.jit_threshold and name not in self.jit_compiled_functions:
+                if (
+                    self.jit_call_counts[name] >= self.jit_threshold
+                    and name not in self.jit_compiled_functions
+                ):
                     # Check if function is recursive before auto-compiling
                     from renzmc.jit.type_inference import TypeInferenceEngine
 
@@ -217,7 +232,7 @@ class ExecutionHelpersMixin:
             return return_value
         finally:
             # Always decrement recursion depth counter
-            if hasattr(self, '_recursion_depth') and name in self._recursion_depth:
+            if hasattr(self, "_recursion_depth") and name in self._recursion_depth:
                 self._recursion_depth[name] -= 1
 
     def _compile_function_with_jit(self, name, params, body, force=False):
@@ -234,9 +249,13 @@ class ExecutionHelpersMixin:
 
             # Use force_compile if force flag is set
             if force:
-                compiled_func = self.jit_compiler.force_compile(name, params, body, interpreter_func)
+                compiled_func = self.jit_compiler.force_compile(
+                    name, params, body, interpreter_func
+                )
             else:
-                compiled_func = self.jit_compiler.compile_function(name, params, body, interpreter_func)
+                compiled_func = self.jit_compiler.compile_function(
+                    name, params, body, interpreter_func
+                )
 
             if compiled_func:
                 self.jit_compiled_functions[name] = compiled_func
@@ -257,7 +276,9 @@ class ExecutionHelpersMixin:
                 else:
                     params, body, return_type, param_types = function_data
                 all_args = [func] + list(args)
-                return self._execute_user_function(name, params, body, return_type, param_types, all_args, kwargs)
+                return self._execute_user_function(
+                    name, params, body, return_type, param_types, all_args, kwargs
+                )
             else:
                 raise RuntimeError(f"User function '{name}' not found for decorator")
 

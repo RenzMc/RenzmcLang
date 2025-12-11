@@ -31,8 +31,12 @@ from typing import Any, Dict, List, Optional, Union
 try:
     try:
         import renzmc_vm
+
         RenzmcVM = renzmc_vm.RenzmcVM
-        def is_available(): return True
+
+        def is_available():
+            return True
+
         version = renzmc_vm.version
         rust_version = renzmc_vm.version()
     except ImportError:
@@ -41,6 +45,7 @@ try:
 except ImportError:
     try:
         from ..rust import RenzmcVM, is_available, version
+
         rust_version = version()
         RUST_AVAILABLE = True
     except ImportError:
@@ -87,7 +92,11 @@ class RustIntegration:
         return {
             "available": RUST_AVAILABLE,
             "enabled": self.is_rust_enabled,
-            "version": version() if RUST_AVAILABLE and callable(version) else str(version) if RUST_AVAILABLE else None
+            "version": (
+                version()
+                if RUST_AVAILABLE and callable(version)
+                else str(version) if RUST_AVAILABLE else None
+            ),
         }
 
     def compile_to_bytecode(self, ast_json: str) -> Optional[bytes]:
@@ -109,7 +118,9 @@ class RustIntegration:
             warnings.warn(f"Rust compilation failed: {e}")
             return None
 
-    def execute_bytecode(self, bytecode: bytes, globals_dict: Optional[Dict[str, Any]] = None) -> Any:
+    def execute_bytecode(
+        self, bytecode: bytes, globals_dict: Optional[Dict[str, Any]] = None
+    ) -> Any:
         """
         Execute bytecode using Rust VM.
 
@@ -133,7 +144,9 @@ class RustIntegration:
             warnings.warn(f"Rust execution failed: {e}")
             return None
 
-    def compile_and_execute(self, ast_json: str, globals_dict: Optional[Dict[str, Any]] = None) -> Any:
+    def compile_and_execute(
+        self, ast_json: str, globals_dict: Optional[Dict[str, Any]] = None
+    ) -> Any:
         """
         Compile AST to bytecode and execute it using Rust VM.
 
@@ -269,9 +282,4 @@ def get_rust_version() -> str:
     return rust_version if RUST_AVAILABLE else "Not available"
 
 
-__all__ = [
-    "RustIntegration",
-    "get_rust_integration",
-    "is_rust_available",
-    "get_rust_version"
-]
+__all__ = ["RustIntegration", "get_rust_integration", "is_rust_available", "get_rust_version"]

@@ -66,7 +66,9 @@ class FileOperations:
             raise RuntimeError(f"Error membaca file: {e}")
 
     @file_rate_limiter
-    def write_file(self, filename: str, content: str, encoding: str = "utf-8", mode: str = "w") -> None:
+    def write_file(
+        self, filename: str, content: str, encoding: str = "utf-8", mode: str = "w"
+    ) -> None:
         if mode not in ("w", "a"):
             raise ValueError(f"Mode tidak valid: {mode} (harus 'w' atau 'a')")
         try:

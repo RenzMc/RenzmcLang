@@ -272,7 +272,9 @@ class ControlFlowStatements:
                     values.append(self.expr())
                 if self.current_token.type == TokenType.TITIK_DUA:
                     self.eat(TokenType.TITIK_DUA)
-                case_body = self.parse_block_until([TokenType.KASUS, TokenType.BAWAAN, TokenType.SELESAI])
+                case_body = self.parse_block_until(
+                    [TokenType.KASUS, TokenType.BAWAAN, TokenType.SELESAI]
+                )
                 cases.append(Case(values, case_body, token))
             else:
                 break

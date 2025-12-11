@@ -2,4 +2,4 @@
 
 from .formatter import RenzmcFormatter
 
-__all__ = ['RenzmcFormatter']
+__all__ = ["RenzmcFormatter"]

@@ -53,9 +53,9 @@ class ASTSerializer:
         result = {"type": node_type}
 
         # Add position information if available
-        if hasattr(ast_node, 'line') and ast_node.line is not None:
+        if hasattr(ast_node, "line") and ast_node.line is not None:
             result["line"] = ast_node.line
-        if hasattr(ast_node, 'column') and ast_node.column is not None:
+        if hasattr(ast_node, "column") and ast_node.column is not None:
             result["column"] = ast_node.column
 
         # Serialize based on node type
@@ -70,8 +70,8 @@ class ASTSerializer:
     def _serialize_generic(self, ast_node, result: Dict[str, Any]):
         """Generic serialization for unknown node types."""
         for attr_name in dir(ast_node):
-            if not attr_name.startswith('_') and not callable(getattr(ast_node, attr_name)):
-                if attr_name not in ['line', 'column', 'token']:
+            if not attr_name.startswith("_") and not callable(getattr(ast_node, attr_name)):
+                if attr_name not in ["line", "column", "token"]:
                     value = getattr(ast_node, attr_name)
                     if value is not None:
                         result[attr_name] = self._serialize_value(value)
@@ -87,18 +87,12 @@ class ASTSerializer:
     def _serialize_binop(self, ast_node, result: Dict[str, Any]):
         """Serialize BinOp node."""
         result["left"] = self.serialize(ast_node.left)
-        result["op"] = {
-            "type": ast_node.op.type,
-            "value": ast_node.op.value
-        }
+        result["op"] = {"type": ast_node.op.type, "value": ast_node.op.value}
         result["right"] = self.serialize(ast_node.right)
 
     def _serialize_unaryop(self, ast_node, result: Dict[str, Any]):
         """Serialize UnaryOp node."""
-        result["op"] = {
-            "type": ast_node.op.type,
-            "value": ast_node.op.value
-        }
+        result["op"] = {"type": ast_node.op.type, "value": ast_node.op.value}
         result["expr"] = self.serialize(ast_node.expr)
 
     def _serialize_num(self, ast_node, result: Dict[str, Any]):
@@ -144,7 +138,7 @@ class ASTSerializer:
         """Serialize VarDecl node."""
         result["var_name"] = ast_node.var_name
         result["value"] = self.serialize(ast_node.value)
-        if hasattr(ast_node, 'type_hint') and ast_node.type_hint:
+        if hasattr(ast_node, "type_hint") and ast_node.type_hint:
             result["type_hint"] = self.serialize(ast_node.type_hint)
 
     def _serialize_assign(self, ast_node, result: Dict[str, Any]):
@@ -192,19 +186,19 @@ class ASTSerializer:
         result["name"] = ast_node.name
         result["params"] = [self.serialize(param) for param in ast_node.params]
         result["body"] = self.serialize(ast_node.body)
-        if hasattr(ast_node, 'return_type') and ast_node.return_type:
+        if hasattr(ast_node, "return_type") and ast_node.return_type:
             result["return_type"] = self.serialize(ast_node.return_type)
-        if hasattr(ast_node, 'param_types') and ast_node.param_types:
+        if hasattr(ast_node, "param_types") and ast_node.param_types:
             result["param_types"] = ast_node.param_types
 
     def _serialize_funccall(self, ast_node, result: Dict[str, Any]):
         """Serialize FuncCall node."""
-        if hasattr(ast_node, 'name') and ast_node.name:
+        if hasattr(ast_node, "name") and ast_node.name:
             result["name"] = ast_node.name
         else:
             result["name_expr"] = self.serialize(ast_node.name_or_expr)
         result["args"] = [self.serialize(arg) for arg in ast_node.args]
-        if hasattr(ast_node, 'kwargs') and ast_node.kwargs:
+        if hasattr(ast_node, "kwargs") and ast_node.kwargs:
             result["kwargs"] = {
                 key: self.serialize(value) for key, value in ast_node.kwargs.items()
             }
@@ -220,7 +214,7 @@ class ASTSerializer:
         result["methods"] = [self.serialize(method) for method in ast_node.methods]
         if ast_node.parent:
             result["parent"] = self.serialize(ast_node.parent)
-        if hasattr(ast_node, 'class_vars') and ast_node.class_vars:
+        if hasattr(ast_node, "class_vars") and ast_node.class_vars:
             result["class_vars"] = [self.serialize(var) for var in ast_node.class_vars]
 
     def _serialize_attributeref(self, ast_node, result: Dict[str, Any]):
@@ -233,7 +227,7 @@ class ASTSerializer:
         result["obj"] = self.serialize(ast_node.obj)
         result["method"] = self.serialize(ast_node.method)
         result["args"] = [self.serialize(arg) for arg in ast_node.args]
-        if hasattr(ast_node, 'kwargs') and ast_node.kwargs:
+        if hasattr(ast_node, "kwargs") and ast_node.kwargs:
             result["kwargs"] = {
                 key: self.serialize(value) for key, value in ast_node.kwargs.items()
             }
@@ -261,7 +255,7 @@ class ASTSerializer:
         """Serialize PythonCall node."""
         result["func_expr"] = self.serialize(ast_node.func_expr)
         result["args"] = [self.serialize(arg) for arg in ast_node.args]
-        if hasattr(ast_node, 'kwargs') and ast_node.kwargs:
+        if hasattr(ast_node, "kwargs") and ast_node.kwargs:
             result["kwargs"] = {
                 key: self.serialize(value) for key, value in ast_node.kwargs.items()
             }
@@ -376,10 +370,7 @@ class ASTSerializer:
     def _serialize_compoundassign(self, ast_node, result: Dict[str, Any]):
         """Serialize CompoundAssign node."""
         result["var"] = self.serialize(ast_node.var)
-        result["op"] = {
-            "type": ast_node.op.type,
-            "value": ast_node.op.value
-        }
+        result["op"] = {"type": ast_node.op.type, "value": ast_node.op.value}
         result["value"] = self.serialize(ast_node.value)
 
     def _serialize_switch(self, ast_node, result: Dict[str, Any]):
@@ -410,12 +401,12 @@ class ASTSerializer:
             return [self._serialize_value(item) for item in value]
         elif isinstance(value, dict):
             return {key: self._serialize_value(val) for key, val in value.items()}
-        elif hasattr(value, '__class__') and hasattr(value.__class__, '__name__'):
+        elif hasattr(value, "__class__") and hasattr(value.__class__, "__name__"):
             # Check if it's an AST node
-            if hasattr(value, 'token') or any(
-                attr in ['statements', 'left', 'right', 'value', 'name', 'body']
+            if hasattr(value, "token") or any(
+                attr in ["statements", "left", "right", "value", "name", "body"]
                 for attr in dir(value)
-                if not attr.startswith('_')
+                if not attr.startswith("_")
             ):
                 return self.serialize(value)
             else:
@@ -482,9 +473,4 @@ def ast_to_dict(ast_node) -> Dict[str, Any]:
     return serializer.serialize(ast_node)
 
 
-__all__ = [
-    "ASTSerializer",
-    "get_ast_serializer",
-    "ast_to_json",
-    "ast_to_dict"
-]
+__all__ = ["ASTSerializer", "get_ast_serializer", "ast_to_json", "ast_to_dict"]

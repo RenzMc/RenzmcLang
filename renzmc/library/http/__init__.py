@@ -61,9 +61,7 @@ from typing import Dict, Any, Optional, Union, Tuple
 
 # Global settings
 DEFAULT_TIMEOUT = 30
-DEFAULT_HEADERS = {
-    'User-Agent': 'RenzMcLang-HTTP/1.0'
-}
+DEFAULT_HEADERS = {"User-Agent": "RenzMcLang-HTTP/1.0"}
 
 
 class HTTPResponse:
@@ -97,8 +95,8 @@ class HTTPResponse:
     def text(self) -> str:
         """Response body sebagai string."""
         if self._content is not None:
-            return self._content.decode('utf-8')
-        return self._response.read().decode('utf-8')
+            return self._content.decode("utf-8")
+        return self._response.read().decode("utf-8")
 
     def json(self) -> Dict[str, Any]:
         """Parse response body sebagai JSON."""
@@ -147,29 +145,35 @@ class HTTPSession:
 
     def get(self, url: str, **kwargs) -> HTTPResponse:
         """HTTP GET request."""
-        return self.request('GET', url, **kwargs)
+        return self.request("GET", url, **kwargs)
 
     def post(self, url: str, **kwargs) -> HTTPResponse:
         """HTTP POST request."""
-        return self.request('POST', url, **kwargs)
+        return self.request("POST", url, **kwargs)
 
     def put(self, url: str, **kwargs) -> HTTPResponse:
         """HTTP PUT request."""
-        return self.request('PUT', url, **kwargs)
+        return self.request("PUT", url, **kwargs)
 
     def delete(self, url: str, **kwargs) -> HTTPResponse:
         """HTTP DELETE request."""
-        return self.request('DELETE', url, **kwargs)
+        return self.request("DELETE", url, **kwargs)
 
     def patch(self, url: str, **kwargs) -> HTTPResponse:
         """HTTP PATCH request."""
-        return self.request('PATCH', url, **kwargs)
+        return self.request("PATCH", url, **kwargs)
 
 
-def _make_request(method: str, url: str, params: Dict[str, Any] = None,
-                  data: Union[str, bytes, Dict] = None, json: Dict[str, Any] = None,
-                  headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT,
-                  allow_redirects: bool = True) -> HTTPResponse:
+def _make_request(
+    method: str,
+    url: str,
+    params: Dict[str, Any] = None,
+    data: Union[str, bytes, Dict] = None,
+    json: Dict[str, Any] = None,
+    headers: Dict[str, str] = None,
+    timeout: int = DEFAULT_TIMEOUT,
+    allow_redirects: bool = True,
+) -> HTTPResponse:
     """
     Internal function untuk membuat HTTP request.
     """
@@ -181,20 +185,20 @@ def _make_request(method: str, url: str, params: Dict[str, Any] = None,
     # Add parameters to URL
     if params:
         query_string = urllib.parse.urlencode(params)
-        if '?' in url:
-            url += '&' + query_string
+        if "?" in url:
+            url += "&" + query_string
         else:
-            url += '?' + query_string
+            url += "?" + query_string
 
     # Prepare data
     if json is not None:
-        data = py_json.dumps(json).encode('utf-8')
-        headers['Content-Type'] = 'application/json'
+        data = py_json.dumps(json).encode("utf-8")
+        headers["Content-Type"] = "application/json"
     elif isinstance(data, dict):
-        data = urllib.parse.urlencode(data).encode('utf-8')
-        headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        data = urllib.parse.urlencode(data).encode("utf-8")
+        headers["Content-Type"] = "application/x-www-form-urlencoded"
     elif isinstance(data, str):
-        data = data.encode('utf-8')
+        data = data.encode("utf-8")
 
     # Create request
     req = urllib.request.Request(url, data=data, headers=headers, method=method)
@@ -210,16 +214,22 @@ def _make_request(method: str, url: str, params: Dict[str, Any] = None,
             return HTTPResponse(response, content)
 
     except urllib.error.HTTPError as e:
-        error_content = e.read() if hasattr(e, 'read') else None
+        error_content = e.read() if hasattr(e, "read") else None
         return HTTPResponse(e, error_content)
     except Exception as e:
         raise HTTPError(str(e))
 
+
 # Main HTTP Functions
 
 
-def get(url: str, params: Dict[str, Any] = None, headers: Dict[str, str] = None,
-        timeout: int = DEFAULT_TIMEOUT, **kwargs) -> HTTPResponse:
+def get(
+    url: str,
+    params: Dict[str, Any] = None,
+    headers: Dict[str, str] = None,
+    timeout: int = DEFAULT_TIMEOUT,
+    **kwargs,
+) -> HTTPResponse:
     """
     HTTP GET request.
 
@@ -237,11 +247,17 @@ def get(url: str, params: Dict[str, Any] = None, headers: Dict[str, str] = None,
         response = get('https://api.example.com/users', params={'page': 1})
         users = response.json()
     """
-    return _make_request('GET', url, params=params, headers=headers, timeout=timeout, **kwargs)
+    return _make_request("GET", url, params=params, headers=headers, timeout=timeout, **kwargs)
 
 
-def post(url: str, data: Union[str, bytes, Dict] = None, json: Dict[str, Any] = None,
-         headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT, **kwargs) -> HTTPResponse:
+def post(
+    url: str,
+    data: Union[str, bytes, Dict] = None,
+    json: Dict[str, Any] = None,
+    headers: Dict[str, str] = None,
+    timeout: int = DEFAULT_TIMEOUT,
+    **kwargs,
+) -> HTTPResponse:
     """
     HTTP POST request.
 
@@ -260,47 +276,69 @@ def post(url: str, data: Union[str, bytes, Dict] = None, json: Dict[str, Any] = 
         response = post('https://api.example.com/users', json={'name': 'Budi'})
         user = response.json()
     """
-    return _make_request('POST', url, data=data, json=json, headers=headers, timeout=timeout, **kwargs)
+    return _make_request(
+        "POST", url, data=data, json=json, headers=headers, timeout=timeout, **kwargs
+    )
 
 
-def put(url: str, data: Union[str, bytes, Dict] = None, json: Dict[str, Any] = None,
-        headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT, **kwargs) -> HTTPResponse:
+def put(
+    url: str,
+    data: Union[str, bytes, Dict] = None,
+    json: Dict[str, Any] = None,
+    headers: Dict[str, str] = None,
+    timeout: int = DEFAULT_TIMEOUT,
+    **kwargs,
+) -> HTTPResponse:
     """
     HTTP PUT request.
     """
-    return _make_request('PUT', url, data=data, json=json, headers=headers, timeout=timeout, **kwargs)
+    return _make_request(
+        "PUT", url, data=data, json=json, headers=headers, timeout=timeout, **kwargs
+    )
 
 
-def delete(url: str, headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT,
-           **kwargs) -> HTTPResponse:
+def delete(
+    url: str, headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT, **kwargs
+) -> HTTPResponse:
     """
     HTTP DELETE request.
     """
-    return _make_request('DELETE', url, headers=headers, timeout=timeout, **kwargs)
+    return _make_request("DELETE", url, headers=headers, timeout=timeout, **kwargs)
 
 
-def patch(url: str, data: Union[str, bytes, Dict] = None, json: Dict[str, Any] = None,
-          headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT, **kwargs) -> HTTPResponse:
+def patch(
+    url: str,
+    data: Union[str, bytes, Dict] = None,
+    json: Dict[str, Any] = None,
+    headers: Dict[str, str] = None,
+    timeout: int = DEFAULT_TIMEOUT,
+    **kwargs,
+) -> HTTPResponse:
     """
     HTTP PATCH request.
     """
-    return _make_request('PATCH', url, data=data, json=json, headers=headers, timeout=timeout, **kwargs)
+    return _make_request(
+        "PATCH", url, data=data, json=json, headers=headers, timeout=timeout, **kwargs
+    )
 
 
-def head(url: str, headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT,
-         **kwargs) -> HTTPResponse:
+def head(
+    url: str, headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT, **kwargs
+) -> HTTPResponse:
     """
     HTTP HEAD request.
     """
-    return _make_request('HEAD', url, headers=headers, timeout=timeout, **kwargs)
+    return _make_request("HEAD", url, headers=headers, timeout=timeout, **kwargs)
 
 
-def options(url: str, headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT,
-            **kwargs) -> HTTPResponse:
+def options(
+    url: str, headers: Dict[str, str] = None, timeout: int = DEFAULT_TIMEOUT, **kwargs
+) -> HTTPResponse:
     """
     HTTP OPTIONS request.
     """
-    return _make_request('OPTIONS', url, headers=headers, timeout=timeout, **kwargs)
+    return _make_request("OPTIONS", url, headers=headers, timeout=timeout, **kwargs)
+
 
 # Utility Functions
 
@@ -357,13 +395,33 @@ buat_sesi = create_session
 
 __all__ = [
     # Classes
-    "HTTPResponse", "HTTPSession", "HTTPError",
+    "HTTPResponse",
+    "HTTPSession",
+    "HTTPError",
     # Main Functions
-    "get", "post", "put", "delete", "patch", "head", "options",
+    "get",
+    "post",
+    "put",
+    "delete",
+    "patch",
+    "head",
+    "options",
     # Utility Functions
-    "set_default_header", "set_default_timeout", "create_session",
+    "set_default_header",
+    "set_default_timeout",
+    "create_session",
     # Indonesian Aliases
-    "ambil", "kirim", "perbarui", "hapus", "tambal", "kepala", "opsi",
-    "respon", "sesi", "error_http", "atur_header_default",
-    "atur_timeout_default", "buat_sesi"
+    "ambil",
+    "kirim",
+    "perbarui",
+    "hapus",
+    "tambal",
+    "kepala",
+    "opsi",
+    "respon",
+    "sesi",
+    "error_http",
+    "atur_header_default",
+    "atur_timeout_default",
+    "buat_sesi",
 ]

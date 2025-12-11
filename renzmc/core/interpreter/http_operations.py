@@ -66,12 +66,16 @@ class HTTPOperationsMixin:
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
+                    response.json()
+                    if response.headers.get("content-type", "").startswith("application/json")
+                    else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
+            raise ImportError(
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+            )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP request: {str(e)}")
 
@@ -101,12 +105,16 @@ class HTTPOperationsMixin:
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
+                    response.json()
+                    if response.headers.get("content-type", "").startswith("application/json")
+                    else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
+            raise ImportError(
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+            )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP GET request: {str(e)}")
 
@@ -137,12 +145,16 @@ class HTTPOperationsMixin:
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
+                    response.json()
+                    if response.headers.get("content-type", "").startswith("application/json")
+                    else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
+            raise ImportError(
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+            )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP POST request: {str(e)}")
 
@@ -173,12 +185,16 @@ class HTTPOperationsMixin:
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
+                    response.json()
+                    if response.headers.get("content-type", "").startswith("application/json")
+                    else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
+            raise ImportError(
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+            )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP PUT request: {str(e)}")
 
@@ -207,11 +223,15 @@ class HTTPOperationsMixin:
                 "headers": dict(response.headers),
                 "text": response.text,
                 "json": (
-                    response.json() if response.headers.get("content-type", "").startswith("application/json") else None
+                    response.json()
+                    if response.headers.get("content-type", "").startswith("application/json")
+                    else None
                 ),
                 "content": response.content,
             }
         except ImportError:
-            raise ImportError("Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'")
+            raise ImportError(
+                "Modul 'requests' tidak terinstal. Silakan instal dengan 'pip install requests'"
+            )
         except Exception as e:
             raise ValueError(f"Gagal melakukan HTTP DELETE request: {str(e)}")

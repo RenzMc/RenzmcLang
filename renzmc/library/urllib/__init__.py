@@ -40,35 +40,35 @@ import os
 def parse_url(url):
     """
     Parse URL menjadi komponen-komponennya.
-    
+
     Args:
         url: URL string untuk di-parse
-        
+
     Returns:
         dict: Komponen URL (scheme, netloc, path, params, query, fragment)
     """
     try:
         parsed = python_urlparse.urlparse(url)
         return {
-            'scheme': parsed.scheme,
-            'netloc': parsed.netloc,
-            'path': parsed.path,
-            'params': parsed.params,
-            'query': parsed.query,
-            'fragment': parsed.fragment,
-            'username': parsed.username,
-            'password': parsed.password,
-            'hostname': parsed.hostname,
-            'port': parsed.port
+            "scheme": parsed.scheme,
+            "netloc": parsed.netloc,
+            "path": parsed.path,
+            "params": parsed.params,
+            "query": parsed.query,
+            "fragment": parsed.fragment,
+            "username": parsed.username,
+            "password": parsed.password,
+            "hostname": parsed.hostname,
+            "port": parsed.port,
         }
     except Exception as e:
         raise ValueError(f"Gagal parse URL: {str(e)}")
 
 
-def buat_url(scheme, netloc, path='', params='', query='', fragment=''):
+def buat_url(scheme, netloc, path="", params="", query="", fragment=""):
     """
     Buat URL dari komponen-komponennya.
-    
+
     Args:
         scheme: Scheme (http, https, ftp, dll)
         netloc: Network location (domain:port)
@@ -76,7 +76,7 @@ def buat_url(scheme, netloc, path='', params='', query='', fragment=''):
         params: Parameters
         query: Query string
         fragment: Fragment
-        
+
     Returns:
         str: URL lengkap
     """
@@ -89,10 +89,10 @@ def buat_url(scheme, netloc, path='', params='', query='', fragment=''):
 def encode_url(params):
     """
     Encode parameter ke URL-encoded string.
-    
+
     Args:
         params: Dictionary atau list of tuples
-        
+
     Returns:
         str: URL-encoded string
     """
@@ -110,10 +110,10 @@ def encode_url(params):
 def decode_url(encoded_string):
     """
     Decode URL-encoded string.
-    
+
     Args:
         encoded_string: URL-encoded string
-        
+
     Returns:
         dict: Parameters sebagai dictionary
     """
@@ -126,15 +126,15 @@ def decode_url(encoded_string):
 def encode_component(component):
     """
     Encode URL component (khusus untuk path, query, dll).
-    
+
     Args:
         component: String component untuk di-encode
-        
+
     Returns:
         str: URL-encoded component
     """
     try:
-        return python_urlparse.quote(str(component), safe='')
+        return python_urlparse.quote(str(component), safe="")
     except Exception as e:
         raise ValueError(f"Gagal encode component: {str(e)}")
 
@@ -142,10 +142,10 @@ def encode_component(component):
 def decode_component(encoded_component):
     """
     Decode URL component.
-    
+
     Args:
         encoded_component: URL-encoded component
-        
+
     Returns:
         str: Decoded component
     """
@@ -158,11 +158,11 @@ def decode_component(encoded_component):
 def gabung_url(base_url, *paths):
     """
     Gabungkan base URL dengan path-path menggunakan proper URL joining.
-    
+
     Args:
         base_url: Base URL
         *paths: Path-path untuk digabungkan
-        
+
     Returns:
         str: URL lengkap
     """
@@ -210,10 +210,10 @@ def dapatkan_query(url):
 def parse_query(query_string):
     """
     Parse query string menjadi dictionary.
-    
+
     Args:
         query_string: Query string
-        
+
     Returns:
         dict: Parameters sebagai dictionary
     """
@@ -226,10 +226,10 @@ def parse_query(query_string):
 def buat_query(params):
     """
     Buat query string dari dictionary.
-    
+
     Args:
         params: Dictionary parameters
-        
+
     Returns:
         str: Query string
     """
@@ -242,10 +242,10 @@ def buat_query(params):
 def url_valid(url):
     """
     Cek apakah URL valid.
-    
+
     Args:
         url: URL untuk dicek
-        
+
     Returns:
         bool: True jika URL valid
     """
@@ -259,10 +259,10 @@ def url_valid(url):
 def dapatkan_extension(path):
     """
     Dapatkan file extension dari path atau URL.
-    
+
     Args:
         path: Path atau URL
-        
+
     Returns:
         str: File extension (tanpa dot) atau None
     """
@@ -276,10 +276,10 @@ def dapatkan_extension(path):
 def dapatkan_filename(url):
     """
     Dapatkan filename dari URL.
-    
+
     Args:
         url: URL
-        
+
     Returns:
         str: Filename atau None
     """
@@ -294,24 +294,24 @@ def dapatkan_filename(url):
 def download_url(url, destination=None):
     """
     Download content dari URL.
-    
+
     Args:
         url: URL untuk download
         destination: Path destination (jika None, return content)
-        
+
     Returns:
         str: Content jika destination None, atau path file jika destination specified
     """
     try:
         with python_urlrequest.urlopen(url) as response:
             content = response.read()
-            
+
         if destination:
-            with open(destination, 'wb') as file:
+            with open(destination, "wb") as file:
                 file.write(content)
             return destination
         else:
-            return content.decode('utf-8')
+            return content.decode("utf-8")
     except python_urlerror.URLError as e:
         raise ValueError(f"Gagal download URL: {str(e)}")
     except Exception as e:
@@ -321,48 +321,50 @@ def download_url(url, destination=None):
 def escape_url(url):
     """
     Escape URL untuk keamanan.
-    
+
     Args:
         url: URL untuk di-escape
-        
+
     Returns:
         str: Escaped URL
     """
     try:
         parsed = python_urlparse.urlparse(url)
         escaped_path = python_urlparse.quote(parsed.path)
-        escaped_query = python_urlparse.quote(parsed.query, safe='=&?')
-        
-        return python_urlparse.urlunparse((
-            parsed.scheme,
-            parsed.netloc,
-            escaped_path,
-            parsed.params,
-            escaped_query,
-            parsed.fragment
-        ))
+        escaped_query = python_urlparse.quote(parsed.query, safe="=&?")
+
+        return python_urlparse.urlunparse(
+            (
+                parsed.scheme,
+                parsed.netloc,
+                escaped_path,
+                parsed.params,
+                escaped_query,
+                parsed.fragment,
+            )
+        )
     except Exception as e:
         raise ValueError(f"Gagal escape URL: {str(e)}")
 
 
 # Daftar semua fungsi yang tersedia
 __all__ = [
-    'parse_url',
-    'buat_url',
-    'encode_url',
-    'decode_url',
-    'encode_component',
-    'decode_component',
-    'gabung_url',
-    'dapatkan_scheme',
-    'dapatkan_domain',
-    'dapatkan_path',
-    'dapatkan_query',
-    'parse_query',
-    'buat_query',
-    'url_valid',
-    'dapatkan_extension',
-    'dapatkan_filename',
-    'download_url',
-    'escape_url'
+    "parse_url",
+    "buat_url",
+    "encode_url",
+    "decode_url",
+    "encode_component",
+    "decode_component",
+    "gabung_url",
+    "dapatkan_scheme",
+    "dapatkan_domain",
+    "dapatkan_path",
+    "dapatkan_query",
+    "parse_query",
+    "buat_query",
+    "url_valid",
+    "dapatkan_extension",
+    "dapatkan_filename",
+    "download_url",
+    "escape_url",
 ]

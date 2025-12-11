@@ -54,9 +54,18 @@ from typing import Any, Dict, List, Union, Optional
 JSONType = Union[Dict[str, Any], List[Any], str, int, float, bool, None]
 
 
-def loads(s: str, *, encoding: Optional[str] = None, cls=None,
-          object_hook=None, parse_float=None, parse_int=None,
-          parse_constant=None, object_pairs_hook=None, **kw) -> JSONType:
+def loads(
+    s: str,
+    *,
+    encoding: Optional[str] = None,
+    cls=None,
+    object_hook=None,
+    parse_float=None,
+    parse_int=None,
+    parse_constant=None,
+    object_pairs_hook=None,
+    **kw,
+) -> JSONType:
     """
     Parse JSON string menjadi Python object.
 
@@ -83,15 +92,32 @@ def loads(s: str, *, encoding: Optional[str] = None, cls=None,
         # data = {"nama": "Budi", "umur": 25}
     """
     return py_json.loads(
-        s, encoding=encoding, cls=cls, object_hook=object_hook,
-        parse_float=parse_float, parse_int=parse_int, parse_constant=parse_constant,
-        object_pairs_hook=object_pairs_hook, **kw
+        s,
+        encoding=encoding,
+        cls=cls,
+        object_hook=object_hook,
+        parse_float=parse_float,
+        parse_int=parse_int,
+        parse_constant=parse_constant,
+        object_pairs_hook=object_pairs_hook,
+        **kw,
     )
 
 
-def dumps(obj: JSONType, *, skipkeys=False, ensure_ascii=True,
-          check_circular=True, allow_nan=True, cls=None, indent=None,
-          separators=None, default=None, sort_keys=False, **kw) -> str:
+def dumps(
+    obj: JSONType,
+    *,
+    skipkeys=False,
+    ensure_ascii=True,
+    check_circular=True,
+    allow_nan=True,
+    cls=None,
+    indent=None,
+    separators=None,
+    default=None,
+    sort_keys=False,
+    **kw,
+) -> str:
     """
     Convert Python object menjadi JSON string.
 
@@ -123,15 +149,31 @@ def dumps(obj: JSONType, *, skipkeys=False, ensure_ascii=True,
         # }
     """
     return py_json.dumps(
-        obj, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
-        check_circular=check_circular, allow_nan=allow_nan, cls=cls,
-        indent=indent, separators=separators, default=default,
-        sort_keys=sort_keys, **kw
+        obj,
+        skipkeys=skipkeys,
+        ensure_ascii=ensure_ascii,
+        check_circular=check_circular,
+        allow_nan=allow_nan,
+        cls=cls,
+        indent=indent,
+        separators=separators,
+        default=default,
+        sort_keys=sort_keys,
+        **kw,
     )
 
 
-def load(fp, *, cls=None, object_hook=None, parse_float=None,
-         parse_int=None, parse_constant=None, object_pairs_hook=None, **kw) -> JSONType:
+def load(
+    fp,
+    *,
+    cls=None,
+    object_hook=None,
+    parse_float=None,
+    parse_int=None,
+    parse_constant=None,
+    object_pairs_hook=None,
+    **kw,
+) -> JSONType:
     """
     Parse JSON dari file-like object.
 
@@ -153,15 +195,32 @@ def load(fp, *, cls=None, object_hook=None, parse_float=None,
             data = load(f)
     """
     return py_json.load(
-        fp, cls=cls, object_hook=object_hook, parse_float=parse_float,
-        parse_int=parse_int, parse_constant=parse_constant,
-        object_pairs_hook=object_pairs_hook, **kw
+        fp,
+        cls=cls,
+        object_hook=object_hook,
+        parse_float=parse_float,
+        parse_int=parse_int,
+        parse_constant=parse_constant,
+        object_pairs_hook=object_pairs_hook,
+        **kw,
     )
 
 
-def dump(obj: JSONType, fp, *, skipkeys=False, ensure_ascii=True,
-         check_circular=True, allow_nan=True, cls=None, indent=None,
-         separators=None, default=None, sort_keys=False, **kw) -> None:
+def dump(
+    obj: JSONType,
+    fp,
+    *,
+    skipkeys=False,
+    ensure_ascii=True,
+    check_circular=True,
+    allow_nan=True,
+    cls=None,
+    indent=None,
+    separators=None,
+    default=None,
+    sort_keys=False,
+    **kw,
+) -> None:
     """
     Write JSON object ke file-like object.
 
@@ -185,11 +244,20 @@ def dump(obj: JSONType, fp, *, skipkeys=False, ensure_ascii=True,
             dump(data, f, indent=2)
     """
     py_json.dump(
-        obj, fp, skipkeys=skipkeys, ensure_ascii=ensure_ascii,
-        check_circular=check_circular, allow_nan=allow_nan, cls=cls,
-        indent=indent, separators=separators, default=default,
-        sort_keys=sort_keys, **kw
+        obj,
+        fp,
+        skipkeys=skipkeys,
+        ensure_ascii=ensure_ascii,
+        check_circular=check_circular,
+        allow_nan=allow_nan,
+        cls=cls,
+        indent=indent,
+        separators=separators,
+        default=default,
+        sort_keys=sort_keys,
+        **kw,
     )
+
 
 # Custom JSON Decoder
 
@@ -200,7 +268,9 @@ class JSONDecoder(py_json.JSONDecoder):
 
     Inherits dari Python's JSONDecoder dan menambahkan fitur-fitur khusus.
     """
+
     pass
+
 
 # Custom JSON Encoder
 
@@ -219,6 +289,7 @@ class JSONEncoder(py_json.JSONEncoder):
         # Add custom type handling here
         return super().default(obj)
 
+
 # Exception
 
 
@@ -226,6 +297,7 @@ class JSONDecodeError(py_json.JSONDecodeError):
     """
     Exception yang di-raised saat JSON parsing gagal.
     """
+
     pass
 
 
@@ -282,19 +354,30 @@ def minify_json(obj: JSONType) -> str:
     Returns:
         Minified JSON string
     """
-    return dumps(obj, separators=(',', ':'), ensure_ascii=True)
+    return dumps(obj, separators=(",", ":"), ensure_ascii=True)
 
 
 __all__ = [
     # Main Functions
-    "loads", "dumps", "load", "dump",
+    "loads",
+    "dumps",
+    "load",
+    "dump",
     # Classes
-    "JSONDecoder", "JSONEncoder",
+    "JSONDecoder",
+    "JSONEncoder",
     # Exception
     "JSONDecodeError",
     # Indonesian Aliases
-    "baca_json", "tulis_json", "baca_dari_file", "tulis_ke_file",
-    "parser_json", "encoder_json", "error_json",
+    "baca_json",
+    "tulis_json",
+    "baca_dari_file",
+    "tulis_ke_file",
+    "parser_json",
+    "encoder_json",
+    "error_json",
     # Utility Functions
-    "format_json", "validate_json", "minify_json"
+    "format_json",
+    "validate_json",
+    "minify_json",
 ]

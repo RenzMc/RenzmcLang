@@ -74,7 +74,7 @@ class LibraryManager:
         base_path = Path(__file__).parent
 
         for item in base_path.iterdir():
-            if item.is_dir() and (item / '__init__.py').exists():
+            if item.is_dir() and (item / "__init__.py").exists():
                 libraries.append(item.name)
 
         return sorted(libraries)
@@ -104,8 +104,10 @@ class LibraryManager:
 
         # Validate library name
         if library_name not in self._available_libraries:
-            raise ImportError(f"Library '{library_name}' tidak ditemukan. "
-                              f"Available: {self._available_libraries}")
+            raise ImportError(
+                f"Library '{library_name}' tidak ditemukan. "
+                f"Available: {self._available_libraries}"
+            )
 
         try:
             # Import the library
@@ -138,7 +140,9 @@ class LibraryManager:
         library = self.import_library(library_name)
 
         if not hasattr(library, function_name):
-            raise ImportError(f"Fungsi '{function_name}' tidak ditemukan di library '{library_name}'")
+            raise ImportError(
+                f"Fungsi '{function_name}' tidak ditemukan di library '{library_name}'"
+            )
 
         return getattr(library, function_name)
 
@@ -210,13 +214,13 @@ class LibraryManager:
             "functions": [],
             "classes": [],
             "constants": [],
-            "docstring": getattr(library, '__doc__', ''),
-            "version": getattr(library, '__version__', 'Unknown'),
-            "author": getattr(library, '__author__', 'Unknown')
+            "docstring": getattr(library, "__doc__", ""),
+            "version": getattr(library, "__version__", "Unknown"),
+            "author": getattr(library, "__author__", "Unknown"),
         }
 
         # Discover exported items
-        if hasattr(library, '__all__'):
+        if hasattr(library, "__all__"):
             for item_name in library.__all__:
                 item = getattr(library, item_name, None)
                 if item is not None:
@@ -285,11 +289,7 @@ class LibraryImporter:
         library_name = from_part.strip()
         items = import_part.split(",")
 
-        result = {
-            "type": "from_import",
-            "library": library_name,
-            "imports": {}
-        }
+        result = {"type": "from_import", "library": library_name, "imports": {}}
 
         library = self.library_manager.import_library(library_name)
 
@@ -325,11 +325,7 @@ class LibraryImporter:
 
         library = self.library_manager.import_library(library_name)
 
-        return {
-            "type": "direct_import",
-            "library": library_name,
-            "module": library
-        }
+        return {"type": "direct_import", "library": library_name, "module": library}
 
 
 # Global instance
@@ -378,7 +374,12 @@ impor_library = import_library
 dapatkan_library_tersedia = get_available_libraries
 
 __all__ = [
-    "LibraryManager", "LibraryImporter",
-    "get_library_manager", "import_library", "get_available_libraries",
-    "manajer_library", "impor_library", "dapatkan_library_tersedia"
+    "LibraryManager",
+    "LibraryImporter",
+    "get_library_manager",
+    "import_library",
+    "get_available_libraries",
+    "manajer_library",
+    "impor_library",
+    "dapatkan_library_tersedia",
 ]

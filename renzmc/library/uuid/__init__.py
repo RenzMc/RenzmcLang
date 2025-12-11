@@ -37,11 +37,11 @@ import re
 def buat_uuid1(node=None, clock_seq=None):
     """
     Buat UUID berdasarkan host ID dan current time.
-    
+
     Args:
         node: Node ID (opsional)
         clock_seq: Clock sequence (opsional)
-        
+
     Returns:
         str: UUID string
     """
@@ -51,11 +51,11 @@ def buat_uuid1(node=None, clock_seq=None):
 def buat_uuid3(namespace, name):
     """
     Buat UUID berdasarkan MD5 hash dari namespace dan name.
-    
+
     Args:
         namespace: Namespace UUID
         name: String name
-        
+
     Returns:
         str: UUID string
     """
@@ -65,7 +65,7 @@ def buat_uuid3(namespace, name):
 def buat_uuid4():
     """
     Buat UUID random.
-    
+
     Returns:
         str: UUID string random
     """
@@ -75,11 +75,11 @@ def buat_uuid4():
 def buat_uuid5(namespace, name):
     """
     Buat UUID berdasarkan SHA-1 hash dari namespace dan name.
-    
+
     Args:
         namespace: Namespace UUID
         name: String name
-        
+
     Returns:
         str: UUID string
     """
@@ -89,10 +89,10 @@ def buat_uuid5(namespace, name):
 def parse_uuid(uuid_string):
     """
     Parse UUID string ke UUID object.
-    
+
     Args:
         uuid_string: UUID string
-        
+
     Returns:
         str: UUID object sebagai string
     """
@@ -106,10 +106,10 @@ def parse_uuid(uuid_string):
 def uuid_valid(uuid_string):
     """
     Cek apakah UUID string valid.
-    
+
     Args:
         uuid_string: UUID string untuk dicek
-        
+
     Returns:
         bool: True jika valid, False jika tidak
     """
@@ -149,18 +149,18 @@ NAMESPACE_X500 = python_uuid.NAMESPACE_X500
 
 # Daftar semua fungsi yang tersedia
 __all__ = [
-    'buat_uuid1',
-    'buat_uuid3', 
-    'buat_uuid4',
-    'buat_uuid5',
-    'parse_uuid',
-    'uuid_valid',
-    'dapatkan_namespace_dns',
-    'dapatkan_namespace_url',
-    'dapatkan_namespace_oid',
-    'dapatkan_namespace_x500',
-    'NAMESPACE_DNS',
-    'NAMESPACE_URL',
-    'NAMESPACE_OID',
-    'NAMESPACE_X500'
+    "buat_uuid1",
+    "buat_uuid3",
+    "buat_uuid4",
+    "buat_uuid5",
+    "parse_uuid",
+    "uuid_valid",
+    "dapatkan_namespace_dns",
+    "dapatkan_namespace_url",
+    "dapatkan_namespace_oid",
+    "dapatkan_namespace_x500",
+    "NAMESPACE_DNS",
+    "NAMESPACE_URL",
+    "NAMESPACE_OID",
+    "NAMESPACE_X500",
 ]

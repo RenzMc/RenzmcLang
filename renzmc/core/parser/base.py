@@ -67,7 +67,9 @@ class ParserBase:
             ]:
                 # Get the actual keyword text from lexer
                 keyword_text = (
-                    self.current_token.value if hasattr(self.current_token, "value") else str(self.current_token.type)
+                    self.current_token.value
+                    if hasattr(self.current_token, "value")
+                    else str(self.current_token.type)
                 )
                 self.error(
                     f"Kesalahan sintaks: Kata kunci '{keyword_text}' tidak dapat digunakan sebagai nama variabel. "

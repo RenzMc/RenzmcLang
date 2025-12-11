@@ -105,6 +105,7 @@ def environ() -> Dict[str, str]:
     """
     return dict(py_os.environ)
 
+
 # Process Functions
 
 
@@ -143,6 +144,7 @@ def system(command: str) -> int:
     """
     return py_os.system(command)
 
+
 # Path Functions
 
 
@@ -172,7 +174,7 @@ def chdir(path: str):
     py_os.chdir(path)
 
 
-def listdir(path: str = '.') -> List[str]:
+def listdir(path: str = ".") -> List[str]:
     """
     Daftar file dan directory dalam path.
 
@@ -268,6 +270,7 @@ def rename(src: str, dst: str):
         rename('/home/user/old.txt', '/home/user/new.txt')
     """
     py_os.rename(src, dst)
+
 
 # File Functions
 
@@ -376,6 +379,7 @@ def chmod(path: str, mode: int):
     """
     py_os.chmod(path, mode)
 
+
 # System Information
 
 
@@ -421,6 +425,7 @@ def architecture() -> str:
         arch = architecture()  # 'x86_64', 'AMD64', dll
     """
     return py_platform.machine()
+
 
 # Utility Functions
 
@@ -550,26 +555,78 @@ path_absolut = abspath
 
 __all__ = [
     # Environment
-    "getenv", "setenv", "unsetenv", "environ", "environ_obj",
+    "getenv",
+    "setenv",
+    "unsetenv",
+    "environ",
+    "environ_obj",
     # Process
-    "getpid", "getppid", "system",
+    "getpid",
+    "getppid",
+    "system",
     # Path
-    "getcwd", "chdir", "listdir", "mkdir", "makedirs", "rmdir", "removedirs",
-    "remove", "rename",
+    "getcwd",
+    "chdir",
+    "listdir",
+    "mkdir",
+    "makedirs",
+    "rmdir",
+    "removedirs",
+    "remove",
+    "rename",
     # File
-    "exists", "isfile", "isdir", "islink", "access", "stat", "chmod",
+    "exists",
+    "isfile",
+    "isdir",
+    "islink",
+    "access",
+    "stat",
+    "chmod",
     # System
-    "uname", "platform", "architecture",
+    "uname",
+    "platform",
+    "architecture",
     # Utility
-    "join", "split", "basename", "dirname", "abspath",
+    "join",
+    "split",
+    "basename",
+    "dirname",
+    "abspath",
     # Constants
-    "F_OK", "R_OK", "W_OK", "X_OK",
+    "F_OK",
+    "R_OK",
+    "W_OK",
+    "X_OK",
     # Indonesian Aliases
-    "dapatkan_env", "atur_env", "hapus_env", "lingkungan", "id_proses",
-    "id_proses_orang_tua", "jalankan_sistem", "dapatkan_dir_sekarang",
-    "ubah_dir", "daftar_dir", "buat_dir", "buat_dir_banyak", "hapus_dir",
-    "hapus_dir_banyak", "hapus_file", "ganti_nama", "ada", "adalah_file",
-    "adalah_dir", "adalah_link", "akses", "info_file", "ubah_mode",
-    "info_sistem", "platform_sistem", "arsitektur", "gabung_path",
-    "pisah_path", "nama_file", "nama_dir", "path_absolut"
+    "dapatkan_env",
+    "atur_env",
+    "hapus_env",
+    "lingkungan",
+    "id_proses",
+    "id_proses_orang_tua",
+    "jalankan_sistem",
+    "dapatkan_dir_sekarang",
+    "ubah_dir",
+    "daftar_dir",
+    "buat_dir",
+    "buat_dir_banyak",
+    "hapus_dir",
+    "hapus_dir_banyak",
+    "hapus_file",
+    "ganti_nama",
+    "ada",
+    "adalah_file",
+    "adalah_dir",
+    "adalah_link",
+    "akses",
+    "info_file",
+    "ubah_mode",
+    "info_sistem",
+    "platform_sistem",
+    "arsitektur",
+    "gabung_path",
+    "pisah_path",
+    "nama_file",
+    "nama_dir",
+    "path_absolut",
 ]

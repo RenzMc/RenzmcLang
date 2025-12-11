@@ -54,7 +54,9 @@ class TypeSystemMixin:
         Returns:
             bool: True if validation passes, False otherwise
         """
-        return check_parameter_type(param_value, type_name, param_name, self.type_registry, function_name)
+        return check_parameter_type(
+            param_value, type_name, param_name, self.type_registry, function_name
+        )
 
     def _validate_return_type(self, return_value, type_name, function_name=""):
         """
@@ -114,7 +116,12 @@ class TypeSystemMixin:
                 return True
             key_type = dict_match.group(1).strip()
             value_type = dict_match.group(2).strip()
-            return all((self._check_type(k, key_type) and self._check_type(v, value_type) for k, v in obj.items()))
+            return all(
+                (
+                    self._check_type(k, key_type) and self._check_type(v, value_type)
+                    for k, v in obj.items()
+                )
+            )
         tuple_match = re.match(r"tuple\[(.*)\]", type_name)
         if tuple_match:
             if not isinstance(obj, tuple):

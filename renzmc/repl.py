@@ -167,7 +167,7 @@ class RenzmcREPL:
         for keyword in self.KEYWORDS:
             result = result.replace(f" {keyword} ", f" {self._colorize(keyword, '')} ")
             if result.startswith(keyword + " "):
-                result = self._colorize(keyword, "") + result[len(keyword):]
+                result = self._colorize(keyword, "") + result[len(keyword) :]
 
         for builtin in self.BUILTINS:
             result = result.replace(f"{builtin}(", f"{self._colorize(builtin, '')}(")
@@ -330,7 +330,11 @@ Tips:
 
         print("\nTraceback (most recent call last):")
 
-        code_to_use = error.source_code if hasattr(error, "source_code") and error.source_code else source_code
+        code_to_use = (
+            error.source_code
+            if hasattr(error, "source_code") and error.source_code
+            else source_code
+        )
 
         if code_to_use and hasattr(error, "line") and error.line is not None:
             lines = code_to_use.split("\n")
@@ -575,7 +579,10 @@ Tips:
 
                 if line.strip().startswith("tipe "):
                     var_name = line.strip()[5:].strip()
-                    if hasattr(self.interpreter, "global_scope") and var_name in self.interpreter.global_scope:
+                    if (
+                        hasattr(self.interpreter, "global_scope")
+                        and var_name in self.interpreter.global_scope
+                    ):
                         value = self.interpreter.global_scope[var_name]
                         print(type(value).__name__)
                     else:

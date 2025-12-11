@@ -52,7 +52,7 @@ import builtins
 
 # Constants
 pi = py_math.pi  # Konstanta Pi
-e = py_math.e    # Bilangan Euler
+e = py_math.e  # Bilangan Euler
 tau = py_math.tau  # 2*pi
 inf = py_math.inf  # Tak terhingga
 nan = py_math.nan  # Not a Number
@@ -78,6 +78,7 @@ def pow(base, exp):
 def sqrt(x):
     """Akar kuadrat dari x."""
     return py_math.sqrt(x)
+
 
 # Trigonometry
 
@@ -116,6 +117,7 @@ def atan2(y, x):
     """Arc tangen dari y/x (hasil dalam radian)."""
     return py_math.atan2(y, x)
 
+
 # Logarithms
 
 
@@ -140,6 +142,7 @@ def ln(x):
     """Logaritma natural dari x."""
     return py_math.log(x)
 
+
 # Conversion
 
 
@@ -151,6 +154,7 @@ def degrees(x):
 def radians(x):
     """Konversi derajat ke radian."""
     return py_math.radians(x)
+
 
 # Hyperbolic Functions
 
@@ -184,6 +188,7 @@ def atanh(x):
     """Inverse hyperbolic tangen dari x."""
     return py_math.atanh(x)
 
+
 # Special Functions
 
 
@@ -215,6 +220,7 @@ def floor(x):
 def trunc(x):
     """Menghapus bagian desimal dari x."""
     return py_math.trunc(x)
+
 
 # Utilities
 
@@ -272,23 +278,67 @@ jumlah_presisi = fsum
 
 __all__ = [
     # Constants
-    "pi", "e", "tau", "inf", "nan",
+    "pi",
+    "e",
+    "tau",
+    "inf",
+    "nan",
     # Basic Operations
-    "abs", "round", "pow", "sqrt",
+    "abs",
+    "round",
+    "pow",
+    "sqrt",
     # Trigonometry
-    "sin", "cos", "tan", "asin", "acos", "atan", "atan2",
+    "sin",
+    "cos",
+    "tan",
+    "asin",
+    "acos",
+    "atan",
+    "atan2",
     # Logarithms
-    "log", "log10", "log2", "ln",
+    "log",
+    "log10",
+    "log2",
+    "ln",
     # Conversion
-    "degrees", "radians",
+    "degrees",
+    "radians",
     # Hyperbolic
-    "sinh", "cosh", "tanh", "asinh", "acosh", "atanh",
+    "sinh",
+    "cosh",
+    "tanh",
+    "asinh",
+    "acosh",
+    "atanh",
     # Special Functions
-    "factorial", "gcd", "lcm", "ceil", "floor", "trunc",
+    "factorial",
+    "gcd",
+    "lcm",
+    "ceil",
+    "floor",
+    "trunc",
     # Utilities
-    "fsum", "isfinite", "isinf", "isnan", "copysign", "frexp", "ldexp",
+    "fsum",
+    "isfinite",
+    "isinf",
+    "isnan",
+    "copysign",
+    "frexp",
+    "ldexp",
     # Indonesian Aliases
-    "nilai_absolut", "pangkat", "akar", "sinus", "cosinus", "tangen",
-    "logaritma", "logaritma_natural", "derajat", "radian", "faktorial",
-    "pembulatan_atas", "pembulatan_bawah", "jumlah_presisi"
+    "nilai_absolut",
+    "pangkat",
+    "akar",
+    "sinus",
+    "cosinus",
+    "tangen",
+    "logaritma",
+    "logaritma_natural",
+    "derajat",
+    "radian",
+    "faktorial",
+    "pembulatan_atas",
+    "pembulatan_bawah",
+    "jumlah_presisi",
 ]

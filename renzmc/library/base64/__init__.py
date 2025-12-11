@@ -37,31 +37,31 @@ import io
 def encode_base64(data):
     """
     Encode data ke Base64.
-    
+
     Args:
         data: String atau bytes untuk di-encode
-        
+
     Returns:
         str: Base64 encoded string
     """
     if isinstance(data, str):
-        data = data.encode('utf-8')
-    return python_base64.b64encode(data).decode('utf-8')
+        data = data.encode("utf-8")
+    return python_base64.b64encode(data).decode("utf-8")
 
 
 def decode_base64(encoded_data):
     """
     Decode Base64 string.
-    
+
     Args:
         encoded_data: Base64 encoded string
-        
+
     Returns:
         str: Decoded string
     """
     try:
         decoded = python_base64.b64decode(encoded_data)
-        return decoded.decode('utf-8')
+        return decoded.decode("utf-8")
     except Exception as e:
         raise ValueError(f"Gagal decode Base64: {str(e)}")
 
@@ -69,30 +69,30 @@ def decode_base64(encoded_data):
 def encode_base64_bytes(data):
     """
     Encode data ke Base64 sebagai bytes.
-    
+
     Args:
         data: String atau bytes untuk di-encode
-        
+
     Returns:
         bytes: Base64 encoded bytes
     """
     if isinstance(data, str):
-        data = data.encode('utf-8')
+        data = data.encode("utf-8")
     return python_base64.b64encode(data)
 
 
 def decode_base64_bytes(encoded_data):
     """
     Decode Base64 bytes.
-    
+
     Args:
         encoded_data: Base64 encoded bytes atau string
-        
+
     Returns:
         bytes: Decoded bytes
     """
     if isinstance(encoded_data, str):
-        encoded_data = encoded_data.encode('utf-8')
+        encoded_data = encoded_data.encode("utf-8")
     try:
         return python_base64.b64decode(encoded_data)
     except Exception as e:
@@ -102,31 +102,31 @@ def decode_base64_bytes(encoded_data):
 def encode_base64_urlsafe(data):
     """
     Encode data ke URL-safe Base64.
-    
+
     Args:
         data: String atau bytes untuk di-encode
-        
+
     Returns:
         str: URL-safe Base64 encoded string
     """
     if isinstance(data, str):
-        data = data.encode('utf-8')
-    return python_base64.urlsafe_b64encode(data).decode('utf-8')
+        data = data.encode("utf-8")
+    return python_base64.urlsafe_b64encode(data).decode("utf-8")
 
 
 def decode_base64_urlsafe(encoded_data):
     """
     Decode URL-safe Base64 string.
-    
+
     Args:
         encoded_data: URL-safe Base64 encoded string
-        
+
     Returns:
         str: Decoded string
     """
     try:
         decoded = python_base64.urlsafe_b64decode(encoded_data)
-        return decoded.decode('utf-8')
+        return decoded.decode("utf-8")
     except Exception as e:
         raise ValueError(f"Gagal decode URL-safe Base64: {str(e)}")
 
@@ -134,16 +134,16 @@ def decode_base64_urlsafe(encoded_data):
 def encode_base64_file(file_path):
     """
     Encode file ke Base64.
-    
+
     Args:
         file_path: Path ke file
-        
+
     Returns:
         str: Base64 encoded content
     """
     try:
-        with open(file_path, 'rb') as file:
-            return python_base64.b64encode(file.read()).decode('utf-8')
+        with open(file_path, "rb") as file:
+            return python_base64.b64encode(file.read()).decode("utf-8")
     except FileNotFoundError:
         raise FileNotFoundError(f"File tidak ditemukan: {file_path}")
     except Exception as e:
@@ -153,14 +153,14 @@ def encode_base64_file(file_path):
 def decode_base64_ke_file(encoded_data, file_path):
     """
     Decode Base64 dan simpan ke file.
-    
+
     Args:
         encoded_data: Base64 encoded string
         file_path: Path untuk menyimpan file
     """
     try:
         decoded = python_base64.b64decode(encoded_data)
-        with open(file_path, 'wb') as file:
+        with open(file_path, "wb") as file:
             file.write(decoded)
     except Exception as e:
         raise ValueError(f"Gagal decode ke file: {str(e)}")
@@ -169,10 +169,10 @@ def decode_base64_ke_file(encoded_data, file_path):
 def base64_valid(encoded_data):
     """
     Cek apakah string adalah Base64 yang valid.
-    
+
     Args:
         encoded_data: String untuk dicek
-        
+
     Returns:
         bool: True jika valid Base64
     """
@@ -182,7 +182,7 @@ def base64_valid(encoded_data):
             if len(encoded_data) % 4 != 0:
                 return False
             # Cek karakter yang valid
-            base64_pattern = r'^[A-Za-z0-9+/]*={0,2}$'
+            base64_pattern = r"^[A-Za-z0-9+/]*={0,2}$"
             if not re.match(base64_pattern, encoded_data):
                 return False
             python_base64.b64decode(encoded_data, validate=True)
@@ -196,13 +196,13 @@ import re
 
 # Daftar semua fungsi yang tersedia
 __all__ = [
-    'encode_base64',
-    'decode_base64',
-    'encode_base64_bytes',
-    'decode_base64_bytes',
-    'encode_base64_urlsafe',
-    'decode_base64_urlsafe',
-    'encode_base64_file',
-    'decode_base64_ke_file',
-    'base64_valid'
+    "encode_base64",
+    "decode_base64",
+    "encode_base64_bytes",
+    "decode_base64_bytes",
+    "encode_base64_urlsafe",
+    "decode_base64_urlsafe",
+    "encode_base64_file",
+    "decode_base64_ke_file",
+    "base64_valid",
 ]

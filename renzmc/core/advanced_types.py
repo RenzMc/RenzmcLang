@@ -236,7 +236,9 @@ class TypedDictType(AdvancedType):
         self.fields = fields
 
     def __repr__(self):
-        field_strs = ", ".join([f"{k}: {TypeValidator.type_to_string(v)}" for k, v in self.fields.items()])
+        field_strs = ", ".join(
+            [f"{k}: {TypeValidator.type_to_string(v)}" for k, v in self.fields.items()]
+        )
         return f"TypedDict[{field_strs}]"
 
     def validate(self, value: Any) -> bool:
@@ -287,7 +289,7 @@ class TypeParser:
             bracket_end = type_str.rindex("]")
 
             container_str = type_str[:bracket_start].strip()
-            elements_str = type_str[bracket_start + 1: bracket_end].strip()
+            elements_str = type_str[bracket_start + 1 : bracket_end].strip()
 
             if container_str in ["Literal", "literal"]:
                 values = []
@@ -349,7 +351,9 @@ class TypeParser:
 class AdvancedTypeValidator:
 
     @staticmethod
-    def validate(value: Any, type_spec: PyUnion[BaseType, AdvancedType], var_name: str = "") -> tuple[bool, str]:
+    def validate(
+        value: Any, type_spec: PyUnion[BaseType, AdvancedType], var_name: str = ""
+    ) -> tuple[bool, str]:
         if isinstance(type_spec, BaseType):
             validator = TypeValidator()
             return validator.validate_type(value, type_spec, var_name)

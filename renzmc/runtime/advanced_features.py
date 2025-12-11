@@ -37,11 +37,17 @@ class RenzmcDecorator:
         self.name = getattr(decorator_func, "__name__", "decorator")
         if self.decorator_args or self.decorator_kwargs:
             try:
-                self.actual_decorator = self.decorator_func(*self.decorator_args, **self.decorator_kwargs)
+                self.actual_decorator = self.decorator_func(
+                    *self.decorator_args, **self.decorator_kwargs
+                )
                 if not callable(self.actual_decorator):
-                    raise RenzmcRuntimeError(f"Decorator factory '{self.name}' must return a callable")
+                    raise RenzmcRuntimeError(
+                        f"Decorator factory '{self.name}' must return a callable"
+                    )
             except Exception as e:
-                raise RenzmcRuntimeError(f"Error creating decorator '{self.name}' with args: {str(e)}")
+                raise RenzmcRuntimeError(
+                    f"Error creating decorator '{self.name}' with args: {str(e)}"
+                )
         else:
             self.actual_decorator = self.decorator_func
 

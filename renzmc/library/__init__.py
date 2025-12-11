@@ -75,6 +75,7 @@ from renzmc.library import datetime
 from renzmc.library import pathlib
 from renzmc.library import os
 from renzmc.library import math
+
 __version__ = "1.0.0"
 __author__ = "RenzMc"
 
@@ -96,5 +97,5 @@ __all__ = [
     "hashlib",
     "base64",
     "uuid",
-    "fileio"
+    "fileio",
 ]

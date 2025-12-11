@@ -133,10 +133,14 @@ class HTTPClient:
         except Exception as e:
             raise RuntimeError(f"HTTP PUT error: {e}")
 
-    def delete(self, url: str, headers: Optional[Dict] = None, timeout: Optional[int] = None) -> HTTPResponse:
+    def delete(
+        self, url: str, headers: Optional[Dict] = None, timeout: Optional[int] = None
+    ) -> HTTPResponse:
         try:
             merged_headers = {**self.default_headers, **(headers or {})}
-            response = self.session.delete(url, headers=merged_headers, timeout=timeout or self.default_timeout)
+            response = self.session.delete(
+                url, headers=merged_headers, timeout=timeout or self.default_timeout
+            )
             return HTTPResponse(response)
         except requests.exceptions.Timeout:
             raise TimeoutError(f"Request timeout setelah {timeout or self.default_timeout} detik")

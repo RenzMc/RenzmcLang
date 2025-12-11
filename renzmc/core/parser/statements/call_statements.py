@@ -64,7 +64,11 @@ class CallStatements:
         if self.current_token.type == TokenType.IDENTIFIER:
             self.eat(TokenType.IDENTIFIER)
         else:
-            self.error("Diharapkan nama fungsi atau metode, tetapi ditemukan '{}'".format(self.current_token.type))
+            self.error(
+                "Diharapkan nama fungsi atau metode, tetapi ditemukan '{}'".format(
+                    self.current_token.type
+                )
+            )
         func_expr = Var(name_token)
         while self.current_token.type == TokenType.TITIK:
             self.eat(TokenType.TITIK)

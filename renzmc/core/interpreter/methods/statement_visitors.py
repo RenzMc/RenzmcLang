@@ -97,7 +97,9 @@ class StatementVisitorsMixin:
                 obj[attr] = value
                 return value
             else:
-                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
+                raise AttributeError(
+                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
+                )
         elif isinstance(node.var, IndexAccess):
             obj = self.visit(node.var.obj)
             index = self.visit(node.var.index)
@@ -126,9 +128,13 @@ class StatementVisitorsMixin:
             elif isinstance(obj, dict):
                 current_value = obj[attr]
             else:
-                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
+                raise AttributeError(
+                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
+                )
         else:
-            raise RuntimeError(f"Tipe compound assignment tidak didukung: {type(node.var).__name__}")
+            raise RuntimeError(
+                f"Tipe compound assignment tidak didukung: {type(node.var).__name__}"
+            )
         operand = self.visit(node.value)
         if node.op.type == TokenType.TAMBAH_SAMA_DENGAN:
             new_value = current_value + operand
@@ -182,7 +188,9 @@ class StatementVisitorsMixin:
             elif isinstance(obj, dict):
                 obj[attr] = new_value
             else:
-                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
+                raise AttributeError(
+                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
+                )
             return new_value
 
     def visit_MultiVarDecl(self, node):
@@ -200,7 +208,9 @@ class StatementVisitorsMixin:
         elif len(node.var_names) == 1:
             return self.set_variable(node.var_names[0], values)
         else:
-            raise ValueError(f"Tidak dapat membongkar 1 nilai menjadi {len(node.var_names)} variabel")
+            raise ValueError(
+                f"Tidak dapat membongkar 1 nilai menjadi {len(node.var_names)} variabel"
+            )
 
     def visit_MultiAssign(self, node):
         values = self.visit(node.values)
@@ -231,7 +241,9 @@ class StatementVisitorsMixin:
                     if isinstance(obj, (list, dict)):
                         obj[index] = value
                     else:
-                        raise TypeError(f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan")
+                        raise TypeError(
+                            f"Objek tipe '{type(obj).__name__}' tidak mendukung pengindeksan"
+                        )
                     result = value
                 else:
                     raise RuntimeError(f"Tipe assignment tidak didukung: {type(var_node).__name__}")

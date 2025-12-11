@@ -139,6 +139,7 @@ def triangular(low: float, high: float, mode: Optional[float] = None) -> float:
     """
     return py_random.triangular(low, high, mode)
 
+
 # Sequence functions
 
 
@@ -161,8 +162,12 @@ def choice(sequence: Sequence[Any]) -> Any:
     return py_random.choice(sequence)
 
 
-def choices(sequence: Sequence[Any], weights: Optional[Sequence[Number]] = None,
-            cum_weights: Optional[Sequence[Number]] = None, k: int = 1) -> List[Any]:
+def choices(
+    sequence: Sequence[Any],
+    weights: Optional[Sequence[Number]] = None,
+    cum_weights: Optional[Sequence[Number]] = None,
+    k: int = 1,
+) -> List[Any]:
     """
     Pilih k elemen acak dari sequence dengan replacement.
 
@@ -213,6 +218,7 @@ def shuffle(x: list):
         shuffle(items)  # items bisa jadi [3, 1, 5, 2, 4]
     """
     py_random.shuffle(x)
+
 
 # Real-valued distributions
 
@@ -340,6 +346,7 @@ def weibullvariate(alpha: float, beta: float) -> float:
     """
     return py_random.weibullvariate(alpha, beta)
 
+
 # Utility functions
 
 
@@ -376,6 +383,7 @@ def setstate(state: dict):
     """
     py_random.setstate(state)
 
+
 # String functions
 
 
@@ -394,6 +402,7 @@ def randbytes(n: int) -> bytes:
     """
     return py_random.randbytes(n)
 
+
 # Classes
 
 
@@ -403,6 +412,7 @@ class Random(py_random.Random):
 
     Bisa digunakan untuk membuat multiple independent generators.
     """
+
     pass
 
 
@@ -412,6 +422,7 @@ class SystemRandom(py_random.SystemRandom):
 
     Lebih secure tapi mungkin lebih lambat.
     """
+
     pass
 
 
@@ -443,23 +454,57 @@ generator_sistem = SystemRandom
 
 __all__ = [
     # Basic Functions
-    "random", "randint", "randrange", "uniform", "triangular",
+    "random",
+    "randint",
+    "randrange",
+    "uniform",
+    "triangular",
     # Sequence Functions
-    "choice", "choices", "sample", "shuffle",
+    "choice",
+    "choices",
+    "sample",
+    "shuffle",
     # Distributions
-    "betavariate", "expovariate", "gammavariate", "gauss",
-    "lognormvariate", "normalvariate", "vonmisesvariate",
-    "paretovariate", "weibullvariate",
+    "betavariate",
+    "expovariate",
+    "gammavariate",
+    "gauss",
+    "lognormvariate",
+    "normalvariate",
+    "vonmisesvariate",
+    "paretovariate",
+    "weibullvariate",
     # Utility
-    "seed", "getstate", "setstate", "randbytes",
+    "seed",
+    "getstate",
+    "setstate",
+    "randbytes",
     # Classes
-    "Random", "SystemRandom",
+    "Random",
+    "SystemRandom",
     # Indonesian Aliases
-    "acak", "acak_bulat", "rentang_acak", "seragam", "segitiga",
-    "pilih_acak", "banyak_pilihan", "contoh_acak", "acak_urutan",
-    "distribusi_beta", "distribusi_eksponensial", "distribusi_gamma",
-    "distribusi_gauss", "distribusi_log_normal", "distribusi_normal",
-    "distribusi_von_mises", "distribusi_pareto", "distribusi_weibull",
-    "inisialisasi", "dapatkan_keadaan", "atur_keadaan", "byte_acak",
-    "generator_acak", "generator_sistem"
+    "acak",
+    "acak_bulat",
+    "rentang_acak",
+    "seragam",
+    "segitiga",
+    "pilih_acak",
+    "banyak_pilihan",
+    "contoh_acak",
+    "acak_urutan",
+    "distribusi_beta",
+    "distribusi_eksponensial",
+    "distribusi_gamma",
+    "distribusi_gauss",
+    "distribusi_log_normal",
+    "distribusi_normal",
+    "distribusi_von_mises",
+    "distribusi_pareto",
+    "distribusi_weibull",
+    "inisialisasi",
+    "dapatkan_keadaan",
+    "atur_keadaan",
+    "byte_acak",
+    "generator_acak",
+    "generator_sistem",
 ]

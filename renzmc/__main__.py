@@ -100,7 +100,7 @@ def run_code(source_code, filename="<stdin>", interpreter=None, use_cache=True):
                 _ast_cache.save(cache_key, ast)
 
         # Use Rust-aware execution (automatic)
-        if hasattr(interpreter, 'visit_with_rust'):
+        if hasattr(interpreter, "visit_with_rust"):
             interpreter.visit_with_rust(ast)
         else:
             interpreter.visit(ast)
@@ -178,7 +178,7 @@ def format_file(filename, save_changes=False):
     try:
         print(f"📝 Memformat file: {filename}")
 
-        with open(filename, 'r', encoding='utf-8') as f:
+        with open(filename, "r", encoding="utf-8") as f:
             original_code = f.read()
 
         formatter = RenzmcFormatter()
@@ -190,8 +190,8 @@ def format_file(filename, save_changes=False):
 
         print("🔧 Perubahan yang akan dilakukan:")
 
-        original_lines = original_code.split('\n')
-        formatted_lines = formatted_code.split('\n')
+        original_lines = original_code.split("\n")
+        formatted_lines = formatted_code.split("\n")
 
         changes_count = 0
         for i, (orig, fmt) in enumerate(zip(original_lines, formatted_lines)):
@@ -208,7 +208,7 @@ def format_file(filename, save_changes=False):
         print(f"\n📊 Total {changes_count} perubahan")
 
         if save_changes:
-            with open(filename, 'w', encoding='utf-8') as f:
+            with open(filename, "w", encoding="utf-8") as f:
                 f.write(formatted_code)
             print(f"💾 File {filename} berhasil disimpan!")
         else:
@@ -230,9 +230,7 @@ def main():
         description="RenzmcLang - Bahasa pemrograman berbasis Bahasa Indonesia",
         epilog="Untuk dokumentasi lengkap, kunjungi: https://github.com/RenzMc/RenzmcLang",
     )
-    parser.add_argument(
-        "file", nargs="?", help="File RenzmcLang (.rmc) untuk dijalankan"
-    )
+    parser.add_argument("file", nargs="?", help="File RenzmcLang (.rmc) untuk dijalankan")
     parser.add_argument(
         "-v",
         "--version",

@@ -249,7 +249,9 @@ class ErrorLogger:
         }
         self.debug_logger.debug(json.dumps(debug_record, ensure_ascii=False))
 
-    def _get_source_snippet(self, source_code: str, line: int, context_lines: int = 3) -> Dict[str, Any]:
+    def _get_source_snippet(
+        self, source_code: str, line: int, context_lines: int = 3
+    ) -> Dict[str, Any]:
         """
         Get source code snippet around error line.
 
@@ -325,34 +327,42 @@ class ErrorLogger:
         # Add source snippet if available
         if "source_snippet" in error_record:
             snippet = error_record["source_snippet"]
-            content_lines.extend([
-                "-" * 80,
-                "SOURCE CODE SNIPPET:",
-                "-" * 80,
-            ])
+            content_lines.extend(
+                [
+                    "-" * 80,
+                    "SOURCE CODE SNIPPET:",
+                    "-" * 80,
+                ]
+            )
             for line_info in snippet.get("lines", []):
                 marker = ">>>" if line_info.get("is_error_line") else "   "
-                content_lines.append(f"{marker} {line_info.get('line_number', 0):4d} | {line_info.get('content', '')}")
+                content_lines.append(
+                    f"{marker} {line_info.get('line_number', 0):4d} | {line_info.get('content', '')}"
+                )
             content_lines.append("")
 
         # Add traceback
-        content_lines.extend([
-            "-" * 80,
-            "TRACEBACK:",
-            "-" * 80,
-            error_record.get("traceback", "N/A"),
-            "",
-        ])
+        content_lines.extend(
+            [
+                "-" * 80,
+                "TRACEBACK:",
+                "-" * 80,
+                error_record.get("traceback", "N/A"),
+                "",
+            ]
+        )
 
         # Add context if available
         if error_record.get("context"):
-            content_lines.extend([
-                "-" * 80,
-                "CONTEXT:",
-                "-" * 80,
-                json.dumps(error_record["context"], indent=2, ensure_ascii=False),
-                "",
-            ])
+            content_lines.extend(
+                [
+                    "-" * 80,
+                    "CONTEXT:",
+                    "-" * 80,
+                    json.dumps(error_record["context"], indent=2, ensure_ascii=False),
+                    "",
+                ]
+            )
 
         content_lines.append("=" * 80)
 
@@ -370,7 +380,9 @@ class ErrorLogger:
             error_file_path: Path to the error file that was just created
         """
         error_logs_dir = os.path.dirname(error_file_path)
-        error_files = [f for f in os.listdir(error_logs_dir) if f.startswith("error_") and f.endswith(".txt")]
+        error_files = [
+            f for f in os.listdir(error_logs_dir) if f.startswith("error_") and f.endswith(".txt")
+        ]
         num_errors = len(error_files)
 
         if num_errors > 0:
@@ -398,7 +410,9 @@ class ErrorLogger:
         if not os.path.exists(error_logs_dir):
             return 0
 
-        error_files = [f for f in os.listdir(error_logs_dir) if f.startswith("error_") and f.endswith(".txt")]
+        error_files = [
+            f for f in os.listdir(error_logs_dir) if f.startswith("error_") and f.endswith(".txt")
+        ]
         count = 0
 
         for filename in error_files:

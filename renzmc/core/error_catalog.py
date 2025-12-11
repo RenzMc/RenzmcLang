@@ -1886,7 +1886,10 @@ def search_error_by_keyword(keyword: str) -> List[ErrorInfo]:
     results = []
 
     for error_info in ERROR_CATALOG.values():
-        if keyword_lower in error_info.title.lower() or keyword_lower in error_info.description.lower():
+        if (
+            keyword_lower in error_info.title.lower()
+            or keyword_lower in error_info.description.lower()
+        ):
             results.append(error_info)
 
     return results

@@ -116,7 +116,9 @@ class ExpressionParser:
                 else_expr = self.walrus_expr()
                 node = Ternary(condition, if_expr, else_expr)
             else:
-                self.error("Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'")
+                self.error(
+                    "Operator ternary tidak lengkap: diharapkan 'kalau tidak' atau 'lainnya'"
+                )
         return node
 
     def walrus_expr(self):
@@ -369,7 +371,9 @@ class ExpressionParser:
                     elif self.current_token.type == TokenType.BIT_ATAU:
                         break
                     else:
-                        self.error(f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}")
+                        self.error(
+                            f"Expected ',' or '|' in pipe tuple, got {self.current_token.type}"
+                        )
                 self.eat(TokenType.BIT_ATAU)
                 self.eat(TokenType.KURUNG_AKHIR)
                 primary = Tuple(elements, token)
@@ -471,7 +475,10 @@ class ExpressionParser:
                     self.eat(TokenType.TITIK_DUA)
 
                     # Parse end (or check for another colon)
-                    if self.current_token.type != TokenType.TITIK_DUA and self.current_token.type != TokenType.DAFTAR_AKHIR:
+                    if (
+                        self.current_token.type != TokenType.TITIK_DUA
+                        and self.current_token.type != TokenType.DAFTAR_AKHIR
+                    ):
                         end = self.expr()
 
                     # Check for step (second colon)
@@ -538,7 +545,10 @@ class ExpressionParser:
                     self.eat(TokenType.TITIK_DUA)
 
                     # Parse end (or check for another colon)
-                    if self.current_token.type != TokenType.TITIK_DUA and self.current_token.type != TokenType.DAFTAR_AKHIR:
+                    if (
+                        self.current_token.type != TokenType.TITIK_DUA
+                        and self.current_token.type != TokenType.DAFTAR_AKHIR
+                    ):
                         end = self.expr()
 
                     # Check for step (second colon)

@@ -93,13 +93,19 @@ class ClassVisitorsMixin:
             if attr in instance_scope:
                 return instance_scope[attr]
             else:
-                raise AttributeError(f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'")
+                raise AttributeError(
+                    f"Objek '{type(obj).__name__}' tidak memiliki atribut '{attr}'"
+                )
         elif hasattr(obj, attr):
             return getattr(obj, attr)
         elif isinstance(obj, dict) and attr in obj:
             return obj[attr]
         else:
-            if hasattr(obj, "__name__") and hasattr(obj, "__package__") and (not isinstance(obj, dict)):
+            if (
+                hasattr(obj, "__name__")
+                and hasattr(obj, "__package__")
+                and (not isinstance(obj, dict))
+            ):
                 try:
                     submodule_name = f"{obj.__name__}.{attr}"
                     submodule = importlib.import_module(submodule_name)
@@ -142,12 +148,16 @@ class ClassVisitorsMixin:
                             f"Metode '{method}' membutuhkan {expected_user_params} parameter, tetapi {len(args)} diberikan"
                         )
                     if param_types and len(param_types) > start_param_idx:
-                        for i, (arg, type_hint) in enumerate(zip(args, param_types[start_param_idx:])):
+                        for i, (arg, type_hint) in enumerate(
+                            zip(args, param_types[start_param_idx:])
+                        ):
                             type_name = type_hint.type_name
                             if type_name in self.type_registry:
                                 expected_type = self.type_registry[type_name]
                                 try:
-                                    if isinstance(expected_type, type) and not isinstance(arg, expected_type):
+                                    if isinstance(expected_type, type) and not isinstance(
+                                        arg, expected_type
+                                    ):
                                         raise TypeHintError(
                                             f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
                                         )
@@ -157,7 +167,9 @@ class ClassVisitorsMixin:
                             elif hasattr(py_builtins, type_name):
                                 expected_type = getattr(py_builtins, type_name)
                                 try:
-                                    if isinstance(expected_type, type) and not isinstance(arg, expected_type):
+                                    if isinstance(expected_type, type) and not isinstance(
+                                        arg, expected_type
+                                    ):
                                         raise TypeHintError(
                                             f"Parameter ke-{i + 1} '{params[i + start_param_idx]}' harus bertipe '{type_name}'"
                                         )
@@ -178,7 +190,9 @@ class ClassVisitorsMixin:
                     if type_name in self.type_registry:
                         expected_type = self.type_registry[type_name]
                         try:
-                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                return_value, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
                                 )
@@ -188,7 +202,9 @@ class ClassVisitorsMixin:
                     elif hasattr(py_builtins, type_name):
                         expected_type = getattr(py_builtins, type_name)
                         try:
-                            if isinstance(expected_type, type) and not isinstance(return_value, expected_type):
+                            if isinstance(expected_type, type) and not isinstance(
+                                return_value, expected_type
+                            ):
                                 raise TypeHintError(
                                     f"Nilai kembali metode '{method}' harus bertipe '{type_name}'"
                                 )

@@ -31,7 +31,6 @@ class BuiltinManager:
             "abs": abs,
             "round": round,
             "pow": pow,
-
             # RenzMcLang string functions
             "huruf_besar": renzmc_builtins.huruf_besar,
             "huruf_kecil": renzmc_builtins.huruf_kecil,
@@ -50,19 +49,16 @@ class BuiltinManager:
             "adalah_huruf_besar": renzmc_builtins.adalah_huruf_besar,
             "adalah_huruf_kecil": renzmc_builtins.adalah_huruf_kecil,
             "adalah_spasi": renzmc_builtins.adalah_spasi,
-
             # Type functions
             "panjang": renzmc_builtins.panjang,
             "jenis": renzmc_builtins.jenis,
             "ke_teks": renzmc_builtins.ke_teks,
             "ke_angka": renzmc_builtins.ke_angka,
-
             # Dict functions
             "hapus_kunci": renzmc_builtins.hapus_kunci,
             "item": renzmc_builtins.item,
             "kunci": renzmc_builtins.kunci,
             "nilai": renzmc_builtins.nilai,
-
             # Iteration functions
             "ada": renzmc_builtins.ada,
             "all_func": renzmc_builtins.all_func,
@@ -82,7 +78,6 @@ class BuiltinManager:
             "terbalik": renzmc_builtins.terbalik,
             "terurut": renzmc_builtins.terurut,
             "zip_func": renzmc_builtins.zip_func,
-
             # List functions
             "balikkan": renzmc_builtins.balikkan,
             "extend": renzmc_builtins.extend,
@@ -95,7 +90,6 @@ class BuiltinManager:
             "salin_dalam": renzmc_builtins.salin_dalam,
             "tambah": renzmc_builtins.tambah,
             "urutkan": renzmc_builtins.urutkan,
-
             # Utility functions
             "hash_teks": renzmc_builtins.hash_teks,
             "url_encode": renzmc_builtins.url_encode,
@@ -104,7 +98,6 @@ class BuiltinManager:
             "regex_replace": renzmc_builtins.regex_replace,
             "base64_encode": renzmc_builtins.base64_encode,
             "base64_decode": renzmc_builtins.base64_decode,
-
             # Python integration
             "daftar_modul_python": renzmc_builtins.daftar_modul_python,
             "jalankan_python": renzmc_builtins.jalankan_python,
@@ -114,14 +107,16 @@ class BuiltinManager:
         }
 
         # Add library management functions
-        builtin_functions.update({
-            "impor_library": BuiltinManager._import_library,
-            "dapatkan_library": BuiltinManager._get_libraries,
-            "info_library": BuiltinManager._get_library_info,
-            # Indonesian aliases
-            "impor_stdlib": BuiltinManager._import_library,
-            "daftar_library": BuiltinManager._get_libraries,
-        })
+        builtin_functions.update(
+            {
+                "impor_library": BuiltinManager._import_library,
+                "dapatkan_library": BuiltinManager._get_libraries,
+                "info_library": BuiltinManager._get_library_info,
+                # Indonesian aliases
+                "impor_stdlib": BuiltinManager._import_library,
+                "daftar_library": BuiltinManager._get_libraries,
+            }
+        )
 
         return builtin_functions
 

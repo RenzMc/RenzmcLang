@@ -62,7 +62,9 @@ class CryptoOperationsMixin:
             ValueError: If encryption fails
         """
         if not CRYPTOGRAPHY_AVAILABLE:
-            raise ImportError("Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'")
+            raise ImportError(
+                "Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'"
+            )
         try:
             import base64
 
@@ -92,7 +94,9 @@ class CryptoOperationsMixin:
             ValueError: If decryption fails
         """
         if not CRYPTOGRAPHY_AVAILABLE:
-            raise ImportError("Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'")
+            raise ImportError(
+                "Modul 'cryptography' tidak terinstal. Silakan instal dengan 'pip install cryptography'"
+            )
         try:
             import base64
 

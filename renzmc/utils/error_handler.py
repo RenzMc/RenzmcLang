@@ -165,11 +165,16 @@ def handle_type_error(obj: Any, expected_type: str, operation: str) -> bool:
     Returns:
         False to indicate type check failed
     """
-    logger.debug(f"Type check failed in {operation}: " f"object of type {type(obj).__name__} is not {expected_type}")
+    logger.debug(
+        f"Type check failed in {operation}: "
+        f"object of type {type(obj).__name__} is not {expected_type}"
+    )
     return False
 
 
-def handle_import_error(module_name: str, operation: str, fallback_action: Optional[str] = None) -> None:
+def handle_import_error(
+    module_name: str, operation: str, fallback_action: Optional[str] = None
+) -> None:
     """
     Handle ImportError with proper logging
 
@@ -211,7 +216,9 @@ def handle_resource_limit_error(resource_name: str, operation: str) -> None:
     )
 
 
-def handle_timeout_error(operation: str, timeout: float, cleanup_action: Optional[str] = None) -> None:
+def handle_timeout_error(
+    operation: str, timeout: float, cleanup_action: Optional[str] = None
+) -> None:
     """
     Handle timeout errors with proper logging
 

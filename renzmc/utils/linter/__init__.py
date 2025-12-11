@@ -2,4 +2,4 @@
 
 from .linter import RenzmcLinter, LinterError, LinterWarning
 
-__all__ = ['RenzmcLinter', 'LinterError', 'LinterWarning']
+__all__ = ["RenzmcLinter", "LinterError", "LinterWarning"]

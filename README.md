@@ -247,23 +247,7 @@ tampilkan data
 Kunjungi [renzmc-docs.vercel.app](https://renzmc-docs.vercel.app/) untuk dokumentasi lengkap dan interaktif.
 
 ### Dokumentasi Lokal
-Lihat folder [docs/](docs/) untuk dokumentasi lengkap:
-
-#### Panduan Dasar
-- [Panduan Instalasi](docs/installation.md) - Cara install dan setup RenzmcLang
-- [Sintaks Dasar](docs/syntax-basics.md) - Pelajari sintaks dasar bahasa
-- [Quick Reference](docs/quick-reference.md) - Cheat sheet untuk referensi cepat
-
-#### Fitur & Fungsi
-- [Built-in Functions](docs/builtin-functions.md) - 184+ fungsi built-in lengkap
-- [Advanced Features](docs/advanced-features.md) - OOP, async/await, decorators, dll
-- [JIT Compiler](docs/jit-compiler.md) - Kompilasi JIT untuk performa maksimal
-- [Type System](docs/type-system.md) - Sistem tipe opsional dengan validasi runtime
-
-#### Integrasi & Tools
-- [Integrasi Python](docs/python-integration.md) - Gunakan library Python di RenzmcLang
-- [HTTP Client Guide](docs/http-client-guide.md) - HTTP client built-in untuk API calls
-- [Contoh Program](docs/examples.md) - 80+ contoh program siap pakai
+Lihat folder [docs/](docs/) untuk dokumentasi lengkap
 
 ## Contoh Program
 
@@ -290,10 +274,6 @@ renzmc examples/database/01_sqlite_basic.rmc
 renzmc examples/python_integration/01_web_scraping.rmc
 ```
 
-## Authors
-
-- **RenzMc** - *Initial work* - [RenzMc](https://github.com/RenzMc)
-
 ## Contact
 
 - GitHub: [@RenzMc](https://github.com/RenzMc)
@@ -303,20 +283,6 @@ renzmc examples/python_integration/01_web_scraping.rmc
 **Made with love for Indonesian developers**
 
 *"Coding in your native language, thinking in your native way"*
-
-## Use Cases
-
-RenzMcLang cocok untuk:
-- Pembelajaran: Belajar programming dengan bahasa Indonesia
-- Prototyping: Rapid application development
-- Data Processing: Analisis dan transformasi data dengan JIT acceleration
-- Web Development: Backend API development
-- Database Operations: Database management dan queries
-- Automation: Script automation dan task scheduling
-- Scientific Computing: Komputasi numerik dengan JIT compiler
-- Algorithm Implementation: Implementasi algoritma dengan performa tinggi
-- Game Logic: Game logic dengan type safety
-- Mathematical Modeling: Pemodelan matematika dengan JIT optimization
 
 ## Links
 

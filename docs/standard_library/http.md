@@ -1,579 +1,578 @@
-# HTTP Module
+# Modul HTTP
 
-The HTTP module provides comprehensive HTTP client functionality following Python's requests library standards with Indonesian function names.
+Modul HTTP menyediakan fungsi-fungsi untuk melakukan HTTP requests, mengikuti standar requests library dengan nama fungsi dalam Bahasa Indonesia.
 
-## Import
+## Impor
 
 ```python
+dari http impor get, post, put, delete, patch
+// atau impor semua
 dari http impor *
-// atau import specific functions
-dari http impor get, post, put, delete
-// atau import classes
-dari http impor HTTPResponse, HTTPSession
+// atau gunakan alias Indonesia
+dari http impor ambil, kirim, perbarui, hapus
 ```
 
-## HTTP Methods
+## Fungsi HTTP Utama
 
 ### get() / ambil()
-Performs an HTTP GET request to retrieve data.
 
-**Syntax:**
+Melakukan HTTP GET request untuk mengambil data.
+
+**Sintaks:**
 ```python
 get(url, params, headers, timeout)
 ambil(url, params, headers, timeout)
 ```
 
-**Parameters:**
-- `url` (string): Target URL
-- `params` (dict, optional): Query parameters to append to URL
-- `headers` (dict, optional): Additional HTTP headers
-- `timeout` (integer, optional): Request timeout in seconds (default: 30)
+**Parameter:**
+- `url` (string): URL untuk request
+- `params` (dict, opsional): Query parameters
+- `headers` (dict, opsional): Additional headers
+- `timeout` (integer, opsional): Request timeout dalam detik (default: 30)
 
-**Returns:**
-- HTTPResponse: Response object containing the result
+**Mengembalikan:**
+- HTTPResponse object: Response dari server
 
-**Examples:**
+**Contoh:**
 ```python
-dari http impor get, ambil
+dari http import get
 
-// Basic GET request
-response1 = get("https://api.example.com/users")
-data1 = response1.json()
+// GET sederhana
+response itu get("https://api.example.com/users")
+tampilkan f"Status: {response.status_code}"
+tampilkan f"Data: {response.text}"
 
-// GET with query parameters
-response2 = get("https://api.example.com/users", params={"page": 1, "limit": 10})
-data2 = response2.json()
+// GET dengan parameters
+response itu get("https://api.example.com/users", params={
+    "page": 1,
+    "limit": 10
+})
+data itu response.json()
+tampilkan data
 
-// GET with headers and timeout
-headers = {"Authorization": "Bearer token123"}
-response3 = get("https://api.example.com/protected", headers=headers, timeout=10)
+// GET dengan headers kustom
+response itu get("https://api.example.com/data", headers={
+    "Authorization": "Bearer token123",
+    "Accept": "application/json"
+})
 ```
 
 ---
 
 ### post() / kirim()
-Performs an HTTP POST request to send data.
 
-**Syntax:**
+Melakukan HTTP POST request untuk mengirim data.
+
+**Sintaks:**
 ```python
 post(url, data, json, headers, timeout)
 kirim(url, data, json, headers, timeout)
 ```
 
-**Parameters:**
-- `url` (string): Target URL
-- `data` (dict/string/bytes, optional): Form data to send
-- `json` (dict, optional): JSON data to send
-- `headers` (dict, optional): Additional HTTP headers
-- `timeout` (integer, optional): Request timeout in seconds (default: 30)
+**Parameter:**
+- `url` (string): URL untuk request
+- `data` (string/bytes/dict, opsional): Data untuk POST (form data)
+- `json` (dict, opsional): JSON data untuk POST
+- `headers` (dict, opsional): Additional headers
+- `timeout` (integer, opsional): Request timeout dalam detik (default: 30)
 
-**Returns:**
-- HTTPResponse: Response object containing the result
+**Mengembalikan:**
+- HTTPResponse object: Response dari server
 
-**Examples:**
+**Contoh:**
 ```python
-dari http impor post, kirim
+dari http import post
 
-// POST JSON data
-response1 = post("https://api.example.com/users", json={"name": "Budi", "age": 25})
-user1 = response1.json()
+// POST dengan JSON data
+response itu post("https://api.example.com/users", json={
+    "nama": "Budi Santoso",
+    "email": "budi@example.com",
+    "umur": 25
+})
+user_baru itu response.json()
+tampilkan f"User dibuat: {user_baru}"
 
-// POST form data
-response2 = post("https://api.example.com/login", data={"username": "admin", "password": "secret"})
-result2 = response2.text
+// POST dengan form data
+response itu post("https://api.example.com/login", data={
+    "username": "budi",
+    "password": "secret123"
+})
+tampilkan f"Login status: {response.status_code}"
 
-// POST with custom headers
-headers = {"Content-Type": "application/json"}
-response3 = kirim("https://api.example.com/data", json={"key": "value"}, headers=headers)
+// POST dengan raw data
+response itu post("https://api.example.com/webhook", 
+    data='{"event": "user_created", "user_id": 123}',
+    headers={"Content-Type": "application/json"}
+)
 ```
 
 ---
 
 ### put() / perbarui()
-Performs an HTTP PUT request to update data.
 
-**Syntax:**
+Melakukan HTTP PUT request untuk memperbarui data.
+
+**Sintaks:**
 ```python
 put(url, data, json, headers, timeout)
 perbarui(url, data, json, headers, timeout)
 ```
 
-**Parameters:**
-- `url` (string): Target URL
-- `data` (dict/string/bytes, optional): Form data to send
-- `json` (dict, optional): JSON data to send
-- `headers` (dict, optional): Additional HTTP headers
-- `timeout` (integer, optional): Request timeout in seconds (default: 30)
+**Parameter:**
+- `url` (string): URL untuk request
+- `data` (string/bytes/dict, opsional): Data untuk PUT
+- `json` (dict, opsional): JSON data untuk PUT
+- `headers` (dict, opsional): Additional headers
+- `timeout` (integer, opsional): Request timeout dalam detik (default: 30)
 
-**Returns:**
-- HTTPResponse: Response object containing the result
-
-**Examples:**
+**Contoh:**
 ```python
-dari http impor put, perbarui
+dari http import put
 
-// PUT JSON data to update user
-response1 = put("https://api.example.com/users/1", json={"name": "Budi Updated"})
-updated_user1 = response1.json()
+// PUT dengan JSON data
+response itu put("https://api.example.com/users/123", json={
+    "nama": "Budi Updated",
+    "email": "budi.updated@example.com"
+})
+user_updated itu response.json()
+tampilkan f"User diperbarui: {user_updated}"
 
-// PUT form data
-response2 = put("https://api.example.com/items/1", data={"name": "Updated Item", "price": 100})
-result2 = response2.text
-
-// PUT with Indonesian alias
-response3 = perbarui("https://api.example.com/users/123", json={"status": "active"})
+// PUT dengan form data
+response itu put("https://api.example.com/profile/123", data={
+    "nama_lengkap": "Budi Santoso",
+    "bio": "Software Developer"
+})
 ```
 
 ---
 
 ### delete() / hapus()
-Performs an HTTP DELETE request to remove data.
 
-**Syntax:**
+Melakukan HTTP DELETE request untuk menghapus data.
+
+**Sintaks:**
 ```python
 delete(url, headers, timeout)
 hapus(url, headers, timeout)
 ```
 
-**Parameters:**
-- `url` (string): Target URL
-- `headers` (dict, optional): Additional HTTP headers
-- `timeout` (integer, optional): Request timeout in seconds (default: 30)
+**Parameter:**
+- `url` (string): URL untuk request
+- `headers` (dict, opsional): Additional headers
+- `timeout` (integer, opsional): Request timeout dalam detik (default: 30)
 
-**Returns:**
-- HTTPResponse: Response object containing the result
-
-**Examples:**
+**Contoh:**
 ```python
-dari http impor delete, hapus
+dari http import delete
 
-// DELETE a resource
-response1 = delete("https://api.example.com/users/1")
-success1 = response1.ok()
+// DELETE user
+response itu delete("https://api.example.com/users/123")
+tampilkan f"Delete status: {response.status_code}"
 
-// DELETE with authentication headers
-headers = {"Authorization": "Bearer token123"}
-response2 = delete("https://api.example.com/items/456", headers=headers)
-
-// DELETE with Indonesian alias
-response3 = hapus("https://api.example.com/temp/789")
+// DELETE dengan headers
+response itu delete("https://api.example.com/posts/456", headers={
+    "Authorization": "Bearer token123"
+})
 ```
 
 ---
 
 ### patch() / tambal()
-Performs an HTTP PATCH request to partially update data.
 
-**Syntax:**
+Melakukan HTTP PATCH request untuk memperbarui sebagian data.
+
+**Sintaks:**
 ```python
 patch(url, data, json, headers, timeout)
 tambal(url, data, json, headers, timeout)
 ```
 
-**Parameters:**
-- `url` (string): Target URL
-- `data` (dict/string/bytes, optional): Form data to send
-- `json` (dict, optional): JSON data to send
-- `headers` (dict, optional): Additional HTTP headers
-- `timeout` (integer, optional): Request timeout in seconds (default: 30)
-
-**Returns:**
-- HTTPResponse: Response object containing the result
-
-**Examples:**
+**Contoh:**
 ```python
-dari http impor patch, tambal
+dari http import patch
 
-// PATCH partial update
-response1 = patch("https://api.example.com/users/1", json={"age": 26})
-updated_user1 = response1.json()
-
-// PATCH with Indonesian alias
-response2 = tambal("https://api.example.com/profile", json={"bio": "Updated bio"})
+// PATCH dengan JSON data
+response itu patch("https://api.example.com/users/123", json={
+    "status": "active"
+})
+user_patched itu response.json()
+tampilkan f"User dipatch: {user_patched}"
 ```
 
 ---
 
 ### head() / kepala()
-Performs an HTTP HEAD request to retrieve headers only.
 
-**Syntax:**
+Melakukan HTTP HEAD request untuk mengambil headers saja.
+
+**Sintaks:**
 ```python
 head(url, headers, timeout)
 kepala(url, headers, timeout)
 ```
 
-**Parameters:**
-- `url` (string): Target URL
-- `headers` (dict, optional): Additional HTTP headers
-- `timeout` (integer, optional): Request timeout in seconds (default: 30)
-
-**Returns:**
-- HTTPResponse: Response object with headers only
-
-**Examples:**
+**Contoh:**
 ```python
-dari http impor head, kepala
+dari http import head
 
-// HEAD request to check resource
-response1 = head("https://api.example.com/users")
-content_type1 = response1.headers["Content-Type"]
-content_length1 = response1.headers["Content-Length"]
-
-// HEAD with Indonesian alias
-response2 = kepala("https://example.com")
-server_info2 = response2.headers
+// HEAD request
+response itu head("https://api.example.com/users/123")
+tampilkan f"Headers: {response.headers}"
+tampilkan f"Status: {response.status_code}"
 ```
 
 ---
 
 ### options() / opsi()
-Performs an HTTP OPTIONS request to retrieve allowed methods.
 
-**Syntax:**
+Melakukan HTTP OPTIONS request untuk mengecek available methods.
+
+**Sintaks:**
 ```python
 options(url, headers, timeout)
 opsi(url, headers, timeout)
 ```
 
-**Parameters:**
-- `url` (string): Target URL
-- `headers` (dict, optional): Additional HTTP headers
-- `timeout` (integer, optional): Request timeout in seconds (default: 30)
-
-**Returns:**
-- HTTPResponse: Response object with allowed methods
-
-**Examples:**
+**Contoh:**
 ```python
-dari http impor options, opsi
+dari http import options
 
-// OPTIONS request to check allowed methods
-response1 = options("https://api.example.com/users")
-allowed_methods1 = response1.headers["Allow"]
-
-// OPTIONS with Indonesian alias
-response2 = opsi("https://api.example.com/data")
-supported_methods2 = response2.headers
+// OPTIONS request
+response itu options("https://api.example.com/users")
+tampilkan f"Allowed methods: {response.headers.get('Allow', 'Unknown')}"
 ```
 
-## Response Object
+## Kelas HTTPResponse
 
-The HTTP functions return an HTTPResponse object with the following properties and methods:
+### Properti
 
-### Properties
+- `url` (string): URL dari response
+- `status_code` (integer): HTTP status code
+- `headers` (dict): Response headers
+- `text` (string): Response body sebagai string
 
-#### url
-The final URL after redirects.
+### Metode
 
+- `json()`: Parse response body sebagai JSON
+- `content()`: Response body sebagai bytes
+- `ok()`: Cek apakah request berhasil (status 200-299)
+- `raise_for_status()`: Raise exception jika error
+
+**Contoh Penggunaan:**
 ```python
-response = get("https://api.example.com")
-final_url = response.url
-tampilkan final_url
-```
+dari http import get
 
-#### status_code
-HTTP status code of the response.
+response itu get("https://api.example.com/users")
 
-```python
-response = get("https://api.example.com")
-code = response.status_code
-tampilkan code  // Output: 200
-```
-
-#### headers
-Dictionary of response headers.
-
-```python
-response = get("https://api.example.com")
-content_type = response.headers["Content-Type"]
-server = response.headers["Server"]
-```
-
-### Methods
-
-#### text
-Returns the response body as a string.
-
-```python
-response = get("https://api.example.com/data")
-content = response.text
-tampilkan content
-```
-
-#### json()
-Parses the response body as JSON and returns a dictionary.
-
-```python
-response = get("https://api.example.com/users")
-data = response.json()
-names = data["users"]
-```
-
-#### content()
-Returns the response body as bytes.
-
-```python
-response = get("https://example.com/image.jpg")
-image_data = response.content()
-// Save to file
-file_handler = buka_file("image.jpg", "wb")
-file_handler.tulis(image_data)
-file_handler.tutup()
-```
-
-#### ok()
-Returns `benar` if the request was successful (status code 200-299), `salah` otherwise.
-
-```python
-response = get("https://api.example.com/users")
+// Cek status
 jika response.ok()
-    tampilkan "Request successful"
+    tampilkan "Request berhasil!"
+    
+    // Ambil data sebagai JSON
+    data itu response.json()
+    tampilkan f"Jumlah users: {panjang(data)}"
+    
+    // Tampilkan headers
+    tampilkan f"Content-Type: {response.headers['Content-Type']}"
+    
+    // Ambil raw content
+    raw_content itu response.content()
+    tampilkan f"Content length: {panjang(raw_content)}"
 lainnya
-    tampilkan "Request failed"
+    tampilkan f"Error: {response.status_code}"
+    response.raise_for_status()  // Akan raise exception
 selesai
 ```
 
-#### raise_for_status()
-Raises an exception if the status code indicates an error.
+## Kelas HTTPSession
 
+Digunakan untuk connection pooling dan persistent connections.
+
+**Contoh:**
 ```python
-response = get("https://api.example.com/users")
-response.raise_for_status()  // Will raise HTTPError if status >= 400
+dari http import create_session
+
+// Buat session
+session itu create_session()
+
+// Set headers dan timeout untuk session
+session.headers["Authorization"] itu "Bearer token123"
+session.timeout it 60
+
+// Gunakan session untuk multiple requests
+response1 itu session.get("https://api.example.com/users")
+response2 itu session.post("https://api.example.com/data", json={"key": "value"})
+
+// Session akan reuse connection untuk performa lebih baik
 ```
 
-## Session Management
-
-### HTTPSession
-Creates a session for connection pooling and persistent connections.
-
-**Syntax:**
-```python
-session = HTTPSession()
-```
-
-**Methods:**
-- `get(url, **kwargs)`
-- `post(url, **kwargs)`
-- `put(url, **kwargs)`
-- `delete(url, **kwargs)`
-- `patch(url, **kwargs)`
-
-**Examples:**
-```python
-dari http impor HTTPSession, buat_sesi
-
-// Create session
-session = HTTPSession()
-// atau
-session = buat_sesi()
-
-// Set session defaults
-session.headers["Authorization"] = "Bearer token123"
-session.timeout = 15
-
-// Multiple requests with same session
-response1 = session.get("https://api.example.com/users")
-response2 = session.post("https://api.example.com/data", json={"key": "value"})
-response3 = session.put("https://api.example.com/items/1", json={"name": "Updated"})
-```
-
-## Utility Functions
+## Fungsi Utilitas
 
 ### set_default_header() / atur_header_default()
-Sets a default header for all HTTP requests.
 
-**Syntax:**
+Mengatur default header untuk semua requests.
+
+**Sintaks:**
 ```python
 set_default_header(key, value)
 atur_header_default(key, value)
 ```
 
-**Parameters:**
-- `key` (string): Header name
-- `value` (string): Header value
-
-**Examples:**
+**Contoh:**
 ```python
-dari http impor set_default_header, atur_header_default
+dari http import set_default_header, get
 
 // Set default authorization
 set_default_header("Authorization", "Bearer token123")
 
-// Set default user agent
-atur_header_default("User-Agent", "MyApp/1.0")
-
-// All subsequent requests will include these headers
-response = get("https://api.example.com/data")
+// Semua request akan include header ini
+response itu get("https://api.example.com/protected")
 ```
 
-### set_default_timeout() / atur_timeout_default()
-Sets a default timeout for all HTTP requests.
+---
 
-**Syntax:**
+### set_default_timeout() / atur_timeout_default()
+
+Mengatur default timeout untuk semua requests.
+
+**Sintaks:**
 ```python
 set_default_timeout(timeout)
 atur_timeout_default(timeout)
 ```
 
-**Parameters:**
-- `timeout` (integer): Timeout in seconds
-
-**Examples:**
+**Contoh:**
 ```python
-dari http impor set_default_timeout, atur_timeout_default
+dari http import set_default_timeout, get
 
-// Set default timeout to 10 seconds
-set_default_timeout(10)
+// Set default timeout 60 detik
+set_default_timeout(60)
 
-// Set default timeout with Indonesian alias
-atur_timeout_default(15)
-
-// All subsequent requests will use this timeout
-response = get("https://api.example.com/data")
+// Semua request akan timeout setelah 60 detik
+response itu get("https://api.example.com/slow-endpoint")
 ```
 
-### create_session() / buat_sesi()
-Creates a new HTTP session object.
+---
 
-**Syntax:**
+### create_session() / buat_sesi()
+
+Membuat HTTP session object.
+
+**Sintaks:**
 ```python
 create_session()
 buat_sesi()
 ```
 
-**Returns:**
-- HTTPSession: New session object
+**Mengembalikan:**
+- HTTPSession object: Session untuk multiple requests
 
-**Examples:**
+## Contoh Praktis
+
+### API Client
+
 ```python
-dari http impor create_session, buat_sesi
+dari http import get, post, create_session
 
-session1 = create_session()
-session2 = buat_sesi()
+buat fungsi get_user dengan user_id
+    response itu get(f"https://jsonplaceholder.typicode.com/users/{user_id}")
+    
+    jika response.ok()
+        hasil response.json()
+    lainnya
+        hasil {"error": "User tidak ditemukan"}
+    selesai
+selesai
+
+buat fungsi create_post dengan title, body, user_id
+    response itu post("https://jsonplaceholder.typicode.com/posts", json={
+        "title": title,
+        "body": body,
+        "userId": user_id
+    })
+    
+    jika response.ok()
+        hasil response.json()
+    lainnya
+        hasil {"error": "Gagal membuat post"}
+    selesai
+selesai
+
+// Penggunaan
+user itu get_user(1)
+tampilkan f"User: {user['name']} ({user['email']})"
+
+post_baru itu create_post("Judul Baru", "Ini konten post", 1)
+tampilkan f"Post dibuat dengan ID: {post_baru['id']}"
+```
+
+### Webhook Sender
+
+```python
+dari http import post, set_default_header
+
+// Konfigurasi webhook
+webhook_url itu "https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
+set_default_header("Content-Type", "application/json")
+
+buat fungsi kirim_notifikasi dengan message, channel
+    payload it {
+        "text": message,
+        "channel": channel,
+        "username": "RenzMcBot"
+    }
+    
+    response itu post(webhook_url, json=payload)
+    
+    jika response.ok()
+        tampilkan "Notifikasi terkirim!"
+    lainnya
+        tampilkan f"Gagal mengirim notifikasi: {response.status_code}"
+    selesai
+selesai
+
+// Penggunaan
+kirim_notifikasi("Hello from RenzMcLang!", "#general")
+kirim_notifikasi("Task completed successfully!", "#notifications")
+```
+
+### REST API Wrapper
+
+```python
+dari http import create_session
+
+buat fungsi buat_api_client dengan base_url, api_key
+    session itu create_session()
+    session.headers["Authorization"] it f"Bearer {api_key}"
+    session.headers["Content-Type"] it "application/json"
+    
+    api_client it {
+        "session": session,
+        "base_url": base_url
+    }
+    hasil api_client
+selesai
+
+buat fungsi api_get dengan client, endpoint
+    url it client["base_url"] + endpoint
+    response it client["session"].get(url)
+    
+    jika response.ok()
+        hasil response.json()
+    lainnya
+        hasil {"error": f"API Error: {response.status_code}"}
+    selesai
+selesai
+
+buat fungsi api_post dengan client, endpoint, data
+    url it client["base_url"] + endpoint
+    response it client["session"].post(url, json=data)
+    
+    jika response.ok()
+        hasil response.json()
+    lainnya
+        hasil {"error": f"API Error: {response.status_code}"}
+    selesai
+selesai
+
+// Penggunaan
+api itu buat_api_client("https://api.example.com/v1", "secret-api-key")
+
+users itu api_get(api, "/users")
+tampilkan f"Users: {users}"
+
+user_baru itu api_post(api, "/users", {
+    "name": "John Doe",
+    "email": "john@example.com"
+})
+tampilkan f"User created: {user_baru}"
+```
+
+### File Downloader
+
+```python
+dari http import get
+dari fileio import tulis_file  // Asumsi ada fungsi fileio
+
+buat fungsi download_file dengan url, filename
+    tampilkan f"Mengunduh {url}..."
+    
+    response itu get(url)
+    
+    jika response.ok()
+        // Simpan ke file
+        file_content itu response.content()
+        tulis_file(filename, file_content)
+        tampilkan f"File disimpan sebagai {filename}"
+        
+        // Tampilkan info
+        file_size it panjang(file_content)
+        tampilkan f"Ukuran file: {file_size} bytes"
+    lainnya
+        tampilkan f"Gagal mengunduh: {response.status_code}"
+    selesai
+selesai
+
+// Penggunaan
+download_file("https://example.com/data.json", "downloaded_data.json")
+download_file("https://example.com/image.png", "downloaded_image.png")
 ```
 
 ## Error Handling
 
-### HTTPError
-Exception raised for HTTP request failures.
-
-**Properties:**
-- `message`: Error message
-- `status_code`: HTTP status code (if available)
-
-**Examples:**
 ```python
-dari http impor get, HTTPError
+dari http import get, HTTPError
 
-coba
-    response = get("https://invalid-url.example.com")
-    response.raise_for_status()
-tangkap HTTPError sebagai e
-    tampilkan "HTTP Error:", e.message
-    jika e.status_code
-        tampilkan "Status Code:", e.status_code
+buat fungsi safe_get dengan url
+    coba
+        response itu get(url, timeout=10)
+        response.raise_for_status()  // Raise exception untuk status error
+        
+        // Cek apakah response JSON valid
+        coba
+            data itu response.json()
+            hasil {"success": benar, "data": data}
+        kecuali
+            hasil {"success": benar, "data": response.text}
+        selesai
+        
+    kecuali HTTPError sebagai e
+        hasil {"success": salah, "error": f"HTTP Error: {e}"}
+    kecuali Exception sebagai e
+        hasil {"success": salah, "error": f"Network Error: {e}"}
+    selesai
 selesai
-```
 
-## Complete Examples
-
-### REST API Client
-```python
-dari http impor get, post, put, delete, set_default_header
-dari json impor dumps, loads
-
-// Set authentication
-set_default_header("Authorization", "Bearer api-token")
-
-// Base API URL
-base_url = "https://jsonplaceholder.typicode.com"
-
-// GET all users
-response = get(base_url + "/users")
-users = response.json()
-tampilkan "Total users:", panjang(users)
-
-// POST new user
-new_user = {"name": "John Doe", "email": "john@example.com"}
-response = post(base_url + "/users", json=new_user)
-created_user = response.json()
-tampilkan "Created user ID:", created_user["id"]
-
-// PUT update user
-updated_user = {"name": "John Updated"}
-response = put(base_url + "/users/1", json=updated_user)
-tampilkan "Update status:", response.status_code
-
-// DELETE user
-response = delete(base_url + "/users/1")
-tampilkan "Delete successful:", response.ok()
-```
-
-### File Download
-```python
-dari http impor get
-dari os impor path_exists
-
-// Download image
-image_url = "https://picsum.photos/800/600"
-response = get(image_url)
-
-jika response.ok()
-    image_data = response.content()
-    filename = "downloaded_image.jpg"
-    
-    // Save file
-    file_handler = buka_file(filename, "wb")
-    file_handler.tulis(image_data)
-    file_handler.tutup()
-    
-    tampilkan "Image downloaded as:", filename
+// Penggunaan
+result itu safe_get("https://api.example.com/data")
+jika result["success"]
+    tampilkan f"Data: {result['data']}"
 lainnya
-    tampilkan "Failed to download image"
+    tampilkan f"Error: {result['error']}"
 selesai
 ```
 
-### Session-based Requests
-```python
-dari http impor HTTPSession, set_default_header
+## Catatan Penggunaan
 
-// Create session with authentication
-session = HTTPSession()
-session.headers["Authorization"] = "Bearer session-token"
-session.timeout = 20
+1. **Impor Diperlukan**: Semua fungsi HTTP harus diimpor dari modul http.
 
-// Multiple requests
-response1 = session.get("https://api.example.com/profile")
-response2 = session.post("https://api.example.com/posts", json={"title": "New Post"})
-response3 = session.put("https://api.example.com/settings", json={"theme": "dark"})
+2. **Alias Indonesia**: Fungsi memiliki alias Indonesia:
+   - `ambil()` untuk `get()`
+   - `kirim()` untuk `post()`
+   - `perbarui()` untuk `put()`
+   - `hapus()` untuk `delete()`
+   - `tambal()` untuk `patch()`
+   - `kepala()` untuk `head()`
+   - `opsi()` untuk `options()`
 
-// Check all requests
-requests = [response1, response2, response3]
-untuk setiap response dari requests
-    tampilkan "URL:", response.url, "Status:", response.status_code
-selesai
-```
+3. **SSL**: Modul ini menggunakan SSL context yang tidak verify certificates untuk compatibility. Gunakan dengan hati-hati di production.
 
-## Usage Notes
+4. **Timeout**: Default timeout adalah 30 detik, dapat diubah dengan `set_default_timeout()`.
 
-1. **SSL/TLS**: The module automatically handles SSL/TLS connections but doesn't verify certificates by default for compatibility.
+5. **Headers**: Default User-Agent diset ke "RenzMcLang-HTTP/1.0".
 
-2. **Redirects**: HTTP requests follow redirects by default.
+6. **Response Object**: Response menyimpan content dalam memory, hati-hati dengan response yang sangat besar.
 
-3. **Timeout**: Default timeout is 30 seconds but can be customized per request or globally.
+7. **Session**: Gunakan session untuk multiple requests ke domain yang sama untuk performa lebih baik.
 
-4. **Indonesian Aliases**: All main functions have Indonesian aliases:
-   - `ambil()` for `get()`
-   - `kirim()` for `post()`
-   - `perbarui()` for `put()`
-   - `hapus()` for `delete()`
-   - `tambal()` for `patch()`
-   - `kepala()` for `head()`
-   - `opsi()` for `options()`
-
-5. **Content Types**: The module automatically sets appropriate Content-Type headers based on data type.
-
-6. **Error Handling**: Always check `response.ok()` or use `response.raise_for_status()` for proper error handling.
-
-7. **Session Usage**: Use sessions for multiple requests to the same domain for better performance.
+8. **Error Handling**: Selalu cek `response.ok()` atau gunakan `response.raise_for_status()` untuk error handling.

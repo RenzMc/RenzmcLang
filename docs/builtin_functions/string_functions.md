@@ -1,25 +1,25 @@
-# String Functions
+# Fungsi String Built-in
 
-This document covers all built-in string functions available in RenzMcLang. These functions are always available without importing any modules.
+Dokumen ini mencakup semua fungsi string built-in yang tersedia di RenzMcLang. Fungsi-fungsi ini selalu tersedia tanpa perlu mengimpor modul apapun.
 
-## Core String Functions
+## Fungsi String Dasar
 
 ### huruf_besar()
 
-Converts text to uppercase.
+Mengubah teks menjadi huruf kapital.
 
-**Syntax:**
+**Sintaks:**
 ```python
-huruf_besar(text)
+huruf_besar(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to convert to uppercase
+**Parameter:**
+- `teks` (string): Teks yang akan diubah menjadi huruf kapital
 
-**Returns:**
-- String: Uppercase version of the input text
+**Mengembalikan:**
+- String: Versi huruf kapital dari teks input
 
-**Example:**
+**Contoh:**
 ```python
 teks itu "Hello World"
 hasil itu huruf_besar(teks)
@@ -27,26 +27,26 @@ tampilkan hasil  // Output: "HELLO WORLD"
 ```
 
 **Error:**
-- Raises `TypeError` if argument is not a string
+- Melempar `TypeError` jika argumen bukan string
 
 ---
 
 ### huruf_kecil()
 
-Converts text to lowercase.
+Mengubah teks menjadi huruf kecil.
 
-**Syntax:**
+**Sintaks:**
 ```python
-huruf_kecil(text)
+huruf_kecil(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to convert to lowercase
+**Parameter:**
+- `teks` (string): Teks yang akan diubah menjadi huruf kecil
 
-**Returns:**
-- String: Lowercase version of the input text
+**Mengembalikan:**
+- String: Versi huruf kecil dari teks input
 
-**Example:**
+**Contoh:**
 ```python
 teks itu "HELLO WORLD"
 hasil itu huruf_kecil(teks)
@@ -54,28 +54,28 @@ tampilkan hasil  // Output: "hello world"
 ```
 
 **Error:**
-- Raises `TypeError` if argument is not a string
+- Melempar `TypeError` jika argumen bukan string
 
 ---
 
 ### potong()
 
-Extracts a substring from text.
+Mengambil substring dari teks.
 
-**Syntax:**
+**Sintaks:**
 ```python
-potong(text, start, end)
+potong(teks, mulai, akhir)
 ```
 
-**Parameters:**
-- `text` (string): The source text
-- `start` (integer): Starting index (inclusive)
-- `end` (integer, optional): Ending index (exclusive). If omitted, extracts to the end
+**Parameter:**
+- `teks` (string): Teks sumber
+- `mulai` (integer): Indeks awal (inklusif)
+- `akhir` (integer, opsional): Indeks akhir (eksklusif). Jika dihilangkan, mengambil sampai akhir
 
-**Returns:**
-- String: The extracted substring
+**Mengembalikan:**
+- String: Substring yang diambil
 
-**Examples:**
+**Contoh:**
 ```python
 teks itu "Hello World"
 hasil1 itu potong(teks, 6)           // Output: "World"
@@ -84,28 +84,28 @@ hasil3 itu potong(teks, -5)          // Output: "World"
 ```
 
 **Error:**
-- Raises `TypeError` if first argument is not a string
-- Raises `IndexError` if index is out of range
+- Melempar `TypeError` jika argumen pertama bukan string
+- Melempar `IndexError` jika indeks di luar jangkauan
 
 ---
 
 ### gabung()
 
-Joins multiple items into a single string with a separator.
+Menggabungkan beberapa item menjadi satu string dengan pemisah.
 
-**Syntax:**
+**Sintaks:**
 ```python
-gabung(separator, item1, item2, ...)
+gabung(pemisah, item1, item2, ...)
 ```
 
-**Parameters:**
-- `separator` (string): The string to place between items
-- `item1, item2, ...` (any): Items to join (automatically converted to strings)
+**Parameter:**
+- `pemisah` (string): String yang ditempatkan di antara item
+- `item1, item2, ...` (apa saja): Item yang akan digabung (otomatis dikonversi ke string)
 
-**Returns:**
-- String: The concatenated string
+**Mengembalikan:**
+- String: String yang telah digabung
 
-**Examples:**
+**Contoh:**
 ```python
 kata1 itu "Hello"
 kata2 itu "World"
@@ -117,27 +117,27 @@ hasil3 itu gabung("", 1, 2, 3)                 // Output: "123"
 ```
 
 **Error:**
-- Raises `TypeError` if separator is not a string
+- Melempar `TypeError` jika pemisah bukan string
 
 ---
 
 ### pisah()
 
-Splits text into a list of substrings.
+Memisahkan teks menjadi list substring.
 
-**Syntax:**
+**Sintaks:**
 ```python
-pisah(text, separator)
+pisah(teks, pemisah)
 ```
 
-**Parameters:**
-- `text` (string): The text to split
-- `separator` (string, optional): The delimiter. If omitted, splits on whitespace
+**Parameter:**
+- `teks` (string): Teks yang akan dipisah
+- `pemisah` (string, opsional): Pembatas. Jika dihilangkan, memisah berdasarkan whitespace
 
-**Returns:**
-- List: List of substrings
+**Mengembalikan:**
+- List: List substring
 
-**Examples:**
+**Contoh:**
 ```python
 teks itu "Hello World Python"
 hasil1 itu pisah(teks)                    // Output: ["Hello", "World", "Python"]
@@ -147,28 +147,28 @@ hasil4 itu pisah("A-B-C-D", "-")         // Output: ["A", "B", "C", "D"]
 ```
 
 **Error:**
-- Raises `TypeError` if first argument is not a string
+- Melempar `TypeError` jika argumen pertama bukan string
 
 ---
 
 ### ganti()
 
-Replaces occurrences of a substring with another substring.
+Mengganti kemunculan substring dengan substring lain.
 
-**Syntax:**
+**Sintaks:**
 ```python
-ganti(text, old, new)
+ganti(teks, lama, baru)
 ```
 
-**Parameters:**
-- `text` (string): The source text
-- `old` (string): Substring to replace
-- `new` (string): Replacement substring
+**Parameter:**
+- `teks` (string): Teks sumber
+- `lama` (string): Substring yang akan diganti
+- `baru` (string): Substring pengganti
 
-**Returns:**
-- String: Text with replacements made
+**Mengembalikan:**
+- String: Teks dengan penggantian yang telah dilakukan
 
-**Examples:**
+**Contoh:**
 ```python
 teks itu "Hello World World"
 hasil1 itu ganti(teks, "World", "RenzMcLang")  // Output: "Hello RenzMcLang RenzMcLang"
@@ -177,27 +177,27 @@ hasil3 itu ganti("123", "2", "X")              // Output: "1X3"
 ```
 
 **Error:**
-- Raises `TypeError` if any argument is not a string
+- Melempar `TypeError` jika ada argumen yang bukan string
 
 ---
 
 ### mulai_dengan()
 
-Checks if text starts with a specific prefix.
+Memeriksa apakah teks diawali dengan prefix tertentu.
 
-**Syntax:**
+**Sintaks:**
 ```python
-mulai_dengan(text, prefix)
+mulai_dengan(teks, prefix)
 ```
 
-**Parameters:**
-- `text` (string): The text to check
-- `prefix` (string): The prefix to look for
+**Parameter:**
+- `teks` (string): Teks yang akan diperiksa
+- `prefix` (string): Prefix yang dicari
 
-**Returns:**
-- Boolean: `benar` if text starts with prefix, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika teks diawali prefix, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 teks itu "Hello World"
 hasil1 itu mulai_dengan(teks, "Hello")    // Output: benar
@@ -206,27 +206,27 @@ hasil3 itu mulai_dengan("Python", "Py")   // Output: benar
 ```
 
 **Error:**
-- Raises `TypeError` if any argument is not a string
+- Melempar `TypeError` jika ada argumen yang bukan string
 
 ---
 
 ### akhir_dengan()
 
-Checks if text ends with a specific suffix.
+Memeriksa apakah teks diakhiri dengan suffix tertentu.
 
-**Syntax:**
+**Sintaks:**
 ```python
-akhir_dengan(text, suffix)
+akhir_dengan(teks, suffix)
 ```
 
-**Parameters:**
-- `text` (string): The text to check
-- `suffix` (string): The suffix to look for
+**Parameter:**
+- `teks` (string): Teks yang akan diperiksa
+- `suffix` (string): Suffix yang dicari
 
-**Returns:**
-- Boolean: `benar` if text ends with suffix, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika teks diakhiri suffix, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 teks itu "Hello World"
 hasil1 itu akhir_dengan(teks, "World")    // Output: benar
@@ -235,27 +235,27 @@ hasil3 itu akhir_dengan("Python.py", ".py")  // Output: benar
 ```
 
 **Error:**
-- Raises `TypeError` if any argument is not a string
+- Melempar `TypeError` jika ada argumen yang bukan string
 
 ---
 
 ### berisi()
 
-Checks if text contains a specific substring.
+Memeriksa apakah teks mengandung substring tertentu.
 
-**Syntax:**
+**Sintaks:**
 ```python
-berisi(text, substring)
+berisi(teks, substring)
 ```
 
-**Parameters:**
-- `text` (string): The text to search in
-- `substring` (string): The substring to search for
+**Parameter:**
+- `teks` (string): Teks tempat pencarian
+- `substring` (string): Substring yang dicari
 
-**Returns:**
-- Boolean: `benar` if substring is found, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika substring ditemukan, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 teks itu "Hello World"
 hasil1 itu berisi(teks, "World")     // Output: benar
@@ -264,26 +264,26 @@ hasil3 itu berisi("Python", "thon")  // Output: benar
 ```
 
 **Error:**
-- Raises `TypeError` if any argument is not a string
+- Melempar `TypeError` jika ada argumen yang bukan string
 
 ---
 
 ### hapus_spasi()
 
-Removes whitespace from both ends of text.
+Menghapus whitespace dari kedua ujung teks.
 
-**Syntax:**
+**Sintaks:**
 ```python
-hapus_spasi(text)
+hapus_spasi(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to trim
+**Parameter:**
+- `teks` (string): Teks yang akan dibersihkan
 
-**Returns:**
-- String: Text without leading/trailing whitespace
+**Mengembalikan:**
+- String: Teks tanpa whitespace di awal dan akhir
 
-**Examples:**
+**Contoh:**
 ```python
 teks itu "   Hello World   "
 hasil1 itu hapus_spasi(teks)     // Output: "Hello World"
@@ -292,27 +292,27 @@ hasil3 itu hapus_spasi("NoSpace")  // Output: "NoSpace"
 ```
 
 **Error:**
-- Raises `TypeError` if argument is not a string
+- Melempar `TypeError` jika argumen bukan string
 
 ---
 
 ### format_teks()
 
-Formats text using Python's format() method.
+Memformat teks menggunakan method format() Python.
 
-**Syntax:**
+**Sintaks:**
 ```python
 format_teks(template, arg1, arg2, ...)
 ```
 
-**Parameters:**
-- `template` (string): Format string with placeholders
-- `arg1, arg2, ...` (any): Values to substitute into placeholders
+**Parameter:**
+- `template` (string): String format dengan placeholder
+- `arg1, arg2, ...` (apa saja): Nilai yang akan disubstitusikan ke placeholder
 
-**Returns:**
-- String: Formatted text
+**Mengembalikan:**
+- String: Teks yang telah diformat
 
-**Examples:**
+**Contoh:**
 ```python
 nama itu "John"
 umur itu 25
@@ -322,27 +322,27 @@ hasil3 itu format_teks("{0} + {1} = {2}", 5, 3, 8)       // Output: "5 + 3 = 8"
 ```
 
 **Error:**
-- Raises `TypeError` if template is not a string
-- Raises `ValueError` if format is invalid
+- Melempar `TypeError` jika template bukan string
+- Melempar `ValueError` jika format tidak valid
 
-## String Validation Functions
+## Fungsi Validasi String
 
 ### adalah_huruf() / is_alpha()
 
-Checks if text contains only alphabetic characters.
+Memeriksa apakah teks hanya mengandung karakter alfabet.
 
-**Syntax:**
+**Sintaks:**
 ```python
-adalah_huruf(text)  // atau is_alpha(text)
+adalah_huruf(teks)  // atau is_alpha(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to validate
+**Parameter:**
+- `teks` (string): Teks yang akan divalidasi
 
-**Returns:**
-- Boolean: `benar` if text contains only letters, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika teks hanya mengandung huruf, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 hasil1 itu adalah_huruf("Hello")      // Output: benar
 hasil2 itu adalah_huruf("Hello123")   // Output: salah
@@ -354,20 +354,20 @@ hasil4 itu adalah_huruf("")           // Output: salah
 
 ### adalah_angka() / is_digit()
 
-Checks if text contains only numeric characters.
+Memeriksa apakah teks hanya mengandung karakter numerik.
 
-**Syntax:**
+**Sintaks:**
 ```python
-adalah_angka(text)  // atau is_digit(text)
+adalah_angka(teks)  // atau is_digit(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to validate
+**Parameter:**
+- `teks` (string): Teks yang akan divalidasi
 
-**Returns:**
-- Boolean: `benar` if text contains only digits, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika teks hanya mengandung digit, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 hasil1 itu adalah_angka("123")        // Output: benar
 hasil2 itu adalah_angka("123.45")     // Output: salah
@@ -379,20 +379,20 @@ hasil4 itu adalah_angka("0123456789") // Output: benar
 
 ### adalah_alfanumerik() / is_alnum()
 
-Checks if text contains only alphanumeric characters.
+Memeriksa apakah teks hanya mengandung karakter alfanumerik.
 
-**Syntax:**
+**Sintaks:**
 ```python
-adalah_alfanumerik(text)  // atau is_alnum(text)
+adalah_alfanumerik(teks)  // atau is_alnum(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to validate
+**Parameter:**
+- `teks` (string): Teks yang akan divalidasi
 
-**Returns:**
-- Boolean: `benar` if text contains only letters and digits, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika teks hanya mengandung huruf dan digit, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 hasil1 itu adalah_alfanumerik("Hello123")   // Output: benar
 hasil2 itu adalah_alfanumerik("Hello")      // Output: benar
@@ -404,20 +404,20 @@ hasil4 itu adalah_alfanumerik("Hello-123")  // Output: salah
 
 ### adalah_huruf_kecil() / is_lower()
 
-Checks if text contains only lowercase letters.
+Memeriksa apakah teks hanya mengandung huruf kecil.
 
-**Syntax:**
+**Sintaks:**
 ```python
-adalah_huruf_kecil(text)  // atau is_lower(text)
+adalah_huruf_kecil(teks)  // atau is_lower(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to validate
+**Parameter:**
+- `teks` (string): Teks yang akan divalidasi
 
-**Returns:**
-- Boolean: `benar` if text contains only lowercase letters, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika teks hanya mengandung huruf kecil, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 hasil1 itu adalah_huruf_kecil("hello")      // Output: benar
 hasil2 itu adalah_huruf_kecil("Hello")      // Output: salah
@@ -429,20 +429,20 @@ hasil4 itu adalah_huruf_kecil("abc")        // Output: benar
 
 ### adalah_huruf_besar() / is_upper()
 
-Checks if text contains only uppercase letters.
+Memeriksa apakah teks hanya mengandung huruf besar.
 
-**Syntax:**
+**Sintaks:**
 ```python
-adalah_huruf_besar(text)  // atau is_upper(text)
+adalah_huruf_besar(teks)  // atau is_upper(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to validate
+**Parameter:**
+- `teks` (string): Teks yang akan divalidasi
 
-**Returns:**
-- Boolean: `benar` if text contains only uppercase letters, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika teks hanya mengandung huruf besar, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 hasil1 itu adalah_huruf_besar("HELLO")      // Output: benar
 hasil2 itu adalah_huruf_besar("Hello")      // Output: salah
@@ -454,20 +454,20 @@ hasil4 itu adalah_huruf_besar("ABC")        // Output: benar
 
 ### adalah_spasi() / is_space()
 
-Checks if text contains only whitespace characters.
+Memeriksa apakah teks hanya mengandung karakter whitespace.
 
-**Syntax:**
+**Sintaks:**
 ```python
-adalah_spasi(text)  // atau is_space(text)
+adalah_spasi(teks)  // atau is_space(teks)
 ```
 
-**Parameters:**
-- `text` (string): The text to validate
+**Parameter:**
+- `teks` (string): Teks yang akan divalidasi
 
-**Returns:**
-- Boolean: `benar` if text contains only whitespace, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika teks hanya mengandung whitespace, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 hasil1 itu adalah_spasi(" ")          // Output: benar
 hasil2 itu adalah_spasi("\t\n ")      // Output: benar
@@ -475,20 +475,20 @@ hasil3 itu adalah_spasi("Hello")      // Output: salah
 hasil4 itu adalah_spasi("")           // Output: salah
 ```
 
-## Usage Notes
+## Catatan Penggunaan
 
-1. **Function Aliases**: Many functions have both Indonesian and English names for convenience:
-   - `adalah_huruf()` and `is_alpha()`
-   - `adalah_angka()` and `is_digit()`
-   - `adalah_alfanumerik()` and `is_alnum()`
-   - `adalah_huruf_kecil()` and `is_lower()`
-   - `adalah_huruf_besar()` and `is_upper()`
-   - `adalah_spasi()` and `is_space()`
+1. **Alias Fungsi**: Banyak fungsi memiliki nama Indonesia dan Inggris untuk kemudahan:
+   - `adalah_huruf()` dan `is_alpha()`
+   - `adalah_angka()` dan `is_digit()`
+   - `adalah_alfanumerik()` dan `is_alnum()`
+   - `adalah_huruf_kecil()` dan `is_lower()`
+   - `adalah_huruf_besar()` dan `is_upper()`
+   - `adalah_spasi()` dan `is_space()`
 
-2. **Unicode Support**: All string functions support Unicode characters.
+2. **Dukungan Unicode**: Semua fungsi string mendukung karakter Unicode.
 
-3. **Error Handling**: Functions validate input types and provide clear error messages in Indonesian.
+3. **Penanganan Error**: Fungsi memvalidasi tipe input dan memberikan pesan error yang jelas dalam bahasa Indonesia.
 
-4. **Performance**: These functions are optimized for common string operations and are directly mapped to Python's string methods.
+4. **Performa**: Fungsi-fungsi ini dioptimasi untuk operasi string umum dan langsung dipetakan ke method string Python.
 
-5. **Immutability**: All string functions return new strings and do not modify the original text.
+5. **Imutabilitas**: Semua fungsi string mengembalikan string baru dan tidak memodifikasi teks asli.

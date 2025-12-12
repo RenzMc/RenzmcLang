@@ -224,7 +224,7 @@ pesan itu f"Nama: {nama}, Umur: {umur}"
 ---
 
 
-### Import System (NEW) 🚀
+### Import System (Versi Terbaru)
 
 ```python
 // Import satu item
@@ -361,7 +361,7 @@ json_tulis("data.json", data)
 
 ---
 
-### Operasi HTTP (BARU di versi terbaru!)
+### Operasi HTTP (Versi Terbaru)
 
 ```python
 // Permintaan GET
@@ -516,7 +516,7 @@ response itu panggil_python requests.get(url)
 
 ---
 
-### Perintah REPL (BARU di versi terbaru!)
+### Perintah REPL (Versi Terbaru)
 
 ```bash
 # Mulai REPL

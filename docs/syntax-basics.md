@@ -657,7 +657,7 @@ selesai
 ---
 
 
-## Import System (NEW) 🚀
+## Import System (Versi Terbaru)
 
 ---
 
@@ -1203,4 +1203,4 @@ Setelah mempelajari dasar-dasar:
 
 ---
 
-**Selamat Coding! 🚀**
+**Selamat Coding!**

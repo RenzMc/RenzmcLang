@@ -1,528 +1,656 @@
-# JSON Module
+# Modul JSON
 
-The JSON module provides comprehensive JSON (JavaScript Object Notation) encoding and decoding functionality following Python's json module standards with Indonesian function names.
+Modul JSON menyediakan fungsi-fungsi untuk encoding dan decoding JSON, mengikuti standar modul json Python dengan nama fungsi dalam Bahasa Indonesia.
 
-## Import
+## Impor
 
 ```python
-dari json impor *
-// atau import specific functions
 dari json impor loads, dumps, load, dump
-// atau import classes
-dari json impor JSONDecoder, JSONEncoder
+// atau gunakan alias Indonesia
+dari json impor baca_json, tulis_json, baca_dari_file, tulis_ke_file
+// atau impor semua
+dari json impor *
 ```
 
-## Core JSON Functions
+## Fungsi Parsing JSON
 
 ### loads() / baca_json()
-Parses a JSON string and converts it to a Python object.
 
-**Syntax:**
+Parse JSON string menjadi Python object.
+
+**Sintaks:**
 ```python
-loads(json_string, encoding, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)
-baca_json(json_string, encoding, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)
+loads(string_json, *, encoding, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)
+baca_json(string_json, *, encoding, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)
 ```
 
-**Parameters:**
-- `json_string` (string): JSON string to parse
-- `encoding` (string, optional): Text encoding (deprecated)
-- `cls` (class, optional): Custom JSON decoder class
-- `object_hook` (function, optional): Function for custom object parsing
-- `parse_float` (function, optional): Function for parsing float values
-- `parse_int` (function, optional): Function for parsing integer values
-- `parse_constant` (function, optional): Function for parsing constants (NaN, Inf, -Inf)
-- `object_pairs_hook` (function, optional): Function for parsing object pairs
+**Parameter:**
+- `string_json` (string): JSON string yang akan di-parse
+- `encoding` (string, opsional): Encoding yang digunakan (deprecated)
+- `cls` (class, opsional): Custom JSON decoder class
+- `object_hook` (function, opsional): Function untuk custom object parsing
+- `parse_float` (function, opsional): Function untuk parsing float
+- `parse_int` (function, opsional): Function untuk parsing integer
+- `parse_constant` (function, opsional): Function untuk parsing constants (NaN, Inf, -Inf)
+- `object_pairs_hook` (function, opsional): Function untuk parsing object pairs
 
-**Returns:**
-- Python object: Dictionary, list, string, number, boolean, or None
+**Mengembalikan:**
+- Python object: Hasil parsing JSON (dict, list, string, number, boolean, atau null)
 
-**Examples:**
+**Contoh:**
 ```python
-dari json impor loads, baca_json
+dari json import loads
 
-// Basic JSON parsing
-json_str1 = '{"nama": "Budi", "umur": 25, "aktif": true}'
-data1 = loads(json_str1)
-tampilkan data1["nama"]      // Output: "Budi"
-tampilkan data1["umur"]      // Output: 25
-tampilkan data1["aktif"]     // Output: benar
+// Parse JSON sederhana
+json_str itu '{"nama": "Budi", "umur": 25}'
+data itu loads(json_str)
+tampilkan data["nama"]     // Output: Budi
+tampilkan data["umur"]     // Output: 25
 
 // Parse JSON array
-json_str2 = '[1, 2, 3, 4, 5]'
-data2 = baca_json(json_str2)
-tampilkan data2              // Output: [1, 2, 3, 4, 5]
+json_array itu '[1, 2, 3, "hello", true]'
+array_data itu loads(json_array)
+tampilkan array_data       // Output: [1, 2, 3, "hello", True]
 
-// Parse nested JSON
-json_str3 = '{"user": {"id": 1, "name": "John"}, "items": ["a", "b", "c"]}'
-data3 = loads(json_str3)
-tampilkan data3["user"]["name"]  // Output: "John"
-tampilkan data3["items"][0]      // Output: "a"
-
-// Parse with custom object hook
-fungsi custom_hook(obj):
-    obj["processed"] = benar
-    hasil obj
-selesai
-
-data4 = loads('{"key": "value"}', object_hook=custom_hook)
-tampilkan data4["processed"]   // Output: benar
+// Parse JSON nested
+json_nested itu '{"user": {"id": 1, "name": "Alice"}, "roles": ["admin", "user"]}'
+nested_data itu loads(json_nested)
+tampilkan nested_data["user"]["name"]    // Output: Alice
+tampilkan nested_data["roles"][0]        // Output: admin
 ```
 
----
-
-### dumps() / tulis_json()
-Converts a Python object to a JSON string.
-
-**Syntax:**
-```python
-dumps(obj, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)
-tulis_json(obj, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)
-```
-
-**Parameters:**
-- `obj` (object): Python object to serialize
-- `skipkeys` (boolean, optional): Skip non-string keys (default: salah)
-- `ensure_ascii` (boolean, optional): Ensure ASCII output (default: benar)
-- `check_circular` (boolean, optional): Check for circular references (default: benar)
-- `allow_nan` (boolean, optional): Allow NaN, Inf, -Inf values (default: benar)
-- `cls` (class, optional): Custom JSON encoder class
-- `indent` (integer, optional): Number of spaces for indentation (default: None)
-- `separators` (tuple, optional): Tuple of (item_separator, key_separator)
-- `default` (function, optional): Function for non-serializable objects
-- `sort_keys` (boolean, optional): Sort keys alphabetically (default: salah)
-
-**Returns:**
-- String: JSON representation of the object
-
-**Examples:**
-```python
-dari json impor dumps, tulis_json
-
-// Basic object serialization
-data1 = {"nama": "Budi", "umur": 25, "aktif": benar}
-json_str1 = dumps(data1)
-tampilkan json_str1          // Output: {"nama": "Budi", "umur": 25, "aktif": true}
-
-// Formatted JSON with indentation
-json_str2 = tulis_json(data1, indent=2)
-tampilkan json_str2
-// Output:
-// {
-//   "nama": "Budi",
-//   "umur": 25,
-//   "aktif": true
-// }
-
-// Sort keys and pretty print
-data3 = {"z": 1, "a": 2, "m": 3}
-json_str3 = dumps(data3, indent=4, sort_keys=benar)
-tampilkan json_str3
-// Output:
-// {
-//     "a": 2,
-//     "m": 3,
-//     "z": 1
-// }
-
-// Minified JSON
-json_str4 = tulis_json(data3, separators=(",", ":"))
-tampilkan json_str4          // Output: {"z":1,"a":2,"m":3}
-
-// Serialize list
-data5 = [1, 2, 3, "hello", benar]
-json_str5 = dumps(data5)
-tampilkan json_str5          // Output: [1, 2, 3, "hello", true]
-
-// Handle non-ASCII characters
-data6 = {"pesan": "Halo Dunia"}
-json_str6 = dumps(data6, ensure_ascii=salah)
-tampilkan json_str6          // Output: {"pesan": "Halo Dunia"}
-```
+**Error:**
+- Melempar `JSONDecodeError` jika JSON string tidak valid
 
 ---
 
 ### load() / baca_dari_file()
-Parses JSON from a file-like object.
 
-**Syntax:**
+Parse JSON dari file-like object.
+
+**Sintaks:**
 ```python
-load(file_object, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)
-baca_dari_file(file_object, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)
+load(file_object, *, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)
+baca_dari_file(file_object, *, cls, object_hook, parse_float, parse_int, parse_constant, object_pairs_hook)
 ```
 
-**Parameters:**
-- `file_object`: File-like object containing JSON data
-- `cls` (class, optional): Custom JSON decoder class
-- `object_hook` (function, optional): Function for custom object parsing
-- `parse_float` (function, optional): Function for parsing float values
-- `parse_int` (function, optional): Function for parsing integer values
-- `parse_constant` (function, optional): Function for parsing constants
-- `object_pairs_hook` (function, optional): Function for parsing object pairs
+**Parameter:**
+- `file_object`: File-like object yang berisi JSON
+- `cls` (class, opsional): Custom JSON decoder class
+- `object_hook` (function, opsional): Function untuk custom object parsing
+- `parse_float` (function, opsional): Function untuk parsing float
+- `parse_int` (function, opsional): Function untuk parsing integer
+- `parse_constant` (function, opsional): Function untuk parsing constants
+- `object_pairs_hook` (function, opsional): Function untuk parsing object pairs
 
-**Returns:**
-- Python object: Parsed JSON data
-
-**Examples:**
+**Contoh:**
 ```python
-dari json impor load, baca_dari_file
+dari json import load
 
-// Read from file (assuming data.json exists)
-file_handler = buka_file("data.json", "r")
-data1 = load(file_handler)
-file_handler.tutup()
-tampilkan data1
+// Asumsi file "data.json" berisi: {"nama": "Charlie", "umur": 30}
+dengan open("data.json", "r") sebagai file
+    data itu load(file)
+    tampilkan data["nama"]
+    tampilkan data["umur"]
+selesai
 
-// Indonesian alias
-file_handler2 = buka_file("config.json", "r")
-config = baca_dari_file(file_handler2)
-file_handler2.tutup()
-tampilkan config["settings"]
+// Parse dari string object (like file)
+json_content it '{"product": "Laptop", "price": 8500000}'
+import io
+file_like it io.StringIO(json_content)
+data itu load(file_like)
+tampilkan data
+```
+
+## Fungsi Serialisasi JSON
+
+### dumps() / tulis_json()
+
+Convert Python object menjadi JSON string.
+
+**Sintaks:**
+```python
+dumps(objek, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)
+tulis_json(objek, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)
+```
+
+**Parameter:**
+- `objek` (dict/list/string/number/boolean/None): Python object yang akan di-serialize
+- `skipkeys` (boolean, opsional): Skip keys yang bukan string (default: False)
+- `ensure_ascii` (boolean, opsional): Ensure output ASCII (default: True)
+- `check_circular` (boolean, opsional): Check circular reference (default: True)
+- `allow_nan` (boolean, opsional): Allow NaN, Inf, -Inf (default: True)
+- `cls` (class, opsional): Custom JSON encoder class
+- `indent` (integer, opsional): Number of spaces untuk indentasi
+- `separators` (tuple, opsional): Tuple item separator dan key separator
+- `default` (function, opsional): Function untuk object yang tidak bisa di-serialize
+- `sort_keys` (boolean, opsional): Sort keys alphabetically (default: False)
+
+**Mengembalikan:**
+- String: JSON string yang telah di-serialize
+
+**Contoh:**
+```python
+dari json import dumps
+
+// Serialisasi dictionary sederhana
+data itu {"nama": "Diana", "umur": 28, "aktif": benar}
+json_str itu dumps(data)
+tampilkan json_str  // Output: {"nama": "Diana", "umur": 28, "aktif": true}
+
+// Dengan indentasi
+json_pretty it dumps(data, indent=2)
+tampilkan json_pretty
+// Output:
+// {
+//   "nama": "Diana",
+//   "umur": 28,
+//   "aktif": true
+// }
+
+// Sort keys alphabetically
+json_sorted it dumps(data, indent=2, sort_keys=benar)
+tampilkan json_sorted
+
+// Serialisasi list
+angka itu [1, 2, 3, 4, 5]
+json_list it dumps(angka)
+tampilkan json_list  // Output: [1, 2, 3, 4, 5]
+
+// Serialisasi complex object
+complex_data it {
+    "users": [
+        {"id": 1, "name": "Alice", "scores": [85, 90, 78]},
+        {"id": 2, "name": "Bob", "scores": [92, 88, 95]}
+    ],
+    "metadata": {
+        "total": 2,
+        "average_score": 88.0
+    }
+}
+json_complex it dumps(complex_data, indent=2, sort_keys=benar)
+tampilkan json_complex
 ```
 
 ---
 
 ### dump() / tulis_ke_file()
-Writes a Python object as JSON to a file-like object.
 
-**Syntax:**
+Write JSON object ke file-like object.
+
+**Sintaks:**
 ```python
-dump(obj, file_object, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)
-tulis_ke_file(obj, file_object, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)
+dump(objek, file_object, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)
+tulis_ke_file(objek, file_object, *, skipkeys, ensure_ascii, check_circular, allow_nan, cls, indent, separators, default, sort_keys)
 ```
 
-**Parameters:**
-- `obj` (object): Python object to serialize
-- `file_object`: File-like object to write JSON to
-- `skipkeys` (boolean, optional): Skip non-string keys (default: salah)
-- `ensure_ascii` (boolean, optional): Ensure ASCII output (default: benar)
-- `check_circular` (boolean, optional): Check for circular references (default: benar)
-- `allow_nan` (boolean, optional): Allow NaN, Inf, -Inf values (default: benar)
-- `cls` (class, optional): Custom JSON encoder class
-- `indent` (integer, optional): Number of spaces for indentation
-- `separators` (tuple, optional): Tuple of separators
-- `default` (function, optional): Function for non-serializable objects
-- `sort_keys` (boolean, optional): Sort keys alphabetically (default: salah)
+**Parameter:**
+- `objek` (dict/list/string/number/boolean/None): Python object yang akan di-serialize
+- `file_object`: File-like object untuk write output
+- `skipkeys` (boolean, opsional): Skip keys yang bukan string (default: False)
+- `ensure_ascii` (boolean, opsional): Ensure output ASCII (default: True)
+- `check_circular` (boolean, opsional): Check circular reference (default: True)
+- `allow_nan` (boolean, opsional): Allow NaN, Inf, -Inf (default: True)
+- `cls` (class, opsional): Custom JSON encoder class
+- `indent` (integer, opsional): Number of spaces untuk indentasi
+- `separators` (tuple, opsional): Tuple item separator dan key separator
+- `default` (function, opsional): Function untuk object yang tidak bisa di-serialize
+- `sort_keys` (boolean, opsional): Sort keys alphabetically (default: False)
 
-**Returns:**
-- None
-
-**Examples:**
+**Contoh:**
 ```python
-dari json impor dump, tulis_ke_file
+dari json import dump
 
-// Write to file with formatting
-data = {"nama": "Budi", "umur": 25, "hobi": ["membaca", "coding"]}
+// Write ke file
+data itu {"nama": "Eva", "pekerjaan": "Developer", "skills": ["Python", "JavaScript"]}
+dengan open("profile.json", "w") sebagai file
+    dump(data, file, indent=2)
+selesai
 
-file_handler = buka_file("output.json", "w")
-dump(data, file_handler, indent=2, sort_keys=benar)
-file_handler.tutup()
-
-// Indonesian alias
-data2 = {"config": {"theme": "dark", "language": "id"}}
-file_handler2 = buka_file("config.json", "w")
-tulis_ke_file(data2, file_handler2, indent=4)
-file_handler2.tutup()
+// Write dengan options
+config itu {
+    "app_name": "MyApp",
+    "version": "1.0.0",
+    "debug": false,
+    "database": {
+        "host": "localhost",
+        "port": 5432
+    }
+}
+dengan open("config.json", "w") sebagai file
+    dump(config, file, indent=4, sort_keys=benar, ensure_ascii=salah)
+selesai
 ```
 
-## Utility Functions
+## Fungsi Utilitas
 
 ### format_json()
-Formats a Python object as a pretty-printed JSON string.
 
-**Syntax:**
+Format JSON string dengan indentasi yang rapi.
+
+**Sintaks:**
 ```python
-format_json(obj, indent)
+format_json(objek, indent)
 ```
 
-**Parameters:**
-- `obj` (object): Python object to format
-- `indent` (integer, optional): Number of spaces for indentation (default: 2)
+**Parameter:**
+- `objek` (dict/list/string/number/boolean/None): Python object yang akan di-format
+- `indent` (integer, opsional): Number of spaces untuk indentasi (default: 2)
 
-**Returns:**
-- String: Formatted JSON string
+**Mengembalikan:**
+- String: JSON string yang sudah di-format
 
-**Examples:**
+**Contoh:**
 ```python
-dari json impor format_json
+dari json import format_json
 
-data = {"user": {"name": "John", "age": 30}, "active": benar}
-formatted = format_json(data, indent=4)
+data itu {"user": "Frank", "age": 35, "city": "Bandung"}
+formatted it format_json(data, indent=4)
 tampilkan formatted
-// Output:
-// {
-//     "active": true,
-//     "user": {
-//         "age": 30,
-//         "name": "John"
-//     }
-// }
 ```
 
 ---
 
 ### validate_json()
-Validates whether a string is valid JSON.
 
-**Syntax:**
+Validasi apakah string adalah JSON yang valid.
+
+**Sintaks:**
 ```python
-validate_json(json_string)
+validate_json(string_json)
 ```
 
-**Parameters:**
-- `json_string` (string): String to validate
+**Parameter:**
+- `string_json` (string): String yang akan divalidasi
 
-**Returns:**
-- Boolean: `benar` if valid JSON, `salah` otherwise
+**Mengembalikan:**
+- Boolean: True jika valid, False jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
-dari json impor validate_json
+dari json import validate_json
 
-// Valid JSON
-valid1 = validate_json('{"name": "John"}')
-tampilkan valid1              // Output: benar
+valid_json itu '{"nama": "Grace", "umur": 25}'
+invalid_json it '{"nama": "Grace", "umur": 25'  // Kurung tutup kurang
 
-valid2 = validate_json('[1, 2, 3]')
-tampilkan valid2              // Output: benar
-
-// Invalid JSON
-invalid1 = validate_json('{name: John}')
-tampilkan invalid1            // Output: salah
-
-invalid2 = validate_json('{"missing": "quote}')
-tampilkan invalid2            // Output: salah
+tampilkan validate_json(valid_json)      // Output: benar
+tampilkan validate_json(invalid_json)    // Output: salah
 ```
 
 ---
 
 ### minify_json()
-Converts an object to a minified JSON string (no whitespace).
 
-**Syntax:**
+Convert object menjadi JSON string yang minimal (tanpa spasi).
+
+**Sintaks:**
 ```python
-minify_json(obj)
+minify_json(objek)
 ```
 
-**Parameters:**
-- `obj` (object): Python object to minify
+**Parameter:**
+- `objek` (dict/list/string/number/boolean/None): Python object yang akan di-minify
 
-**Returns:**
+**Mengembalikan:**
 - String: Minified JSON string
 
-**Examples:**
+**Contoh:**
 ```python
-dari json impor minify_json
+dari json import minify_json
 
-data = {"name": "John", "age": 30, "items": [1, 2, 3]}
-minified = minify_json(data)
-tampilkan minified            // Output: {"name":"John","age":30,"items":[1,2,3]}
+data it {"key1": "value1", "key2": "value2", "number": 123}
+minified it minify_json(data)
+tampilkan minified  // Output: {"key1":"value1","key2":"value2","number":123}
 ```
 
-## Classes
+## Kelas
 
-### JSONDecoder
-Custom JSON decoder class with additional functionality.
+### JSONDecoder / parser_json
 
-**Syntax:**
+Custom JSON decoder dengan additional functionality.
+
+**Contoh:**
 ```python
-decoder = JSONDecoder(**kwargs)
-```
+dari json import JSONDecoder
 
-**Parameters:**
-- `**kwargs`: Additional keyword arguments
-
-**Examples:**
-```python
-dari json impor JSONDecoder
-
-decoder = JSONDecoder(object_hook=lambda x: {**x, "decoded": benar})
-data = decoder.decode('{"test": "value"}')
-tampilkan data["decoded"]      // Output: benar
+// Buat custom decoder
+decoder itu JSONDecoder(object_hook=lambda d: {k.upper(): v untuk k, v di d.items()})
+json_str it '{"nama": "Henry", "umur": 30}'
+data itu decoder.decode(json_str)
+tampilkan data  // Output: {'NAMA': 'Henry', 'UMUR': 30}
 ```
 
 ---
 
-### JSONEncoder
-Custom JSON encoder class with additional functionality.
+### JSONEncoder / encoder_json
 
-**Syntax:**
+Custom JSON encoder dengan additional functionality.
+
+**Contoh:**
 ```python
-encoder = JSONEncoder(**kwargs)
+dari json import JSONEncoder, dumps
+
+class CustomEncoder(JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, set):
+            return list(obj)
+        return super().default(obj)
+
+data it {"items": {1, 2, 3}, "name": "Iris"}
+json_str it dumps(data, cls=CustomEncoder)
+tampilkan json_str  // Output: {"items": [1, 2, 3], "name": "Iris"}
 ```
 
-**Parameters:**
-- `**kwargs`: Additional keyword arguments
+---
 
-**Examples:**
+### JSONDecodeError / error_json
+
+Exception yang di-raised saat JSON parsing gagal.
+
+**Contoh:**
 ```python
-dari json impor JSONEncoder
-
-encoder = JSONEncoder(indent=2)
-data = {"name": "John", "age": 30}
-json_str = encoder.encode(data)
-tampilkan json_str
-```
-
-## Exception Handling
-
-### JSONDecodeError
-Exception raised when JSON parsing fails.
-
-**Properties:**
-- `msg`: Error message
-- `doc`: JSON document that caused the error
-- `pos`: Position in the document where the error occurred
-
-**Examples:**
-```python
-dari json impor loads, JSONDecodeError
+dari json import loads, JSONDecodeError
 
 coba
-    data = loads('{"invalid": json}')
-tangkap JSONDecodeError sebagai e
-    tampilkan "JSON Error:", e.msg
-    tampilkan "Position:", e.pos
+    data it loads('{"invalid": json}')
+kecuali JSONDecodeError sebagai e
+    tampilkan f"JSON Error: {e}"
 selesai
 ```
 
-## Complete Examples
+## Contoh Praktis
 
-### API Data Processing
+### Configuration Manager
+
 ```python
-dari json impor loads, dumps, format_json
-dari http impor get
+dari json import load, dump, validate_json
 
-// Fetch data from API
-response = get("https://jsonplaceholder.typicode.com/users")
-users = response.json()
+buat fungsi load_config dengan filename
+    coba
+        dengan open(filename, "r") sebagai file
+            config it load(file)
+            hasil config
+    kecuali FileNotFoundError
+        tampilkan f"File {filename} tidak ditemukan"
+        hasil {}
+    kecuali Exception sebagai e
+        tampilkan f"Error loading config: {e}"
+        hasil {}
+    selesai
+selesai
 
-// Process data
-processed_users = []
-untuk setiap user dari users
-    new_user = {
-        "id": user["id"],
-        "name": user["name"],
-        "email": user["email"],
-        "company": user["company"]["name"]
+buat fungsi save_config dengan config, filename
+    coba
+        dengan open(filename, "w") sebagai file
+            dump(config, file, indent=2, sort_keys=benar)
+        tampilkan f"Config disimpan ke {filename}"
+        hasil benar
+    kecuali Exception sebagai e
+        tampilkan f"Error saving config: {e}"
+        hasil salah
+    selesai
+selesai
+
+// Penggunaan
+config it load_config("app_config.json")
+config["app_name"] it "MyRenzMcApp"
+config["version"] it "1.0.0"
+config["debug"] it benar
+
+save_config(config, "app_config.json")
+```
+
+### Data Export/Import
+
+```python
+dari json import dumps, loads, format_json
+
+buat fungsi export_data_ke_json dengan data
+    // Add metadata
+    export_data it {
+        "timestamp": waktu(),  // Asumsi ada fungsi waktu()
+        "version": "1.0",
+        "data": data
     }
-    processed_users.tambah(new_user)
+    
+    json_string it format_json(export_data, indent=2)
+    hasil json_string
 selesai
 
-// Convert to formatted JSON
-json_output = format_json(processed_users, indent=2)
-tampilkan json_output
+buat fungsi import_dari_json dengan json_string
+    coba
+        parsed_data it loads(json_string)
+        
+        // Validate structure
+        jika "data" dalam parsed_data
+            hasil parsed_data["data"]
+        lainnya
+            hasil parsed_data
+        selesai
+    kecuali Exception sebagai e
+        tampilkan f"Error importing JSON: {e}"
+        hasil {}
+    selesai
+selesai
 
-// Save to file
-file_handler = buka_file("processed_users.json", "w")
-file_handler.tulis(json_output)
-file_handler.tutup()
+// Data export
+users it [
+    {"id": 1, "name": "Jack", "email": "jack@example.com"},
+    {"id": 2, "name": "Kate", "email": "kate@example.com"}
+]
+
+json_export it export_data_ke_json(users)
+tampilkan "Data exported:"
+tampilkan json_export
+
+// Data import
+imported_data it import_dari_json(json_export)
+tampilkan f"Imported {panjang(imported_data)} users"
 ```
 
-### Configuration Management
-```python
-dari json impor load, dump, validate_json
+### API Response Parser
 
-// Default configuration
-default_config = {
-    "app": {
-        "name": "MyApp",
-        "version": "1.0.0",
-        "debug": salah
-    },
-    "database": {
-        "host": "localhost",
-        "port": 5432,
-        "name": "myapp_db"
-    },
-    "features": {
-        "auth": benar,
-        "logging": benar,
-        "cache": salah
+```python
+dari json import loads, validate_json
+
+buat fungsi parse_api_response dengan response_text
+    // Validate JSON format
+    jika tidak validate_json(response_text)
+        hasil {"error": "Invalid JSON format", "success": salah}
+    selesai
+    
+    coba
+        data it loads(response_text)
+        
+        // Standard API response format
+        response it {
+            "success": benar,
+            "data": data.get("data", data),
+            "message": data.get("message", "Success"),
+            "status_code": data.get("status", 200)
+        }
+        
+        hasil response
+    kecuali Exception sebagai e
+        hasil {"error": f"Parsing error: {e}", "success": salah}
+    selesai
+selesai
+
+// Mock API response
+api_response it '{
+    "status": 200,
+    "message": "Users retrieved successfully",
+    "data": [
+        {"id": 1, "name": "Liam", "role": "admin"},
+        {"id": 2, "name": "Mia", "role": "user"}
+    ],
+    "total": 2
+}'
+
+parsed it parse_api_response(api_response)
+jika parsed["success"]
+    tampilkan f"API Success: {parsed['message']}"
+    tampilkan f"Users: {panjang(parsed['data'])}")
+lainnya
+    tampilkan f"API Error: {parsed['error']}"
+selesai
+```
+
+### Database JSON Backup
+
+```python
+dari json import dump, load
+
+buat fungsi backup_table_ke_json dengan table_data, filename
+    coba
+        dengan open(filename, "w") sebagai file
+            dump(table_data, file, indent=2, ensure_ascii=salah)
+        
+        tampilkan f"Backup berhasil disimpan ke {filename}"
+        hasil benar
+    kecuali Exception sebagai e
+        tampilkan f"Backup gagal: {e}"
+        hasil salah
+    selesai
+selesai
+
+buat fungsi restore_table_dari_json dengan filename
+    coba
+        dengan open(filename, "r") sebagai file
+            table_data it load(file)
+        
+        tampilkan f"Restore berhasil dari {filename}"
+        tampilkan f"Jumlah records: {panjang(table_data)}"
+        hasil table_data
+    kecuali FileNotFoundError
+        tampilkan f"File backup {filename} tidak ditemukan"
+        hasil []
+    kecuali Exception sebagai e
+        tampilkan f"Restore gagal: {e}"
+        hasil []
+    selesai
+selesai
+
+// Mock database table
+users_table it [
+    {"id": 1, "username": "noah", "email": "noah@example.com", "created_at": "2025-01-01"},
+    {"id": 2, "username": "olivia", "email": "olivia@example.com", "created_at": "2025-01-02"},
+    {"id": 3, "username": "peter", "email": "peter@example.com", "created_at": "2025-01-03"}
+]
+
+// Backup
+backup_table_ke_json(users_table, "users_backup.json")
+
+// Restore (simulasi)
+restored_users it restore_table_dari_json("users_backup.json")
+tampilkan f"Restored {panjang(restored_users)} users"
+```
+
+### JSON Schema Validator
+
+```python
+dari json import loads, validate_json
+
+buat fungsi validate_json_schema dengan json_data, schema
+    // Validasi basic JSON format
+    jika tidak validate_json(json_data)
+        hasil {"valid": salah, "error": "Invalid JSON format"}
+    selesai
+    
+    coba
+        data it loads(json_data)
+        errors it []
+        
+        // Check required fields
+        jika "required" dalam schema
+            untuk setiap field dari schema["required"]
+                jika field tidak dalam data
+                    tambah(errors, f"Field required '{field}' tidak ada")
+                selesai
+            selesai
+        selesai
+        
+        // Check field types
+        jika "properties" dalam schema
+            untuk setiap (field, field_schema) dari item(schema["properties"])
+                jika field dalam data
+                    expected_type it field_schema.get("type")
+                    actual_value it data[field]
+                    
+                    jika expected_type == "string" dan jenis(actual_value) != "str"
+                        tambah(errors, f"Field '{field}' harus string")
+                    selesai
+                    
+                    jika expected_type == "number" dan jenis(actual_value) not in ["int", "float"]
+                        tambah(errors, f"Field '{field}' harus number")
+                    selesai
+                    
+                    jika expected_type == "boolean" dan jenis(actual_value) != "bool"
+                        tambah(errors, f"Field '{field}' harus boolean")
+                    selesai
+                selesai
+            selesai
+        selesai
+        
+        jika panjang(errors) > 0
+            hasil {"valid": salah, "errors": errors}
+        lainnya
+            hasil {"valid": benar, "data": data}
+        selesai
+        
+    kecuali Exception sebagai e
+        hasil {"valid": salah, "error": f"Validation error: {e}"}
+    selesai
+selesai
+
+// Schema definition
+user_schema it {
+    "type": "object",
+    "required": ["nama", "email", "umur"],
+    "properties": {
+        "nama": {"type": "string"},
+        "email": {"type": "string"},
+        "umur": {"type": "number"},
+        "aktif": {"type": "boolean"}
     }
 }
 
-// Save default config
-file_handler = buka_file("config.json", "w")
-dump(default_config, file_handler, indent=4, sort_keys=benar)
-file_handler.tutup()
+// Test data
+valid_user it '{"nama": "Quinn", "email": "quinn@example.com", "umur": 25, "aktif": true}'
+invalid_user it '{"nama": "Rachel", "umur": "thirty"}'  // Email missing, umur bukan number
 
-// Load and validate config
-file_handler = buka_file("config.json", "r")
-config_data = file_handler.baca()
-file_handler.tutup()
+validation1 it validate_json_schema(valid_user, user_schema)
+tampilkan validation1
 
-jika validate_json(config_data)
-    config = load(config_data)
-    tampilkan "Configuration loaded successfully"
-    tampilkan "App name:", config["app"]["name"]
-    tampilkan "Database host:", config["database"]["host"]
-lainnya
-    tampilkan "Invalid configuration file"
-selesai
+validation2 it validate_json_schema(invalid_user, user_schema)
+tampilkan validation2
 ```
 
-### Data Validation and Cleaning
-```python
-dari json impor loads, validate_json, format_json
+## Catatan Penggunaan
 
-// Raw JSON strings (from user input, API, etc.)
-raw_data = [
-    '{"name": "John", "age": 25}',
-    '{"name": "Jane", "age": 30}',
-    '{"invalid": json}',
-    '{"name": "Bob", "age": 35}'
-]
+1. **Impor Diperlukan**: Semua fungsi JSON harus diimpor dari modul json.
 
-// Process and validate data
-valid_data = []
-invalid_count = 0
+2. **Alias Indonesia**: Fungsi memiliki alias Indonesia:
+   - `baca_json()` untuk `loads()`
+   - `tulis_json()` untuk `dumps()`
+   - `baca_dari_file()` untuk `load()`
+   - `tulis_ke_file()` untuk `dump()`
+   - `parser_json()` untuk `JSONDecoder`
+   - `encoder_json()` untuk `JSONEncoder`
+   - `error_json()` untuk `JSONDecodeError`
 
-untuk setiap item dari raw_data
-    jika validate_json(item)
-        data = loads(item)
-        // Ensure required fields
-        jika "name" di data dan "age" di data
-            valid_data.tambah(data)
-        lainnya
-            invalid_count = invalid_count + 1
-    lainnya
-        invalid_count = invalid_count + 1
-selesai
+3. **Tipe Data Support**: JSON support tipe data: object (dict), array (list), string, number, boolean, null.
 
-tampilkan "Valid entries:", panjang(valid_data)
-tampilkan "Invalid entries:", invalid_count
+4. **Unicode**: Set `ensure_ascii=False` untuk support karakter Unicode dalam output.
 
-// Export cleaned data
-cleaned_json = format_json(valid_data, indent=2)
-file_handler = buka_file("cleaned_data.json", "w")
-file_handler.tulis(cleaned_json)
-file_handler.tutup()
-```
+5. **Performance**: Untuk data besar, gunakan `separators=(",", ":")` untuk output yang lebih compact.
 
-## Usage Notes
+6. **Error Handling**: Selalu gunakan try-catch untuk menangani `JSONDecodeError`.
 
-1. **Indonesian Aliases**: All main functions have Indonesian aliases:
-   - `baca_json()` for `loads()`
-   - `tulis_json()` for `dumps()`
-   - `baca_dari_file()` for `load()`
-   - `tulis_ke_file()` for `dump()`
+7. **Circular Reference**: Defaultnya cek circular reference, set `check_circular=False` untuk performa.
 
-2. **Type Support**: JSON supports the following types:
-   - Objects: `{}` (Python dict)
-   - Arrays: `[]` (Python list)
-   - Strings: `""` (Python str)
-   - Numbers: (Python int and float)
-   - Booleans: `true`, `false` (Python bool)
-   - Null: `null` (Python None)
+8. **Custom Types**: Gunakan custom encoder untuk tipe data yang tidak didukung secara default.
 
-3. **Unicode Support**: Set `ensure_ascii=salah` to preserve Unicode characters.
+9. **File Operations**: Gunakan `load()`/`dump()` untuk operasi file, `loads()`/`dumps()` untuk string.
 
-4. **Error Handling**: Always wrap JSON operations in try-catch blocks for production code.
-
-5. **Performance**: Use `load()`/`dump()` for file operations instead of reading entire files into memory.
-
-6. **Validation**: Use `validate_json()` to check JSON validity before parsing.
-
-7. **Formatting**: Use `format_json()` for consistent, readable JSON output.
-
-8. **Minification**: Use `minify_json()` for compact JSON transmission.
+10. **Validation**: Gunakan `validate_json()` untuk quick validation tanpa parsing penuh.

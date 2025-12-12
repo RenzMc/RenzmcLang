@@ -1,253 +1,492 @@
-# Dictionary Functions
+# Fungsi Dictionary Built-in
 
-This document covers all built-in dictionary functions available in RenzMcLang. These functions are always available without importing any modules and provide comprehensive dictionary manipulation capabilities.
+Dokumen ini mencakup semua fungsi dictionary built-in yang tersedia di RenzMcLang. Fungsi-fungsi ini selalu tersedia tanpa perlu mengimpor modul apapun.
 
-## Core Dictionary Functions
+## Fungsi Akses Dictionary
 
 ### kunci()
-Returns all keys from a dictionary as a list.
 
-**Syntax:**
+Mendapatkan semua kunci dari dictionary.
+
+**Sintaks:**
 ```python
 kunci(dictionary)
 ```
 
-**Parameters:**
-- `dictionary` (dict): The dictionary to extract keys from
+**Parameter:**
+- `dictionary` (dict): Dictionary yang akan diambil kuncinya
 
-**Returns:**
-- List: List of all keys in the dictionary
+**Mengembalikan:**
+- List: List berisi semua kunci dalam dictionary
 
-**Examples:**
+**Contoh:**
 ```python
-// Basic key extraction
-profil = {"nama": "John", "umur": 25, "kota": "Jakarta"}
-daftar_kunci = kunci(profil)
-tampilkan daftar_kunci         // Output: ["nama", "umur", "kota"]
+profil itu {
+    "nama": "Budi",
+    "umur": 25,
+    "kota": "Jakarta"
+}
 
-// Mixed key types
-data = {1: "satu", "dua": 2, 3.0: "tiga"}
-keys = kunci(data)
-tampilkan keys                 // Output: [1, "dua", 3.0]
+semua_kunci itu kunci(profil)
+tampilkan semua_kunci  // Output: ["nama", "umur", "kota"]
 
-// Empty dictionary
-kosong = {}
-empty_keys = kunci(kosong)
-tampilkan empty_keys           // Output: []
-
-// Nested dictionary
-nested = {"user": {"id": 1}, "config": {"debug": benar}}
-top_keys = kunci(nested)
-tampilkan top_keys             // Output: ["user", "config"]
+// Iterasi kunci
+untuk setiap key dari kunci(profil)
+    tampilkan f"Kunci: {key}"
+selesai
 ```
+
+**Error:**
+- Melempar `TypeError` jika argumen bukan dictionary
 
 ---
 
 ### nilai()
-Returns all values from a dictionary as a list.
 
-**Syntax:**
+Mendapatkan semua nilai dari dictionary.
+
+**Sintaks:**
 ```python
 nilai(dictionary)
 ```
 
-**Parameters:**
-- `dictionary` (dict): The dictionary to extract values from
+**Parameter:**
+- `dictionary` (dict): Dictionary yang akan diambil nilainya
 
-**Returns:**
-- List: List of all values in the dictionary
+**Mengembalikan:**
+- List: List berisi semua nilai dalam dictionary
 
-**Examples:**
+**Contoh:**
 ```python
-// Basic value extraction
-profil = {"nama": "John", "umur": 25, "kota": "Jakarta"}
-daftar_nilai = nilai(profil)
-tampilkan daftar_nilai         // Output: ["John", 25, "Jakarta"]
+harga_barang itu {
+    "apel": 15000,
+    "jeruk": 12000,
+    "mangga": 20000
+}
 
-// Mixed value types
-data = {"int": 42, "str": "hello", "bool": benar, "list": [1, 2, 3]}
-values = nilai(data)
-tampilkan values               // Output: [42, "hello", benar, [1, 2, 3]]
+semua_nilai itu nilai(harga_barang)
+tampilkan semua_nilai  // Output: [15000, 12000, 20000]
 
-// Empty dictionary
-kosong = {}
-empty_values = nilai(kosong)
-tampilkan empty_values         // Output: []
-
-// Dictionary with None values
-data_none = {"a": 1, "b": None, "c": "test"}
-values_none = nilai(data_none)
-tampilkan values_none          // Output: [1, None, "test"]
+// Hitung total harga
+total itu 0
+untuk setiap harga dari nilai(harga_barang)
+    total itu total + harga
+selesai
+tampilkan f"Total harga: {total}"
 ```
+
+**Error:**
+- Melempar `TypeError` jika argumen bukan dictionary
 
 ---
 
 ### item()
-Returns all key-value pairs from a dictionary as a list of tuples.
 
-**Syntax:**
+Mendapatkan semua pasangan kunci-nilai dari dictionary.
+
+**Sintaks:**
 ```python
 item(dictionary)
 ```
 
-**Parameters:**
-- `dictionary` (dict): The dictionary to extract items from
+**Parameter:**
+- `dictionary` (dict): Dictionary yang akan diambil item-nya
 
-**Returns:**
-- List: List of (key, value) tuples
+**Mengembalikan:**
+- List: List berisi tuple (kunci, nilai)
 
-**Examples:**
+**Contoh:**
 ```python
-// Basic item extraction
-profil = {"nama": "John", "umur": 25, "kota": "Jakarta"}
-daftar_item = item(profil)
-tampilkan daftar_item          // Output: [("nama", "John"), ("umur", 25), ("kota", "Jakarta")]
+siswa itu {
+    "nama": "Alice",
+    "nilai": 85,
+    "kelas": "XII"
+}
 
-// Iterate through items
-data = {"apple": 3, "banana": 5, "cherry": 2}
-items = item(data)
-untuk setiap (key, val) dari items
-    tampilkan f"{key}: {val}"
+semua_item itu item(siswa)
+tampilkan semua_item  // Output: [("nama", "Alice"), ("nilai", 85), ("kelas", "XII")]
+
+// Iterasi item
+untuk setiap (key, value) dari item(siswa)
+    tampilkan f"{key}: {value}"
 selesai
-// Output:
-// apple: 3
-// banana: 5
-// cherry: 2
-
-// Mixed key and value types
-data = {1: "satu", "dua": 2, 3.0: [1, 2, 3]}
-mixed_items = item(data)
-tampilkan mixed_items          // Output: [(1, "satu"), ("dua", 2), (3.0, [1, 2, 3])]
-
-// Empty dictionary
-kosong = {}
-empty_items = item(kosong)
-tampilkan empty_items          // Output: []
-```
-
----
-
-### hapus_kunci()
-Removes a specific key from a dictionary.
-
-**Syntax:**
-```python
-hapus_kunci(dictionary, key)
-```
-
-**Parameters:**
-- `dictionary` (dict): The dictionary to remove from
-- `key` (any): The key to remove
-
-**Returns:**
-- Dict: The modified dictionary (in-place operation)
-
-**Examples:**
-```python
-// Basic key removal
-data = {"nama": "John", "umur": 25, "kota": "Jakarta"}
-hasil = hapus_kunci(data, "umur")
-tampilkan data                 // Output: {"nama": "John", "kota": "Jakarta"}
-tampilkan hasil                // Output: {"nama": "John", "kota": "Jakarta"}
-
-// Remove numeric key
-numbers = {1: "satu", 2: "dua", 3: "tiga"}
-hapus_kunci(numbers, 2)
-tampilkan numbers              // Output: {1: "satu", 3: "tiga"}
-
-// Remove string key
-config = {"debug": benar, "port": 8080, "host": "localhost"}
-hapus_kunci(config, "debug")
-tampilkan config               // Output: {"port": 8080, "host": "localhost"}
-
-// Attempt to remove non-existent key
-data = {"a": 1, "b": 2}
-coba hapus_kunci(data, "c")    // Error: Kunci 'c' tidak ditemukan dalam dictionary
 ```
 
 **Error:**
-- Raises `KeyError` if the key is not found in the dictionary
+- Melempar `TypeError` jika argumen bukan dictionary
 
-## Advanced Dictionary Operations
+## Fungsi Modifikasi Dictionary
 
-### Common Patterns
+### hapus_kunci()
+
+Menghapus kunci dan nilainya dari dictionary.
+
+**Sintaks:**
+```python
+hapus_kunci(dictionary, kunci)
+```
+
+**Parameter:**
+- `dictionary` (dict): Dictionary yang akan dihapus kuncinya
+- `kunci` (apa saja): Kunci yang akan dihapus
+
+**Mengembalikan:**
+- Dictionary: Dictionary yang telah dihapus kuncinya
+
+**Contoh:**
+```python
+data_siswa itu {
+    "nama": "Bob",
+    "umur": 17,
+    "alamat": "Surabaya",
+    "telepon": "08123456789"
+}
+
+// Hapus kunci alamat
+hapus_kunci(data_siswa, "alamat")
+tampilkan data_siswa  // Output: {"nama": "Bob", "umur": 17, "telepon": "08123456789"}
+
+// Hapus kunci telepon
+hapus_kunci(data_siswa, "telepon")
+tampilkan data_siswa  // Output: {"nama": "Bob", "umur": 17}
+```
+
+**Error:**
+- Melempar `TypeError` jika argumen pertama bukan dictionary
+- Melempar `KeyError` jika kunci tidak ditemukan dalam dictionary
+
+## Contoh Praktis
+
+### Database Sederhana
 
 ```python
-// Dictionary iteration patterns
-data = {"apple": 3, "banana": 5, "cherry": 2}
+// Simulasi database user
+database_user itu {}
 
-// Iterate using kunci()
-untuk setiap key dari kunci(data)
-    value = data[key]
+// Tambah user
+database_user["user1"] itu {
+    "nama": "Alice Johnson",
+    "email": "alice@example.com",
+    "umur": 28,
+    "aktif": benar
+}
+
+database_user["user2"] itu {
+    "nama": "Bob Smith",
+    "email": "bob@example.com",
+    "umur": 32,
+    "aktif": benar
+}
+
+// Tampilkan semua user
+tampilkan "Daftar User:"
+untuk setiap user_id dari kunci(database_user)
+    user_data itu database_user[user_id]
+    tampilkan f"ID: {user_id}, Nama: {user_data['nama']}"
+selesai
+
+// Hapus user yang tidak aktif
+database_user["user3"] itu {
+    "nama": "Charlie Brown",
+    "email": "charlie@example.com",
+    "umur": 25,
+    "aktif": salah
+}
+
+// Cari dan hapus user tidak aktif
+user_id_aktif itu []
+untuk setiap user_id dari kunci(database_user)
+    jika database硍_user[user_id]["aktif"] == benar
+        tambah(user_id_aktif, user_id)
+    selesai
+selesai
+
+// Buat database baru hanya user aktif
+database_aktif itu {}
+untuk setiap user_id dari user_id_aktif
+    database_aktif[user_id] itu database_user[user_id]
+selesai
+
+tampilkan f"User aktif: {kunci(database_aktif)}"
+```
+
+### Sistem Inventori
+
+```python
+// Sistem inventori barang
+inventori itu {
+    "Laptop": {"jumlah": 10, "harga": 8500000},
+    "Mouse": {"jumlah": 25, "harga": 150000},
+    "Keyboard": {"jumlah": 15, "harga": 450000},
+    "Monitor": {"jumlah": 8, "harga": 2500000}
+}
+
+// Hitung total nilai inventori
+total_nilai itu 0
+untuk setiap (barang, info) dari item(inventori)
+    nilai_barang itu info["jumlah"] * info["harga"]
+    total_nilai itu total_nilai + nilai_barang
+    tampilkan f"{barang}: {info['jumlah']} unit x Rp {info['harga']} = Rp {nilai_barang}"
+selesai
+
+tampilkan f"Total nilai inventori: Rp {total_nilai}"
+
+// Cari barang dengan stok terbanyak
+stok_terbanyak itu 0
+barang_terbanyak itu ""
+
+untuk setiap (barang, info) dari item(inventori)
+    jika info["jumlah"] > stok_terbanyak
+        stok_terbanyak itu info["jumlah"]
+        barang_terbanyak itu barang
+    selesai
+selesai
+
+tampilkan f"Barang dengan stok terbanyak: {barang_terbanyak} ({stok_terbanyak} unit)"
+
+// Hapus barang dengan stok 0
+inventori["Printer"] itu {"jumlah": 0, "harga": 1200000}
+barang_stok_kosong itu []
+
+untuk setiap barang dari kunci(inventori)
+    jika inventori[barang]["jumlah"] == 0
+        tambah(barang_stok_kosong, barang)
+    selesai
+selesai
+
+// Hapus barang stok kosong
+untuk setiap barang dari barang_stok_kosong
+    hapus_kunci(inventori, barang)
+selesai
+
+tampilkan f"Inventori setelah dibersihkan: {kunci(inventori)}"
+```
+
+### Konfigurasi Aplikasi
+
+```python
+// Konfigurasi default aplikasi
+konfig_default itu {
+    "database_host": "localhost",
+    "database_port": 5432,
+    "database_name": "myapp",
+    "debug_mode": salah,
+    "max_connections": 100,
+    "timeout": 30
+}
+
+// Konfigurasi user (override default)
+konfig_user itu {
+    "database_host": "production-server.com",
+    "debug_mode": benar,
+    "max_connections": 200
+}
+
+// Gabungkan konfigurasi
+konfig_final it salin(konfig_default)
+
+// Override dengan konfigurasi user
+untuk setiap (key, value) dari item(konfig_user)
+    konfig_final[key] itu value
+selesai
+
+tampilkan "Konfigurasi Final:"
+untuk setiap (key, value) dari item(konfig_final)
     tampilkan f"{key}: {value}"
 selesai
 
-// Iterate using nilai() 
-untuk setiap value dari nilai(data)
-    tampilkan f"Value: {value}"
+// Validasi konfigurasi
+validasi_errors itu []
+
+// Cek host tidak kosong
+jika konfig_final["database_host"] == ""
+    tambah(validasi_errors, "Database host tidak boleh kosong")
 selesai
 
-// Iterate using item()
-untuk setiap (key, value) dari item(data)
-    tampilkan f"{key} => {value}"
+// Cek port dalam range
+port itu konfig_final["database_port"]
+jika port < 1 atau port > 65535
+    tambah(validasi_errors, "Database port harus antara 1-65535")
 selesai
 
-// Dictionary filtering
-scores = {"math": 90, "english": 85, "science": 95}
-passed_keys = []
-untuk setiap (subject, score) dari item(scores)
-    jika score >= 90
-        tambah(passed_keys, subject)
+// Cek max_connections positif
+jika konfig_final["max_connections"] <= 0
+    tambah(validasi_errors, "Max connections harus positif")
+selesai
+
+jika panjang(validasi_errors) > 0
+    tampilkan "Error validasi konfigurasi:"
+    untuk setiap error dari validasi_errors
+        tampilkan f"- {error}"
     selesai
+lainnya
+    tampilkan "Konfigurasi valid!"
 selesai
-tampilkan passed_keys          // Output: ["math", "science"]
 ```
 
-### Dictionary Transformations
+### Analisis Data Statistik
 
 ```python
-// Transform keys to uppercase
-data = {"name": "John", "age": 25}
-upper_keys = {}
-untuk setiap (key, value) dari item(data)
-    new_key = huruf_besar(key)
-    upper_keys[new_key] = value
-selesai
-tampilkan upper_keys           // Output: {"NAME": "John", "AGE": 25}
+// Data penjualan per bulan
+penjualan itu {
+    "Januari": 15000000,
+    "Februari": 18500000,
+    "Maret": 22000000,
+    "April": 19500000,
+    "Mei": 25000000,
+    "Juni": 28000000
+}
 
-// Filter dictionary values
-numbers = {"a": 1, "b": 2, "c": 3, "d": 4}
-even_numbers = {}
-untuk setiap (key, value) dari item(numbers)
-    jika value % 2 == 0
-        even_numbers[key] = value
+// Statistik dasar
+nilai_penjualan itu nilai(penjualan)
+bulan_penjualan itu kunci(penjualan)
+
+// Total penjualan
+total itu 0
+untuk setiap nilai dari nilai_penjualan
+    total itu total + nilai
+selesai
+tampilkan f"Total penjualan: Rp {total}"
+
+// Rata-rata penjualan
+rata_rata itu total / panjang(nilai_penjualan)
+tampilkan f"Rata-rata penjualan: Rp {rata_rata}"
+
+// Penjualan tertinggi
+penjualan_tertinggi it max(nilai_penjualan)
+indeks_tertinggi it indeks(nilai_penjualan, penjualan_tertinggi)
+bulan_tertinggi it bulan_penjualan[indeks_tertinggi]
+tampilkan f"Penjualan tertinggi: {bulan_tertinggi} (Rp {penjualan_tertinggi})"
+
+// Penjualan terendah
+penjualan_terendah it min(nilai_penjualan)
+indeks_terendah it indeks(nilai_penjualan, penjualan_terendah)
+bulan_terendah it bulan_penjualan[indeks_terendah]
+tampilkan f"Penjualan terendah: {bulan_terendah} (Rp {penjualan_terendah})"
+
+// Cari bulan dengan penjualan di atas rata-rata
+bulan_diatas_rata it []
+untuk setiap (bulan, nilai) dari item(penjualan)
+    jika nilai > rata_rata
+        tambah(bulan_diatas_rata, bulan)
     selesai
 selesai
-tampilkan even_numbers         // Output: {"b": 2, "d": 4}
 
-// Merge dictionaries using kunci() and nilai()
-dict1 = {"a": 1, "b": 2}
-dict2 = {"c": 3, "d": 4}
-merged = {}
-untuk setiap key dari kunci(dict1)
-    merged[key] = dict1[key]
+tampilkan f"Bulan dengan penjualan di atas rata-rata: {bulan_diatas_rata}"
+
+// Persentase kenaikan dari bulan sebelumnya
+kenaikan_persen it {}
+bulan_list it kunci(penjualan)
+untuk i dari 1 sampai panjang(bulan_list) - 1
+    bulan_sekarang it bulan_list[i]
+    bulan_sebelumnya it bulan_list[i-1]
+    nilai_sekarang it penjualan[bulan_sekarang]
+    nilai_sebelumnya it penjualan[bulan_sebelumnya]
+    
+    persentase it ((nilai_sekarang - nilai_sebelumnya) / nilai_sebelumnya) * 100
+    kenaikan_persen[bulan_sekarang] it persentase
 selesai
-untuk setiap key dari kunci(dict2)
-    merged[key] = dict2[key]
+
+tampilkan "Persentase kenaikan penjualan:"
+untuk setiap (bulan, persen) dari item(kenaikan_persen)
+    tampilkan f"{bulan}: {persen:.2f}%"
 selesai
-tampilkan merged               // Output: {"a": 1, "b": 2, "c": 3, "d": 4}
 ```
 
-## Performance Notes
+### Cache Manager
 
-- **kunci()**: Returns a new list, O(n) complexity where n is number of keys
-- **nilai()**: Returns a new list, O(n) complexity where n is number of values  
-- **item()**: Returns a new list of tuples, O(n) complexity
-- **hapus_kunci()**: Modifies dictionary in-place, O(1) average case for hash table operations
+```python
+// Sistem cache sederhana
+cache it {}
+cache_max_size it 100
+cache_ttl it 300  // 5 menit dalam detik
 
-## Best Practices
+buat fungsi simpan_cache dengan key, value
+    // Hapus cache lama jika penuh
+    jika panjang(kunci(cache)) >= cache_max_size
+        // Hapus 10% cache tertua
+        hapus_count it cache_max_size // 10
+        cache_keys it kunci(cache)
+        
+        untuk i dari 0 sampai hapus_count - 1
+            jika i < panjang(cache_keys)
+                hapus_kunci(cache, cache_keys[i])
+            selesai
+        selesai
+    selesai
+    
+    // Simpan dengan timestamp
+    cache[key] it {
+        "value": value,
+        "timestamp": waktu()  // waktu() fungsi untuk mendapatkan epoch time
+    }
+selesai
 
-1. **Use item() for iteration**: Most efficient way to iterate through key-value pairs
-2. **Avoid unnecessary conversions**: Access dictionary directly when you don't need lists
-3. **Check key existence**: Use `di` operator before calling `hapus_kunci()` to avoid KeyError
-4. **Memory efficiency**: Large dictionaries may consume significant memory when converted to lists
+buat fungsi ambil_cache dengan key
+    jika key dalam cache
+        cache_item it cache[key]
+        usia it waktu() - cache_item["timestamp"]
+        
+        jika usia < cache_ttl
+            hasil cache_item["value"]
+        lainnya
+            hapus_kunci(cache, key)
+            hasil "Cache expired"
+        selesai
+    lainnya
+        hasil "Cache miss"
+    selesai
+selesai
+
+buat fungsi clear_cache_expired
+    cache_keys it kunci(cache)
+    expired_keys it []
+    
+    untuk setiap key dari cache_keys
+        cache_item it cache[key]
+        usia it waktu() - cache_item["timestamp"]
+        
+        jika usia >= cache_ttl
+            tambah(expired_keys, key)
+        selesai
+    selesai
+    
+    untuk setiap key dari expired_keys
+        hapus_kunci(cache, key)
+    selesai
+    
+    tampilkan f"Dihapus {panjang(expired_keys)} cache expired"
+selesai
+
+// Penggunaan cache
+simpan_cache("user:123", {"nama": "Alice", "umur": 28})
+simpan_cache("product:456", {"nama": "Laptop", "harga": 8500000})
+simpan_cache("settings:theme", "dark")
+
+user_data it ambil_cache("user:123")
+tampilkan f"Data user: {user_data}"
+
+product_data it ambil_cache("product:999")  // Tidak ada
+tampilkan f"Data product: {product_data}"
+
+tampilkan f"Cache keys: {kunci(cache)}"
+clear_cache_expired()
+```
+
+## Catatan Penggunaan
+
+1. **Return Type**: Fungsi `kunci()`, `nilai()`, dan `item()` mengembalikan list, bukan view object seperti Python.
+
+2. **Modifikasi In-place**: Fungsi `hapus_kunci()` memodifikasi dictionary asli.
+
+3. **Order Preservation**: Order kunci dipertahankan (Python 3.7+).
+
+4. **Type Safety**: Fungsi memvalidasi tipe input dan memberikan pesan error dalam bahasa Indonesia.
+
+5. **Key Uniqueness**: Dictionary tidak boleh memiliki kunci duplikat.
+
+6. **Hashable Keys**: Kunci harus berupa objek yang dapat di-hash (string, number, tuple).
+
+7. **Performance**: Fungsi-fungsi ini dioptimasi untuk performa dan langsung dipetakan ke method dict Python.
+
+8. **Memory Usage**: Gunakan fungsi ini dengan bijak untuk dictionary yang sangat besar.

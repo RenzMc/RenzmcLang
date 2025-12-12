@@ -1,434 +1,448 @@
-# System Functions
+# Fungsi Sistem Built-in
 
-This document covers all built-in system functions available in RenzMcLang. These functions provide system-level operations, file handling, time operations, and command execution capabilities.
+Dokumen ini mencakup semua fungsi sistem built-in yang tersedia di RenzMcLang. Fungsi-fungsi ini menyediakan operasi tingkat sistem, penanganan file, operasi waktu, dan kemampuan eksekusi perintah.
 
-## Core System Functions
+## Fungsi Sistem Inti
 
 ### waktu()
-Returns the current Unix timestamp.
 
-**Syntax:**
+Mengembalikan timestamp Unix saat ini.
+
+**Sintaks:**
 ```python
 waktu()
 ```
 
-**Returns:**
-- Float: Current Unix timestamp in seconds
+**Mengembalikan:**
+- Float: Timestamp Unix saat ini dalam detik
 
-**Examples:**
+**Contoh:**
 ```python
-// Get current timestamp
-timestamp = waktu()
-tampilkan timestamp         // Output: 1703123456.789 (example)
+// Dapatkan timestamp saat ini
+timestamp it waktu()
+tampilkan timestamp         // Output: 1703123456.789 (contoh)
 
-// Use for timing operations
-start = waktu()
-// Do some work
-end = waktu()
-elapsed = end - start
-tampilkan f"Elapsed time: {elapsed} seconds"
+// Gunakan untuk operasi timing
+start it waktu()
+// Lakukan beberapa pekerjaan
+end it waktu()
+elapsed it end - start
+tampilkan f"Waktu yang berlalu: {elapsed} detik"
 ```
 
 ---
 
 ### tidur()
-Pauses execution for a specified number of seconds.
 
-**Syntax:**
+Menjeda eksekusi untuk jumlah detik tertentu.
+
+**Sintaks:**
 ```python
-tidur(seconds)
+tidur(detik)
 ```
 
-**Parameters:**
-- `seconds` (number): Number of seconds to pause
+**Parameter:**
+- `detik` (number): Jumlah detik untuk menjeda
 
-**Examples:**
+**Contoh:**
 ```python
-// Pause for 2 seconds
-tampilkan "Starting..."
+// Jeda 2 detik
+tampilkan "Memulai..."
 tidur(2)
-tampilkan "Done!"
+tampilkan "Selesai!"
 
-// Pause for half a second
+// Jeda setengah detik
 tidur(0.5)
 
-// Pause with user feedback
-tampilkan "Processing data..."
+// Jeda dengan feedback pengguna
+tampilkan "Memproses data..."
 tidur(1)
-tampilkan "Data processed!"
+tampilkan "Data diproses!"
 ```
 
 ---
 
 ### tanggal()
-Returns the current date and time as a formatted string.
 
-**Syntax:**
+Mengembalikan tanggal dan waktu saat ini sebagai string yang diformat.
+
+**Sintaks:**
 ```python
 tanggal()
 ```
 
-**Returns:**
-- String: Current date and time in "YYYY-MM-DD HH:MM:SS" format
+**Mengembalikan:**
+- String: Tanggal dan waktu saat ini dalam format "YYYY-MM-DD HH:MM:SS"
 
-**Examples:**
+**Contoh:**
 ```python
-// Get current date and time
-sekarang = tanggal()
+// Dapatkan tanggal dan waktu saat ini
+sekarang it tanggal()
 tampilkan sekarang           // Output: "2024-01-15 14:30:25"
 
-// Use in logging
-log_message = f"[{tanggal()}] Application started"
+// Gunakan dalam logging
+log_message it f"[{tanggal()}] Aplikasi dimulai"
 tampilkan log_message
 ```
 
 ---
 
 ### buat_uuid()
-Generates a unique UUID (Universally Unique Identifier).
 
-**Syntax:**
+Menghasilkan UUID yang unik (Universally Unique Identifier).
+
+**Sintaks:**
 ```python
 buat_uuid()
 ```
 
-**Returns:**
-- String: UUID string in standard format
+**Mengembalikan:**
+- String: String UUID dalam format standar
 
-**Examples:**
+**Contoh:**
 ```python
-// Generate unique identifier
-session_id = buat_uuid()
+// Hasilkan identifier unik
+session_id it buat_uuid()
 tampilkan session_id         // Output: "550e8400-e29b-41d4-a716-446655440000"
 
-// Use for unique filenames
-filename = f"data_{buat_uuid()}.json"
+// Gunakan untuk filename unik
+filename it f"data_{buat_uuid()}.json"
 tampilkan filename          // Output: "data_550e8400-e29b-41d4-a716-446655440000.json"
 
-// Use for transaction IDs
-transaction_id = buat_uuid()
-tampilkan f"Transaction ID: {transaction_id}"
+// Gunakan untuk ID transaksi
+transaction_id it buat_uuid()
+tampilkan f"ID Transaksi: {transaction_id}"
 ```
 
-## File Operations
+## Operasi File
 
 ### buka() / open_file()
-Opens a file for reading or writing operations.
 
-**Syntax:**
+Membuka file untuk operasi membaca atau menulis.
+
+**Sintaks:**
 ```python
 buka(nama_file, mode)
 open_file(nama_file, mode)
 ```
 
-**Parameters:**
-- `nama_file` (string): Path to the file
-- `mode` (string, optional): File open mode (default: "r")
-  - "r": Read mode (default)
-  - "w": Write mode (overwrites existing file)
-  - "a": Append mode
-  - "r+": Read and write mode
-  - "w+": Write and read mode
-  - "a+": Append and read mode
+**Parameter:**
+- `nama_file` (string): Path ke file
+- `mode` (string, opsional): Mode buka file (default: "r")
+  - "r": Mode baca (default)
+  - "w": Mode tulis (menimpa file yang ada)
+  - "a": Mode tambah
+  - "r+": Mode baca dan tulis
+  - "w+": Mode tulis dan baca
+  - "a+": Mode tambah dan baca
 
-**Returns:**
-- File object: File handle for operations
+**Mengembalikan:**
+- File object: Handle file untuk operasi
 
-**Examples:**
+**Contoh:**
 ```python
-// Read from file
-file = buka("data.txt")
-content = file.baca()
+// Baca dari file
+file it buka("data.txt")
+content it file.baca()
 file.tutup()
 tampilkan content
 
-// Write to file
-file = buka("output.txt", "w")
+// Tulis ke file
+file it buka("output.txt", "w")
 file.tulis("Hello, World!")
 file.tutup()
 
-// Append to file
-file = buka("log.txt", "a")
-file.tulis(f"[{tanggal()}] New entry\n")
+// Tambah ke file
+file it buka("log.txt", "a")
+file.tulis(f"[{tanggal()}] Entri baru\n")
 file.tutup()
 
-// Using English alias
-file = open_file("config.json", "r")
-config_data = file.baca()
+// Menggunakan alias Inggris
+file it open_file("config.json", "r")
+config_data it file.baca()
 file.tutup()
 
-// Context manager style (if supported)
+// Gaya context manager (jika didukung)
 dengan buka("data.txt") sebagai file
-    content = file.baca()
+    content it file.baca()
     tampilkan content
 selesai
 ```
 
-## Command Execution Functions
+## Fungsi Eksekusi Perintah
 
 ### jalankan_perintah()
-Executes a system command with security controls.
 
-**Syntax:**
+Menjalankan perintah sistem dengan kontrol keamanan.
+
+**Sintaks:**
 ```python
-jalankan_perintah(command, shell, capture_output)
+jalankan_perintah(perintah, shell, capture_output)
 ```
 
-**Parameters:**
-- `command` (string): Command to execute
-- `shell` (boolean, optional): Use shell for execution (default: benar)
-- `capture_output` (boolean, optional): Capture command output (default: benar)
+**Parameter:**
+- `perintah` (string): Perintah untuk dieksekusi
+- `shell` (boolean, opsional): Gunakan shell untuk eksekusi (default: benar)
+- `capture_output` (boolean, opsional): Tangkap output perintah (default: benar)
 
-**Returns:**
-- Dict: Result containing:
-  - "stdout": Standard output
-  - "stderr": Standard error
-  - "returncode": Exit code
+**Mengembalikan:**
+- Dict: Hasil berisi:
+  - "stdout": Output standar
+  - "stderr": Error standar
+  - "returncode": Kode keluar
 
-**Examples:**
+**Contoh:**
 ```python
-// Execute safe command
-result = jalankan_perintah("ls -la")
+// Jalankan perintah aman
+result it jalankan_perintah("ls -la")
 tampilkan result["stdout"]
 
-// Check command result
-result = jalankan_perintah("echo 'Hello World'")
+// Periksa hasil perintah
+result it jalankan_perintah("echo 'Hello World'")
 tampilkan result["stdout"]    // Output: "Hello World\n"
 tampilkan result["returncode"] // Output: 0
 
-// Handle command errors
-result = jalankan_perintah("cat nonexistent.txt")
-tampilkan result["stderr"]    // Error message
-tampilkan result["returncode"] // Non-zero exit code
+// Tangani error perintah
+result it jalankan_perintah("cat nonexistent.txt")
+tampilkan result["stderr"]    // Pesan error
+tampilkan result["returncode"] // Kode keluar bukan nol
 
-// Execute command with custom shell
-result = jalankan_perintah("python --version", shell=benar)
-tampilkan result["stdout"]    // Python version info
+// Jalankan perintah dengan shell kustom
+result it jalankan_perintah("python --version", shell=benar)
+tampilkan result["stdout"]    // Info versi Python
 ```
 
-## Security Functions
+## Fungsi Keamanan
 
 ### atur_sandbox()
-Enables or disables sandbox mode for command execution.
 
-**Syntax:**
+Mengaktifkan atau menonaktifkan mode sandbox untuk eksekusi perintah.
+
+**Sintaks:**
 ```python
-atur_sandbox(enabled)
+atur_sandbox(diaktifkan)
 ```
 
-**Parameters:**
-- `enabled` (boolean, optional): Enable sandbox (default: benar)
+**Parameter:**
+- `diaktifkan` (boolean, opsional): Aktifkan sandbox (default: benar)
 
-**Returns:**
-- Boolean: Current sandbox status
+**Mengembalikan:**
+- Boolean: Status sandbox saat ini
 
-**Examples:**
+**Contoh:**
 ```python
-// Enable sandbox
-status = atur_sandbox(benar)
+// Aktifkan sandbox
+status it atur_sandbox(benar)
 tampilkan status            // Output: benar
 
-// Disable sandbox
-status = atur_sandbox(salah)
+// Nonaktifkan sandbox
+status it atur_sandbox(salah)
 tampilkan status            // Output: salah
 
-// Check current status
-is_sandboxed = atur_sandbox()
-tampilkan f"Sandbox enabled: {is_sandboxed}"
+// Periksa status saat ini
+is_sandboxed it atur_sandbox()
+tampilkan f"Sandbox diaktifkan: {is_sandboxed}"
 ```
+
+---
 
 ### tambah_perintah_aman()
-Adds a command to the safe commands list.
 
-**Syntax:**
+Menambahkan perintah ke daftar perintah aman.
+
+**Sintaks:**
 ```python
-tambah_perintah_aman(command)
+tambah_perintah_aman(perintah)
 ```
 
-**Parameters:**
-- `command` (string): Command to add to safe list
+**Parameter:**
+- `perintah` (string): Perintah untuk ditambahkan ke daftar aman
 
-**Returns:**
-- Boolean: True if added successfully
+**Mengembalikan:**
+- Boolean: True jika berhasil ditambahkan
 
-**Examples:**
+**Contoh:**
 ```python
-// Add custom safe command
+// Tambah perintah aman kustom
 tambah_perintah_aman("python")
 tambah_perintah_aman("node")
 tambah_perintah_aman("npm")
 
-// Now these commands can be executed in sandbox mode
+// Sekarang perintah ini dapat dieksekusi dalam mode sandbox
 atur_sandbox(benar)
-result = jalankan_perintah("python --version")
+result it jalankan_perintah("python --version")
 tampilkan result["stdout"]
 ```
 
-### hapus_perintah_aman()
-Removes a command from the safe commands list.
+---
 
-**Syntax:**
+### hapus_perintah_aman()
+
+Menghapus perintah dari daftar perintah aman.
+
+**Sintaks:**
 ```python
-hapus_perintah_aman(command)
+hapus_perintah_aman(perintah)
 ```
 
-**Parameters:**
-- `command` (string): Command to remove from safe list
+**Parameter:**
+- `perintah` (string): Perintah untuk dihapus dari daftar aman
 
-**Returns:**
-- Boolean: True if removed successfully, False if not found
+**Mengembalikan:**
+- Boolean: True jika berhasil dihapus, False jika tidak ditemukan
 
-**Examples:**
+**Contoh:**
 ```python
-// Remove command from safe list
-success = hapus_perintah_aman("python")
+// Hapus perintah dari daftar aman
+success it hapus_perintah_aman("python")
 tampilkan success            // Output: benar
 
-// Try to remove non-existent command
-success = hapus_perintah_aman("nonexistent")
+// Coba hapus perintah yang tidak ada
+success it hapus_perintah_aman("nonexistent")
 tampilkan success            // Output: salah
 ```
 
-## System Information Operations
+## Operasi Informasi Sistem
 
-### Safe Commands List
-By default, the following commands are safe to execute in sandbox mode:
-- `ls` - List directory contents
-- `cat` - Display file contents
-- `echo` - Display message
-- `pwd` - Print working directory
-- `date` - Display date and time
-- `whoami` - Display current user
-- `uname` - Display system information
-- `grep` - Search text patterns
-- `find` - Find files
-- `wc` - Word count
-- `head` - Display first lines
-- `tail` - Display last lines
-- `sort` - Sort lines
-- `uniq` - Remove duplicate lines
+### Daftar Perintah Aman
 
-## Advanced Usage Examples
+Secara default, perintah berikut aman untuk dieksekusi dalam mode sandbox:
+- `ls` - Tampilkan konten direktori
+- `cat` - Tampilkan konten file
+- `echo` - Tampilkan pesan
+- `pwd` - Cetak direktori kerja
+- `date` - Tampilkan tanggal dan waktu
+- `whoami` - Tampilkan pengguna saat ini
+- `uname` - Tampilkan informasi sistem
+- `grep` - Cari pola teks
+- `find` - Cari file
+- `wc` - Hitung kata
+- `head` - Tampilkan baris pertama
+- `tail` - Tampilkan baris terakhir
+- `sort` - Urutkan baris
+- `uniq` - Hapus baris duplikat
 
-### File Processing Pipeline
+## Contoh Penggunaan Lanjutan
+
+### Pipeline Pemrosesan File
 
 ```python
-// Process multiple files with timing
-start_time = waktu()
+// Proses multiple file dengan timing
+start_time it waktu()
 
-files = ["data1.txt", "data2.txt", "data3.txt"]
-results = []
+files it ["data1.txt", "data2.txt", "data3.txt"]
+results it []
 
 untuk setiap filename dari files
-    tampilkan f"Processing {filename}..."
+    tampilkan f"Memproses {filename}..."
     
-    file = buka(filename, "r")
-    content = file.baca()
+    file it buka(filename, "r")
+    content it file.baca()
     file.tutup()
     
-    // Process content
-    processed = huruf_besar(content)
+    // Proses konten
+    processed it huruf_besar(content)
     results.append(processed)
     
-    tidur(0.1)  // Brief pause
+    tidur(0.1)  // Jeda singkat
 selesai
 
-end_time = waktu()
-elapsed = end_time - start_time
+end_time it waktu()
+elapsed it end_time - start_time
 
-tampilkan f"Processed {panjang(files)} files in {elapsed} seconds"
+tampilkan f"Diproses {panjang(files)} file dalam {elapsed} detik"
 ```
 
-### System Monitoring
+### Monitoring Sistem
 
 ```python
-// Create system monitoring function
+// Buat fungsi monitoring sistem
 fungsi monitor_system():
-    timestamp = waktu()
-    date_str = tanggal()
-    session_id = buat_uuid()
+    timestamp it waktu()
+    date_str it tanggal()
+    session_id it buat_uuid()
     
-    tampilkan f"=== System Monitor ==="
-    tampilkan f"Time: {date_str}"
+    tampilkan f"=== Monitor Sistem ==="
+    tampilkan f"Waktu: {date_str}"
     tampilkan f"Timestamp: {timestamp}"
-    tampilkan f"Session: {session_id}"
+    tampilkan f"Sesi: {session_id}"
     
-    // Get system info
-    hasil whoami = jalankan_perintah("whoami")
-    tampilkan f"User: {hasil['stdout'].strip()}"
+    // Dapatkan info sistem
+    hasil whoami it jalankan_perintah("whoami")
+    tampilkan f"Pengguna: {hasil['stdout'].strip()}"
     
-    hasil uname = jalankan_perintah("uname -a")
-    tampilkan f"System: {hasil['stdout'].strip()}"
+    hasil uname it jalankan_perintah("uname -a")
+    tampilkan f"Sistem: {hasil['stdout'].strip()}"
 selesai
 
-// Run monitoring
+// Jalankan monitoring
 monitor_system()
 ```
 
-### Secure File Operations
+### Operasi File Aman
 
 ```python
-// Secure file backup with UUID
+// Backup file aman dengan UUID
 fungsi backup_file(filepath):
-    // Validate file exists
+    // Validasi file ada
     coba
-        original = buka(filepath, "r")
-        content = original.baca()
+        original it buka(filepath, "r")
+        content it original.baca()
         original.tutup()
     except
-        tampilkan "Error: File not found or not readable"
+        tampilkan "Error: File tidak ditemukan atau tidak dapat dibaca"
         hasil salah
     selesai
     
-    // Create backup with UUID
-    backup_name = f"backup_{buat_uuid()}_{filepath}"
-    backup = buka(backup_name, "w")
+    // Buat backup dengan UUID
+    backup_name it f"backup_{buat_uuid()}_{filepath}"
+    backup it buka(backup_name, "w")
     backup.tulis(content)
     backup.tutup()
     
-    tampilkan f"Backup created: {backup_name}"
+    tampilkan f"Backup dibuat: {backup_name}"
     hasil benar
 selesai
 
-// Usage
+// Penggunaan
 backup_file("important.txt")
 ```
 
-## Security Considerations
+## Pertimbangan Keamanan
 
-1. **Sandbox Mode**: Always enable sandbox mode for untrusted code
-2. **Command Validation**: Only execute commands from the safe list
-3. **File Permissions**: Ensure proper file permissions before operations
-4. **Timeout Protection**: Commands have built-in 30-second timeout
-5. **Input Validation**: Validate file paths and command inputs
+1. **Mode Sandbox**: Selalu aktifkan mode sandbox untuk kode tidak tepercaya
+2. **Validasi Perintah**: Hanya eksekusi perintah dari daftar aman
+3. **Izin File**: Pastikan izin file yang benar sebelum operasi
+4. **Perlindungan Timeout**: Perintah memiliki timeout 30 detik built-in
+5. **Validasi Input**: Validasi path file dan input perintah
 
-## Error Handling
+## Penanganan Error
 
 ```python
-// Safe command execution with error handling
+// Eksekusi perintah aman dengan penanganan error
 fungsi safe_execute(command):
     coba
-        result = jalankan_perintah(command)
-        tampilkan "Command executed successfully"
-        tampilkan f"Exit code: {result['returncode']}"
+        result it jalankan_perintah(command)
+        tampilkan "Perintah dieksekusi berhasil"
+        tampilkan f"Kode keluar: {result['returncode']}"
         
         jika result['returncode'] == 0
             tampilkan "Output:"
             tampilkan result['stdout']
         lainnya
-            tampilkan "Error output:"
+            tampilkan "Output error:"
             tampilkan result['stderr']
         selesai
         
     except SecurityError sebagai e
-        tampilkan f"Security error: {e.message}"
+        tampilkan f"Error keamanan: {e.message}"
     except TimeoutError
-        tampilkan "Command timed out"
+        tampilkan "Perintah timeout"
     except Exception sebagai e
-        tampilkan f"Unexpected error: {e}"
+        tampilkan f"Error tak terduga: {e}"
     selesai
 selesai
 
-// Usage
+// Penggunaan
 safe_execute("ls -la")
 ```

@@ -1,530 +1,512 @@
-# List Functions
+# Fungsi List Built-in
 
-This document covers all built-in list functions available in RenzMcLang. These functions are always available without importing any modules and provide comprehensive list manipulation capabilities.
+Dokumen ini mencakup semua fungsi list built-in yang tersedia di RenzMcLang. Fungsi-fungsi ini selalu tersedia tanpa perlu mengimpor modul apapun.
 
-## Core List Functions
+## Fungsi Manipulasi List
 
 ### tambah()
-Adds an item to the end of a list.
 
-**Syntax:**
+Menambahkan item ke akhir list.
+
+**Sintaks:**
 ```python
 tambah(list, item)
 ```
 
-**Parameters:**
-- `list` (list): The list to add to
-- `item` (any): The item to add
+**Parameter:**
+- `list` (list): List yang akan ditambah item
+- `item` (apa saja): Item yang akan ditambahkan
 
-**Returns:**
-- List: The modified list (in-place operation)
+**Mengembalikan:**
+- List: List yang telah ditambah item
 
-**Examples:**
+**Contoh:**
 ```python
-// Basic addition
-daftar1 = [1, 2, 3]
-hasil1 = tambah(daftar1, 4)
-tampilkan daftar1         // Output: [1, 2, 3, 4]
-tampilkan hasil1         // Output: [1, 2, 3, 4]
+buah itu ["apel", "jeruk"]
+tambah(buah, "mangga")
+tampilkan buah  // Output: ["apel", "jeruk", "mangga"]
 
-// Add different types
-daftar2 = ["a", "b"]
-tambah(daftar2, "c")      // daftar2 becomes ["a", "b", "c"]
-tambah(daftar2, 123)      // daftar2 becomes ["a", "b", "c", 123]
-
-// Add list
-daftar3 = [1, 2]
-tambah(daftar3, [3, 4])   // daftar3 becomes [1, 2, [3, 4]]
+// Menambahkan angka
+angka itu [1, 2, 3]
+tambah(angka, 4)
+tampilkan angka  // Output: [1, 2, 3, 4]
 ```
+
+**Error:**
+- Melempar `TypeError` jika argumen pertama bukan list
 
 ---
 
 ### hapus()
-Removes the first occurrence of an item from a list.
 
-**Syntax:**
+Menghapus item pertama yang ditemukan dalam list.
+
+**Sintaks:**
 ```python
 hapus(list, item)
 ```
 
-**Parameters:**
-- `list` (list): The list to remove from
-- `item` (any): The item to remove
+**Parameter:**
+- `list` (list): List yang akan dihapus item
+- `item` (apa saja): Item yang akan dihapus
 
-**Returns:**
-- List: The modified list (in-place operation)
+**Mengembalikan:**
+- List: List yang telah dihapus item
 
-**Examples:**
+**Contoh:**
 ```python
-// Basic removal
-daftar1 = [1, 2, 3, 2, 4]
-hasil1 = hapus(daftar1, 2)
-tampilkan daftar1         // Output: [1, 3, 2, 4]
-tampilkan hasil1         // Output: [1, 3, 2, 4]
+buah itu ["apel", "jeruk", "mangga", "jeruk"]
+hapus(buah, "jeruk")
+tampilkan buah  // Output: ["apel", "mangga", "jeruk"]
 
-// Remove string
-daftar2 = ["a", "b", "c"]
-hapus(daftar2, "b")       // daftar2 becomes ["a", "c"]
-
-// Remove all occurrences (loop)
-daftar3 = [1, 2, 2, 2, 3]
-selama 2 di daftar3
-    hapus(daftar3, 2)
-selesai
-tampilkan daftar3         // Output: [1, 3]
+// Menghapus angka
+angka itu [1, 2, 3, 2, 4]
+hapus(angka, 2)
+tampilkan angka  // Output: [1, 3, 2, 4]
 ```
 
 **Error:**
-- Raises `ValueError` if item is not found in the list
+- Melempar `TypeError` jika argumen pertama bukan list
+- Melempar `ValueError` jika item tidak ditemukan dalam list
 
 ---
 
 ### hapus_pada()
-Removes an item at a specific index from a list.
 
-**Syntax:**
+Menghapus item pada indeks tertentu.
+
+**Sintaks:**
 ```python
-hapus_pada(list, index)
+hapus_pada(list, indeks)
 ```
 
-**Parameters:**
-- `list` (list): The list to remove from
-- `index` (integer): Index of the item to remove
+**Parameter:**
+- `list` (list): List yang akan dihapus item
+- `indeks` (integer): Indeks item yang akan dihapus
 
-**Returns:**
-- List: The modified list (in-place operation)
+**Mengembalikan:**
+- List: List yang telah dihapus item
 
-**Examples:**
+**Contoh:**
 ```python
-// Remove by index
-daftar1 = [1, 2, 3, 4, 5]
-hasil1 = hapus_pada(daftar1, 2)
-tampilkan daftar1         // Output: [1, 2, 4, 5]
+buah itu ["apel", "jeruk", "mangga", "pisang"]
+hapus_pada(buah, 1)  // Hapus indeks 1 ("jeruk")
+tampilkan buah  // Output: ["apel", "mangga", "pisang"]
 
-// Remove first item
-daftar2 = ["a", "b", "c"]
-hapus_pada(daftar2, 0)    // daftar2 becomes ["b", "c"]
-
-// Remove last item (negative index)
-daftar3 = [1, 2, 3]
-hapus_pada(daftar3, -1)   // daftar3 becomes [1, 2]
+// Indeks negatif
+angka itu [10, 20, 30, 40]
+hapus_pada(angka, -1)  // Hapus item terakhir
+tampilkan angka  // Output: [10, 20, 30]
 ```
 
 **Error:**
-- Raises `IndexError` if index is out of range
+- Melempar `TypeError` jika argumen pertama bukan list
+- Melempar `IndexError` jika indeks di luar jangkauan
 
 ---
 
 ### masukkan()
-Inserts an item at a specific index in a list.
 
-**Syntax:**
+Menyisipkan item pada indeks tertentu.
+
+**Sintaks:**
 ```python
-masukkan(list, index, item)
+masukkan(list, indeks, item)
 ```
 
-**Parameters:**
-- `list` (list): The list to insert into
-- `index` (integer): Position to insert at
-- `item` (any): The item to insert
+**Parameter:**
+- `list` (list): List yang akan disisipkan item
+- `indeks` (integer): Indeks tempat penyisipan
+- `item` (apa saja): Item yang akan disisipkan
 
-**Returns:**
-- List: The modified list (in-place operation)
+**Mengembalikan:**
+- List: List yang telah disisipkan item
 
-**Examples:**
+**Contoh:**
 ```python
-// Insert at position
-daftar1 = [1, 3, 4]
-hasil1 = masukkan(daftar1, 1, 2)
-tampilkan daftar1         // Output: [1, 2, 3, 4]
+buah itu ["apel", "pisang"]
+masukkan(buah, 1, "jeruk")  // Sisipkan pada indeks 1
+tampilkan buah  // Output: ["apel", "jeruk", "pisang"]
 
-// Insert at beginning
-daftar2 = ["b", "c"]
-masukkan(daftar2, 0, "a") // daftar2 becomes ["a", "b", "c"]
+// Sisipkan di awal
+angka itu [2, 3, 4]
+masukkan(angka, 0, 1)
+tampilkan angka  // Output: [1, 2, 3, 4]
 
-// Insert at end
-daftar3 = [1, 2]
-masukkan(daftar3, 2, 3)   // daftar3 becomes [1, 2, 3]
-
-// Insert with negative index
-daftar4 = [1, 3, 4]
-masukkan(daftar4, -1, 2)  // daftar4 becomes [1, 3, 2, 4]
+// Sisipkan di akhir
+nama itu ["Alice", "Bob"]
+masukkan(nama, 2, "Charlie")
+tampilkan nama  // Output: ["Alice", "Bob", "Charlie"]
 ```
 
 **Error:**
-- Raises `IndexError` if index is invalid
+- Melempar `TypeError` jika argumen pertama bukan list
+- Melempar `IndexError` jika indeks di luar jangkauan
 
 ---
 
 ### urutkan()
-Sorts a list in ascending or descending order.
 
-**Syntax:**
+Mengurutkan item dalam list.
+
+**Sintaks:**
 ```python
 urutkan(list, terbalik)
 ```
 
-**Parameters:**
-- `list` (list): The list to sort
-- `terbalik` (boolean, optional): Sort in descending order (default: salah)
+**Parameter:**
+- `list` (list): List yang akan diurutkan
+- `terbalik` (boolean, opsional): `benar` untuk urutan terbalik, `salah` untuk urutan normal (default: `salah`)
 
-**Returns:**
-- List: The modified list (in-place operation)
+**Mengembalikan:**
+- List: List yang telah diurutkan
 
-**Examples:**
+**Contoh:**
 ```python
-// Sort ascending (default)
-daftar1 = [3, 1, 4, 1, 5, 9]
-hasil1 = urutkan(daftar1)
-tampilkan daftar1         // Output: [1, 1, 3, 4, 5, 9]
+// Urutan normal
+angka itu [3, 1, 4, 1, 5, 9]
+urutkan(angka)
+tampilkan angka  // Output: [1, 1, 3, 4, 5, 9]
 
-// Sort descending
-daftar2 = [3, 1, 4, 1, 5, 9]
-urutkan(daftar2, benar)   // daftar2 becomes [9, 5, 4, 3, 1, 1]
+// Urutan terbalik
+angka2 itu [3, 1, 4, 1, 5, 9]
+urutkan(angka2, benar)
+tampilkan angka2  // Output: [9, 5, 4, 3, 1, 1]
 
-// Sort strings
-daftar3 = ["zebra", "apple", "banana"]
-urutkan(daftar3)          // daftar3 becomes ["apple", "banana", "zebra"]
-
-// Sort strings descending
-daftar4 = ["zebra", "apple", "banana"]
-urutkan(daftar4, benar)   // daftar4 becomes ["zebra", "banana", "apple"]
+// Mengurutkan string
+buah itu ["jeruk", "apel", "mangga"]
+urutkan(buah)
+tampilkan buah  // Output: ["apel", "jeruk", "mangga"]
 ```
 
 **Error:**
-- Raises `TypeError` if list contains items that cannot be compared
+- Melempar `TypeError` jika argumen pertama bukan list
+- Melempar `TypeError` jika list berisi item yang tidak dapat dibandingkan
 
 ---
 
 ### balikkan()
-Reverses the order of items in a list.
 
-**Syntax:**
+Membalik urutan item dalam list.
+
+**Sintaks:**
 ```python
 balikkan(list)
 ```
 
-**Parameters:**
-- `list` (list): The list to reverse
+**Parameter:**
+- `list` (list): List yang akan dibalik urutannya
 
-**Returns:**
-- List: The modified list (in-place operation)
+**Mengembalikan:**
+- List: List yang telah dibalik urutannya
 
-**Examples:**
+**Contoh:**
 ```python
-// Reverse list
-daftar1 = [1, 2, 3, 4, 5]
-hasil1 = balikkan(daftar1)
-tampilkan daftar1         // Output: [5, 4, 3, 2, 1]
+angka itu [1, 2, 3, 4, 5]
+balikkan(angka)
+tampilkan angka  // Output: [5, 4, 3, 2, 1]
 
-// Reverse strings
-daftar2 = ["a", "b", "c"]
-balikkan(daftar2)         // daftar2 becomes ["c", "b", "a"]
-
-// Reverse already sorted
-daftar3 = [1, 2, 3]
-balikkan(daftar3)         // daftar3 becomes [3, 2, 1]
-```
-
----
-
-### hitung()
-Counts the number of occurrences of an item in a list.
-
-**Syntax:**
-```python
-hitung(list, item)
-```
-
-**Parameters:**
-- `list` (list): The list to search in
-- `item` (any): The item to count
-
-**Returns:**
-- Integer: Number of occurrences
-
-**Examples:**
-```python
-// Count numbers
-daftar1 = [1, 2, 3, 2, 4, 2, 5]
-hasil1 = hitung(daftar1, 2)
-tampilkan hasil1         // Output: 3
-
-// Count strings
-daftar2 = ["a", "b", "a", "c", "a"]
-count_a = hitung(daftar2, "a")
-count_b = hitung(daftar2, "b")
-tampilkan count_a        // Output: 3
-tampilkan count_b        // Output: 1
-
-// Count non-existent item
-daftar3 = [1, 2, 3]
-hasil3 = hitung(daftar3, 5)
-tampilkan hasil3         // Output: 0
-```
-
----
-
-### indeks()
-Returns the index of the first occurrence of an item in a list.
-
-**Syntax:**
-```python
-indeks(list, item)
-```
-
-**Parameters:**
-- `list` (list): The list to search in
-- `item` (any): The item to find
-
-**Returns:**
-- Integer: Index of the first occurrence
-
-**Examples:**
-```python
-// Find index
-daftar1 = [10, 20, 30, 40, 30]
-hasil1 = indeks(daftar1, 30)
-tampilkan hasil1         // Output: 2
-
-// Find string index
-daftar2 = ["a", "b", "c", "d"]
-hasil2 = indeks(daftar2, "c")
-tampilkan hasil2         // Output: 2
-
-// Find first occurrence
-daftar3 = [1, 2, 3, 2, 1]
-hasil3 = indeks(daftar3, 2)
-tampilkan hasil3         // Output: 1
+buah itu ["apel", "jeruk", "mangga"]
+balikkan(buah)
+tampilkan buah  // Output: ["mangga", "jeruk", "apel"]
 ```
 
 **Error:**
-- Raises `ValueError` if item is not found in the list
+- Melempar `TypeError` jika argumen bukan list
 
 ---
 
 ### extend()
-Extends a list by appending elements from an iterable.
 
-**Syntax:**
+Menambahkan semua item dari iterable ke akhir list.
+
+**Sintaks:**
 ```python
 extend(list, iterable)
 ```
 
-**Parameters:**
-- `list` (list): The list to extend
-- `iterable`: Iterable of items to add
+**Parameter:**
+- `list` (list): List yang akan ditambah item
+- `iterable` (iterable): Iterable yang item-nya akan ditambahkan
 
-**Returns:**
-- List: The modified list (in-place operation)
+**Mengembalikan:**
+- List: List yang telah ditambah item
 
-**Examples:**
+**Contoh:**
 ```python
-// Extend with list
-daftar1 = [1, 2, 3]
-hasil1 = extend(daftar1, [4, 5, 6])
-tampilkan daftar1         // Output: [1, 2, 3, 4, 5, 6]
+// Extend dengan list lain
+buah1 itu ["apel", "jeruk"]
+buah2 itu ["mangga", "pisang"]
+extend(buah1, buah2)
+tampilkan buah1  // Output: ["apel", "jeruk", "mangga", "pisang"]
 
-// Extend with tuple
-daftar2 = ["a", "b"]
-extend(daftar2, ("c", "d"))
-tampilkan daftar2         // Output: ["a", "b", "c", "d"]
+// Extend dengan tuple
+angka itu [1, 2, 3]
+extend(angka, (4, 5, 6))
+tampilkan angka  // Output: [1, 2, 3, 4, 5, 6]
 
-// Extend with string (characters)
-daftar3 = [1, 2]
-extend(daftar3, "abc")
-tampilkan daftar3         // Output: [1, 2, "a", "b", "c"]
-
-// Extend with range
-daftar4 = [0]
-extend(daftar4, range(1, 4))
-tampilkan daftar4         // Output: [0, 1, 2, 3]
+// Extend dengan string
+huruf itu ["a", "b"]
+extend(huruf, "cde")
+tampilkan huruf  // Output: ["a", "b", "c", "d", "e"]
 ```
+
+**Error:**
+- Melempar `TypeError` jika argumen pertama bukan list
+
+## Fungsi Pencarian dan Informasi
+
+### hitung()
+
+Menghitung jumlah kemunculan item dalam list.
+
+**Sintaks:**
+```python
+hitung(list, item)
+```
+
+**Parameter:**
+- `list` (list): List yang akan dihitung item-nya
+- `item` (apa saja): Item yang akan dihitung
+
+**Mengembalikan:**
+- Integer: Jumlah kemunculan item
+
+**Contoh:**
+```python
+buah itu ["apel", "jeruk", "apel", "mangga", "apel"]
+jumlah_apel itu hitung(buah, "apel")
+tampilkan jumlah_apel  // Output: 3
+
+angka itu [1, 2, 3, 2, 4, 2, 5]
+jumlah_dua itu hitung(angka, 2)
+tampilkan jumlah_dua  // Output: 3
+
+// Item tidak ditemukan
+jumlah_nol itu hitung(angka, 0)
+tampilkan jumlah_nol  // Output: 0
+```
+
+**Error:**
+- Melempar `TypeError` jika argumen pertama bukan list
 
 ---
 
-### salin()
-Creates a shallow copy of an object.
+### indeks()
 
-**Syntax:**
+Mencari indeks pertama dari item dalam list.
+
+**Sintaks:**
 ```python
-salin(obj)
+indeks(list, item)
 ```
 
-**Parameters:**
-- `obj` (any): Object to copy
+**Parameter:**
+- `list` (list): List yang akan dicari
+- `item` (apa saja): Item yang akan dicari indeksnya
 
-**Returns:**
-- Any: Shallow copy of the object
+**Mengembalikan:**
+- Integer: Indeks pertama dari item
 
-**Examples:**
+**Contoh:**
 ```python
-// Copy list
-original1 = [1, 2, 3]
-copy1 = salin(original1)
-copy1.tambah(4)
-tampilkan original1       // Output: [1, 2, 3]
-tampilkan copy1           // Output: [1, 2, 3, 4]
+buah itu ["apel", "jeruk", "mangga", "pisang"]
+posisi_mangga itu indeks(buah, "mangga")
+tampilkan posisi_mangga  // Output: 2
 
-// Copy string
-text = "Hello"
-copy_text = salin(text)
-tampilkan copy_text       // Output: "Hello"
+angka itu [10, 20, 30, 40, 50]
+posisi_30 itu indeks(angka, 30)
+tampilkan posisi_30  // Output: 2
 
-// Copy number
-num = 42
-copy_num = salin(num)
-tampilkan copy_num        // Output: 42
+// Item duplikat (mengembalikan yang pertama)
+duplikat itu ["a", "b", "c", "b", "d"]
+posisi_b itu indeks(duplikat, "b")
+tampilkan posisi_b  // Output: 1
+```
+
+**Error:**
+- Melempar `TypeError` jika argumen pertama bukan list
+- Melempar `ValueError` jika item tidak ditemukan dalam list
+
+## Fungsi Salin
+
+### salin()
+
+Membuat salinan shallow dari object.
+
+**Sintaks:**
+```python
+salin(objek)
+```
+
+**Parameter:**
+- `objek` (apa saja): Object yang akan disalin
+
+**Mengembalikan:**
+- Object: Salinan shallow dari objek
+
+**Contoh:**
+```python
+// Salin list
+asli itu [1, 2, 3]
+salinan itu salin(asli)
+tampilkan salinan  // Output: [1, 2, 3]
+
+// Modifikasi salinan tidak mempengaruhi asli
+tambah(salinan, 4)
+tampilkan asli     // Output: [1, 2, 3] (tidak berubah)
+tampilkan salinan  // Output: [1, 2, 3, 4] (berubah)
 ```
 
 ---
 
 ### salin_dalam()
-Creates a deep copy of an object.
 
-**Syntax:**
+Membuat salinan deep dari object.
+
+**Sintaks:**
 ```python
-salin_dalam(obj)
+salin_dalam(objek)
 ```
 
-**Parameters:**
-- `obj` (any): Object to deep copy
+**Parameter:**
+- `objek` (apa saja): Object yang akan disalin
 
-**Returns:**
-- Any: Deep copy of the object
+**Mengembalikan:**
+- Object: Salinan deep dari objek
 
-**Examples:**
+**Contoh:**
 ```python
-// Deep copy nested list
-original1 = [[1, 2], [3, 4]]
-deep_copy1 = salin_dalam(original1)
-deep_copy1[0].tambah(99)
-tampilkan original1       // Output: [[1, 2], [3, 4]]
-tampilkan deep_copy1      // Output: [[1, 2, 99], [3, 4]]
+// Salin list bersarang
+asli_bersarang itu [[1, 2], [3, 4]]
+salinan_dalam itu salin_dalam(asli_bersarang)
+tampilkan salinan_dalam  // Output: [[1, 2], [3, 4]]
 
-// Shallow vs Deep copy comparison
-original2 = [[1], [2]]
-shallow = salin(original2)
-deep = salin_dalam(original2)
-shallow[0].tambah(99)
-deep[1].tambah(88)
-tampilkan original2       // Output: [[1, 99], [2, 88]] (shallow affected original)
-tampilkan shallow         // Output: [[1, 99], [2, 88]]
-tampilkan deep            // Output: [[1], [2, 88]]
+// Modifikasi salinan deep tidak mempengaruhi asli
+tambah(salinan_dalam[0], 99)
+tampilkan asli_bersarang     // Output: [[1, 2], [3, 4]] (tidak berubah)
+tampilkan salinan_dalam  // Output: [[1, 2, 99], [3, 4]] (berubah)
 ```
 
-## Complete Examples
+## Contoh Praktis
 
-### List Processing Pipeline
+### Daftar Belanja
+
 ```python
-// Process a list of numbers
-angka = [5, 2, 8, 1, 9, 3, 7, 4, 6]
+// Buat daftar belanja
+daftar_belanja itu []
 
-// Sort ascending
-urutkan(angka)
-tampilkan "Sorted:", angka
+// Tambah item
+tambah(daftar_belanja, "susu")
+tambah(daftar_belanja, "roti")
+tambah(daftar_belanja, "telur")
+tampilkan daftar_belanja  // Output: ["susu", "roti", "telur"]
 
-// Find and remove extremes
-max_val = angka[-1]
-min_val = angka[0]
-hapus(angka, max_val)
-hapus(angka, min_val)
+// Sisipkan item di tengah
+masukkan(daftar_belanja, 1, "keju")
+tampilkan daftar_belanja  // Output: ["susu", "keju", "roti", "telur"]
 
-tampilkan "Without extremes:", angka
+// Hapus item yang tidak perlu
+hapus(daftar_belanja, "telur")
+tampilkan daftar_belanja  // Output: ["susu", "keju", "roti"]
 
-// Insert new values
-masukkan(angka, 0, 0)
-tambah(angka, 10)
-
-tampilkan "Final:", angka
+// Urutkan alphabetically
+urutkan(daftar_belanja)
+tampilkan daftar_belanja  // Output: ["keju", "roti", "susu"]
 ```
 
-### Data Deduplication
-```python
-// Remove duplicates from list
-data = [1, 2, 2, 3, 4, 4, 4, 5, 1, 6]
-unique_data = []
+### Analisis Data
 
-untuk setiap item dari data
-    jika item tidak di unique_data
-        tambah(unique_data, item)
+```python
+// Data skor siswa
+skor itu [85, 92, 78, 95, 88, 76, 89, 93]
+
+// Hitung jumlah siswa
+jumlah_siswa itu panjang(skor)
+tampilkan f"Jumlah siswa: {jumlah_siswa}"
+
+// Cari skor tertinggi dan terendah
+urutkan(skor)
+skor_terendah itu skor[0]
+skor_tertinggi itu skor[-1]
+tampilkan f"Skor terendah: {skor_terendah}"
+tampilkan f"Skor tertinggi: {skor_tertinggi}"
+
+// Hitung rata-rata
+total itu 0
+untuk setiap nilai dari skor
+    total itu total + nilai
+selesai
+rata_rata itu total / jumlah_siswa
+tampilkan f"Rata-rata: {rata_rata}"
+
+// Hitung siswa di atas rata-rata
+atas_rata_rata itu 0
+untuk setiap nilai dari skor
+    jika nilai > rata_rata
+        atas_rata_rata itu atas_rata_rata + 1
+    selesai
+selesai
+tampilkan f"Siswa di atas rata-rata: {atas_rata_rata}"
+```
+
+### Queue (Antrian)
+
+```python
+// Implementasi queue sederhana
+buat fungsi buat_queue
+    hasil []
 selesai
 
-tampilkan "Original:", data
-tampilkan "Unique:", unique_data
-tampilkan "Original length:", hitung(data, 2) + hitung(data, 4)
-tampilkan "Unique count:", panjang(unique_data)
-```
-
-### List Statistics
-```python
-// Calculate list statistics
-numbers = [1, 5, 3, 9, 2, 8, 4, 7, 6]
-
-// Basic stats
-panjang_list = panjang(numbers)
-max_val = max(numbers)
-min_val = min(numbers)
-
-// Find specific values
-index_max = indeks(numbers, max_val)
-index_min = indeks(numbers, min_val)
-
-tampilkan "List:", numbers
-tampilkan "Length:", panjang_list
-tampilkan "Max:", max_val, "at index", index_max
-tampilkan "Min:", min_val, "at index", index_min
-
-// Create sorted copy
-sorted_copy = salin(numbers)
-urutkan(sorted_copy)
-tampilkan "Sorted copy:", sorted_copy
-```
-
-### Nested List Operations
-```python
-// Work with nested lists
-matrix = [
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9]
-]
-
-// Extract diagonal
-diagonal = []
-untuk i dari 0 sampai panjang(matrix)
-    tambah(diagonal, matrix[i][i])
+buat fungsi enqueue dengan queue, item
+    tambah(queue, item)
 selesai
 
-tampilkan "Original matrix:", matrix
-tampilkan "Diagonal:", diagonal
+buat fungsi dequeue dengan queue
+    jika panjang(queue) > 0
+        hasil queue[0]
+        hapus_pada(queue, 0)
+    lainnya
+        hasil "Queue kosong"
+    selesai
+selesai
 
-// Deep copy for modification
-matrix_copy = salin_dalam(matrix)
-// Swap first and last rows
-temp = matrix_copy[0]
-matrix_copy[0] = matrix_copy[2]
-matrix_copy[2] = temp
-tampilkan "Modified copy:", matrix_copy
+buat fungsi is_empty dengan queue
+    hasil panjang(queue) == 0
+selesai
+
+// Penggunaan
+antrian itu buat_queue()
+enqueue(antrian, "Alice")
+enqueue(antrian, "Bob")
+enqueue(antrian, "Charlie")
+
+tampilkan f"Antrian: {antrian}"
+
+// Layani pelanggan
+pertama itu dequeue(antrian)
+tampilkan f"Dilayani: {pertama}"
+tampilkan f"Sisa antrian: {antrian}"
+
+kedua itu dequeue(antrian)
+tampilkan f"Dilayani: {kedua}"
+tampilkan f"Sisa antrian: {antrian}"
+
+tampilkan f"Queue kosong? {is_empty(antrian)}"
 ```
 
-## Usage Notes
+## Catatan Penggunaan
 
-1. **In-place Operations**: Most list functions (`tambah`, `hapus`, `masukkan`, `urutkan`, `balikkan`, `extend`) modify the original list in-place and return the modified list.
+1. **Modifikasi In-place**: Sebagian besar fungsi modifikasi list dilakukan in-place (mengubah list asli).
 
-2. **Type Safety**: Functions validate input types and provide clear error messages in Indonesian.
+2. **Return Value**: Fungsi modifikasi mengembalikan list yang telah dimodifikasi untuk chaining.
 
-3. **Index Handling**: Use negative indices for positions from the end of the list.
+3. **Indeks Negatif**: Mendukung indeks negatif untuk mengakses item dari belakang.
 
-4. **Copy Operations**: 
-   - `salin()` creates a shallow copy (nested objects are shared)
-   - `salin_dalam()` creates a deep copy (nested objects are independent)
+4. **Type Safety**: Fungsi memvalidasi tipe input dan memberikan pesan error dalam bahasa Indonesia.
 
-5. **Error Handling**: Functions raise appropriate exceptions for invalid operations:
-   - `TypeError` for wrong input types
-   - `ValueError` for items not found
-   - `IndexError` for out-of-range indices
+5. **Shallow vs Deep Copy**: 
+   - `salin()` membuat shallow copy (objek bersarang masih mereferensi yang sama)
+   - `salin_dalam()` membuat deep copy (semua objek bersarang juga disalin)
 
-6. **Performance**: List operations are optimized for common use cases but consider using appropriate data structures for specific needs.
-
-7. **Comparison**: `urutkan()` requires items to be comparable with each other.
+6. **Performance**: Fungsi-fungsi ini dioptimasi untuk performa dan langsung dipetakan ke method list Python.

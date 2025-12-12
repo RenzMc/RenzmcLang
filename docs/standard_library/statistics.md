@@ -1,563 +1,569 @@
-# Statistics Module
+# Modul Statistik
 
-The Statistics module provides comprehensive statistical analysis functionality following Python's statistics module standards with Indonesian function names.
+Modul Statistik menyediakan fungsionalitas analisis statistik komprehensif mengikuti standar modul statistics Python dengan nama fungsi dalam Bahasa Indonesia.
 
-## Import
+## Impor
 
 ```python
 dari statistics impor *
-// atau import specific functions
+// atau impor fungsi spesifik
 dari statistics impor mean, median, stdev, variance, mode
 ```
 
-## Measures of Central Tendency
+## Ukuran Tendensi Sentral
 
 ### mean() / rata_rata()
-Calculates the arithmetic mean of numeric data.
 
-**Syntax:**
+Menghitung rata-rata aritmatika dari data numerik.
+
+**Sintaks:**
 ```python
 mean(data)
 rata_rata(data)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
 
-**Returns:**
-- Float: Arithmetic mean of the data
+**Mengembalikan:**
+- Float: Rata-rata aritmatika dari data
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor mean, rata_rata
 
-// Basic mean calculation
-data1 = [1, 2, 3, 4, 5]
-mean1 = mean(data1)
+// Perhitungan rata-rata dasar
+data1 it [1, 2, 3, 4, 5]
+mean1 it mean(data1)
 tampilkan mean1            // Output: 3.0
 
-// Mean with decimal values
-data2 = [1.5, 2.5, 3.5, 4.5]
-mean2 = rata_rata(data2)
+// Rata-rata dengan nilai desimal
+data2 it [1.5, 2.5, 3.5, 4.5]
+mean2 it rata_rata(data2)
 tampilkan mean2            // Output: 3.0
 
-// Mean of negative numbers
-data3 = [-5, 0, 5, 10]
-mean3 = mean(data3)
+// Rata-rata angka negatif
+data3 it [-5, 0, 5, 10]
+mean3 it mean(data3)
 tampilkan mean3            // Output: 2.5
 
-// Mean test scores
-scores = [85, 90, 78, 92, 88, 76, 95]
-avg_score = rata_rata(scores)
-tampilkan f"Average score: {avg_score:.1f}"
+// Rata-rata nilai tes
+scores it [85, 90, 78, 92, 88, 76, 95]
+avg_score it rata_rata(scores)
+tampilkan f"Nilai rata-rata: {avg_score:.1f}"
 ```
 
 ---
 
 ### median() / nilai_tengah()
-Calculates the median (middle value) of numeric data.
 
-**Syntax:**
+Menghitung median (nilai tengah) dari data numerik.
+
+**Sintaks:**
 ```python
 median(data)
 nilai_tengah(data)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
 
-**Returns:**
-- Float: Median value of the data
+**Mengembalikan:**
+- Float: Nilai median dari data
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor median, nilai_tengah
 
-// Odd number of values
-data1 = [1, 3, 5, 7, 9]
-median1 = median(data1)
+// Jumlah nilai ganjil
+data1 it [1, 3, 5, 7, 9]
+median1 it median(data1)
 tampilkan median1          // Output: 5
 
-// Even number of values (average of middle two)
-data2 = [1, 2, 3, 4, 5, 6]
-median2 = nilai_tengah(data2)
+// Jumlah nilai genap (rata-rata dua tengah)
+data2 it [1, 2, 3, 4, 5, 6]
+median2 it nilai_tengah(data2)
 tampilkan median2          // Output: 3.5
 
-// Unsorted data
-data3 = [9, 1, 5, 3, 7]
-median3 = median(data3)    // Automatically sorts
+// Data tidak terurut
+data3 it [9, 1, 5, 3, 7]
+median3 it median(data3)    // Otomatis mengurutkan
 tampilkan median3          // Output: 5
 
-// Salary median
-salaries = [45000, 50000, 52000, 48000, 55000, 60000, 75000]
-median_salary = nilai_tengah(salaries)
-tampilkan f"Median salary: ${median_salary}"
+// Median gaji
+salaries it [45000, 50000, 52000, 48000, 55000, 60000, 75000]
+median_salary it nilai_tengah(salaries)
+tampilkan f"Median gaji: ${median_salary}"
 ```
 
 ---
 
 ### mode() / modus()
-Calculates the mode (most frequent value) of data.
 
-**Syntax:**
+Menghitung modus (nilai yang paling sering) dari data.
+
+**Sintaks:**
 ```python
 mode(data)
 modus(data)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of values
+**Parameter:**
+- `data` (sequence): Sequence nilai
 
-**Returns:**
-- Any: Most frequent value(s)
+**Mengembalikan:**
+- Any: Nilai yang paling sering
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor mode, modus
 
-// Single mode
-data1 = [1, 2, 2, 3, 4, 2, 5]
-mode1 = mode(data1)
+// Modus tunggal
+data1 it [1, 2, 2, 3, 4, 2, 5]
+mode1 it mode(data1)
 tampilkan mode1            // Output: 2
 
-// String mode
-data2 = ["apple", "banana", "apple", "orange", "apple"]
-mode2 = modus(data2)
+// Modus string
+data2 it ["apple", "banana", "apple", "orange", "apple"]
+mode2 it modus(data2)
 tampilkan mode2            // Output: "apple"
 
-// Test grade mode
-grades = ["A", "B", "C", "B", "B", "A", "B"]
-common_grade = mode(grades)
-tampilkan f"Most common grade: {common_grade}"
+// Modus nilai tes
+grades it ["A", "B", "C", "B", "B", "A", "B"]
+common_grade it mode(grades)
+tampilkan f"Nilai yang paling umum: {common_grade}"
 ```
 
 ---
 
 ### multimode() / banyak_modus()
-Returns all modes (most frequent values) of data.
 
-**Syntax:**
+Mengembalikan semua modus (nilai yang paling sering) dari data.
+
+**Sintaks:**
 ```python
 multimode(data)
 banyak_modus(data)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of values
+**Parameter:**
+- `data` (sequence): Sequence nilai
 
-**Returns:**
-- List: List of all modes
+**Mengembalikan:**
+- List: List dari semua modus
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor multimode, banyak_modus
 
-// Multiple modes
-data1 = [1, 1, 2, 2, 3, 4]
-modes1 = multimode(data1)
+// Modus ganda
+data1 it [1, 1, 2, 2, 3, 4]
+modes1 it multimode(data1)
 tampilkan modes1           // Output: [1, 2]
 
-// String modes
-data2 = ["cat", "dog", "cat", "bird", "dog"]
-modes2 = banyak_modus(data2)
+// Modus string
+data2 it ["cat", "dog", "cat", "bird", "dog"]
+modes2 it banyak_modus(data2)
 tampilkan modes2           // Output: ["cat", "dog"]
 
-// Survey responses
-responses = ["yes", "no", "maybe", "yes", "no", "yes", "no"]
-all_modes = multimode(responses)
-tampilkan f"All modes: {all_modes}"
+// Respons survei
+responses it ["yes", "no", "maybe", "yes", "no", "yes", "no"]
+all_modes it multimode(responses)
+tampilkan f"Semua modus: {all_modes}"
 ```
 
----
-
-## Measures of Spread
+## Ukuran Sebaran
 
 ### stdev() / deviasi_standar()
-Calculates sample standard deviation.
 
-**Syntax:**
+Menghitung standar deviasi sampel.
+
+**Sintaks:**
 ```python
 stdev(data, xbar)
 deviasi_standar(data, xbar)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
-- `xbar` (float, optional): Pre-calculated mean
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
+- `xbar` (float, opsional): Rata-rata yang dihitung sebelumnya
 
-**Returns:**
-- Float: Sample standard deviation
+**Mengembalikan:**
+- Float: Standar deviasi sampel
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor stdev, deviasi_standar
 
-// Basic standard deviation
-data1 = [1, 2, 3, 4, 5]
-std1 = stdev(data1)
+// Standar deviasi dasar
+data1 it [1, 2, 3, 4, 5]
+std1 it stdev(data1)
 tampilkan std1             // Output: ~1.58
 
-// With pre-calculated mean
-data2 = [10, 20, 30, 40, 50]
-mean2 = mean(data2)
-std2 = deviasi_standar(data2, mean2)
+// Dengan rata-rata yang dihitung sebelumnya
+data2 it [10, 20, 30, 40, 50]
+mean2 it mean(data2)
+std2 it deviasi_standar(data2, mean2)
 tampilkan std2
 
-// Test score spread
-scores = [85, 90, 78, 92, 88, 76, 95]
-score_std = stdev(scores)
-tampilkan f"Score standard deviation: {score_std:.2f}"
+// Sebaran nilai tes
+scores it [85, 90, 78, 92, 88, 76, 95]
+score_std it stdev(scores)
+tampilkan f"Standar deviasi nilai: {score_std:.2f}"
 ```
 
 ---
 
 ### pstdev() / deviasi_standar_populasi()
-Calculates population standard deviation.
 
-**Syntax:**
+Menghitung standar deviasi populasi.
+
+**Sintaks:**
 ```python
 pstdev(data, mu)
 deviasi_standar_populasi(data, mu)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
-- `mu` (float, optional): Pre-calculated population mean
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
+- `mu` (float, opsional): Rata-rata populasi yang dihitung sebelumnya
 
-**Returns:**
-- Float: Population standard deviation
+**Mengembalikan:**
+- Float: Standar deviasi populasi
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor pstdev, deviasi_standar_populasi
 
-// Population standard deviation
-data1 = [1, 2, 3, 4, 5]
-pop_std1 = pstdev(data1)
+// Standar deviasi populasi
+data1 it [1, 2, 3, 4, 5]
+pop_std1 it pstdev(data1)
 tampilkan pop_std1         // Output: ~1.41
 
-// Compare with sample standard deviation
-sample_std = stdev(data1)
-tampilkan f"Sample std: {sample_std:.2f}, Population std: {pop_std1:.2f}"
+// Bandingkan dengan standar deviasi sampel
+sample_std it stdev(data1)
+tampilkan f"Std sampel: {sample_std:.2f}, Std populasi: {pop_std1:.2f}"
 
-// Complete population data
-ages = [25, 30, 28, 35, 32, 29, 31, 27, 33, 30]
-pop_age_std = deviasi_standar_populasi(ages)
-tampilkan f"Population age std: {pop_age_std:.2f}"
+// Data populasi lengkap
+ages it [25, 30, 28, 35, 32, 29, 31, 27, 33, 30]
+pop_age_std it deviasi_standar_populasi(ages)
+tampilkan f"Std umur populasi: {pop_age_std:.2f}"
 ```
 
 ---
 
 ### variance() / variansi()
-Calculates sample variance.
 
-**Syntax:**
+Menghitung variansi sampel.
+
+**Sintaks:**
 ```python
 variance(data, xbar)
 variansi(data, xbar)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
-- `xbar` (float, optional): Pre-calculated mean
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
+- `xbar` (float, opsional): Rata-rata yang dihitung sebelumnya
 
-**Returns:**
-- Float: Sample variance
+**Mengembalikan:**
+- Float: Variansi sampel
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor variance, variansi
 
-// Basic variance
-data1 = [1, 2, 3, 4, 5]
-var1 = variance(data1)
+// Variansi dasar
+data1 it [1, 2, 3, 4, 5]
+var1 it variance(data1)
 tampilkan var1             // Output: 2.5
 
-// Test score variance
-scores = [85, 90, 78, 92, 88, 76, 95]
-score_var = variansi(scores)
-tampilkan f"Score variance: {score_var:.2f}"
+// Variansi nilai tes
+scores it [85, 90, 78, 92, 88, 76, 95]
+score_var it variansi(scores)
+tampilkan f"Variansi nilai: {score_var:.2f}"
 
-// Financial returns
-returns = [0.05, 0.03, 0.07, -0.02, 0.04, 0.06]
-returns_var = variance(returns)
-tampilkan f"Returns variance: {returns_var:.4f}"
+// Return finansial
+returns it [0.05, 0.03, 0.07, -0.02, 0.04, 0.06]
+returns_var it variance(returns)
+tampilkan f"Variansi return: {returns_var:.4f}"
 ```
 
 ---
 
 ### pvariance() / variansi_populasi()
-Calculates population variance.
 
-**Syntax:**
+Menghitung variansi populasi.
+
+**Sintaks:**
 ```python
 pvariance(data, mu)
 variansi_populasi(data, mu)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
-- `mu` (float, optional): Pre-calculated population mean
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
+- `mu` (float, opsional): Rata-rata populasi yang dihitung sebelumnya
 
-**Returns:**
-- Float: Population variance
+**Mengembalikan:**
+- Float: Variansi populasi
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor pvariance, variansi_populasi
 
-// Population variance
-data1 = [1, 2, 3, 4, 5]
-pop_var1 = pvariance(data1)
+// Variansi populasi
+data1 it [1, 2, 3, 4, 5]
+pop_var1 it pvariance(data1)
 tampilkan pop_var1         // Output: 2.0
 
-// Complete dataset analysis
-weights = [70, 75, 80, 85, 90, 72, 78, 82, 88, 76]
-pop_weight_var = variansi_populasi(weights)
-tampilkan f"Population weight variance: {pop_weight_var:.2f}"
+// Analisis dataset lengkap
+weights it [70, 75, 80, 85, 90, 72, 78, 82, 88, 76]
+pop_weight_var it variansi_populasi(weights)
+tampilkan f"Variansi bobot populasi: {pop_weight_var:.2f}"
 ```
 
----
-
-## Advanced Statistical Functions
+## Fungsi Statistik Lanjutan
 
 ### geometric_mean() / rata_rata_geometrik()
-Calculates geometric mean of positive numbers.
 
-**Syntax:**
+Menghitung rata-rata geometrik dari angka positif.
+
+**Sintaks:**
 ```python
 geometric_mean(data)
 rata_rata_geometrik(data)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of positive numeric values
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik positif
 
-**Returns:**
-- Float: Geometric mean
+**Mengembalikan:**
+- Float: Rata-rata geometrik
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor geometric_mean, rata_rata_geometrik
 
-// Basic geometric mean
-data1 = [1, 4, 9]
-gm1 = geometric_mean(data1)
+// Rata-rata geometrik dasar
+data1 it [1, 4, 9]
+gm1 it geometric_mean(data1)
 tampilkan gm1              // Output: ~3.36
 
-// Growth rates
-growth_rates = [1.05, 1.10, 1.08, 1.12, 1.09]
-avg_growth = rata_rata_geometrik(growth_rates)
-tampilkan f"Average growth rate: {avg_growth:.4f}"
+// Laju pertumbuhan
+growth_rates it [1.05, 1.10, 1.08, 1.12, 1.09]
+avg_growth it rata_rata_geometrik(growth_rates)
+tampilkan f"Laju pertumbuhan rata-rata: {avg_growth:.4f}"
 
-// Financial returns
-returns = [1.05, 1.03, 1.07, 0.98, 1.04]
-geometric_return = geometric_mean(returns)
-tampilkan f"Geometric mean return: {geometric_return:.4f}"
+// Return finansial
+returns it [1.05, 1.03, 1.07, 0.98, 1.04]
+geometric_return it geometric_mean(returns)
+tampilkan f"Return rata-rata geometrik: {geometric_return:.4f}"
 ```
 
 ---
 
 ### harmonic_mean() / rata_rata_harmonik()
-Calculates harmonic mean of positive numbers.
 
-**Syntax:**
+Menghitung rata-rata harmonik dari angka positif.
+
+**Sintaks:**
 ```python
 harmonic_mean(data, weights)
 rata_rata_harmonik(data, weights)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of positive numeric values
-- `weights` (sequence, optional): Weights for weighted harmonic mean
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik positif
+- `weights` (sequence, opsional): Bobot untuk rata-rata harmonik tertimbang
 
-**Returns:**
-- Float: Harmonic mean
+**Mengembalikan:**
+- Float: Rata-rata harmonik
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor harmonic_mean, rata_rata_harmonik
 
-// Basic harmonic mean
-data1 = [1, 2, 4]
-hm1 = harmonic_mean(data1)
+// Rata-rata harmonik dasar
+data1 it [1, 2, 4]
+hm1 it harmonic_mean(data1)
 tampilkan hm1              // Output: ~1.71
 
-// Weighted harmonic mean
-data2 = [10, 20, 30]
-weights2 = [1, 2, 3]
-hm2 = rata_rata_harmonik(data2, weights2)
+// Rata-rata harmonik tertimbang
+data2 it [10, 20, 30]
+weights2 it [1, 2, 3]
+hm2 it rata_rata_harmonik(data2, weights2)
 tampilkan hm2
 
-// Speed calculations
-speeds = [60, 50, 40]  // km/h
-avg_speed = harmonic_mean(speeds)
-tampilkan f"Average speed: {avg_speed:.2f} km/h"
+// Perhitungan kecepatan
+speeds it [60, 50, 40]  // km/jam
+avg_speed it harmonic_mean(speeds)
+tampilkan f"Kecepatan rata-rata: {avg_speed:.2f} km/jam"
 ```
 
 ---
 
 ### quantiles() / kuantil()
-Divides data into equal intervals.
 
-**Syntax:**
+Membagi data menjadi interval yang sama.
+
+**Sintaks:**
 ```python
 quantiles(data, n)
 kuantil(data, n)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
-- `n` (integer): Number of equal intervals (default: 4 for quartiles)
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
+- `n` (integer): Jumlah interval yang sama (default: 4 untuk kuartil)
 
-**Returns:**
-- List: List of quantile values
+**Mengembalikan:**
+- List: List nilai kuantil
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor quantiles, kuantil
 
-// Quartiles (default, n=4)
-data1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-quartiles1 = quantiles(data1)
+// Kuartil (default, n=4)
+data1 it [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+quartiles1 it quantiles(data1)
 tampilkan quartiles1       // Output: [3.0, 5.5, 8.0]
 
-// Quintiles (n=5)
-quintiles1 = kuantil(data1, n=5)
+// Kuintil (n=5)
+quintiles1 it kuantil(data1, n=5)
 tampilkan quintiles1       // Output: [2.8, 4.6, 6.4, 8.2]
 
-// Percentiles (n=100)
-data2 = rentang(1, 101)    // 1 to 100
-percentiles = quantiles(data2, n=10)  // Deciles
+// Persentil (n=100)
+data2 it rentang(1, 101)    // 1 to 100
+percentiles it quantiles(data2, n=10)  // Desil
 tampilkan percentiles
 
-// Test score percentiles
-scores = [65, 70, 75, 80, 85, 90, 95, 100]
-score_quartiles = kuantil(scores, n=4)
-tampilkan f"Score quartiles: {score_quartiles}"
+// Kuartil nilai tes
+scores it [65, 70, 75, 80, 85, 90, 95, 100]
+score_quartiles it kuantil(scores, n=4)
+tampilkan f"Kuartil nilai: {score_quartiles}"
 ```
 
----
-
-## Custom Statistical Functions
+## Fungsi Statistik Kustom
 
 ### range_data() / rentang_data()
-Calculates the range (max - min) of data.
 
-**Syntax:**
+Menghitung rentang (maks - min) dari data.
+
+**Sintaks:**
 ```python
 range_data(data)
 rentang_data(data)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
 
-**Returns:**
-- Float: Range of the data
+**Mengembalikan:**
+- Float: Rentang dari data
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor rentang_data
 
-data1 = [1, 2, 3, 4, 5]
-range1 = rentang_data(data1)
+data1 it [1, 2, 3, 4, 5]
+range1 it rentang_data(data1)
 tampilkan range1           // Output: 4.0
 
-data2 = [10, 25, 15, 30, 20]
-range2 = range_data(data2)
+data2 it [10, 25, 15, 30, 20]
+range2 it range_data(data2)
 tampilkan range2           // Output: 20.0
 
-// Temperature range
-temperatures = [18, 25, 22, 28, 20, 24, 19, 26]
-temp_range = rentang_data(temperatures)
-tampilkan f"Temperature range: {temp_range}°C"
+// Rentang suhu
+temperatures it [18, 25, 22, 28, 20, 24, 19, 26]
+temp_range it rentang_data(temperatures)
+tampilkan f"Rentang suhu: {temp_range}°C"
 ```
 
 ---
 
 ### cv() / koefisien_variasi()
-Calculates coefficient of variation.
 
-**Syntax:**
+Menghitung koefisien variasi.
+
+**Sintaks:**
 ```python
 cv(data)
 koefisien_variasi(data)
 ```
 
-**Parameters:**
-- `data` (sequence): Sequence of numeric values
+**Parameter:**
+- `data` (sequence): Sequence nilai numerik
 
-**Returns:**
-- Float: Coefficient of variation
+**Mengembalikan:**
+- Float: Koefisien variasi
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor cv, koefisien_variasi
 
-// Basic CV
-data1 = [10, 12, 11, 13, 9]
-cv1 = cv(data1)
+// CV dasar
+data1 it [10, 12, 11, 13, 9]
+cv1 it cv(data1)
 tampilkan cv1              // Output: ~0.14
 
-// Compare variability of two datasets
-data_a = [100, 102, 98, 101, 99]
-data_b = [50, 150, 75, 125, 100]
+// Bandingkan variabilitas dua dataset
+data_a it [100, 102, 98, 101, 99]
+data_b it [50, 150, 75, 125, 100]
 
-cv_a = koefisien_variasi(data_a)
-cv_b = koefisien_variasi(data_b)
+cv_a it koefisien_variasi(data_a)
+cv_b it koefisien_variasi(data_b)
 
 tampilkan f"CV A: {cv_a:.3f}, CV B: {cv_b:.3f}"
-tampilkan "Dataset B has higher relative variability"
+tampilkan "Dataset B memiliki variabilitas relatif lebih tinggi"
 ```
 
 ---
 
 ### z_score() / nilai_z()
-Calculates z-score for a value in a dataset.
 
-**Syntax:**
+Menghitung z-score untuk nilai dalam dataset.
+
+**Sintaks:**
 ```python
 z_score(x, data)
 nilai_z(x, data)
 ```
 
-**Parameters:**
-- `x` (number): Value to calculate z-score for
-- `data` (sequence): Reference dataset
+**Parameter:**
+- `x` (number): Nilai untuk menghitung z-score
+- `data` (sequence): Dataset referensi
 
-**Returns:**
-- Float: Z-score value
+**Mengembalikan:**
+- Float: Nilai z-score
 
-**Examples:**
+**Contoh:**
 ```python
 dari statistics impor z_score, nilai_z
 
-// Basic z-score
-data1 = [1, 2, 3, 4, 5]
-z1 = z_score(4, data1)
+// Z-score dasar
+data1 it [1, 2, 3, 4, 5]
+z1 it z_score(4, data1)
 tampilkan z1               // Output: ~1.26
 
-// Student performance
-class_scores = [75, 80, 85, 90, 95, 78, 82, 88, 92, 77]
-student_score = 88
+// Performa siswa
+class_scores it [75, 80, 85, 90, 95, 78, 82, 88, 92, 77]
+student_score it 88
 
-student_z = nilai_z(student_score, class_scores)
-tampilkan f"Student z-score: {student_z:.2f}"
+student_z it nilai_z(student_score, class_scores)
+tampilkan f"Z-score siswa: {student_z:.2f}"
 
-// Quality control measurements
-measurements = [10.1, 9.9, 10.0, 10.2, 9.8, 10.1, 9.9]
-target_measurement = 10.15
+// Pengukuran kontrol kualitas
+measurements it [10.1, 9.9, 10.0, 10.2, 9.8, 10.1, 9.9]
+target_measurement it 10.15
 
-measurement_z = z_score(target_measurement, measurements)
-tampilkan f"Measurement z-score: {measurement_z:.2f}"
+measurement_z it z_score(target_measurement, measurements)
+tampilkan f"Z-score pengukuran: {measurement_z:.2f}"
 ```
 
----
+## Contoh Penggunaan Lanjutan
 
-## Advanced Usage Examples
-
-### Complete Statistical Analysis
+### Analisis Statistik Lengkap
 
 ```python
 dari statistics impor (
@@ -568,33 +574,33 @@ dari statistics impor (
 fungsi analisis_statistik_lengkap(data, nama="Data"):
     tampilkan f"=== Analisis Statistik {nama} ==="
     
-    // Central tendency
-    rata = mean(data)
-    tengah = median(data)
+    // Tendensi sentral
+    rata it mean(data)
+    tengah it median(data)
     
     tampilkan f"Rata-rata: {rata:.2f}"
     tampilkan f"Median: {tengah:.2f}"
     
-    // Spread
-    std_dev = stdev(data)
-    vari = variance(data)
-    data_range = max(data) - min(data)
-    coeff_var = cv(data)
+    // Sebaran
+    std_dev it stdev(data)
+    vari it variance(data)
+    data_range it max(data) - min(data)
+    coeff_var it cv(data)
     
     tampilkan f"Standar deviasi: {std_dev:.2f}"
     tampilkan f"Variansi: {vari:.2f}"
     tampilkan f"Range: {data_range:.2f}"
     tampilkan f"Koefisien variasi: {coeff_var:.3f}"
     
-    // Quantiles
-    quartiles = quantiles(data)
-    tampilkan f"Quartiles: Q1={quartiles[0]:.2f}, Q2={quartiles[1]:.2f}, Q3={quartiles[2]:.2f}"
+    // Kuantil
+    quartiles it quantiles(data)
+    tampilkan f"Kuartil: Q1={quartiles[0]:.2f}, Q2={quartiles[1]:.2f}, Q3={quartiles[2]:.2f}"
     
-    // Z-scores for outliers
-    outliers = []
+    // Z-scores untuk outliers
+    outliers it []
     untuk value dari data
-        z = abs(z_score(value, data))
-        jika z > 2  // Outlier threshold
+        z it abs(z_score(value, data))
+        jika z > 2  // Threshold outlier
             tambah(outliers, value)
         selesai
     selesai
@@ -602,7 +608,7 @@ fungsi analisis_statistik_lengkap(data, nama="Data"):
     jika outliers
         tampilkan f"Outliers (z > 2): {outliers}"
     lainnya
-        tampilkan "No outliers detected"
+        tampilkan "Tidak ada outliers yang terdeteksi"
     selesai
     
     hasil {
@@ -617,12 +623,12 @@ fungsi analisis_statistik_lengkap(data, nama="Data"):
     }
 selesai
 
-// Usage
-test_scores = [85, 90, 78, 92, 88, 76, 95, 82, 89, 91, 87, 83]
-analysis = analisis_statistik_lengkap(test_scores, "Test Scores")
+// Penggunaan
+test_scores it [85, 90, 78, 92, 88, 76, 95, 82, 89, 91, 87, 83]
+analysis it analisis_statistik_lengkap(test_scores, "Nilai Tes")
 ```
 
-### Comparing Two Datasets
+### Membandingkan Dua Dataset
 
 ```python
 dari statistics impor mean, stdev, cv
@@ -630,44 +636,44 @@ dari statistics impor mean, stdev, cv
 fungsi bandingkan_dataset(data1, data2, nama1="Dataset 1", nama2="Dataset 2"):
     tampilkan f"=== Perbandingan {nama1} vs {nama2} ==="
     
-    // Basic statistics
-    mean1 = mean(data1)
-    mean2 = mean(data2)
-    std1 = stdev(data1)
-    std2 = stdev(data2)
+    // Statistik dasar
+    mean1 it mean(data1)
+    mean2 it mean(data2)
+    std1 it stdev(data1)
+    std2 it stdev(data2)
     
     tampilkan f"{nama1}: Mean={mean1:.2f}, Std={std1:.2f}"
     tampilkan f"{nama2}: Mean={mean2:.2f}, Std={std2:.2f}"
     
-    // Relative comparison
-    mean_diff = mean2 - mean1
-    std_ratio = std2 / std1
+    // Perbandingan relatif
+    mean_diff it mean2 - mean1
+    std_ratio it std2 / std1
     
-    tampilkan f"Mean difference: {mean_diff:.2f}"
-    tampilkan f"Std ratio: {std_ratio:.2f}"
+    tampilkan f"Perbedaan mean: {mean_diff:.2f}"
+    tampilkan f"Rasio std: {std_ratio:.2f}"
     
-    // Coefficient of variation
-    cv1 = cv(data1)
-    cv2 = cv(data2)
+    // Koefisien variasi
+    cv1 it cv(data1)
+    cv2 it cv(data2)
     
     tampilkan f"CV {nama1}: {cv1:.3f}"
     tampilkan f"CV {nama2}: {cv2:.3f}"
     
     jika cv1 < cv2
-        tampilkan f"{nama1} has more consistent (lower relative variability)"
+        tampilkan f"{nama1} lebih konsisten (variabilitas relatif lebih rendah)"
     lainnya
-        tampilkan f"{nama2} has more consistent (lower relative variability)"
+        tampilkan f"{nama2} lebih konsisten (variabilitas relatif lebih rendah)"
     selesai
 selesai
 
-// Usage
-product_a = [10.2, 10.5, 10.1, 10.3, 10.4, 10.2, 10.6]
-product_b = [10.8, 10.2, 11.1, 9.9, 10.5, 10.7, 10.0]
+// Penggunaan
+product_a it [10.2, 10.5, 10.1, 10.3, 10.4, 10.2, 10.6]
+product_b it [10.8, 10.2, 11.1, 9.9, 10.5, 10.7, 10.0]
 
-bandingkan_dataset(product_a, product_b, "Product A", "Product B")
+bandingkan_dataset(product_a, product_b, "Produk A", "Produk B")
 ```
 
-### Quality Control Analysis
+### Analisis Kontrol Kualitas
 
 ```python
 dari statistics impor mean, stdev, z_score
@@ -677,26 +683,26 @@ fungsi analisis_kualitas(measurements, spec_mean, spec_tolerance=2):
     
     tampilkan "=== Analisis Kontrol Kualitas ==="
     
-    // Process capability
-    process_mean = mean(measurements)
-    process_std = stdev(measurements)
+    // Kapabilitas proses
+    process_mean it mean(measurements)
+    process_std it stdev(measurements)
     
-    tampilkan f"Process mean: {process_mean:.3f}"
-    tampilkan f"Process std: {process_std:.3f}"
-    tampilkan f"Spec target: {spec_mean:.3f}"
-    tampilkan f"Spec tolerance: ±{spec_tolerance:.3f}"
+    tampilkan f"Mean proses: {process_mean:.3f}"
+    tampilkan f"Std proses: {process_std:.3f}"
+    tampilkan f"Target spec: {spec_mean:.3f}"
+    tampilkan f"Toleransi spec: ±{spec_tolerance:.3f}"
     
-    // Process capability index
-    cp = spec_tolerance / (3 * process_std)
-    cpk = min((spec_mean + spec_tolerance - process_mean) / (3 * process_std),
+    // Indeks kapabilitas proses
+    cp it spec_tolerance / (3 * process_std)
+    cpk it min((spec_mean + spec_tolerance - process_mean) / (3 * process_std),
               (process_mean - (spec_mean - spec_tolerance)) / (3 * process_std))
     
     tampilkan f"Cp (Process Capability): {cp:.2f}"
     tampilkan f"Cpk (Process Capability Index): {cpk:.2f}"
     
-    // Out of spec items
-    oos_lower = []
-    oos_upper = []
+    // Item di luar spec
+    oos_lower it []
+    oos_upper it []
     
     untuk measurement dari measurements
         jika measurement < spec_mean - spec_tolerance
@@ -707,66 +713,66 @@ fungsi analisis_kualitas(measurements, spec_mean, spec_tolerance=2):
         selesai
     selesai
     
-    total_oos = panjang(oos_lower) + panjang(oos_upper)
-    percent_oos = (total_oos / panjang(measurements)) * 100
+    total_oos it panjang(oos_lower) + panjang(oos_upper)
+    percent_oos it (total_oos / panjang(measurements)) * 100
     
-    tampilkan f"Items out of spec: {total_oos}/{panjang(measurements)} ({percent_oos:.1f}%)"
+    tampilkan f"Item di luar spec: {total_oos}/{panjang(measurements)} ({percent_oos:.1f}%)"
     
     jika oos_lower
-        tampilkan f"Below spec: {oos_lower}"
+        tampilkan f"Di bawah spec: {oos_lower}"
     selesai
     jika oos_upper
-        tampilkan f"Above spec: {oos_upper}"
+        tampilkan f"Di atas spec: {oos_upper}"
     selesai
     
-    // Quality assessment
+    // Penilaian kualitas
     jika cp >= 1.33 dan cpk >= 1.33
-        tampilkan "✅ Process is capable and centered"
+        tampilkan "Proses mampu dan terpusat"
     lainnya jika cp >= 1.33
-        tampilkan "⚠️ Process is capable but not centered"
+        tampilkan "Proses mampu tapi tidak terpusat"
     lainnya jika cpk >= 1.33
-        tampilkan "⚠️ Process is centered but not capable"
+        tampilkan "Proses terpusat tapi tidak mampu"
     lainnya
-        tampilkan "❌ Process needs improvement"
+        tampilkan "Proses perlu perbaikan"
     selesai
 selesai
 
-// Usage
-measurements = [10.02, 9.98, 10.05, 10.01, 9.99, 10.03, 10.00, 9.97, 10.04, 9.96]
+// Penggunaan
+measurements it [10.02, 9.98, 10.05, 10.01, 9.99, 10.03, 10.00, 9.97, 10.04, 9.96]
 analisis_kualitas(measurements, spec_mean=10.0, spec_tolerance=0.05)
 ```
 
-## Performance Notes
+## Catatan Performa
 
-- **Large datasets**: Use `fmean()` for faster mean calculation with large datasets
-- **Memory efficiency**: Functions work with iterators, not just lists
-- **Precision**: Uses high-precision arithmetic for better accuracy
-- **Edge cases**: Handles empty data and single-value cases appropriately
+- **Dataset besar**: Gunakan `fmean()` untuk perhitungan rata-rata lebih cepat dengan dataset besar
+- **Efisiensi memori**: Fungsi bekerja dengan iterator, tidak hanya list
+- **Presisi**: Menggunakan aritmatika presisi tinggi untuk akurasi lebih baik
+- **Kasus edge**: Menangani data kosong dan kasus nilai tunggal dengan tepat
 
-## Error Handling
+## Penanganan Error
 
 ```python
 dari statistics impor StatisticsError, mean
 
 coba
-    empty_mean = mean([])
+    empty_mean it mean([])
 except StatisticsError
-    tampilkan "Error: Cannot calculate mean of empty data"
+    tampilkan "Error: Tidak dapat menghitung rata-rata data kosong"
 selesai
 
-// Handle zero mean for coefficient of variation
-data_with_zero = [0, 0, 0]
+// Handle mean nol untuk koefisien variasi
+data_with_zero it [0, 0, 0]
 coba
-    cv_zero = cv(data_with_zero)
+    cv_zero it cv(data_with_zero)
 except ValueError
-    tampilkan "Error: Mean is zero, cannot calculate coefficient of variation"
+    tampilkan "Error: Mean adalah nol, tidak dapat menghitung koefisien variasi"
 selesai
 ```
 
-## Best Practices
+## Praktik Terbaik
 
-1. **Data validation**: Ensure data is numeric and non-empty before calculations
-2. **Choose appropriate measure**: Use median for skewed data, mean for symmetric data
-3. **Sample vs Population**: Use `stdev()` for samples, `pstdev()` for complete populations
-4. **Outlier detection**: Use z-scores or IQR method to identify outliers
-5. **Statistical significance**: Consider sample size when interpreting results
+1. **Validasi data**: Pastikan data numerik dan tidak kosong sebelum perhitungan
+2. **Pilih ukuran yang tepat**: Gunakan median untuk data miring, mean untuk data simetris
+3. **Sampel vs Populasi**: Gunakan `stdev()` untuk sampel, `pstdev()` untuk populasi lengkap
+4. **Deteksi outlier**: Gunakan z-scores atau metode IQR untuk mengidentifikasi outlier
+5. **Signifikansi statistik**: Pertimbangkan ukuran sampel saat menginterpretasi hasil

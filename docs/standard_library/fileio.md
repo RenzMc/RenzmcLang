@@ -1,532 +1,550 @@
-# File I/O Module
+# Modul File I/O
 
-The File I/O module provides comprehensive file and directory operations functionality following Python's file operations standards with Indonesian function names.
+Modul File I/O menyediakan fungsi-fungsi untuk operasi file I/O, mengikuti standar operasi file Python dengan nama fungsi dalam Bahasa Indonesia.
 
-## Import
+## Impor
 
 ```python
+dari fileio impor read_text, write_text, copy, move, delete
+// atau gunakan alias Indonesia
+dari fileio impor baca_teks, tulis_teks, salin, pindahkan, hapus
+// atau impor semua
 dari fileio impor *
-// atau import specific functions
-dari fileio impor read_text, write_text, copy, delete, exists
 ```
 
-## File Reading Functions
+## Fungsi Membaca File
 
 ### read_text() / baca_teks()
-Reads file content as text.
 
-**Syntax:**
+Baca file sebagai text.
+
+**Sintaks:**
 ```python
-read_text(file_path, encoding)
-baca_teks(file_path, encoding)
+read_text(path_file, encoding)
+baca_teks(path_file, encoding)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the file to read
-- `encoding` (string, optional): File encoding (default: "utf-8")
+**Parameter:**
+- `path_file` (string): Path file yang akan dibaca
+- `encoding` (string, opsional): Encoding file (default: "utf-8")
 
-**Returns:**
-- String: File content as text
+**Mengembalikan:**
+- String: Konten file sebagai text
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor read_text, baca_teks
+dari fileio import baca_teks
 
-// Read basic text file
-content1 = read_text("data.txt")
-tampilkan content1
+// Baca file text sederhana
+konten itu baca_teks("data.txt")
+tampilkan konten
 
-// Read with specific encoding
-content2 = baca_teks("data_utf8.txt", "utf-8")
-tampilkan content2
+// Baca dengan encoding tertentu
+konten_utf16 it baca_teks("data.txt", encoding="utf-16")
+tampilkan konten_utf16
 
-// Read configuration file
-config_content = read_text("config.ini")
-tampilkan config_content
-
-// Handle file not found
-coba
-    content = read_text("nonexistent.txt")
-except FileNotFoundError
-    tampilkan "File not found!"
-selesai
+// Baca dan proses line by line
+konten it baca_teks("artikel.txt")
+baris-baris it pisah(konten, "\n")
+tampilkan f"Jumlah baris: {panjang(baris-baris)}"
 ```
+
+**Error:**
+- Melempar `FileNotFoundError` jika file tidak ada
+- Melempar `UnicodeDecodeError` jika encoding tidak cocok
 
 ---
 
 ### read_lines() / baca_baris()
-Reads file content as a list of lines.
 
-**Syntax:**
+Baca file sebagai list of lines.
+
+**Sintaks:**
 ```python
-read_lines(file_path, encoding)
-baca_baris(file_path, encoding)
+read_lines(path_file, encoding)
+baca_baris(path_file, encoding)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the file to read
-- `encoding` (string, optional): File encoding (default: "utf-8")
+**Parameter:**
+- `path_file` (string): Path file yang akan dibaca
+- `encoding` (string, opsional): Encoding file (default: "utf-8")
 
-**Returns:**
-- List: List of lines from the file
+**Mengembalikan:**
+- List: List berisi setiap baris dari file
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor read_lines, baca_baris
+dari fileio import baca_baris
 
-// Read file as lines
-lines1 = read_lines("data.txt")
-tampilkan lines1           // Output: ["line 1\n", "line 2\n", "line 3"]
+// Baca semua baris
+baris it baca_baris("data.txt")
+tampilkan baris  // Output: ["baris1\n", "baris2\n", "baris3"]
 
-// Process each line
-lines2 = baca_baris("names.txt")
-untuk line dari lines2
-    clean_line = line.strip()  // Remove whitespace
-    tampilkan f"Name: {clean_line}"
+// Hitung total baris
+jumlah_baris it panjang(baris)
+tampilkan f"Total baris: {jumlah_baris}"
+
+// Proses setiap baris
+untuk setiap baris_data dari baris
+    // Hapus newline character
+    baris_bersih it hapus_spasi(baris_data)
+    tampilkan f"Baris: {baris_bersih}"
 selesai
 
-// Count lines
-all_lines = read_lines("document.txt")
-line_count = panjang(all_lines)
-tampilkan f"Total lines: {line_count}"
-
-// Filter lines containing specific text
-log_lines = baca_baris("app.log")
-error_lines = []
-untuk line dari log_lines
-    jika "ERROR" di line
-        tambah(error_lines, line.strip())
-    selesai
+// Baca file CSV dengan parsing manual
+csv_baris it baca_baris("data.csv")
+untuk setiap baris_csv dari csv_baris
+    kolom it pisah(hapus_spasi(baris_csv), ",")
+    tampilkan kolom
 selesai
-tampilkan f"Found {panjang(error_lines)} errors"
 ```
 
 ---
 
 ### read_bytes() / baca_bytes()
-Reads file content as bytes.
 
-**Syntax:**
+Baca file sebagai bytes.
+
+**Sintaks:**
 ```python
-read_bytes(file_path)
-baca_bytes(file_path)
+read_bytes(path_file)
+baca_bytes(path_file)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the file to read
+**Parameter:**
+- `path_file` (string): Path file yang akan dibaca
 
-**Returns:**
-- Bytes: File content as bytes
+**Mengembalikan:**
+- Bytes: Konten file sebagai bytes
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor read_bytes, baca_bytes
+dari fileio import baca_bytes
 
-// Read image file
-image_data = read_bytes("photo.jpg")
-tampilkan f"Image size: {panjang(image_data)} bytes"
+// Baca file binary
+data_gambar it baca_bytes("foto.jpg")
+tampilkan f"Ukuran gambar: {panjang(data_gambar)} bytes"
 
-// Read binary data
-binary_data = baca_bytes("data.bin")
-tampilkan f"Binary data: {binary_data[:10]}"  // First 10 bytes
+// Baca dan proses binary data
+data it baca_bytes("data.bin")
+untuk i dari 0 hingga panjang(data) - 1
+    tampilkan f"Byte {i}: {data[i]}"
+selesai
 
-// Read PDF file
-pdf_content = read_bytes("document.pdf")
-tampilkan f"PDF size: {panjang(pdf_content)} bytes"
-
-// Calculate file hash (using utility functions)
-dari builtin_functions impor hash_teks
-file_hash = hash_teks(binary_data, "md5")
-tampilkan f"File MD5: {file_hash}"
+// Simpan ke file baru (backup)
+dari fileio import tulis_bytes
+tulis_bytes("backup.bin", data)
 ```
 
 ---
 
 ### read_json() / baca_json()
-Reads and parses JSON file.
 
-**Syntax:**
+Baca file JSON.
+
+**Sintaks:**
 ```python
-read_json(file_path, encoding)
-baca_json(file_path, encoding)
+read_json(path_file, encoding)
+baca_json(path_file, encoding)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the JSON file
-- `encoding` (string, optional): File encoding (default: "utf-8")
+**Parameter:**
+- `path_file` (string): Path file JSON yang akan dibaca
+- `encoding` (string, opsional): Encoding file (default: "utf-8")
 
-**Returns:**
-- Dictionary: Parsed JSON data
+**Mengembalikan:**
+- Dictionary: Hasil parsing JSON
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor read_json, baca_json
+dari fileio import baca_json
 
-// Read configuration
-config = read_json("config.json")
-tampilkan config["database_url"]
-tampilkan config["port"]
+// Baca konfigurasi
+config it baca_json("config.json")
+tampilkan f"App name: {config['app_name']}"
+tampilkan f"Version: {config['version']}"
 
-// Read user data
-users = baca_json("users.json")
-untuk user dari users
-    tampilkan f"User: {user['name']}, Age: {user['age']}"
+// Baca data users
+users it baca_json("users.json")
+tampilkan f"Total users: {panjang(users)}"
+
+untuk setiap user dari users
+    tampilkan f"User: {user['name']} ({user['email']})"
 selesai
 
-// Read API response
-api_data = read_json("api_response.json")
-tampilkan api_data["status"]
-tampilkan api_data["data"]["total"]
-
-// Handle JSON parsing errors
+// Baca dengan default value
 coba
-    data = baca_json("invalid.json")
-except Exception sebagai e
-    tampilkan f"JSON parsing error: {e}"
+    settings it baca_json("settings.json")
+    debug_mode it settings.get("debug", salah)
+    port it settings.get("port", 8080)
+kecuali Exception sebagai e
+    tampilkan f"Error reading settings: {e}"
+    // Gunakan default values
+    debug_mode it salah
+    port it 8080
 selesai
 ```
 
 ---
 
 ### read_csv() / baca_csv()
-Reads CSV file as list of rows.
 
-**Syntax:**
+Baca file CSV.
+
+**Sintaks:**
 ```python
-read_csv(file_path, delimiter, encoding)
-baca_csv(file_path, delimiter, encoding)
+read_csv(path_file, delimiter, encoding)
+baca_csv(path_file, delimiter, encoding)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the CSV file
-- `delimiter` (string, optional): Field delimiter (default: ",")
-- `encoding` (string, optional): File encoding (default: "utf-8")
+**Parameter:**
+- `path_file` (string): Path file CSV yang akan dibaca
+- `delimiter` (string, opsional): Delimiter (default: ",")
+- `encoding` (string, opsional): Encoding file (default: "utf-8")
 
-**Returns:**
-- List: List of rows (each row is a list of strings)
+**Mengembalikan:**
+- List: List of rows (setiap row adalah list of strings)
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor read_csv, baca_csv
+dari fileio import baca_csv
 
-// Read standard CSV
-data1 = read_csv("data.csv")
-tampilkan data1[0]          // First row
-tampilkan data1[1][2]       // Third column of second row
+// Baca CSV standar
+data it baca_csv("data.csv")
+header it data[0]  // Baris pertama sebagai header
+rows it data[1:]   // Data rows
 
-// Read semicolon-delimited CSV
-data2 = baca_csv("data.csv", delimiter=";")
-tampilkan data2
+tampilkan "Header:"
+tampilkan header
 
-// Process CSV data
-rows = read_csv("students.csv")
-headers = rows[0]           // Assuming first row is headers
-tampilkan "Headers:", headers
-
-untuk i dari rentang(1, panjang(rows))
-    row = rows[i]
-    tampilkan f"Student: {row[0]}, Grade: {row[1]}"
+tampilkan "Data:"
+untuk setiap row dari rows
+    tampilkan row
 selesai
 
-// Read tab-separated data
-tsv_data = baca_csv("data.tsv", delimiter="\t")
-tampilkan tsv_data
+// Baca CSV dengan delimiter kustom
+semicolon_data it baca_csv("data.csv", delimiter=";")
+tampilkan semicolon_data
+
+// Baca CSV dengan tab delimiter
+tab_data it baca_csv("data.tsv", delimiter="\t")
+tampilkan tab_data
 ```
 
----
-
-## File Writing Functions
+## Fungsi Menulis File
 
 ### write_text() / tulis_teks()
-Writes text content to a file.
 
-**Syntax:**
+Tulis text ke file.
+
+**Sintaks:**
 ```python
-write_text(file_path, content, encoding)
-tulis_teks(file_path, content, encoding)
+write_text(path_file, konten, encoding)
+tulis_teks(path_file, konten, encoding)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the file to write
-- `content` (string): Text content to write
-- `encoding` (string, optional): File encoding (default: "utf-8")
+**Parameter:**
+- `path_file` (string): Path file yang akan ditulis
+- `konten` (string): Text konten yang akan ditulis
+- `encoding` (string, opsional): Encoding file (default: "utf-8")
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor write_text, tulis_teks
+dari fileio import tulis_teks
 
-// Write simple text
-write_text("output.txt", "Hello, RenzMcLang!")
-tampilkan "Text written to output.txt"
+// Tulis text sederhana
+tulis_teks("hello.txt", "Hello, World!")
 
-// Write multi-line content
-content = "Line 1\nLine 2\nLine 3"
-tulis_teks("multiline.txt", content)
+// Tulis multi-line text
+artikel it "Judul Artikel\n\nIni adalah paragraf pertama.\nIni adalah paragraf kedua."
+tulis_teks("artikel.txt", artikel)
 
-// Write with specific encoding
-write_text("utf8_file.txt", "Unicode: ñáéíóú", "utf-8")
+// Tulis dengan formatting
+nama it "Budi Santoso"
+umur it 25
+bio it f"Nama: {nama}\nUmur: {umur}\nStatus: Aktif"
+tulis_teks("profile.txt", bio)
 
-// Write log file
-log_message = f"[{tanggal()}] Application started"
-tulis_teks("app.log", log_message, "utf-8")
-
-// Append to file
-dengan open_text("log.txt", "a") sebagai file
-    file.tulis(f"[{tanggal()}] New log entry\n")
+// Append ke file (baca dulu, lalu tulis)
+coba
+    existing_konten it baca_teks("log.txt")
+kecuali FileNotFoundError
+    existing_konten it ""
 selesai
+
+log_baru it f"\n{waktu()}: User login"  // Asumsi ada fungsi waktu()
+tulis_teks("log.txt", existing_konten + log_baru)
 ```
 
 ---
 
 ### write_lines() / tulis_baris()
-Writes a list of lines to a file.
 
-**Syntax:**
+Tulis list of lines ke file.
+
+**Sintaks:**
 ```python
-write_lines(file_path, lines, encoding)
-tulis_baris(file_path, lines, encoding)
+write_lines(path_file, baris-baris, encoding)
+tulis_baris(path_file, baris-baris, encoding)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the file to write
-- `lines` (list): List of strings to write
-- `encoding` (string, optional): File encoding (default: "utf-8")
+**Parameter:**
+- `path_file` (string): Path file yang akan ditulis
+- `baris-baris` (list): List of lines yang akan ditulis
+- `encoding` (string, opsional): Encoding file (default: "utf-8")
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor write_lines, tulis_baris
+dari fileio import tulis_baris
 
-// Write list of lines
-data = ["First line\n", "Second line\n", "Third line"]
-write_lines("output.txt", data)
+// Tulis list sederhana
+lines it ["Line 1\n", "Line 2\n", "Line 3"]
+tulis_baris("output.txt", lines)
 
-// Write generated data
-numbers = []
-untuk i di rentang(1, 11)
-    tambah(numbers, f"Number {i}\n")
+// Generate dan tulis lines
+data_lines it []
+untuk i dari 1 hingga 10
+    tambah(data_lines, f"Data item {i}\n")
 selesai
-tulis_baris("numbers.txt", numbers)
+tulis_baris("data.txt", data_lines)
 
-// Write CSV data without CSV module
-csv_data = ["Name,Age,City\n", "John,25,NYC\n", "Jane,30,LA\n"]
-write_lines("simple.csv", csv_data)
+// Tulis CSV manual
+csv_data it []
+tambah(csv_data, "Name,Age,City\n")  // Header
+tambah(csv_data, "Alice,25,Jakarta\n")
+tambah(csv_data, "Bob,30,Bandung\n")
+tambah(csv_data, "Charlie,28,Surabaya\n")
+tulis_baris("manual.csv", csv_data)
 ```
 
 ---
 
 ### write_bytes() / tulis_bytes()
-Writes bytes content to a file.
 
-**Syntax:**
+Tulis bytes ke file.
+
+**Sintaks:**
 ```python
-write_bytes(file_path, content)
-tulis_bytes(file_path, content)
+write_bytes(path_file, konten)
+tulis_bytes(path_file, konten)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the file to write
-- `content` (bytes): Bytes content to write
+**Parameter:**
+- `path_file` (string): Path file yang akan ditulis
+- `konten` (bytes): Bytes konten yang akan ditulis
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor write_bytes, tulis_bytes
+dari fileio import tulis_bytes, baca_bytes
 
-// Write binary data
-binary_data = b"\x00\x01\x02\x03\x04"
-write_bytes("output.bin", binary_data)
+// Tulis binary data
+binary_data it b"\x00\x01\x02\x03\x04\x05"
+tulis_bytes("binary.bin", binary_data)
 
-// Write image data
-image_bytes = read_bytes("input.jpg")
-tulis_bytes("backup.jpg", image_bytes)
+// Create simple image header (mock)
+image_header it b"\x89PNG\r\n\x1a\n"
+tulis_bytes("image.png", image_header)
 
-// Create simple binary file
-header = b"BINARY\x01\x00"
-data = b"Hello Binary World"
-tulis_bytes("simple.bin", header + data)
+// Copy dan modify bytes
+original_data it baca_bytes("input.bin")
+// Modify first byte
+modified_data it bytes([0xFF] + list(original_data[1:]))
+tulis_bytes("modified.bin", modified_data)
 ```
 
 ---
 
 ### write_json() / tulis_json()
-Writes data to JSON file.
 
-**Syntax:**
+Tulis data ke JSON file.
+
+**Sintaks:**
 ```python
-write_json(file_path, data, indent, encoding)
-tulis_json(file_path, data, indent, encoding)
+write_json(path_file, data, indent, encoding)
+tulis_json(path_file, data, indent, encoding)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the JSON file
-- `data` (dictionary): Data to write
-- `indent` (integer, optional): Indentation for pretty printing
-- `encoding` (string, optional): File encoding (default: "utf-8")
+**Parameter:**
+- `path_file` (string): Path file JSON yang akan ditulis
+- `data` (dict): Data yang akan ditulis
+- `indent` (integer, opsional): Indentasi untuk pretty printing
+- `encoding` (string, opsional): Encoding file (default: "utf-8")
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor write_json, tulis_json
+dari fileio import tulis_json
 
-// Write simple JSON
-config = {"name": "RenzMcLang", "version": "1.0", "author": "RenzMc"}
-write_json("config.json", config, indent=2)
+// Tulis JSON sederhana
+user_data it {"name": "David", "age": 30, "city": "Medan"}
+tulis_json("user.json", user_data)
 
-// Write user data
-users = [
-    {"name": "Alice", "age": 25, "city": "NYC"},
-    {"name": "Bob", "age": 30, "city": "LA"}
-]
-tulis_json("users.json", users, indent=4)
-
-// Write API response
-response = {
-    "status": "success",
-    "data": {
-        "total": 100,
-        "items": ["item1", "item2", "item3"]
+// Tulis dengan indentasi
+config it {
+    "app_name": "MyApp",
+    "version": "1.0.0",
+    "debug": true,
+    "database": {
+        "host": "localhost",
+        "port": 5432,
+        "name": "myapp_db"
     }
 }
-write_json("response.json", response, indent=2)
+tulis_json("config.json", config, indent=2)
+
+// Tulis array/list
+products it [
+    {"id": 1, "name": "Laptop", "price": 8500000},
+    {"id": 2, "name": "Mouse", "price": 250000},
+    {"id": 3, "name": "Keyboard", "price": 450000}
+]
+tulis_json("products.json", products, indent=4)
 ```
 
 ---
 
 ### write_csv() / tulis_csv()
-Writes data to CSV file.
 
-**Syntax:**
+Tulis data ke CSV file.
+
+**Sintaks:**
 ```python
-write_csv(file_path, rows, delimiter, encoding)
-tulis_csv(file_path, rows, delimiter, encoding)
+write_csv(path_file, rows, delimiter, encoding)
+tulis_csv(path_file, rows, delimiter, encoding)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to the CSV file
-- `rows` (list): List of rows (each row is a list of strings)
-- `delimiter` (string, optional): Field delimiter (default: ",")
-- `encoding` (string, optional): File encoding (default: "utf-8")
+**Parameter:**
+- `path_file` (string): Path file CSV yang akan ditulis
+- `rows` (list): List of rows
+- `delimiter` (string, opsional): Delimiter (default: ",")
+- `encoding` (string, opsional): Encoding file (default: "utf-8")
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor write_csv, tulis_csv
+dari fileio import tulis_csv
 
-// Write simple CSV
-data = [
+// Tulis CSV sederhana
+csv_data it [
     ["Name", "Age", "City"],
-    ["Alice", "25", "NYC"],
-    ["Bob", "30", "LA"]
+    ["Eva", "25", "Jakarta"],
+    ["Frank", "30", "Bandung"],
+    ["Grace", "28", "Surabaya"]
 ]
-write_csv("output.csv", data)
+tulis_csv("users.csv", csv_data)
 
-// Write semicolon-delimited CSV
-tulis_csv("data.csv", data, delimiter=";")
+// Tulis dengan delimiter kustom
+semicolon_data it [
+    ["Product"; "Price"; "Stock"],
+    ["Laptop"; "8500000"; "10"],
+    ["Mouse"; "250000"; "50"],
+    ["Keyboard"; "450000"; "25"]
+]
+tulis_csv("products.csv", semicolon_data, delimiter=";")
 
-// Write tab-separated data
-write_csv("data.tsv", data, delimiter="\t")
-
-// Write generated data
-csv_data = [["ID", "Value"]]
-untuk i di rentang(1, 6)
-    tambah(csv_data, [str(i), str(i * 10)])
-selesai
-tulis_csv("generated.csv", csv_data)
+// Generate CSV dari data dinamis
+sales_data it [["Date", "Product", "Amount", "Total"]]
+// Add sample data
+tambah(sales_data, ["2025-01-01", "Laptop", 2, 17000000])
+tambah(sales_data, ["2025-01-02", "Mouse", 5, 1250000])
+tambah(sales_data, ["2025-01-03", "Keyboard", 3, 1350000])
+tulis_csv("sales_report.csv", sales_data)
 ```
 
----
-
-## File Operations
+## Operasi File
 
 ### copy() / salin()
-Copies file from source to destination.
 
-**Syntax:**
+Salin file dari source ke destination.
+
+**Sintaks:**
 ```python
-copy(src, dst)
-salin(src, dst)
+copy(source, destination)
+salin(source, destination)
 ```
 
-**Parameters:**
-- `src` (string): Source file path
-- `dst` (string): Destination file path
+**Parameter:**
+- `source` (string): Path file sumber
+- `destination` (string): Path file tujuan
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor copy, salin, exists
+dari fileio import salin
 
-// Backup file
-copy("important.txt", "backup.txt")
-tampilkan "File backed up successfully"
+// Salin file
+salin("data.txt", "backup/data.txt")
 
-// Copy with Indonesian alias
-salin("data.csv", "data_backup.csv")
+// Salin dengan nama baru
+salin("config.json", "config_backup.json")
 
-// Conditional copy
-jika exists("config.json")
-    salin("config.json", "config_backup.json")
-selesai
+// Salin ke directory berbeda
+salin("report.pdf", "archives/report_2025.pdf")
 ```
 
 ---
 
 ### move() / pindahkan()
-Moves file from source to destination.
 
-**Syntax:**
+Pindahkan file dari source ke destination.
+
+**Sintaks:**
 ```python
-move(src, dst)
-pindahkan(src, dst)
+move(source, destination)
+pindahkan(source, destination)
 ```
 
-**Parameters:**
-- `src` (string): Source file path
-- `dst` (string): Destination file path
+**Parameter:**
+- `source` (string): Path file sumber
+- `destination` (string): Path file tujuan
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor move, pindahkan
+dari fileio import pindahkan
 
-// Move file
-move("temp.txt", "processed.txt")
+// Pindahkan file
+pindahkan("temp.txt", "processed/temp.txt")
 
-// Reorganize files
-pindahkan("downloads/file.pdf", "documents/file.pdf")
+// Rename file
+pindahkan("old_name.txt", "new_name.txt")
 
-// Rename file (move within same directory)
-move("old_name.txt", "new_name.txt")
+// Pindahkan ke directory lain
+pindahkan("output.csv", "reports/monthly_report.csv")
 ```
 
 ---
 
 ### delete() / hapus()
-Deletes a file.
 
-**Syntax:**
+Hapus file.
+
+**Sintaks:**
 ```python
-delete(file_path)
-hapus(file_path)
+delete(path_file)
+hapus(path_file)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to file to delete
+**Parameter:**
+- `path_file` (string): Path file yang akan dihapus
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor delete, hapus, exists
+dari fileio import hapus, ada
 
-// Delete temporary file
-delete("temp.txt")
+// Hapus file
+hapus("temp_file.txt")
 
-// Conditional deletion
-jika exists("old_backup.txt")
-    hapus("old_backup.txt")
-    tampilkan "Old backup deleted"
+// Hapus dengan cek keberadaan
+jika ada("old_data.csv")
+    hapus("old_data.csv")
+    tampilkan "File old_data.csv dihapus"
+lainnya
+    tampilkan "File old_data.csv tidak ditemukan"
 selesai
 
-// Clean up files
-extensions = [".tmp", ".bak", ".temp"]
-untuk ext dari extensions
-    files = [f for f in list_dir() if f.endswith(ext)]
-    untuk file dari files
-        hapus(file)
+// Cleanup temporary files
+temp_files it ["temp1.txt", "temp2.dat", "temp3.bin"]
+untuk setiap temp_file dari temp_files
+    jika ada(temp_file)
+        hapus(temp_file)
+        tampilkan f"File {temp_file} dihapus"
     selesai
 selesai
 ```
@@ -534,216 +552,262 @@ selesai
 ---
 
 ### exists() / ada()
-Checks if a file or directory exists.
 
-**Syntax:**
+Cek apakah file atau directory ada.
+
+**Sintaks:**
 ```python
-exists(file_path)
-ada(file_path)
+exists(path)
+ada(path)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to check
+**Parameter:**
+- `path` (string): Path yang akan dicek
 
-**Returns:**
-- Boolean: True if exists, False otherwise
+**Mengembalikan:**
+- Boolean: True jika ada, False jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor exists, ada
+dari fileio import ada
 
-// Check file existence
-jika exists("data.txt")
-    content = read_text("data.txt")
-    tampilkan content
-lainnya
-    tampilkan "File does not exist"
-selesai
-
-// Indonesian alias
+// Cek file
 jika ada("config.json")
-    tampilkan "Configuration found"
-selesai
-
-// Validate multiple files
-required_files = ["config.json", "data.txt", "output.csv"]
-missing_files = []
-
-untuk file dari required_files
-    jika tidak ada(file)
-        tambah(missing_files, file)
-    selesai
-selesai
-
-jika missing_files
-    tampilkan f"Missing files: {missing_files}"
+    tampilkan "File config.json ada"
 lainnya
-    tampilkan "All required files present"
+    tampilkan "File config.json tidak ada"
+selesai
+
+// Cek directory
+jika ada("data/")
+    tampilkan "Directory data ada"
+lainnya
+    tampilkan "Directory data tidak ada"
+selesai
+
+// Cek sebelum operasi file
+filename it "important_data.txt"
+jika tidak ada(filename)
+    // Buat file baru
+    dari fileio import tulis_teks
+    tulis_teks(filename, "Initial data")
+    tampilkan f"File {filename} dibuat"
+lainnya
+    tampilkan f"File {filename} sudah ada"
 selesai
 ```
 
 ---
 
 ### size() / ukuran()
-Gets file size in bytes.
 
-**Syntax:**
+Dapatkan ukuran file dalam bytes.
+
+**Sintaks:**
 ```python
-size(file_path)
-ukuran(file_path)
+size(path_file)
+ukuran(path_file)
 ```
 
-**Parameters:**
-- `file_path` (string): Path to file
+**Parameter:**
+- `path_file` (string): Path file
 
-**Returns:**
-- Integer: File size in bytes
+**Mengembalikan:**
+- Integer: Ukuran file dalam bytes
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor size, ukuran
+dari fileio import ukuran, ada
 
-// Get file size
-file_size = size("data.txt")
-tampilkan f"File size: {file_size} bytes"
-
-// Format file size
-file_size_kb = ukuran("image.jpg") / 1024
-tampilkan f"Image size: {file_size_kb:.2f} KB"
-
-// Check file size limits
-max_size = 10 * 1024 * 1024  // 10 MB
-jika size("upload.zip") > max_size
-    tampilkan "File too large!"
-selesai
-```
-
----
-
-### is_file() / adalah_file() & is_dir() / adalah_dir()
-Checks if path is a file or directory.
-
-**Syntax:**
-```python
-is_file(file_path)
-is_dir(file_path)
-adalah_file(file_path)
-adalah_dir(file_path)
-```
-
-**Parameters:**
-- `file_path` (string): Path to check
-
-**Returns:**
-- Boolean: True if file/directory, False otherwise
-
-**Examples:**
-```python
-dari fileio impor is_file, is_dir, adalah_file, adalah_dir
-
-// Check path type
-path = "data.txt"
-jika is_file(path)
-    tampilkan f"{path} is a file"
-lainnya jika is_dir(path)
-    tampilkan f"{path} is a directory"
-lainnya
-    tampilkan f"{path} does not exist"
+// Dapatkan ukuran file
+jika ada("data.txt")
+    file_size it ukuran("data.txt")
+    tampilkan f"Ukuran file: {file_size} bytes"
+    
+    // Konversi ke KB
+    size_kb it file_size / 1024
+    tampilkan f"Ukuran file: {size_kb:.2f} KB"
 selesai
 
-// Indonesian aliases
-jika adalah_file("config.json")
-    tampilkan "Configuration file found"
-selesai
-
-jika adalah_dir("logs")
-    tampilkan "Logs directory exists"
-selesai
-
-// List directory contents with types
-items = list_dir(".")
-untuk item dari items
-    jika adalah_file(item)
-        tampilkan f"FILE: {item}"
-    lainnya jika adalah_dir(item)
-        tampilkan f"DIR:  {item}"
+// Monitor file sizes
+files it ["data1.txt", "data2.txt", "data3.txt"]
+total_size it 0
+untuk setiap file dari files
+    jika ada(file)
+        file_size it ukuran(file)
+        total_size it total_size + file_size
+        tampilkan f"{file}: {file_size} bytes"
     selesai
 selesai
+tampilkan f"Total ukuran: {total_size} bytes"
 ```
 
 ---
 
-## Directory Operations
+### is_file() / adalah_file()
 
-### create_dir() / buat_dir()
-Creates a directory.
+Cek apakah path adalah file.
 
-**Syntax:**
+**Sintaks:**
 ```python
-create_dir(dir_path, exist_ok)
-buat_dir(dir_path, exist_ok)
+is_file(path)
+adalah_file(path)
 ```
 
-**Parameters:**
-- `dir_path` (string): Directory path to create
-- `exist_ok` (boolean, optional): Don't error if directory exists (default: True)
+**Parameter:**
+- `path` (string): Path yang akan dicek
 
-**Examples:**
+**Mengembalikan:**
+- Boolean: True jika file, False jika tidak
+
+**Contoh:**
 ```python
-dari fileio impor create_dir, buat_dir
+dari fileio import adalah_file
 
-// Create single directory
-create_dir("output")
-
-// Create nested directory
-buat_dir("data/processed/2024")
-
-// Create with error handling
-create_dir("config", exist_ok=salah)
-// Will raise error if config already exists
-
-// Organize project structure
-directories = ["src", "tests", "docs", "output", "logs"]
-untuk dir dari directories
-    buat_dir(dir)
+// Cek apakah path adalah file
+jika adalah_file("data.txt")
+    tampilkan "data.txt adalah file"
+lainnya
+    tampilkan "data.txt bukan file"
 selesai
-tampilkan "Project structure created"
+
+// Filter files dari directory listing
+all_items it ["data.txt", "logs", "config.json", "temp"]
+files it []
+untuk setiap item dari all_items
+    jika adalah_file(item)
+        tambah(files, item)
+    selesai
+selesai
+tampilkan f"Files: {files}"
+```
+
+---
+
+### is_dir() / adalah_dir()
+
+Cek apakah path adalah directory.
+
+**Sintaks:**
+```python
+is_dir(path)
+adalah_dir(path)
+```
+
+**Parameter:**
+- `path` (string): Path yang akan dicek
+
+**Mengembalikan:**
+- Boolean: True jika directory, False jika tidak
+
+**Contoh:**
+```python
+dari fileio import adalah_dir
+
+// Cek apakah path adalah directory
+jika adalah_dir("data/")
+    tampilkan "data adalah directory"
+lainnya
+    tampilkan "data bukan directory"
+selesai
+
+// Filter directories
+items it ["data", "file.txt", "logs", "config.json"]
+directories it []
+untuk setiap item dari items
+    jika adalah_dir(item)
+        tambah(directories, item)
+    selesai
+selesai
+tampilkan f"Directories: {directories}"
+```
+
+## Operasi Directory
+
+### create_dir() / buat_dir()
+
+Buat directory.
+
+**Sintaks:**
+```python
+create_dir(path_dir, exist_ok)
+buat_dir(path_dir, exist_ok)
+```
+
+**Parameter:**
+- `path_dir` (string): Path directory yang akan dibuat
+- `exist_ok` (boolean, opsional): Tidak error jika directory sudah ada (default: True)
+
+**Contoh:**
+```python
+dari fileio import buat_dir
+
+// Buat directory sederhana
+buat_dir("data")
+
+// Buat nested directory
+buat_dir("data/processed/2025")
+
+// Buat dengan error handling
+coba
+    buat_dir("logs", exist_ok=salah)  // Akan error jika sudah ada
+    tampilkan "Directory logs dibuat"
+kecuali Exception sebagai e
+    tampilkan f"Error: {e}"
+selesai
+
+// Buat struktur directory lengkap
+directories it [
+    "data",
+    "data/input",
+    "data/output", 
+    "data/temp",
+    "logs",
+    "config"
+]
+untuk setiap dir dari directories
+    buat_dir(dir)
+    tampilkan f"Directory {dir} dibuat"
+selesai
 ```
 
 ---
 
 ### remove_dir() / hapus_dir()
-Removes directory and its contents.
 
-**Syntax:**
+Hapus directory dan semua isinya.
+
+**Sintaks:**
 ```python
-remove_dir(dir_path, ignore_errors)
-hapus_dir(dir_path, ignore_errors)
+remove_dir(path_dir, ignore_errors)
+hapus_dir(path_dir, ignore_errors)
 ```
 
-**Parameters:**
-- `dir_path` (string): Directory path to remove
-- `ignore_errors` (boolean, optional): Ignore errors during removal (default: False)
+**Parameter:**
+- `path_dir` (string): Path directory yang akan dihapus
+- `ignore_errors` (boolean, opsional): Abaikan error saat penghapusan (default: False)
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor remove_dir, hapus_dir
+dari fileio import hapus_dir, adalah_dir
 
-// Remove empty directory
-remove_dir("temp")
+// Hapus directory
+hapus_dir("temp")
 
-// Remove directory with contents
-hapus_dir("data/old")
+// Hapus dengan error handling
+coba
+    hapus_dir("logs", ignore_errors=salah)
+    tampilkan "Directory logs dihapus"
+kecuali Exception sebagai e
+    tampilkan f"Error: {e}"
+selesai
 
-// Safe removal
-hapus_dir("backup", ignore_errors=benar)
-
-// Clean up temporary directories
-temp_dirs = ["temp", "tmp", "cache"]
-untuk dir dari temp_dirs
-    jika adalah_dir(dir)
-        hapus_dir(dir, ignore_errors=benar)
-        tampilkan f"Removed {dir}"
+// Cleanup temporary directories
+temp_dirs it ["temp1", "temp2", "temp3"]
+untuk setiap temp_dir dari temp_dirs
+    jika adalah_dir(temp_dir)
+        hapus_dir(temp_dir, ignore_errors=benar)
+        tampilkan f"Directory {temp_dir} dihapus"
     selesai
 selesai
 ```
@@ -751,331 +815,696 @@ selesai
 ---
 
 ### list_dir() / daftar_dir()
-Lists contents of a directory.
 
-**Syntax:**
+Daftar file dan directory dalam directory.
+
+**Sintaks:**
 ```python
-list_dir(dir_path)
-daftar_dir(dir_path)
+list_dir(path_dir)
+daftar_dir(path_dir)
 ```
 
-**Parameters:**
-- `dir_path` (string, optional): Directory path (default: current directory)
+**Parameter:**
+- `path_dir` (string, opsional): Path directory (default: current directory)
 
-**Returns:**
-- List: List of file and directory names
+**Mengembalikan:**
+- List: List nama file dan directory
 
-**Examples:**
+**Contoh:**
 ```python
-dari fileio impor list_dir, daftar_dir
+dari fileio import daftar_dir, adalah_file, adalah_dir
 
-// List current directory
-files = list_dir()
-tampilkan files
+// Daftar current directory
+items it daftar_dir(".")
+tampilkan items
 
-// List specific directory
-config_files = daftar_dir("config")
-tampilkan config_files
+// Daftar directory tertentu
+data_items it daftar_dir("data")
+tampilkan f"Isi directory data: {data_items}"
 
-// Filter files by extension
-all_files = list_dir(".")
-txt_files = [f for f in all_files if f.endswith(".txt")]
-tampilkan f"Text files: {txt_files}"
+// Filter files dan directories
+files it []
+directories it []
+untuk setiap item dari data_items
+    full_path it "data/" + item
+    jika adalah_file(full_path)
+        tambah(files, item)
+    selesai
+    jika adalah_dir(full_path)
+        tambah(directories, item)
+    selesai
+selesai
+tampilkan f"Files: {files}"
+tampilkan f"Directories: {directories}"
 
-// Count directory items
-item_count = panjang(daftar_dir("documents"))
-tampilkan f"Documents contain {item_count} items"
+// Recursive listing
+buat fungsi list_recursive dengan path
+    items it daftar_dir(path)
+    untuk setiap item dari items
+        full_path it path + "/" + item
+        tampilkan full_path
+        jika adalah_dir(full_path)
+            list_recursive(full_path)
+        selesai
+    selesai
+selesai
+
+list_recursive("data")
 ```
 
 ---
 
-## Advanced Usage Examples
+### walk_dir() / jelajahi_dir()
 
-### File Processing Pipeline
+Jelajahi directory tree secara rekursif.
 
+**Sintaks:**
 ```python
-dari fileio impor (
-    read_text, write_text, copy, delete, 
-    exists, size, create_dir, list_dir
-)
-
-fungsi proses_file_batch(input_dir, output_dir):
-    """Process all text files in a directory"""
-    
-    // Ensure output directory exists
-    buat_dir(output_dir)
-    
-    // Get all text files
-    files = list_dir(input_dir)
-    txt_files = [f for f in files jika f.endswith(".txt")]
-    
-    tampilkan f"Processing {panjang(txt_files)} files..."
-    
-    processed_count = 0
-    untuk filename dari txt_files
-        input_path = join_paths(input_dir, filename)
-        
-        coba
-            // Read and process
-            content = read_text(input_path)
-            
-            // Process: convert to uppercase
-            processed_content = huruf_besar(content)
-            
-            // Write to output
-            output_path = join_paths(output_dir, f"processed_{filename}")
-            write_text(output_path, processed_content)
-            
-            // Backup original
-            backup_path = join_paths(output_dir, f"backup_{filename}")
-            copy(input_path, backup_path)
-            
-            processed_count = processed_count + 1
-            tampilkan f"Processed: {filename}"
-            
-        except Exception sebagai e
-            tampilkan f"Error processing {filename}: {e}"
-        selesai
-    selesai
-    
-    tampilkan f"Successfully processed {processed_count} files"
-    hasil processed_count
-selesai
-
-// Usage
-proses_file_batch("input_data", "processed_data")
+walk_dir(path_dir)
+jelajahi_dir(path_dir)
 ```
 
-### File System Monitor
+**Parameter:**
+- `path_dir` (string): Root directory
+
+**Mengembalikan:**
+- Generator: Menghasilkan tuple (dirpath, dirnames, filenames)
+
+**Contoh:**
+```python
+dari fileio import jelajahi_dir
+
+// Jelajahi directory
+untuk setiap (dirpath, dirnames, filenames) dari jelajahi_dir("data")
+    tampilkan f"Directory: {dirpath}"
+    
+    // Tampilkan subdirectories
+    tampilkan "  Subdirectories:"
+    untuk setiap dirname dari dirnames
+        tampilkan f"    {dirname}"
+    selesai
+    
+    // Tampilkan files
+    tampilkan "  Files:"
+    untuk setiap filename dari filenames
+        tampilkan f"    {filename}"
+    selesai
+selesai
+
+// Hitung total files
+total_files it 0
+untuk setiap (dirpath, dirnames, filenames) dari jelajahi_dir(".")
+    total_files it total_files + panjang(filenames)
+selesai
+tampilkan f"Total files: {total_files}"
+
+// Cari file dengan ekstensi tertentu
+txt_files it []
+untuk setiap (dirpath, dirnames, filenames) dari jelajahi_dir(".")
+    untuk setiap filename dari filenames
+        jika akhir_dengan(filename, ".txt")
+            full_path it dirpath + "/" + filename
+            tambah(txt_files, full_path)
+        selesai
+    selesai
+selesai
+tampilkan f"Text files: {txt_files}"
+```
+
+## Context Manager
+
+### open_text() / buka_teks()
+
+Buka text file dengan mode tertentu.
+
+**Sintaks:**
+```python
+open_text(path_file, mode, encoding)
+buka_teks(path_file, mode, encoding)
+```
+
+**Parameter:**
+- `path_file` (string): Path file
+- `mode` (string, opsional): Mode file ('r', 'w', 'a', etc.) (default: 'r')
+- `encoding` (string, opsional): Encoding file (default: 'utf-8')
+
+**Mengembalikan:**
+- TextIOWrapper: File object
+
+**Contoh:**
+```python
+dari fileio import buka_teks
+
+// Buka dan baca file
+dengan buka_teks("data.txt", "r") sebagai file
+    konten it file.read()
+    tampilkan konten
+selesai
+
+// Buka dan tulis file
+dengan buka_teks("output.txt", "w") sebagai file
+    file.write("Hello from context manager")
+    file.write("\nThis is line 2")
+selesai
+
+// Append ke file
+dengan buka_teks("log.txt", "a") sebagai file
+    file.write(f"\n{waktu()}: New log entry")
+selesai
+
+// Process line by line
+dengan buka_teks("large_file.txt", "r") sebagai file
+    line_count it 0
+    untuk setiap line dari file
+        line_count it line_count + 1
+        jika line_count % 1000 == 0
+            tampilkan f"Processed {line_count} lines"
+        selesai
+    selesai
+selesai
+```
+
+---
+
+### open_binary() / buka_binary()
+
+Buka binary file dengan mode tertentu.
+
+**Sintaks:**
+```python
+open_binary(path_file, mode)
+buka_binary(path_file, mode)
+```
+
+**Parameter:**
+- `path_file` (string): Path file
+- `mode` (string, opsional): Mode file ('rb', 'wb', 'ab', etc.) (default: 'rb')
+
+**Mengembalikan:**
+- BufferedReader/BufferedWriter: Binary file object
+
+**Contoh:**
+```python
+dari fileio import buka_binary
+
+// Baca binary file
+dengan buka_binary("image.png", "rb") sebagai file
+    header it file.read(8)  // Read first 8 bytes
+    tampilkan f"Header: {header}"
+selesai
+
+// Tulis binary file
+data it b"\x00\x01\x02\x03\x04\x05"
+dengan buka_binary("output.bin", "wb") sebagai file
+    file.write(data)
+selesai
+
+// Copy binary file
+dengan buka_binary("input.bin", "rb") sebagai source
+    dengan buka_binary("output.bin", "wb") sebagai destination
+        destination.write(source.read())
+    selesai
+selesai
+```
+
+## Fungsi Utilitas Path
+
+### get_extension() / dapatkan_ekstensi()
+
+Dapatkan file extension.
+
+**Sintaks:**
+```python
+get_extension(path_file)
+dapatkan_ekstensi(path_file)
+```
+
+**Parameter:**
+- `path_file` (string): Path file
+
+**Mengembalikan:**
+- String: File extension (termasuk dot)
+
+**Contoh:**
+```python
+dari fileio import dapatkan_ekstensi
+
+// Dapatkan ekstensi file
+ext1 it dapatkan_ekstensi("data.txt")      // Output: ".txt"
+ext2 it dapatkan_ekstensi("image.jpg")     // Output: ".jpg"
+ext3 it dapatkan_ekstensi("archive.tar.gz") // Output: ".gz"
+ext4 it dapatkan_ekstensi("no_extension")  // Output: ""
+
+tampilkan ext1
+tampilkan ext2
+tampilkan ext3
+tampilkan ext4
+
+// Filter files by extension
+files it ["data.txt", "image.jpg", "config.json", "script.py"]
+txt_files it []
+untuk setiap file dari files
+    jika dapatkan_ekstensi(file) == ".txt"
+        tambah(txt_files, file)
+    selesai
+selesai
+tampilkan f"Text files: {txt_files}"
+```
+
+---
+
+### get_basename() / dapatkan_nama_file()
+
+Dapatkan filename tanpa path.
+
+**Sintaks:**
+```python
+get_basename(path_file)
+dapatkan_nama_file(path_file)
+```
+
+**Parameter:**
+- `path_file` (string): Path file
+
+**Mengembalikan:**
+- String: Filename saja
+
+**Contoh:**
+```python
+dari fileio import dapatkan_nama_file
+
+// Dapatkan filename
+name1 it dapatkan_nama_file("/home/user/data.txt")     // Output: "data.txt"
+name2 it dapatkan_nama_file("C:\\Windows\\system32\&quot;) // Output: "system32"
+name3 it dapatkan_nama_file("relative/path/file.json") // Output: "file.json"
+name4 it dapatkan_nama_file("simple.txt")              // Output: "simple.txt"
+
+tampilkan name1
+tampilkan name2
+tampilkan name3
+tampilkan name4
+```
+
+---
+
+### get_stem() / dapatkan_stem()
+
+Dapatkan filename tanpa extension.
+
+**Sintaks:**
+```python
+get_stem(path_file)
+dapatkan_stem(path_file)
+```
+
+**Parameter:**
+- `path_file` (string): Path file
+
+**Mengembalikan:**
+- String: Filename tanpa extension
+
+**Contoh:**
+```python
+dari fileio import dapatkan_stem
+
+// Dapatkan filename tanpa extension
+stem1 it dapatkan_stem("data.txt")           // Output: "data"
+stem2 it dapatkan_stem("report.final.pdf")   // Output: "report.final"
+stem3 it dapatkan_stem("archive.tar.gz")     // Output: "archive.tar"
+stem4 it dapatkan_stem("no_extension")       // Output: "no_extension"
+
+tampilkan stem1
+tampilkan stem2
+tampilkan stem3
+tampilkan stem4
+
+// Generate backup filename
+original_file it "important_data.txt"
+stem it dapatkan_stem(original_file)
+backup_file it stem + "_backup.txt"
+tampilkan f"Backup file: {backup_file}"
+```
+
+---
+
+### get_parent() / dapatkan_induk()
+
+Dapatkan parent directory.
+
+**Sintaks:**
+```python
+get_parent(path_file)
+dapatkan_induk(path_file)
+```
+
+**Parameter:**
+- `path_file` (string): Path file
+
+**Mengembalikan:**
+- String: Parent directory path
+
+**Contoh:**
+```python
+dari fileio import dapatkan_induk
+
+// Dapatkan parent directory
+parent1 it dapatkan_induk("/home/user/data.txt")     // Output: "/home/user"
+parent2 it dapatkan_induk("C:\\Windows\\system32\&quot;) // Output: "C:\\Windows"
+parent3 it dapatkan_induk("relative/path/file.json") // Output: "relative/path"
+parent4 it dapatkan_induk("simple.txt")              // Output: "."
+
+tampilkan parent1
+tampilkan parent2
+tampilkan parent3
+tampilkan parent4
+```
+
+---
+
+### join_paths() / gabungkan_path()
+
+Gabungkan path components.
+
+**Sintaks:**
+```python
+join_paths(*paths)
+gabungkan_path(*paths)
+```
+
+**Parameter:**
+- `*paths` (string): Path components
+
+**Mengembalikan:**
+- String: Joined path
+
+**Contoh:**
+```python
+dari fileio import gabungkan_path
+
+// Gabungkan path
+path1 it gabungkan_path("/home", "user", "data.txt")  // Output: "/home/user/data.txt"
+path2 it gabungkan_path("data", "processed", "2025")   // Output: "data/processed/2025"
+path3 it gabungkan_path("config", "app.json")         // Output: "config/app.json"
+
+tampilkan path1
+tampilkan path2
+tampilkan path3
+
+// Dynamic path construction
+base_dir it "/home/user/project"
+data_dir it gabungkan_path(base_dir, "data")
+config_file it gabungkan_path(base_dir, "config", "settings.json")
+log_file it gabungkan_path(base_dir, "logs", "app.log")
+
+tampilkan data_dir
+tampilkan config_file
+tampilkan log_file
+```
+
+---
+
+### absolute_path() / path_absolut()
+
+Dapatkan absolute path.
+
+**Sintaks:**
+```python
+absolute_path(relative_path)
+path_absolut(relative_path)
+```
+
+**Parameter:**
+- `relative_path` (string): Relative path
+
+**Mengembalikan:**
+- String: Absolute path
+
+**Contoh:**
+```python
+dari fileio import path_absolut
+
+// Convert relative ke absolute
+abs_path1 it path_absolut("data.txt")
+abs_path2 it path_absolut("../config.json")
+abs_path3 it path_absolut("./logs/app.log")
+
+tampilkan f"Absolute path: {abs_path1}"
+tampilkan f"Absolute path: {abs_path2}"
+tampilkan f"Absolute path: {abs_path3}"
+
+// Normalize paths
+messy_path it "data/../config/./settings.json"
+normalized it path_absolut(messy_path)
+tampilkan f"Normalized: {normalized}"
+```
+
+## Contoh Praktis
+
+### File Manager Sederhana
 
 ```python
-dari fileio impor size, exists, list_dir, adalah_file
+dari fileio import *
 
-fungsi monitor_direktori(directory, max_size_mb=100):
-    """Monitor directory size and file count"""
+buat fungsi organize_files dengan source_dir, target_dir
+    // Buat target directory structure
+    buat_dir(gabungkan_path(target_dir, "documents"))
+    buat_dir(gabungkan_path(target_dir, "images"))
+    buat_dir(gabungkan_path(target_dir, "configs"))
     
-    max_size_bytes = max_size_mb * 1024 * 1024
-    total_size = 0
-    file_count = 0
-    large_files = []
-    
-    files = list_dir(directory)
-    
-    untuk filename dari files
-        filepath = join_paths(directory, filename)
-        
-        jika adalah_file(filepath)
-            file_size = size(filepath)
-            total_size = total_size + file_size
-            file_count = file_count + 1
+    // Jelajahi source directory
+    untuk setiap (dirpath, dirnames, filenames) dari jelajahi_dir(source_dir)
+        untuk setiap filename dari filenames
+            source_path it gabungkan_path(dirpath, filename)
+            extension it dapatkan_ekstensi(filename)
             
-            // Track large files (> 1 MB)
-            jika file_size > 1024 * 1024
-                large_files.append({
-                    "name": filename,
-                    "size_mb": file_size / (1024 * 1024)
-                })
+            // Tentukan target directory
+            jika extension di [".txt", ".doc", ".pdf"]
+                target_subdir it "documents"
             selesai
+            jika extension di [".jpg", ".png", ".gif", ".bmp"]
+                target_subdir it "images"
+            selesai
+            jika extension di [".json", ".xml", ".yaml"]
+                target_subdir it "configs"
+            selesai
+            lainnya
+                target_subdir it "others"
+            selesai
+            
+            // Pindahkan file
+            target_path it gabungkan_path(target_dir, target_subdir, filename)
+            pindahkan(source_path, target_path)
+            tampilkan f"Moved {filename} to {target_subdir}"
         selesai
     selesai
-    
-    // Report
-    tampilkan f"=== Directory Monitor: {directory} ==="
-    tampilkan f"Total files: {file_count}"
-    tampilkan f"Total size: {total_size / (1024 * 1024):.2f} MB"
-    tampilkan f"Size limit: {max_size_mb} MB"
-    
-    jika total_size > max_size_bytes
-        tampilkan "⚠️ Directory exceeds size limit!"
-    selesai
-    
-    jika large_files
-        tampilkan "Large files (>1 MB):"
-        untuk file_info dari large_files
-            tampilkan f"  {file_info['name']}: {file_info['size_mb']:.2f} MB"
-        selesai
-    selesai
-    
-    hasil {
-        "file_count": file_count,
-        "total_size_bytes": total_size,
-        "large_files": large_files,
-        "exceeds_limit": total_size > max_size_bytes
-    }
 selesai
 
-// Usage
-monitor_direktori("documents", max_size_mb=50)
+// Penggunaan
+organize_files("messy_files", "organized")
 ```
 
-### Backup System
+### Log File Processor
 
 ```python
-dari fileio impor (
-    copy, create_dir, list_dir, join_paths,
-    get_basename, get_extension, ada
-)
-dari datetime impor sekarang
+dari fileio import baca_baris, tulis_teks, dapatkan_ekstensi
 
-fungsi buat_backup(source_dir, backup_base="backups"):
-    """Create timestamped backup of directory"""
+buat fungsi process_log_file dengan input_file, output_file
+    // Baca semua baris
+    lines it baca_baris(input_file)
     
-    jika tidak ada(source_dir)
-        tampilkan f"Source directory {source_dir} does not exist"
+    // Process lines
+    processed_lines it []
+    error_count it 0
+    warning_count it 0
+    
+    untuk setiap line dari lines
+        clean_line it hapus_spasi(line)
+        
+        // Filter empty lines
+        jika panjang(clean_line) > 0
+            // Count log levels
+            jika berisi(huruf_kecil(clean_line), "error")
+                error_count it error_count + 1
+            selesai
+            jika berisi(huruf_kecil(clean_line), "warning")
+                warning_count it warning_count + 1
+            selesai
+            
+            tambah(processed_lines, clean_line)
+        selesai
+    selesai
+    
+    // Generate report
+    report it f"Log Processing Report\n"
+    report it report + f"Input file: {input_file}\n"
+    report it report + f"Total lines processed: {panjang(processed_lines)}\n"
+    report it report + f"Errors found: {error_count}\n"
+    report it report + f"Warnings found: {warning_count}\n"
+    report it report + "\nProcessed Log:\n"
+    
+    // Add processed lines
+    untuk setiap line dari processed_lines
+        report it report + line + "\n"
+    selesai
+    
+    // Write output
+    tulis_teks(output_file, report)
+    tampilkan f"Log processing completed. Results saved to {output_file}"
+selesai
+
+// Penggunaan
+process_log_file("app.log", "processed_log.txt")
+```
+
+### Configuration Backup System
+
+```python
+dari fileio import baca_json, tulis_json, ada, salin, buat_dir
+dari datetime import sekarang
+
+buat fungsi backup_config dengan config_file, backup_dir
+    // Pastikan config file ada
+    jika tidak ada(config_file)
+        tampilkan f"Config file {config_file} tidak ada"
         hasil salah
     selesai
     
-    // Create backup directory with timestamp
-    timestamp = sekarang().strftime("%Y%m%d_%H%M%S")
-    backup_dir = join_paths(backup_base, f"backup_{timestamp}")
+    // Buat backup directory
     buat_dir(backup_dir)
     
-    // Copy all files
-    files = list_dir(source_dir)
-    copied_count = 0
-    
-    tampilkan f"Creating backup in {backup_dir}..."
-    
-    untuk filename dari files
-        source_path = join_paths(source_dir, filename)
-        backup_path = join_paths(backup_dir, filename)
-        
-        coba
-            copy(source_path, backup_path)
-            copied_count = copied_count + 1
-            tampilkan f"Backed up: {filename}"
-        except Exception sebagai e
-            tampilkan f"Failed to backup {filename}: {e}"
-        selesai
-    selesai
-    
-    tampilkan f"Backup complete: {copied_count} files copied"
-    tampilkan f"Backup location: {backup_dir}"
-    
-    hasil backup_dir
-selesai
-
-// Usage
-buat_backup("important_documents")
-```
-
-### Log File Manager
-
-```python
-dari fileio impor (
-    read_lines, write_lines, delete, size, 
-    list_dir, join_paths, get_extension
-)
-
-fungsi kelola_log_files(log_dir="logs", max_size_mb=10, max_files=100):
-    """Manage log files: rotate, compress, clean up"""
-    
-    max_size_bytes = max_size_mb * 1024 * 1024
-    
-    jika tidak ada(log_dir)
-        tampilkan "Log directory does not exist"
-        hasil
-    selesai
-    
-    log_files = [f for f in list_dir(log_dir) jika f.endswith(".log")]
-    
-    tampilkan f"Managing {panjang(log_files)} log files..."
-    
-    // Check individual file sizes
-    oversized_files = []
-    untuk filename dari log_files
-        filepath = join_paths(log_dir, filename)
-        file_size = size(filepath)
-        
-        jika file_size > max_size_bytes
-            oversized_files.append(filename)
-        selesai
-    selesai
-    
-    // Process oversized files
-    untuk filename dari oversized_files
-        filepath = join_paths(log_dir, filename)
-        tampilkan f"Processing oversized file: {filename} ({size(filepath)} bytes)"
-        
-        // Read lines
-        lines = read_lines(filepath)
-        
-        // Keep only last half of lines
-        keep_lines = lines[-(panjang(lines)//2):]
-        
-        // Write back
-        write_lines(filepath, keep_lines)
-        tampilkan f"Rotated {filename}, kept {panjang(keep_lines)} lines"
-    selesai
-    
-    // Clean up old log files if too many
-    jika panjang(log_files) > max_files
-        sort_files = sorted(log_files)
-        files_to_remove = sort_files[:panjang(log_files) - max_files]
-        
-        tampilkan f"Removing {panjang(files_to_remove)} old log files..."
-        untuk filename dari files_to_remove
-            filepath = join_paths(log_dir, filename)
-            delete(filepath)
-            tampilkan f"Deleted: {filename}"
-        selesai
-    selesai
-    
-    tampilkan "Log file management complete"
-selesai
-
-// Usage
-kelola_log_files("application_logs", max_size_mb=5, max_files=50)
-```
-
-## Performance Notes
-
-- **Large files**: Use `read_bytes()` and `write_bytes()` for binary files
-- **Memory efficiency**: `read_lines()` is more memory-efficient for large files
-- **Encoding**: Always specify encoding for non-UTF8 files
-- **Atomic operations**: Use temporary files for important write operations
-
-## Error Handling Best Practices
-
-```python
-dari fileio impor read_text, write_text, exists
-
-fungsi safe_file_operation(filepath):
+    // Baca config
     coba
-        // Check if file exists
-        jika exists(filepath)
-            content = read_text(filepath)
-            // Process content
-            processed = huruf_besar(content)
-            
-            // Write to backup first
-            write_text(f"{filepath}.backup", content)
-            
-            // Write processed content
-            write_text(filepath, processed)
-            
-            tampilkan f"Successfully processed {filepath}"
-            hasil benar
-        lainnya
-            tampilkan f"File {filepath} does not exist"
-            hasil salah
-        selesai
-        
-    except PermissionError
-        tampilkan f"Permission denied for {filepath}"
+        config it baca_json(config_file)
+    kecuali Exception sebagai e
+        tampilkan f"Error reading config: {e}"
         hasil salah
-    except Exception sebagai e
-        tampilkan f"Error processing {filepath}: {e}"
+    selesai
+    
+    // Generate backup filename dengan timestamp
+    current_time it sekarang()
+    timestamp it ganti(str(current_time), ":", "-")  // Ganti colon dengan dash
+    backup_filename it f"config_backup_{timestamp}.json"
+    backup_path it gabungkan_path(backup_dir, backup_filename)
+    
+    // Add backup metadata
+    backup_config it {
+        "original_file": config_file,
+        "backup_time": str(current_time),
+        "config_data": config
+    }
+    
+    // Write backup
+    coba
+        tulis_json(backup_path, backup_config, indent=2)
+        tampilkan f"Config backed up to {backup_path}"
+        
+        // Also copy original file
+        original_backup it gabungkan_path(backup_dir, dapatkan_nama_file(config_file))
+        salin(config_file, original_backup)
+        
+        hasil benar
+    kecuali Exception sebagai e
+        tampilkan f"Error creating backup: {e}"
         hasil salah
     selesai
 selesai
+
+// Penggunaan
+backup_config("app_config.json", "backups")
 ```
 
-## Best Practices
+### Data Export System
 
-1. **Always handle exceptions**: File operations can fail for many reasons
-2. **Use context managers**: Prefer `dengan` statements for file operations
-3. **Check file existence**: Use `exists()` before operations
-4. **Specify encoding**: Always specify encoding for text files
-5. **Clean up resources**: Ensure temporary files are cleaned up
-6. **Backup important data**: Always create backups before modifications
+```python
+dari fileio import tulis_csv, tulis_json, tulis_teks, gabungkan_path
+dari datetime import sekarang
+
+buat fungsi export_data dengan data, export_dir, format_type
+    // Buat export directory
+    buat_dir(export_dir)
+    
+    // Generate filename dengan timestamp
+    timestamp it ganti(str(sekarang()), ":", "-")
+    
+    // Export based on format
+    jika format_type == "csv"
+        filename it f"data_export_{timestamp}.csv"
+        filepath it gabungkan_path(export_dir, filename)
+        
+        // Convert data ke CSV format
+        csv_data it []
+        // Add header
+        jika panjang(data) > 0 dan jenis(data[0]) == "dict"
+            header it kunci(data[0])
+            tambah(csv_data, header)
+            
+            // Add rows
+            untuk setiap row dari data
+                row_data it []
+                untuk setiap key dari header
+                    tambah(row_data, str(row.get(key, "")))
+                selesai
+                tambah(csv_data, row_data)
+            selesai
+        lainnya
+            // Simple list data
+            tambah(csv_data, ["value"])
+            untuk setiap item dari data
+                tambah(csv_data, [str(item)])
+            selesai
+        selesai
+        
+        tulis_csv(filepath, csv_data)
+        tampilkan f"Data exported to CSV: {filepath}"
+        
+    selesai
+    
+    jika format_type == "json"
+        filename it f"data_export_{timestamp}.json"
+        filepath it gabungkan_path(export_dir, filename)
+        
+        export_data it {
+            "export_time": str(sekarang()),
+            "total_records": panjang(data),
+            "data": data
+        }
+        
+        tulis_json(filepath, export_data, indent=2)
+        tampilkan f"Data exported to JSON: {filepath}"
+        
+    selesai
+    
+    jika format_type == "txt"
+        filename it f"data_export_{timestamp}.txt"
+        filepath it gabungkan_path(export_dir, filename)
+        
+        // Generate text report
+        report it f"Data Export Report\n"
+        report it report + f"Generated: {sekarang()}\n"
+        report it report + f"Total Records: {panjang(data)}\n"
+        report it report + "\nData:\n"
+        
+        untuk setiap i, item dari enumerate(data)
+            report it report + f"{i + 1}. {item}\n"
+        selesai
+        
+        tulis_teks(filepath, report)
+        tampilkan f"Data exported to TXT: {filepath}"
+        
+    selesai
+    
+    hasil filepath
+selesai
+
+// Sample data
+user_data it [
+    {"id": 1, "name": "Alice", "email": "alice@example.com", "age": 25},
+    {"id": 2, "name": "Bob", "email": "bob@example.com", "age": 30},
+    {"id": 3, "name": "Charlie", "email": "charlie@example.com", "age": 28}
+]
+
+// Export ke berbagai format
+export_data(user_data, "exports", "csv")
+export_data(user_data, "exports", "json")
+export_data(user_data, "exports", "txt")
+```

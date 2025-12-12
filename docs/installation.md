@@ -1,12 +1,12 @@
-# Instalasi RenzmcLang
+# Instalasi RenzMcLang
 
-Panduan lengkap instalasi RenzmcLang di berbagai platform dan setup development environment.
+Panduan lengkap instalasi RenzMcLang di berbagai platform dan setup lingkungan pengembangan.
 
 ## Instalasi Cepat
 
 ### Dari PyPI (Direkomendasikan)
 
-Cara termudah dan tercepat untuk menginstall RenzmcLang:
+Cara termudah dan tercepat untuk menginstal RenzMcLang:
 
 ```bash
 pip install renzmc
@@ -22,18 +22,18 @@ renzmc --version
 
 Anda akan melihat output seperti:
 ```
-RenzmcLang version (0.0.8)
+RenzMcLang version (0.0.8)
 ```
 
 ## Instalasi dari Source
 
-Untuk development atau ingin versi terbaru:
+Untuk pengembangan atau ingin versi terbaru:
 
 ### 1. Clone Repository
 
 ```bash
 git clone https://github.com/RenzMc/RenzmcLang.git
-cd RenzmcLang
+cd RenzMcLang
 ```
 
 ### 2. Install dalam Mode Development
@@ -106,7 +106,7 @@ Setelah terinstall, Anda akan mendapatkan:
 ### Verifikasi Extension
 
 1. Buat file baru dengan ekstensi `.rmc`
-2. Ketik kode RenzmcLang
+2. Ketik kode RenzMcLang
 3. Lihat syntax highlighting bekerja
 
 ```python
@@ -186,7 +186,7 @@ pip install --force-reinstall renzmc
 
 **Solusi:**
 1. Pastikan file berekstensi `.rmc` atau `.renzmc`
-2. Klik kanan file → "Change Language Mode" → "RenzmcLang"
+2. Klik kanan file → "Change Language Mode" → "RenzMcLang"
 3. Reload VSCode
 
 ## Testing Instalasi

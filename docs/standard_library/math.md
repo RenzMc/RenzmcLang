@@ -1,62 +1,62 @@
-# Math Module
+# Modul Matematika
 
-The Math module provides comprehensive mathematical functions following Python's math module standards with Indonesian function names.
+Modul Matematika menyediakan fungsi-fungsi matematika yang komprehensif mengikuti standar modul math Python dengan nama fungsi dalam Bahasa Indonesia.
 
-## Import
+## Impor
 
 ```python
 dari math impor *
-// atau import specific functions
+// atau impor fungsi spesifik
 dari math impor pi, sin, cos, sqrt
 ```
 
-## Mathematical Constants
+## Konstanta Matematika
 
 ### pi
-The mathematical constant π (3.141592653589793).
+Konstanta matematika π (3.141592653589793).
 
 ```python
 dari math impor pi
 tampilkan pi  // Output: 3.141592653589793
 
-// Calculate circumference
+// Hitung keliling
 jari_jari itu 10
 keliling itu 2 * pi * jari_jari
 tampilkan keliling  // Output: 62.83185307179586
 ```
 
 ### e
-The mathematical constant e (2.718281828459045).
+Konstanta matematika e (2.718281828459045).
 
 ```python
 dari math impor e
 tampilkan e  // Output: 2.718281828459045
 
-// Calculate exponential
+// Hitung eksponensial
 hasil itu e ** 2
 tampilkan hasil  // Output: 7.38905609893065
 ```
 
 ### tau
-The mathematical constant τ (2π = 6.283185307179586).
+Konstanta matematika τ (2π = 6.283185307179586).
 
 ```python
 dari math impor tau
 tampilkan tau  // Output: 6.283185307179586
 
-// Full rotation
+// Rotasi penuh
 sudut_penuh itu tau
 tampilkan sudut_penuh
 ```
 
 ### inf
-Positive infinity.
+Tak terhingga positif.
 
 ```python
 dari math impor inf
 tampilkan inf  // Output: inf
 
-// Check if value is infinite
+// Periksa apakah nilai tak terhingga
 dari math impor isinf
 hasil itu isinf(inf)
 tampilkan hasil  // Output: benar
@@ -69,30 +69,30 @@ Not a Number (NaN).
 dari math impor nan
 tampilkan nan  // Output: nan
 
-// Check if value is NaN
+// Periksa apakah nilai NaN
 dari math impor isnan
 hasil itu isnan(nan)
 tampilkan hasil  // Output: benar
 ```
 
-## Basic Operations
+## Operasi Dasar
 
 ### abs() / nilai_absolut()
-Returns the absolute value of x.
+Mengembalikan nilai absolut dari x.
 
-**Syntax:**
+**Sintaks:**
 ```python
 abs(x)
 nilai_absolut(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number
+**Parameter:**
+- `x` (number): Angka input
 
-**Returns:**
-- Number: Absolute value
+**Mengembalikan:**
+- Number: Nilai absolut
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor abs, nilai_absolut
 
@@ -101,22 +101,24 @@ hasil2 itu abs(10)          // Output: 10
 hasil3 itu nilai_absolut(-3) // Output: 3
 ```
 
-### round()
-Rounds x to specified decimal places.
+---
 
-**Syntax:**
+### round()
+Membulatkan x ke jumlah desimal tertentu.
+
+**Sintaks:**
 ```python
 round(x, digits)
 ```
 
-**Parameters:**
-- `x` (number): Number to round
-- `digits` (integer, optional): Decimal places (default: 0)
+**Parameter:**
+- `x` (number): Angka yang akan dibulatkan
+- `digits` (integer, opsional): Jumlah desimal (default: 0)
 
-**Returns:**
-- Number: Rounded value
+**Mengembalikan:**
+- Number: Nilai yang dibulatkan
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor round
 
@@ -125,23 +127,25 @@ hasil2 itu round(2.71828)      // Output: 3
 hasil3 itu round(-2.7)         // Output: -3
 ```
 
-### pow() / pangkat()
-Calculates base raised to the power of exp.
+---
 
-**Syntax:**
+### pow() / pangkat()
+Menghitung basis dipangkatkan dengan eksponen.
+
+**Sintaks:**
 ```python
-pow(base, exp)
-pangkat(base, exp)
+pow(basis, eksponen)
+pangkat(basis, eksponen)
 ```
 
-**Parameters:**
-- `base` (number): Base number
-- `exp` (number): Exponent
+**Parameter:**
+- `basis` (number): Angka basis
+- `eksponen` (number): Eksponen
 
-**Returns:**
-- Number: Base^exp
+**Mengembalikan:**
+- Number: Basis^eksponen
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor pow, pangkat
 
@@ -150,22 +154,24 @@ hasil2 itu pow(9, 0.5)        // Output: 3.0
 hasil3 itu pangkat(5, 3)      // Output: 125.0
 ```
 
-### sqrt() / akar()
-Calculates the square root of x.
+---
 
-**Syntax:**
+### sqrt() / akar()
+Menghitung akar kuadrat dari x.
+
+**Sintaks:**
 ```python
 sqrt(x)
 akar(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number (must be non-negative)
+**Parameter:**
+- `x` (number): Angka input (harus non-negatif)
 
-**Returns:**
-- Number: Square root
+**Mengembalikan:**
+- Number: Akar kuadrat
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor sqrt, akar
 
@@ -174,24 +180,24 @@ hasil2 itu sqrt(2)            // Output: 1.4142135623730951
 hasil3 itu akar(25)           // Output: 5.0
 ```
 
-## Trigonometric Functions
+## Fungsi Trigonometri
 
 ### sin() / sinus()
-Calculates the sine of x (in radians).
+Menghitung sinus dari x (dalam radian).
 
-**Syntax:**
+**Sintaks:**
 ```python
 sin(x)
 sinus(x)
 ```
 
-**Parameters:**
-- `x` (number): Angle in radians
+**Parameter:**
+- `x` (number): Sudut dalam radian
 
-**Returns:**
-- Number: Sine value
+**Mengembalikan:**
+- Number: Nilai sinus
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor sin, sinus, pi
 
@@ -200,22 +206,24 @@ hasil2 itu sin(pi/2)           // Output: 1.0
 hasil3 itu sinus(pi)           // Output: 1.2246467991473532e-16 (≈ 0)
 ```
 
-### cos() / cosinus()
-Calculates the cosine of x (in radians).
+---
 
-**Syntax:**
+### cos() / cosinus()
+Menghitung cosinus dari x (dalam radian).
+
+**Sintaks:**
 ```python
 cos(x)
 cosinus(x)
 ```
 
-**Parameters:**
-- `x` (number): Angle in radians
+**Parameter:**
+- `x` (number): Sudut dalam radian
 
-**Returns:**
-- Number: Cosine value
+**Mengembalikan:**
+- Number: Nilai cosinus
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor cos, cosinus, pi
 
@@ -224,22 +232,24 @@ hasil2 itu cos(pi)             // Output: -1.0
 hasil3 itu cosinus(pi/2)       // Output: 6.123233995736766e-17 (≈ 0)
 ```
 
-### tan() / tangen()
-Calculates the tangent of x (in radians).
+---
 
-**Syntax:**
+### tan() / tangen()
+Menghitung tangen dari x (dalam radian).
+
+**Sintaks:**
 ```python
 tan(x)
 tangen(x)
 ```
 
-**Parameters:**
-- `x` (number): Angle in radians
+**Parameter:**
+- `x` (number): Sudut dalam radian
 
-**Returns:**
-- Number: Tangent value
+**Mengembalikan:**
+- Number: Nilai tangen
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor tan, tangen, pi
 
@@ -248,21 +258,23 @@ hasil2 itu tan(pi/4)           // Output: 0.9999999999999999 (≈ 1)
 hasil3 itu tangen(pi/6)        // Output: 0.5773502691896257
 ```
 
-### asin()
-Calculates the inverse sine (arcsin) of x.
+---
 
-**Syntax:**
+### asin()
+Menghitung inverse sinus (arcsin) dari x.
+
+**Sintaks:**
 ```python
 asin(x)
 ```
 
-**Parameters:**
-- `x` (number): Value between -1 and 1
+**Parameter:**
+- `x` (number): Nilai antara -1 dan 1
 
-**Returns:**
-- Number: Angle in radians
+**Mengembalikan:**
+- Number: Sudut dalam radian
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor asin
 
@@ -271,21 +283,23 @@ hasil2 itu asin(1)             // Output: 1.5707963267948966 (π/2)
 hasil3 itu asin(0.5)           // Output: 0.5235987755982989 (π/6)
 ```
 
-### acos()
-Calculates the inverse cosine (arccos) of x.
+---
 
-**Syntax:**
+### acos()
+Menghitung inverse cosinus (arccos) dari x.
+
+**Sintaks:**
 ```python
 acos(x)
 ```
 
-**Parameters:**
-- `x` (number): Value between -1 and 1
+**Parameter:**
+- `x` (number): Nilai antara -1 dan 1
 
-**Returns:**
-- Number: Angle in radians
+**Mengembalikan:**
+- Number: Sudut dalam radian
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor acos
 
@@ -294,21 +308,23 @@ hasil2 itu acos(0)             // Output: 1.5707963267948966 (π/2)
 hasil3 itu acos(-1)            // Output: 3.141592653589793 (π)
 ```
 
-### atan()
-Calculates the inverse tangent (arctan) of x.
+---
 
-**Syntax:**
+### atan()
+Menghitung inverse tangen (arctan) dari x.
+
+**Sintaks:**
 ```python
 atan(x)
 ```
 
-**Parameters:**
-- `x` (number): Any real number
+**Parameter:**
+- `x` (number): Angka real apa saja
 
-**Returns:**
-- Number: Angle in radians
+**Mengembalikan:**
+- Number: Sudut dalam radian
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor atan
 
@@ -317,22 +333,24 @@ hasil2 itu atan(1)             // Output: 0.7853981633974483 (π/4)
 hasil3 itu atan(1000)          // Output: 1.5697963271282298 (≈ π/2)
 ```
 
-### atan2()
-Calculates the arctangent of y/x, considering the quadrant.
+---
 
-**Syntax:**
+### atan2()
+Menghitung arctangen dari y/x, mempertimbangkan kuadran.
+
+**Sintaks:**
 ```python
 atan2(y, x)
 ```
 
-**Parameters:**
-- `y` (number): Y coordinate
-- `x` (number): X coordinate
+**Parameter:**
+- `y` (number): Koordinat Y
+- `x` (number): Koordinat X
 
-**Returns:**
-- Number: Angle in radians
+**Mengembalikan:**
+- Number: Sudut dalam radian
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor atan2
 
@@ -341,48 +359,50 @@ hasil2 itu atan2(1, 0)         // Output: 1.5707963267948966 (π/2)
 hasil3 itu atan2(0, 1)         // Output: 0.0
 ```
 
-## Logarithmic Functions
+## Fungsi Logaritma
 
 ### log() / logaritma()
-Calculates the logarithm of x with specified base.
+Menghitung logaritma dari x dengan basis tertentu.
 
-**Syntax:**
+**Sintaks:**
 ```python
-log(x, base)
-logaritma(x, base)
+log(x, basis)
+logaritma(x, basis)
 ```
 
-**Parameters:**
-- `x` (number): Positive number
-- `base` (number, optional): Base (default: e for natural log)
+**Parameter:**
+- `x` (number): Angka positif
+- `basis` (number, opsional): Basis (default: e untuk log natural)
 
-**Returns:**
-- Number: Logarithm value
+**Mengembalikan:**
+- Number: Nilai logaritma
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor log, logaritma, e
 
-hasil1 itu log(100)            // Output: 4.605170185988092 (natural log)
-hasil2 itu log(100, 10)        // Output: 2.0 (log base 10)
+hasil1 itu log(100)            // Output: 4.605170185988092 (log natural)
+hasil2 itu log(100, 10)        // Output: 2.0 (log basis 10)
 hasil3 itu logaritma(e)        // Output: 1.0
 ```
 
-### log10()
-Calculates the base-10 logarithm of x.
+---
 
-**Syntax:**
+### log10()
+Menghitung logaritma basis 10 dari x.
+
+**Sintaks:**
 ```python
 log10(x)
 ```
 
-**Parameters:**
-- `x` (number): Positive number
+**Parameter:**
+- `x` (number): Angka positif
 
-**Returns:**
-- Number: Base-10 logarithm
+**Mengembalikan:**
+- Number: Logaritma basis 10
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor log10
 
@@ -391,21 +411,23 @@ hasil2 itu log10(100)          // Output: 2.0
 hasil3 itu log10(1)            // Output: 0.0
 ```
 
-### log2()
-Calculates the base-2 logarithm of x.
+---
 
-**Syntax:**
+### log2()
+Menghitung logaritma basis 2 dari x.
+
+**Sintaks:**
 ```python
 log2(x)
 ```
 
-**Parameters:**
-- `x` (number): Positive number
+**Parameter:**
+- `x` (number): Angka positif
 
-**Returns:**
-- Number: Base-2 logarithm
+**Mengembalikan:**
+- Number: Logaritma basis 2
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor log2
 
@@ -414,22 +436,24 @@ hasil2 itu log2(16)            // Output: 4.0
 hasil3 itu log2(1)             // Output: 0.0
 ```
 
-### ln() / logaritma_natural()
-Calculates the natural logarithm (base e) of x.
+---
 
-**Syntax:**
+### ln() / logaritma_natural()
+Menghitung logaritma natural (basis e) dari x.
+
+**Sintaks:**
 ```python
 ln(x)
 logaritma_natural(x)
 ```
 
-**Parameters:**
-- `x` (number): Positive number
+**Parameter:**
+- `x` (number): Angka positif
 
-**Returns:**
-- Number: Natural logarithm
+**Mengembalikan:**
+- Number: Logaritma natural
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor ln, logaritma_natural, e
 
@@ -438,24 +462,24 @@ hasil2 itu ln(e ** 2)          // Output: 2.0
 hasil3 itu logaritma_natural(1) // Output: 0.0
 ```
 
-## Angle Conversion Functions
+## Fungsi Konversi Sudut
 
 ### degrees() / derajat()
-Converts radians to degrees.
+Mengkonversi radian ke derajat.
 
-**Syntax:**
+**Sintaks:**
 ```python
 degrees(x)
 derajat(x)
 ```
 
-**Parameters:**
-- `x` (number): Angle in radians
+**Parameter:**
+- `x` (number): Sudut dalam radian
 
-**Returns:**
-- Number: Angle in degrees
+**Mengembalikan:**
+- Number: Sudut dalam derajat
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor degrees, derajat, pi
 
@@ -464,22 +488,24 @@ hasil2 itu degrees(pi/2)       // Output: 90.0
 hasil3 itu derajat(0)          // Output: 0.0
 ```
 
-### radians() / radian()
-Converts degrees to radians.
+---
 
-**Syntax:**
+### radians() / radian()
+Mengkonversi derajat ke radian.
+
+**Sintaks:**
 ```python
 radians(x)
 radian(x)
 ```
 
-**Parameters:**
-- `x` (number): Angle in degrees
+**Parameter:**
+- `x` (number): Sudut dalam derajat
 
-**Returns:**
-- Number: Angle in radians
+**Mengembalikan:**
+- Number: Sudut dalam radian
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor radians, radian
 
@@ -488,24 +514,24 @@ hasil2 itu radians(90)         // Output: 1.5707963267948966
 hasil3 itu radian(45)          // Output: 0.7853981633974483
 ```
 
-## Special Functions
+## Fungsi Khusus
 
 ### factorial() / faktorial()
-Calculates the factorial of n (n!).
+Menghitung faktorial dari n (n!).
 
-**Syntax:**
+**Sintaks:**
 ```python
 factorial(n)
 faktorial(n)
 ```
 
-**Parameters:**
-- `n` (integer): Non-negative integer
+**Parameter:**
+- `n` (integer): Integer non-negatif
 
-**Returns:**
-- Integer: Factorial value
+**Mengembalikan:**
+- Integer: Nilai faktorial
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor factorial, faktorial
 
@@ -514,22 +540,24 @@ hasil2 itu factorial(0)        // Output: 1
 hasil3 itu faktorial(10)       // Output: 3628800
 ```
 
-### gcd()
-Calculates the greatest common divisor of a and b.
+---
 
-**Syntax:**
+### gcd()
+Menghitung faktor persekutuan terbesar dari a dan b.
+
+**Sintaks:**
 ```python
 gcd(a, b)
 ```
 
-**Parameters:**
-- `a` (integer): First integer
-- `b` (integer): Second integer
+**Parameter:**
+- `a` (integer): Integer pertama
+- `b` (integer): Integer kedua
 
-**Returns:**
-- Integer: Greatest common divisor
+**Mengembalikan:**
+- Integer: Faktor persekutuan terbesar
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor gcd
 
@@ -538,22 +566,24 @@ hasil2 itu gcd(100, 25)        // Output: 25
 hasil3 itu gcd(17, 13)         // Output: 1
 ```
 
-### lcm()
-Calculates the least common multiple of a and b.
+---
 
-**Syntax:**
+### lcm()
+Menghitung kelipatan persekutuan terkecil dari a dan b.
+
+**Sintaks:**
 ```python
 lcm(a, b)
 ```
 
-**Parameters:**
-- `a` (integer): First integer
-- `b` (integer): Second integer
+**Parameter:**
+- `a` (integer): Integer pertama
+- `b` (integer): Integer kedua
 
-**Returns:**
-- Integer: Least common multiple
+**Mengembalikan:**
+- Integer: Kelipatan persekutuan terkecil
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor lcm
 
@@ -562,22 +592,24 @@ hasil2 itu lcm(5, 7)           // Output: 35
 hasil3 itu lcm(10, 15)         // Output: 30
 ```
 
-### ceil() / pembulatan_atas()
-Rounds x up to the nearest integer.
+---
 
-**Syntax:**
+### ceil() / pembulatan_atas()
+Membulatkan x ke integer terdekat ke atas.
+
+**Sintaks:**
 ```python
 ceil(x)
 pembulatan_atas(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number
+**Parameter:**
+- `x` (number): Angka input
 
-**Returns:**
-- Integer: Rounded up value
+**Mengembalikan:**
+- Integer: Nilai yang dibulatkan ke atas
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor ceil, pembulatan_atas
 
@@ -586,22 +618,24 @@ hasil2 itu ceil(3.8)           // Output: 4
 hasil3 itu pembulatan_atas(-2.3) // Output: -2
 ```
 
-### floor() / pembulatan_bawah()
-Rounds x down to the nearest integer.
+---
 
-**Syntax:**
+### floor() / pembulatan_bawah()
+Membulatkan x ke integer terdekat ke bawah.
+
+**Sintaks:**
 ```python
 floor(x)
 pembulatan_bawah(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number
+**Parameter:**
+- `x` (number): Angka input
 
-**Returns:**
-- Integer: Rounded down value
+**Mengembalikan:**
+- Integer: Nilai yang dibulatkan ke bawah
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor floor, pembulatan_bawah
 
@@ -610,21 +644,23 @@ hasil2 itu floor(3.8)          // Output: 3
 hasil3 itu pembulatan_bawah(-2.3) // Output: -3
 ```
 
-### trunc()
-Truncates the decimal part of x.
+---
 
-**Syntax:**
+### trunc()
+Menghapus bagian desimal dari x.
+
+**Sintaks:**
 ```python
 trunc(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number
+**Parameter:**
+- `x` (number): Angka input
 
-**Returns:**
-- Integer: Truncated value
+**Mengembalikan:**
+- Integer: Nilai yang dipotong
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor trunc
 
@@ -633,24 +669,24 @@ hasil2 itu trunc(3.8)          // Output: 3
 hasil3 itu trunc(-2.3)         // Output: -2
 ```
 
-## Utility Functions
+## Fungsi Utilitas
 
 ### fsum() / jumlah_presisi()
-Performs high-precision summation of iterable.
+Melakukan penjumlahan presisi tinggi dari iterable.
 
-**Syntax:**
+**Sintaks:**
 ```python
 fsum(iterable)
 jumlah_presisi(iterable)
 ```
 
-**Parameters:**
-- `iterable`: Iterable of numbers
+**Parameter:**
+- `iterable`: Iterable angka
 
-**Returns:**
-- Number: Precise sum
+**Mengembalikan:**
+- Number: Jumlah yang presisi
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor fsum, jumlah_presisi
 
@@ -659,21 +695,23 @@ hasil1 itu fsum(angka)         // Output: 1.0
 hasil2 itu jumlah_presisi([1, 2, 3, 4, 5]) // Output: 15.0
 ```
 
-### isfinite()
-Checks if x is a finite number.
+---
 
-**Syntax:**
+### isfinite()
+Memeriksa apakah x adalah angka finite.
+
+**Sintaks:**
 ```python
 isfinite(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number
+**Parameter:**
+- `x` (number): Angka input
 
-**Returns:**
-- Boolean: `benar` if finite, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika finite, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor isfinite, inf, nan
 
@@ -682,21 +720,23 @@ hasil2 itu isfinite(inf)       // Output: salah
 hasil3 itu isfinite(nan)       // Output: salah
 ```
 
-### isinf()
-Checks if x is infinity.
+---
 
-**Syntax:**
+### isinf()
+Memeriksa apakah x adalah tak terhingga.
+
+**Sintaks:**
 ```python
 isinf(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number
+**Parameter:**
+- `x` (number): Angka input
 
-**Returns:**
-- Boolean: `benar` if infinity, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika tak terhingga, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor isinf, inf
 
@@ -705,21 +745,23 @@ hasil2 itu isinf(123)          // Output: salah
 hasil3 itu isinf(-inf)         // Output: benar
 ```
 
-### isnan()
-Checks if x is NaN (Not a Number).
+---
 
-**Syntax:**
+### isnan()
+Memeriksa apakah x adalah NaN (Not a Number).
+
+**Sintaks:**
 ```python
 isnan(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number
+**Parameter:**
+- `x` (number): Angka input
 
-**Returns:**
-- Boolean: `benar` if NaN, `salah` otherwise
+**Mengembalikan:**
+- Boolean: `benar` jika NaN, `salah` jika tidak
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor isnan, nan
 
@@ -728,22 +770,24 @@ hasil2 itu isnan(123)          // Output: salah
 hasil3 itu isnan(0)            // Output: salah
 ```
 
-### copysign()
-Copies the sign of y to x.
+---
 
-**Syntax:**
+### copysign()
+Menyalin tanda dari y ke x.
+
+**Sintaks:**
 ```python
 copysign(x, y)
 ```
 
-**Parameters:**
-- `x` (number): Magnitude
-- `y` (number): Sign source
+**Parameter:**
+- `x` (number): Magnitudo
+- `y` (number): Sumber tanda
 
-**Returns:**
-- Number: x with sign of y
+**Mengembalikan:**
+- Number: x dengan tanda dari y
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor copysign
 
@@ -752,21 +796,23 @@ hasil2 itu copysign(-5, 3)     // Output: 5.0
 hasil3 itu copysign(5, 0)      // Output: 5.0
 ```
 
-### frexp()
-Returns mantissa and exponent of x.
+---
 
-**Syntax:**
+### frexp()
+Mengembalikan mantissa dan eksponen dari x.
+
+**Sintaks:**
 ```python
 frexp(x)
 ```
 
-**Parameters:**
-- `x` (number): Input number
+**Parameter:**
+- `x` (number): Angka input
 
-**Returns:**
-- Tuple: (mantissa, exponent)
+**Mengembalikan:**
+- Tuple: (mantissa, eksponen)
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor frexp
 
@@ -774,22 +820,24 @@ hasil1 itu frexp(8)            // Output: (0.5, 4)
 hasil2 itu frexp(0.75)         // Output: (0.75, 0)
 ```
 
-### ldexp()
-Calculates x * (2**i).
+---
 
-**Syntax:**
+### ldexp()
+Menghitung x * (2**i).
+
+**Sintaks:**
 ```python
 ldexp(x, i)
 ```
 
-**Parameters:**
+**Parameter:**
 - `x` (number): Mantissa
-- `i` (integer): Exponent
+- `i` (integer): Eksponen
 
-**Returns:**
+**Mengembalikan:**
 - Number: x * (2**i)
 
-**Examples:**
+**Contoh:**
 ```python
 dari math impor ldexp
 
@@ -798,28 +846,28 @@ hasil2 itu ldexp(1, 3)         // Output: 8.0
 hasil3 itu ldexp(2, 0)         // Output: 2.0
 ```
 
-## Usage Notes
+## Catatan Penggunaan
 
-1. **Import Required**: All math functions must be imported from the math module.
+1. **Impor Diperlukan**: Semua fungsi matematika harus diimpor dari modul math.
 
-2. **Indonesian Aliases**: Many functions have Indonesian aliases for convenience:
-   - `nilai_absolut()` for `abs()`
-   - `pangkat()` for `pow()`
-   - `akar()` for `sqrt()`
-   - `sinus()` for `sin()`
-   - `cosinus()` for `cos()`
-   - `tangen()` for `tan()`
-   - `logaritma()` for `log()`
-   - `logaritma_natural()` for `ln()`
-   - `derajat()` for `degrees()`
-   - `radian()` for `radians()`
-   - `faktorial()` for `factorial()`
-   - `pembulatan_atas()` for `ceil()`
-   - `pembulatan_bawah()` for `floor()`
-   - `jumlah_presisi()` for `fsum()`
+2. **Alias Indonesia**: Banyak fungsi memiliki alias Indonesia untuk kemudahan:
+   - `nilai_absolut()` untuk `abs()`
+   - `pangkat()` untuk `pow()`
+   - `akar()` untuk `sqrt()`
+   - `sinus()` untuk `sin()`
+   - `cosinus()` untuk `cos()`
+   - `tangen()` untuk `tan()`
+   - `logaritma()` untuk `log()`
+   - `logaritma_natural()` untuk `ln()`
+   - `derajat()` untuk `degrees()`
+   - `radian()` untuk `radians()`
+   - `faktorial()` untuk `factorial()`
+   - `pembulatan_atas()` untuk `ceil()`
+   - `pembulatan_bawah()` untuk `floor()`
+   - `jumlah_presisi()` untuk `fsum()`
 
-3. **Angle Units**: Trigonometric functions use radians by default. Use `degrees()`/`radians()` for conversion.
+3. **Satuan Sudut**: Fungsi trigonometri menggunakan radian secara default. Gunakan `degrees()`/`radians()` untuk konversi.
 
-4. **Precision**: Functions use double-precision floating-point arithmetic.
+4. **Presisi**: Fungsi menggunakan aritmatika floating-point presisi ganda.
 
-5. **Error Handling**: Functions will raise appropriate exceptions for invalid inputs (e.g., negative numbers for square roots).
+5. **Penanganan Error**: Fungsi akan melempar exception yang sesuai untuk input tidak valid (misalnya angka negatif untuk akar kuadrat).

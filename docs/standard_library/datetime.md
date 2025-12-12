@@ -1,563 +1,496 @@
-# DateTime Module
+# Modul DateTime
 
-The DateTime module provides comprehensive date and time manipulation functionality following Python's datetime module standards with Indonesian function names.
+Modul DateTime menyediakan fungsi-fungsi untuk manipulasi tanggal dan waktu, mengikuti standar modul datetime Python dengan nama fungsi dalam Bahasa Indonesia.
 
-## Import
+## Impor
 
 ```python
+dari datetime impor datetime, timedelta, sekarang, hari_ini
+// atau impor semua
 dari datetime impor *
-// atau import specific functions
-dari datetime impor datetime, date, time, timedelta, sekarang, hari_ini
 ```
 
-## Core DateTime Classes
+## Kelas DateTime
 
 ### datetime
-Complete date and time object.
+Kelas untuk representasi tanggal dan waktu.
 
-**Usage:**
+**Konstruktor:**
+```python
+datetime(tahun, bulan, hari, jam=0, menit=0, detik=0, mikrodetik=0, tzinfo=None)
+```
+
+**Parameter:**
+- `tahun` (integer): Tahun (1-9999)
+- `bulan` (integer): Bulan (1-12)
+- `hari` (integer): Hari (1-31, tergantung bulan)
+- `jam` (integer, opsional): Jam (0-23)
+- `menit` (integer, opsional): Menit (0-59)
+- `detik` (integer, opsional): Detik (0-59)
+- `mikrodetik` (integer, opsional): Mikrodetik (0-999999)
+- `tzinfo` (timezone, opsional): Informasi timezone
+
+**Contoh:**
 ```python
 dari datetime impor datetime
 
-// Current datetime
-sekarang_dt = datetime.sekarang()
-tampilkan sekarang_dt     // Output: "2024-01-15 14:30:25.123456"
+// Buat datetime object
+dt1 itu datetime(2025, 1, 15, 14, 30, 45)
+tampilkan dt1  // Output: 2025-01-15 14:30:45
 
-// Create specific datetime
-dt1 = datetime(2024, 1, 15, 14, 30, 0)
-tampilkan dt1            // Output: "2024-01-15 14:30:00"
-
-// Create datetime with timezone
-dt2 = datetime(2024, 1, 15, 14, 30, 0, tzinfo=datetime.timezone.utc)
-tampilkan dt2            // Output: "2024-01-15 14:30:00+00:00"
-
-// Access components
-tahun = dt1.tahun
-bulan = dt1.bulan
-hari = dt1.hari
-jam = dt1.jam
-menit = dt1.menit
-detik = dt1.detik
-
-tampilkan f"Tahun: {tahun}, Bulan: {bulan}, Hari: {hari}"
+// Buat datetime untuk hari ini
+dt2 itu datetime(2025, 1, 15)
+tampilkan dt2  // Output: 2025-01-15 00:00:00
 ```
 
-### date
-Date object without time.
+---
 
-**Usage:**
+### date
+Kelas untuk representasi tanggal saja.
+
+**Konstruktor:**
+```python
+date(tahun, bulan, hari)
+```
+
+**Contoh:**
 ```python
 dari datetime impor date
 
-// Current date
-hari_ini_date = date.hari_ini()
-tampilkan hari_ini_date   // Output: "2024-01-15"
-
-// Create specific date
-tanggal_lahir = date(1990, 5, 20)
-tampilkan tanggal_lahir   // Output: "1990-05-20"
-
-// Date operations
-besok = hari_ini_date + datetime.timedelta(hari=1)
-tampilkan besok           // Output: "2024-01-16"
-
-kemarin = hari_ini_date - datetime.timedelta(hari=1)
-tampilkan kemarin         // Output: "2024-01-14"
+tanggal itu date(2025, 1, 15)
+tampilkan tanggal  // Output: 2025-01-15
 ```
 
-### time
-Time object without date.
+---
 
-**Usage:**
+### time
+Kelas untuk representasi waktu saja.
+
+**Konstruktor:**
+```python
+time(jam=0, menit=0, detik=0, mikrodetik=0, tzinfo=None)
+```
+
+**Contoh:**
 ```python
 dari datetime impor time
 
-// Create specific time
-waktu_kerja = time(9, 0, 0)      // 09:00:00
-waktu_istirahat = time(12, 30)   // 12:30:00
-waktu_pulang = time(17, 30)      // 17:30:00
-
-tampilkan waktu_kerja           // Output: "09:00:00"
-
-// Create time with timezone
-waktu_utc = time(14, 30, 0, tzinfo=datetime.timezone.utc)
-tampilkan waktu_utc             // Output: "14:30:00+00:00"
+waktu itu time(14, 30, 45)
+tampilkan waktu  // Output: 14:30:45
 ```
 
-### timedelta
-Duration between two dates or times.
+---
 
-**Usage:**
+### timedelta
+Kelas untuk representasi durasi waktu.
+
+**Konstruktor:**
+```python
+timedelta(hari=0, detik=0, mikrodetik=0, milidetik=0, menit=0, jam=0, minggu=0)
+```
+
+**Contoh:**
 ```python
 dari datetime impor timedelta
 
-// Create timedelta
-delta1 = timedelta(hari=7, jam=2, menit=30)
-tampilkan delta1               // Output: "7 days, 2:30:00"
-
-// Time arithmetic
-sekarang = datetime.sekarang()
-minggu_depan = sekarang + timedelta(hari=7)
-tampilkan minggu_depan
-
-// Calculate difference
-date1 = date(2024, 1, 1)
-date2 = date(2024, 1, 15)
-selisih = date2 - date1
-tampilkan selisih              // Output: "14 days, 0:00:00"
-tampilkan selisih.hari         // Output: 14
+// Durasi 3 hari 4 jam 30 menit
+durasi itu timedelta(hari=3, jam=4, menit=30)
+tampilkan durasi  // Output: 3 days, 4:30:00
 ```
 
-## Current Time Functions
+## Fungsi Waktu Saat Ini
 
-### sekarang()
-Gets current local date and time.
+### sekarang() / waktu_sekarang()
+Mendapatkan tanggal dan waktu saat ini.
 
-**Syntax:**
+**Sintaks:**
 ```python
-sekarang(tz)
+sekarang(timezone)
+waktu_sekarang(timezone)
 ```
 
-**Parameters:**
-- `tz` (timezone, optional): Specific timezone
+**Parameter:**
+- `timezone` (timezone, opsional): Timezone yang diinginkan
 
-**Returns:**
-- datetime: Current date and time
+**Mengembalikan:**
+- datetime object: Waktu saat ini
 
-**Examples:**
+**Contoh:**
 ```python
-dari datetime impor sekarang
+dari datetime impor sekarang, waktu_sekarang
 
-// Basic current time
-waktu_skrg = sekarang()
-tampilkan waktu_skrg         // Output: "2024-01-15 14:30:25.123456"
+waktu_skg itu sekarang()
+tampilkan f"Waktu sekarang: {waktu_skg}"
 
-// With timezone
-waktu_utc = sekarang(datetime.timezone.utc)
-tampilkan waktu_utc          // Output: "2024-01-15 07:30:25.123456+00:00"
-
-// Indonesian alias
-waktu_skrng = waktu_sekarang()
-tampilkan waktu_skrng        // Same as sekarang()
+// Dengan timezone (jika tersedia)
+waktu_jakarta itu sekarang(timezone.utc)
+tampilkan f"Waktu UTC: {waktu_jakarta}"
 ```
 
 ---
 
-### hari_ini()
-Gets current local date.
+### hari_ini() / tanggal_sekarang()
+Mendapatkan tanggal hari ini.
 
-**Syntax:**
+**Sintaks:**
 ```python
 hari_ini()
+tanggal_sekarang()
 ```
 
-**Returns:**
-- date: Current date
+**Mengembalikan:**
+- date object: Tanggal hari ini
 
-**Examples:**
+**Contoh:**
 ```python
 dari datetime impor hari_ini
 
-tanggal_skrg = hari_ini()
-tampilkan tanggal_skrg       // Output: "2024-01-15"
-
-// Indonesian alias
-tanggal_skrng = tanggal_sekarang()
-tampilkan tanggal_skrng      // Same as hari_ini()
+today itu hari_ini()
+tampilkan f"Hari ini: {today}"
 ```
 
 ---
 
-### utc_sekarang()
-Gets current UTC date and time.
+### utc_sekarang() / utc_waktu_sekarang()
+Mendapatkan waktu saat ini dalam UTC.
 
-**Syntax:**
+**Sintaks:**
 ```python
 utc_sekarang()
+utc_waktu_sekarang()
 ```
 
-**Returns:**
-- datetime: Current UTC date and time
+**Mengembalikan:**
+- datetime object: Waktu UTC saat ini
 
-**Examples:**
+**Contoh:**
 ```python
 dari datetime impor utc_sekarang
 
-waktu_utc = utc_sekarang()
-tampilkan waktu_utc          // Output: "2024-01-15 07:30:25.123456"
-
-// Indonesian alias
-utc_waktu_skrng = utc_waktu_sekarang()
-tampilkan utc_waktu_skrng    // Same as utc_sekarang()
+utc_time itu utc_sekarang()
+tampilkan f"Waktu UTC: {utc_time}"
 ```
 
----
+## Fungsi Parsing String
 
-## String Parsing Functions
+### parse_isoformat() / pars_format_iso()
+Parsing string tanggal format ISO.
 
-### parse_isoformat()
-Parses ISO format date string.
-
-**Syntax:**
+**Sintaks:**
 ```python
-parse_isoformat(date_string)
+parse_isoformat(string_tanggal)
+pars_format_iso(string_tanggal)
 ```
 
-**Parameters:**
-- `date_string` (string): ISO format date string
+**Parameter:**
+- `string_tanggal` (string): String tanggal format ISO (YYYY-MM-DD atau YYYY-MM-DDTHH:MM:SS)
 
-**Returns:**
-- datetime: Parsed datetime object
+**Mengembalikan:**
+- datetime object: Tanggal yang diparsing
 
-**Examples:**
+**Contoh:**
 ```python
 dari datetime impor parse_isoformat
 
-// Basic ISO format
-dt1 = parse_isoformat("2024-01-15T14:30:25")
-tampilkan dt1               // Output: "2024-01-15 14:30:25"
+// Parse date only
+tanggal itu parse_isoformat("2025-01-15")
+tampilkan f"Tanggal: {tanggal}"
 
-// With microseconds
-dt2 = parse_isoformat("2024-01-15T14:30:25.123456")
-tampilkan dt2               // Output: "2024-01-15 14:30:25.123456"
-
-// With timezone
-dt3 = parse_isoformat("2024-01-15T14:30:25+00:00")
-tampilkan dt3               // Output: "2024-01-15 14:30:25+00:00"
-
-// Indonesian alias
-dt4 = pars_format_iso("2024-01-15T14:30:25")
-tampilkan dt4               // Same as parse_isoformat()
+// Parse datetime
+dt itu parse_isoformat("2025-01-15T14:30:45")
+tampilkan f"Datetime: {dt}"
 ```
 
 ---
 
-### strptime()
-Parses date string with custom format.
+### strptime() / pars_string_waktu()
+Parsing string tanggal dengan format tertentu.
 
-**Syntax:**
+**Sintaks:**
 ```python
-strptime(date_string, format_string)
+strptime(string_tanggal, format_string)
+pars_string_waktu(string_tanggal, format_string)
 ```
 
-**Parameters:**
-- `date_string` (string): Date string to parse
-- `format_string` (string): Format pattern
+**Parameter:**
+- `string_tanggal` (string): String tanggal yang akan diparsing
+- `format_string` (string): Format string sesuai standar Python
 
-**Returns:**
-- datetime: Parsed datetime object
+**Mengembalikan:**
+- datetime object: Tanggal yang diparsing
 
-**Examples:**
+**Contoh:**
 ```python
 dari datetime impor strptime
 
-// DD/MM/YYYY format
-dt1 = strptime("15/01/2024", "%d/%m/%Y")
-tampilkan dt1               // Output: "2024-01-15 00:00:00"
+// Format DD/MM/YYYY
+dt1 itu strptime("15/01/2025", "%d/%m/%Y")
+tampilkan f"Format DD/MM/YYYY: {dt1}"
 
-// MM-DD-YYYY HH:MM format
-dt2 = strptime("01-15-2024 14:30", "%m-%d-%Y %H:%M")
-tampilkan dt2               // Output: "2024-01-15 14:30:00"
+// Format dengan nama hari
+dt2 itu strptime("Senin, 15 Januari 2025", "%A, %d %B %Y")
+tampilkan f"Format lengkap: {dt2}"
 
-// Full format
-dt3 = strptime("Monday, January 15, 2024 02:30 PM", "%A, %B %d, %Y %I:%M %p")
-tampilkan dt3               // Output: "2024-01-15 14:30:00"
-
-// Indonesian date format
-dt4 = strptime("15 Januari 2024", "%d %B %Y")
-tampilkan dt4               // Output: "2024-01-15 00:00:00"
-
-// Indonesian alias
-dt5 = pars_string_waktu("15/01/2024", "%d/%m/%Y")
-tampilkan dt5               // Same as strptime()
+// Format waktu
+dt3 itu strptime("15-01-2025 14:30:45", "%d-%m-%Y %H:%M:%S")
+tampilkan f"Dengan waktu: {dt3}"
 ```
 
----
+## Fungsi Utilitas Waktu
 
-## Time Functions
+### waktu() / waktu_epoch()
+Mendapatkan waktu saat ini dalam detik sejak epoch.
 
-### waktu()
-Gets current Unix timestamp.
-
-**Syntax:**
+**Sintaks:**
 ```python
 waktu()
+waktu_epoch()
 ```
 
-**Returns:**
-- Float: Seconds since Unix epoch
+**Mengembalikan:**
+- Float: Waktu dalam detik sejak epoch (1 Januari 1970)
 
-**Examples:**
+**Contoh:**
 ```python
-dari datetime impor waktu
+dari datetime impor waktu, waktu_epoch
 
-timestamp = waktu()
-tampilkan timestamp         // Output: 1705312225.123456 (example)
+epoch_time itu waktu()
+tampilkan f"Waktu epoch: {epoch_time}"
 
-// Indonesian alias
-timestamp_id = waktu_epoch()
-tampilkan timestamp_id      // Same as waktu()
+// Menghitung waktu eksekusi
+start itu waktu()
+// ... lakukan operasi ...
+end itu waktu()
+tampilkan f"Waktu eksekusi: {end - start} detik"
 ```
 
 ---
 
 ### sleep() / tidur()
-Pauses execution for specified seconds.
+Menunda eksekusi selama jumlah detik tertentu.
 
-**Syntax:**
+**Sintaks:**
 ```python
 sleep(detik)
 tidur(detik)
 ```
 
-**Parameters:**
-- `detik` (float): Number of seconds to sleep
+**Parameter:**
+- `detik` (float): Jumlah detik untuk menunda
 
-**Examples:**
+**Contoh:**
 ```python
 dari datetime impor sleep, tidur
 
-// Sleep for 2 seconds
-tampilkan "Starting..."
-sleep(2)
-tampilkan "Done!"
+tampilkan "Mulai eksekusi"
+sleep(2.5)  // Tunda 2.5 detik
+tampilkan "Selesai setelah 2.5 detik"
 
-// Sleep for half a second
-tampilkan "Processing..."
-tidur(0.5)
-tampilkan "Complete!"
+// Menggunakan alias Indonesia
+tampilkan "Tidur sebentar..."
+tidur(1)    // Tunda 1 detik
+tampilkan "Bangun!"
 ```
 
----
-
-## Constants
+## Konstanta
 
 ### MINYEAR / tahun_minimum
-Minimum year value supported (1).
+Tahun minimum yang didukung (1).
 
 ```python
 dari datetime impor MINYEAR, tahun_minimum
 
-tampilkan MINYEAR            // Output: 1
-tampilkan tahun_minimum      // Output: 1
-```
-
-### MAXYEAR / tahun_maksimum
-Maximum year value supported (9999).
-
-```python
-dari datetime impor MAXYEAR, tahun_maksimum
-
-tampilkan MAXYEAR            // Output: 9999
-tampilkan tahun_maksimum     // Output: 9999
+tampilkan f"Tahun minimum: {MINYEAR}"
+tampilkan f"Tahun minimum (Indonesia): {tahun_minimum}"
 ```
 
 ---
 
-## Advanced Usage Examples
-
-### Date Calculations
+### MAXYEAR / tahun_maksimum
+Tahun maksimum yang didukung (9999).
 
 ```python
-dari datetime impor datetime, timedelta, hari_ini
+dari datetime impor MAXYEAR, tahun_maksimum
 
-// Calculate age
-fungsi hitung_umur(tanggal_lahir):
-    hari_ini_date = hari_ini()
-    umur = hari_ini_date.tahun - tanggal_lahir.tahun
-    
-    // Adjust if birthday hasn't occurred this year
-    jika (hari_ini_date.bulan, hari_ini_date.hari) < (tanggal_lahir.bulan, tanggal_lahir.hari)
-        umur = umur - 1
-    selesai
-    
-    hasil umur
+tampilkan f"Tahun maksimum: {MAXYEAR}"
+tampilkan f"Tahun maksimum (Indonesia): {tahun_maksimum}"
+```
+
+## Operasi DateTime
+
+### Penambahan dan Pengurangan
+
+```python
+dari datetime impor datetime, timedelta, sekarang
+
+// Dapatkan waktu sekarang
+skrng itu sekarang()
+
+// Tambah 5 hari
+lima_hari_lagi itu skrng + timedelta(hari=5)
+tampilkan f"5 hari lagi: {lima_hari_lagi}"
+
+// Kurangi 2 minggu
+dua_minggu_lalu itu skrng - timedelta(minggu=2)
+tampilkan f"2 minggu lalu: {dua_minggu_lalu}"
+
+// Tambah 3 jam 30 menit
+tambahan_waktu itu skrng + timedelta(jam=3, menit=30)
+tampilkan f"3 jam 30 menit lagi: {tambahan_waktu}"
+```
+
+### Perbandingan
+
+```python
+dari datetime impor datetime
+
+waktu1 itu datetime(2025, 1, 15, 10, 0, 0)
+waktu2 itu datetime(2025, 1, 15, 14, 30, 0)
+
+jika waktu1 < waktu2
+    tampilkan "Waktu1 lebih awal dari Waktu2"
 selesai
 
-// Usage
-lahir = date(1990, 5, 20)
-umur_saya = hitung_umur(lahir)
-tampilkan f"Umur: {umur_saya} tahun"
-```
-
-### Working Days Calculator
-
-```python
-dari datetime impor datetime, timedelta
-
-fungsi hitung_hari_kerja(start_date, end_date):
-    current = start_date
-    hari_kerja = 0
-    
-    selama current <= end_date
-        // Monday=0, Sunday=6 in Python
-        jika current.weekday() < 5  // Monday to Friday
-            hari_kerja = hari_kerja + 1
-        selesai
-        current = current + timedelta(hari=1)
-    selesai
-    
-    hasil hari_kerja
+jika waktu1 == waktu2
+    tampilkan "Waktu1 sama dengan Waktu2"
+lainnya
+    tampilkan "Waktu1 tidak sama dengan Waktu2"
 selesai
-
-// Usage
-mulai = date(2024, 1, 1)  // Monday
-akhir = date(2024, 1, 31) // Wednesday
-total_hari_kerja = hitung_hari_kerja(mulai, akhir)
-tampilkan f"Hari kerja di Januari 2024: {total_hari_kerja}"
 ```
 
-### Timezone Handling
+### Format String
 
 ```python
-dari datetime impor datetime, timezone, timedelta
+dari datetime impor datetime, sekarang
 
-// Create timezone with offset
-wib = timezone(timedelta(jam=7))     // WIB (UTC+7)
-wita = timezone(timedelta(jam=8))    // WITA (UTC+8)
-wit = timezone(timedelta(jam=9))     // WIT (UTC+9)
+waktu_skg itu sekarang()
 
-// Convert between timezones
-utc_time = datetime.now(timezone.utc)
-wib_time = utc_time.astimezone(wib)
-wita_time = utc_time.astimezone(wita)
-wit_time = utc_time.astimezone(wit)
+// Format standar
+tampilkan f"Tanggal: {waktu_skg.strftime('%d/%m/%Y')}"
+tampilkan f"Waktu: {waktu_skg.strftime('%H:%M:%S')}"
 
-tampilkan f"UTC: {utc_time}"
-tampilkan f"WIB: {wib_time}"
-tampilkan f"WITA: {wita_time}"
-tampilkan f"WIT: {wit_time}"
+// Format lengkap
+tampilkan f"Lengkap: {waktu_skg.strftime('%A, %d %B %Y %H:%M:%S')}"
+
+// Format ISO
+tampilkan f"ISO: {waktu_skg.isoformat()}"
 ```
 
-### Date Formatting and Display
+## Contoh Praktis
+
+### Kalkulator Usia
 
 ```python
 dari datetime impor datetime, hari_ini
 
-fungsi format_tanggal_indonesia(dt):
-    hari_nama = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]
-    bulan_nama = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                  "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
+buat fungsi hitung_usia dengan tanggal_lahir
+    hari_ini_dt itu hari_ini()
+    usia_tahun itu hari_ini_dt.tahun - tanggal_lahir.tahun
     
-    hari_idx = dt.weekday()
-    bulan_idx = dt.bulan - 1
-    
-    hasil f"{hari_nama[hari_idx]}, {dt.hari} {bulan_nama[bulan_idx]} {dt.tahun}"
-selesai
-
-// Usage
-sekarang_date = hari_ini()
-formatted_date = format_tanggal_indonesia(sekarang_date)
-tampilkan formatted_date    // Output: "Senin, 15 Januari 2024"
-```
-
-### Event Scheduler
-
-```python
-dari datetime impor datetime, timedelta, sekarang, sleep
-
-fungsi jadwal_event(event_time, callback):
-    sekarang_time = sekarang()
-    
-    jika event_time > sekarang_time
-        tunggu = event_time - sekarang_time
-        detik_tunggu = tunggu.total_seconds()
-        
-        tampilkan f"Event dijadwalkan dalam {detik_tunggu} detik"
-        sleep(detik_tunggu)
-        
-        tampilkan "Menjalankan event..."
-        callback()
-    lainnya
-        tampilkan "Event waktu sudah lewat"
+    // Periksa apakah sudah ulang tahun tahun ini
+    jika (hari_ini_dt.bulan, hari_ini_dt.hari) < (tanggal_lahir.bulan, tanggal_lahir.hari)
+        usia_tahun itu usia_tahun - 1
     selesai
+    
+    hasil usia_tahun
 selesai
 
-fungsi event_callback():
-    tampilkan "Event berhasil dijalankan!"
-    tampilkan f"Waktu eksekusi: {sekarang()}"
-selesai
-
-// Schedule event for 10 seconds from now
-waktu_event = sekarang() + timedelta(detik=10)
-jadwal_event(waktu_event, event_callback)
+lahir itu datetime(1990, 5, 15).date()
+usia itu hitung_usia(lahir)
+tampilkan f"Usia: {usia} tahun"
 ```
 
-### Performance Timing
+### Penghitung Mundur
 
 ```python
-dari datetime impor waktu
+dari datetime impor datetime, sekarang, sleep
 
-fungsi ukur_waktu_eksekusi(func, *args):
-    start_time = waktu()
-    result = func(*args)
-    end_time = waktu()
-    
-    execution_time = end_time - start_time
-    tampilkan f"Waktu eksekusi: {execution_time:.4f} detik"
-    
-    hasil result
-selesai
-
-// Test function
-fungsi fibonacci(n):
-    jika n <= 1
-        hasil n
+buat fungsi countdown dengan detik
+    selama detik > 0
+        tampilkan f"Countdown: {detik}"
+        sleep(1)
+        detik itu detik - 1
     selesai
-    hasil fibonacci(n-1) + fibonacci(n-2)
+    tampilkan "Waktu habis!"
 selesai
 
-// Usage
-result = ukur_waktu_eksekusi(fibonacci, 35)
-tampilkan f"Fibonacci(35) = {result}"
+// Mulai countdown 10 detik
+countdown(10)
 ```
 
-## Date Format Codes
-
-Common format codes for `strptime()`:
-
-- `%Y`: 4-digit year (2024)
-- `%y`: 2-digit year (24)
-- `%m`: Month as number (01-12)
-- `%B`: Full month name (January)
-- `%b`: Abbreviated month name (Jan)
-- `%d`: Day of month (01-31)
-- `%A`: Full weekday name (Monday)
-- `%a`: Abbreviated weekday name (Mon)
-- `%H`: Hour (24-hour clock, 00-23)
-- `%I`: Hour (12-hour clock, 01-12)
-- `%M`: Minute (00-59)
-- `%S`: Second (00-59)
-- `%p`: AM/PM
-- `%f`: Microseconds
-
-## Time Constants and Properties
+### Deadline Calculator
 
 ```python
-dari datetime impor datetime, time, date
+dari datetime import datetime, timedelta, sekarang
 
-// datetime properties
-dt = datetime.sekarang()
-tampilkan dt.tahun           // Year
-tampilkan dt.bulan           // Month (1-12)
-tampilkan dt.hari            // Day (1-31)
-tampilkan dt.jam             // Hour (0-23)
-tampilkan dt.menit           // Minute (0-59)
-tampilkan dt.detik           // Second (0-59)
-tampilkan dt.microsecond     // Microsecond (0-999999)
-tampilkan dt.weekday()       // Day of week (0=Monday, 6=Sunday)
+buat fungsi hitung_deadline dengan hari_kerja
+    hari_kerja_per_minggu itu 5
+    minggu itu hari_kerja // hari_kerja_per_minggu
+    sisa_hari itu hari_kerja % hari_kerja_per_minggu
+    
+    start itu sekarang()
+    
+    // Tambah minggu penuh
+    deadline itu start + timedelta(minggu=minggu)
+    
+    // Tambah hari kerja sisa
+    hari_terhitung itu 0
+    selama hari_terhitung < sisa_hari
+        deadline itu deadline + timedelta(hari=1)
+        
+        // Lewati akhir pekan (Sabtu=5, Minggu=6)
+        jika deadline.weekday() >= 5
+            deadline itu deadline + timedelta(hari=1)
+        lainnya
+            hari_terhitung itu hari_terhitung + 1
+        selesai
+    selesai
+    
+    hasil deadline
+selesai
 
-// date properties
-d = date.hari_ini()
-tampilkan d.tahun
-tampilkan d.bulan
-tampilkan d.hari
-tampilkan d.weekday()
-
-// time properties
-t = time(14, 30, 45, 123456)
-tampilkan t.jam
-tampilkan t.menit
-tampilkan t.detik
-tampilkan t.microsecond
+deadline_kerja itu hitung_deadline(7)  // 7 hari kerja
+tampilkan f"Deadline 7 hari kerja: {deadline_kerja}"
 ```
+
+## Format String Umum
+
+| Kode | Deskripsi | Contoh |
+|------|-----------|--------|
+| `%Y` | Tahun 4 digit | 2025 |
+| `%y` | Tahun 2 digit | 25 |
+| `%m` | Bulan (01-12) | 01 |
+| `%B` | Nama bulan lengkap | Januari |
+| `%b` | Nama bulan singkat | Jan |
+| `%d` | Hari (01-31) | 15 |
+| `%A` | Nama hari lengkap | Senin |
+| `%a` | Nama hari singkat | Sen |
+| `%H` | Jam (00-23) | 14 |
+| `%I` | Jam (01-12) | 02 |
+| `%M` | Menit (00-59) | 30 |
+| `%S` | Detik (00-59) | 45 |
+| `%f` | Mikrodetik | 123456 |
+| `%p` | AM/PM | PM |
+
+## Catatan Penggunaan
+
+1. **Impor Diperlukan**: Semua fungsi datetime harus diimpor dari modul datetime.
+
+2. **Alias Indonesia**: Banyak fungsi memiliki alias Indonesia:
+   - `waktu_sekarang()` untuk `sekarang()`
+   - `tanggal_sekarang()` untuk `hari_ini()`
+   - `utc_waktu_sekarang()` untuk `utc_sekarang()`
+   - `pars_format_iso()` untuk `parse_isoformat()`
+   - `pars_string_waktu()` untuk `strptime()`
+   - `waktu_epoch()` untuk `waktu()`
+   - `tidur()` untuk `sleep()`
+   - `tahun_minimum` untuk `MINYEAR`
+   - `tahun_maksimum` untuk `MAXYEAR`
+
+3. **Timezone**: Fungsi timezone memerlukan instalasi pytz atau library timezone lainnya.
+
+4. **Format String**: Gunakan format string Python standar untuk parsing dan formatting.
+
+5. **Imutabilitas**: datetime objects tidak dapat diubah, operasi selalu mengembalikan object baru.
+
+6. **Precision**: datetime mendukung precision hingga mikrodetik.

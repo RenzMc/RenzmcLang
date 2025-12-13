@@ -274,12 +274,6 @@ renzmc examples/database/01_sqlite_basic.rmc
 renzmc examples/python_integration/01_web_scraping.rmc
 ```
 
-## Contact
-
-- GitHub: [@RenzMc](https://github.com/RenzMc)
-- Email: renzaja11@gmail.com
----
-
 **Made with love for Indonesian developers**
 
 *"Coding in your native language, thinking in your native way"*

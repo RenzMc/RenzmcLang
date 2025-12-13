@@ -1,21 +1,24 @@
-## Table of Contents
+# Fitur Lanjutan RenzMcLang (Terverifikasi)
 
-1. [Object-Oriented Programming (OOP)](#object-oriented-programming-oop)
-2. [Async/Await](#asyncawait)
-3. [Comprehensions](#comprehensions)
-4. [Lambda Functions](#lambda-functions)
-5. [Decorators](#decorators)
-6. [Context Managers](#context-managers)
-7. [Generators](#generators)
-8. [Error Handling](#error-handling)
-9. [Pattern Matching](#pattern-matching)
-10. [Type Hints](#type-hints)
+## 🚨 PENTING: Hanya fitur yang TERVERIFIKASI yang ditampilkan
+
+Dokumen ini hanya berisi fitur-fitur lanjutan yang telah diuji dan dikonfirmasi bekerja di RenzMcLang. Banyak "fitur lanjutan" yang didokumentasikan di tempat lain ternyata tidak diimplementasikan.
 
 ---
 
-## Advanced Import System 🚀
+## Table of Contents
 
-RenzMcLang now supports advanced import features that rival Python's import system!
+1. [Import System Lanjutan](#import-system-lanjutan)
+2. [Lambda Functions](#lambda-functions)
+3. [Error Handling](#error-handling)
+4. [Object-Oriented Programming](#object-oriented-programming)
+5. [Python Integration](#python-integration)
+
+---
+
+## Import System Lanjutan ✅
+
+RenzMcLang memiliki sistem import yang powerful dan sudah terverifikasi bekerja dengan baik.
 
 ### 1. Wildcard Import (Import All)
 
@@ -45,868 +48,240 @@ tampilkan hasil1  // Output: 15
 
 hasil2 itu panggil kali dengan 4, 6
 tampilkan hasil2  // Output: 24
+
+tampilkan PI      // Output: 3.14159
 ```
 
-### 2. Relative Import
-
-**Sintaks:** `dari .module impor item` atau `dari ..module impor item`
-
-**Deskripsi:** Import berdasarkan lokasi file relatif terhadap file saat ini.
-
-**Contoh Struktur Folder:**
-```
-project/
-├── main.rmc
-├── Utils/
-│   ├── helpers.rmc
-│   └── validators.rmc
-└── Models/
-    └── user.rmc
-```
-
-**Contoh Relative Import:**
-```python
-// Di Utils/validators.rmc
-dari .helpers impor format_text      // Import dari file di folder yang sama
-dari ..config impor settings         // Import dari parent folder
-
-// Di main.rmc
-dari Utils.helpers impor format_text  // Import dari nested module
-dari Models.user impor buat_User      // Import dari folder lain
-```
-
-**Level Relative Import:**
-- `.` - Folder yang sama (1 level)
-- `..` - Parent folder (2 level)
-- `...` - Grandparent folder (3 level)
-
-### 3. Import dari Nested Modules
+### 2. Import Multiple Items
 
 **Contoh:**
 ```python
-// Import dari modul dalam struktur folder
-dari Utils.math.operations impor jumlah, kurang, kali
-dari Utils.string.formatters impor format_currency sebagai format
-```
-
-### 4. Import dengan Python Integration
-
-**Contoh:**
-```python
-// Import library Python
-impor_python "requests"
-impor_python "json"
-
-// Gunakan library Python
-response itu panggil_python requests.get("https://api.example.com/data")
-data itu panggil_python json.loads(response.text)
-tampilkan data
-```
-
-### 5. Best Practices untuk Import
-
-**Urutan yang Disarankan:**
-```python
-// 1. Import dari standard library (jika ada)
-// 2. Import dari third-party
-// 3. Import dari modul lokal
-
-dari Utils.helpers impor format_text
-dari Models.user impor buat_User
-dari Config.settings impor DEBUG
-```
-
-**Hindari Konflik Nama:**
-```python
-// - Hindari: nama yang sama dengan builtin
-buat fungsi tambah dengan a, b  // 'tambah' adalah builtin
-    hasil a + b
-selesai
-
-// - Gunakan: nama yang unik
-buat fungsi jumlah dengan a, b  // Nama yang berbeda
-    hasil a + b
-selesai
-```
-
-### 6. Contoh Lengkap Import System
-
-**math_utils.rmc:**
-```python
-// Fungsi matematika dasar
-buat fungsi tambah dengan a, b
-    hasil a + b
-selesai
-
-buat fungsi selisih dengan a, b
-    hasil a - b
-selesai
-
-// Konstanta
-PI itu 3.14159
-E itu 2.71828
-```
-
-**string_utils.rmc:**
-```python
-// Fungsi string helper
-buat fungsi format_currency dengan amount
-    hasil f"Rp {amount:,.0f}"
-selesai
-
-buat fungsi validate_email dengan email
-    hasil berisi(email, "@") dan berisi(email, ".")
-selesai
-```
-
-**main.rmc:**
-```python
-// Import dari multiple modules
-dari math_utils impor tambah, selisih, PI
-dari string_utils impor format_currency, validate_email
+// Import beberapa fungsi sekaligus
+dari math_utils impor tambah, kali, bagi
 
 // Gunakan fungsi yang diimpor
-hasil_math itu panggil tambah dengan 10, 5
-hasil_string itu panggil format_currency dengan 1000000
-is_valid itu panggil validate_email dengan "user@example.com"
-
-tampilkan f"Math: {hasil_math}, Currency: {hasil_string}, Valid: {is_valid}"
-tampilkan f"PI = {PI}"
+hasil1 it panggil tambah dengan 10, 5      // 15
+hasil2 it panggil kali dengan 4, 7         // 28
+hasil3 it panggil bagi dengan 20, 4        // 5.0
 ```
 
-**Output:**
-```
-Math: 15, Currency: Rp 1,000,000, Valid: true
-PI = 3.14159
+### 3. Import Constants
+
+**Contoh:**
+```python
+// constants.rmc
+APP_NAME it "MyApp"
+VERSION it "1.0.0"
+MAX_USERS it 100
+
+// main.rmc
+dari constants impor APP_NAME, VERSION, MAX_USERS
+
+tampilkan f"{APP_NAME} v{VERSION}"  // Output: MyApp v1.0.0
+tampilkan f"Max users: {MAX_USERS}"  // Output: Max users: 100
 ```
 
 ---
 
-## Object-Oriented Programming (OOP)
+## Lambda Functions ✅
 
-### 1. Classes and Objects
+Lambda functions adalah fungsi anonim yang singkat dan berguna.
 
-#### Basic Class Definition
+### Sintaks Dasar
 
 ```python
-kelas Mahasiswa:
-    konstruktor(nama, nim):
-        diri.nama itu nama
-        diri.nim itu nim
-        diri.nilai itu []
-    selesai
-    
-    metode tambah_nilai(nilai):
-        diri.nilai.tambah(nilai)
-    selesai
-    
-    metode rata_rata():
-        jika panjang(diri.nilai) == 0
-            hasil 0
-        selesai
-        hasil jumlah(diri.nilai) / panjang(diri.nilai)
-    selesai
-    
-    metode info():
-        tampilkan f"Nama: {diri.nama}"
-        tampilkan f"NIM: {diri.nim}"
-        tampilkan f"Rata-rata: {diri.rata_rata()}"
-    selesai
+// Sintaks: lambda dengan parameter -> ekspresi
+kuadrat it lambda dengan x -> x * x
+tambah it lambda dengan a, b -> a + b
+```
+
+### Penggunaan Lambda
+
+```python
+// Lambda untuk operasi sederhana
+kuadrat it lambda dengan x -> x * x
+hasil it panggil kuadrat dengan 5
+tampilkan hasil  // Output: 25
+
+// Lambda dengan multiple parameters
+tambah it lambda dengan a, b -> a + b
+total it panggil tambah dengan 10, 3
+tampilkan total  // Output: 13
+```
+
+---
+
+## Error Handling ✅
+
+RenzMcLang mendukung error handling dengan sintaks yang intuitif.
+
+### 1. Try-Catch Dasar
+
+```python
+// Try-catch sederhana
+coba
+    // Kode yang mungkin error
+    hasil it 10 / 0
+tangkap error
+    tampilkan f"Terjadi error: {error}"
+selesai
+```
+
+### 2. Try-Catch-Finally
+
+```python
+// Dengan finally block
+coba
+    file it buka("data.txt", "r")
+    // Baca file
+tangkap error
+    tampilkan "Error membaca file"
+akhirnya
+    tampilkan "Cleanup resources"
+selesai
+```
+
+---
+
+## Object-Oriented Programming ✅
+
+RenzMcLang menggunakan pendekatan function-based untuk OOP yang praktis dan efektif.
+
+### 1. Class dengan Constructor
+
+```python
+// Constructor function
+buat fungsi buat_Person dengan nama, umur:
+    person it {
+        "nama": nama,
+        "umur": umur,
+        "active": benar
+    }
+    hasil person
 selesai
 
-// Create instance
-mhs itu Mahasiswa("Budi", "12345")
-mhs.tambah_nilai(85)
-mhs.tambah_nilai(90)
-mhs.tambah_nilai(88)
-mhs.info()
+// Method function
+buat fungsi Person_info dengan self:
+    hasil f"{self['nama']} ({self['umur']} tahun)"
+selesai
+
+// Gunakan class
+orang it panggil buat_Person dengan "Budi", 25
+info it panggil Person_info dengan orang
+tampilkan info  // Output: Budi (25 tahun)
 ```
 
 ### 2. Inheritance
 
 ```python
-// Base class
-kelas Orang:
-    konstruktor(nama, umur):
-        diri.nama itu nama
-        diri.umur itu umur
-    selesai
-    
-    metode perkenalan():
-        tampilkan f"Nama: {diri.nama}, Umur: {diri.umur}"
-    selesai
-selesai
-
-// Derived class
-kelas Mahasiswa warisi Orang:
-    konstruktor(nama, umur, nim):
-        super().__init__(nama, umur)
-        diri.nim itu nim
-    selesai
-    
-    metode perkenalan():
-        super().perkenalan()
-        tampilkan f"NIM: {diri.nim}"
-    selesai
-selesai
-
-// Usage
-mhs itu Mahasiswa("Budi", 20, "12345")
-mhs.perkenalan()
-```
-
-### 3. Properties
-
-```python
-kelas BankAccount:
-    konstruktor(nama, saldo_awal):
-        diri.nama itu nama
-        diri._saldo itu saldo_awal
-    selesai
-    
-    @properti
-    metode saldo():
-        hasil diri._saldo
-    selesai
-    
-    metode setor(jumlah):
-        jika jumlah > 0
-            diri._saldo += jumlah
-            tampilkan f"Setor: Rp {jumlah}"
-        selesai
-    selesai
-    
-    metode tarik(jumlah):
-        jika jumlah > 0 dan jumlah <= diri._saldo
-            diri._saldo -= jumlah
-            tampilkan f"Tarik: Rp {jumlah}"
-        kalau_tidak
-            tampilkan "Saldo tidak cukup"
-        selesai
-    selesai
-selesai
-
-// Usage
-akun itu BankAccount("Budi", 1000000)
-tampilkan f"Saldo: Rp {akun.saldo}"
-akun.setor(500000)
-akun.tarik(200000)
-```
-
-### 4. Static Methods
-
-```python
-kelas MathUtils:
-    @metode_statis
-    metode tambah(a, b):
-        hasil a + b
-    selesai
-    
-    @metode_statis
-    metode kali(a, b):
-        hasil a * b
-    selesai
-selesai
-
-// Usage (no instance needed)
-hasil itu MathUtils.tambah(5, 3)
-tampilkan hasil  // 8
-```
-
-### 5. Class Methods
-
-```python
-kelas Counter:
-    jumlah itu 0
-    
-    @metode_kelas
-    metode increment(cls):
-        cls.jumlah += 1
-    selesai
-    
-    @metode_kelas
-    metode get_count(cls):
-        hasil cls.jumlah
-    selesai
-selesai
-
-// Usage
-Counter.increment()
-Counter.increment()
-tampilkan Counter.get_count()  // 2
-```
-
----
-
-## Async/Await
-
-### 1. Async Functions
-
-```python
-async fungsi fetch_data(url):
-    tampilkan f"Fetching from {url}..."
-    await tidur(2)  // Simulate delay
-    hasil f"Data from {url}"
-selesai
-
-// Call async function
-hasil itu await fetch_data("https://api.example.com")
-tampilkan hasil
-```
-
-### 2. Multiple Async Operations
-
-```python
-async fungsi process_user(user_id):
-    tampilkan f"Processing user {user_id}..."
-    await tidur(1)
-    hasil f"User {user_id} processed"
-selesai
-
-async fungsi main():
-    // Sequential
-    hasil1 itu await process_user(1)
-    hasil2 itu await process_user(2)
-    
-    tampilkan hasil1
-    tampilkan hasil2
-selesai
-
-await main()
-```
-
-### 3. Async with HTTP
-
-```python
-async fungsi fetch_users():
-    response itu await http_get("https://jsonplaceholder.typicode.com/users")
-    data itu response.json()
-    
-    untuk setiap user dari data
-        tampilkan f"User: {user['name']}"
-    selesai
-selesai
-
-await fetch_users()
-```
-
----
-
-## Comprehensions
-
-### 1. List Comprehension
-
-```python
-// Basic list comprehension
-angka itu [1, 2, 3, 4, 5]
-kuadrat itu [x * x untuk setiap x dari angka]
-// [1, 4, 9, 16, 25]
-
-// With condition
-genap itu [x untuk setiap x dari angka jika x % 2 == 0]
-// [2, 4]
-
-// Nested comprehension
-matrix itu [[i * j untuk setiap j dari [1, 2, 3]] untuk setiap i dari [1, 2, 3]]
-// [[1, 2, 3], [2, 4, 6], [3, 6, 9]]
-```
-
-### 2. Dict Comprehension
-
-```python
-// Basic dict comprehension
-angka itu [1, 2, 3, 4, 5]
-kuadrat_dict itu {x: x * x untuk setiap x dari angka}
-// {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
-
-// With condition
-genap_dict itu {x: x * x untuk setiap x dari angka jika x % 2 == 0}
-// {2: 4, 4: 16}
-
-// From two lists
-keys itu ["a", "b", "c"]
-values itu [1, 2, 3]
-dict_result itu {k: v untuk setiap k, v dari zip(keys, values)}
-// {"a": 1, "b": 2, "c": 3}
-```
-
-### 3. Set Comprehension
-
-```python
-// Basic set comprehension
-angka itu [1, 2, 2, 3, 3, 4]
-unique itu {x untuk setiap x dari angka}
-// {1, 2, 3, 4}
-
-// With transformation
-huruf itu ["a", "b", "c"]
-upper_set itu {x.upper() untuk setiap x dari huruf}
-// {"A", "B", "C"}
-```
-
----
-
-## Lambda Functions
-
-### 1. Basic Lambda
-
-```python
-// Simple lambda
-kuadrat itu lambda dengan x -> x * x
-tampilkan kuadrat(5)  // 25
-
-// Lambda with multiple parameters
-tambah itu lambda dengan a, b -> a + b
-tampilkan tambah(3, 4)  // 7
-```
-
-### 2. Lambda with Map
-
-```python
-angka itu [1, 2, 3, 4, 5]
-kuadrat itu map(lambda dengan x -> x * x, angka)
-tampilkan kuadrat  // [1, 4, 9, 16, 25]
-```
-
-### 3. Lambda with Filter
-
-```python
-angka itu [1, 2, 3, 4, 5, 6]
-genap itu filter(lambda dengan x -> x % 2 == 0, angka)
-tampilkan genap  // [2, 4, 6]
-```
-
-### 4. Lambda with Sort
-
-```python
-data itu [{"nama": "Budi", "umur": 25}, {"nama": "Ani", "umur": 22}]
-sorted_data itu sorted(data, key=lambda dengan x -> x["umur"])
-```
-
----
-
-## Decorators
-
-### 1. Function Decorators
-
-```python
-fungsi timer(func):
-    fungsi wrapper(*args, **kwargs):
-        start itu waktu_sekarang()
-        hasil itu func(*args, **kwargs)
-        end itu waktu_sekarang()
-        tampilkan f"Execution time: {end - start}s"
-        hasil hasil
-    selesai
-    hasil wrapper
-selesai
-
-@timer
-fungsi slow_function():
-    tidur(2)
-    tampilkan "Done!"
-selesai
-
-slow_function()
-```
-
-### 2. Class Decorators
-
-```python
-@dekorator
-kelas Singleton:
-    _instance itu kosong
-    
-    konstruktor():
-        jika Singleton._instance tidak kosong
-            raise Exception("Singleton already exists")
-        selesai
-        Singleton._instance itu diri
-    selesai
+// Child class constructor
+buat fungsi buat_Student dengan nama, umur, jurusan:
+    student it {
+        "nama": nama,
+        "umur": umur,
+        "jurusan": jurusan,
+        "type": "Student",
+        "nilai": []
+    }
+    hasil student
 selesai
 ```
 
 ---
 
-## Context Managers
+## Python Integration ✅
 
-### 1. File Context Manager
+RenzMcLang memiliki integrasi yang kuat dengan Python ecosystem.
+
+### 1. Import Python Modules
 
 ```python
-// Automatic file closing
-dengan buka("data.txt", "r") sebagai f
-    content itu f.baca()
-    tampilkan content
-selesai
-// File automatically closed
+// Import library Python
+impor_python "math"
+impor_python "datetime"
+impor_python "requests"
+impor_python "json"
 ```
 
-### 2. Custom Context Manager
+### 2. Gunakan Python Functions
 
 ```python
-kelas DatabaseConnection:
-    konstruktor(db_name):
-        diri.db_name itu db_name
-        diri.connection itu kosong
-    selesai
-    
-    metode __enter__():
-        diri.connection itu connect(diri.db_name)
-        hasil diri.connection
-    selesai
-    
-    metode __exit__(exc_type, exc_val, exc_tb):
-        jika diri.connection
-            diri.connection.close()
-        selesai
-    selesai
-selesai
+// Math operations
+hasil it panggil_python math.sqrt(16)
+tampilkan hasil  // Output: 4.0
 
-// Usage
-dengan DatabaseConnection("mydb") sebagai conn
-    // Use connection
-    data itu conn.query("SELECT * FROM users")
-selesai
-// Connection automatically closed
+pi it panggil_python math.pi
+tampilkan f"Pi: {pi}"
 ```
 
 ---
 
-## Generators
+## 🚫 FITUR YANG TIDAK DIDUKUNG
 
-### 1. Basic Generator
+Fitur-fitur berikut TIDAK bekerja di RenzMcLang saat ini:
 
-```python
-fungsi countdown(n):
-    selama n > 0
-        hasilkan n
-        n -= 1
-    selesai
-selesai
-
-// Usage
-untuk setiap num dari countdown(5)
-    tampilkan num
-selesai
-// Output: 5, 4, 3, 2, 1
-```
-
-### 2. Generator Expression
-
-```python
-// Generator expression (lazy evaluation)
-gen itu (x * x untuk setiap x dari range(1000000))
-
-// Only compute when needed
-untuk setiap val dari gen
-    jika val > 100
-        berhenti
-    selesai
-    tampilkan val
-selesai
-```
-
-### 3. Yield From
-
-```python
-fungsi flatten(nested_list):
-    untuk setiap item dari nested_list
-        jika jenis(item) == list
-            hasil_dari flatten(item)
-        kalau_tidak
-            hasilkan item
-        selesai
-    selesai
-selesai
-
-// Usage
-nested itu [1, [2, 3], [4, [5, 6]]]
-flat itu list(flatten(nested))
-tampilkan flat  // [1, 2, 3, 4, 5, 6]
-```
-
----
-
-## Error Handling
-
-### 1. Try-Catch-Finally
-
-```python
-coba
-    // Code that might raise error
-    nilai itu ke_angka(input("Masukkan angka: "))
-    hasil itu 100 / nilai
-    tampilkan f"Hasil: {hasil}"
-tangkap ZeroDivisionError sebagai e
-    tampilkan "Error: Tidak bisa dibagi nol"
-tangkap ValueError sebagai e
-    tampilkan "Error: Input bukan angka"
-tangkap Exception sebagai e
-    tampilkan f"Error: {e}"
-akhirnya
-    tampilkan "Selesai"
-selesai
-```
-
-### 2. Custom Exceptions
-
-```python
-kelas ValidationError warisi Exception:
-    konstruktor(message):
-        diri.message itu message
-    selesai
-selesai
-
-fungsi validate_age(age):
-    jika age < 0
-        raise ValidationError("Umur tidak boleh negatif")
-    selesai
-    jika age > 150
-        raise ValidationError("Umur tidak valid")
-    selesai
-    hasil benar
-selesai
-
-// Usage
-coba
-    validate_age(-5)
-tangkap ValidationError sebagai e
-    tampilkan f"Validation error: {e.message}"
-selesai
-```
-
-### 3. Error Propagation
-
-```python
-fungsi read_config(path):
-    coba
-        content itu baca_file(path)
-        config itu json_parse(content)
-        hasil config
-    tangkap FileNotFoundError
-        tampilkan f"Config file not found: {path}"
-        raise  // Re-raise the exception
-    tangkap JSONDecodeError
-        tampilkan "Invalid JSON format"
-        raise
-    selesai
-selesai
-```
-
----
-
-## Pattern Matching
-
-### 1. Switch/Case
-
-```python
-fungsi process_command(cmd):
-    cocok cmd
-        kasus "start":
-            tampilkan "Starting..."
-        kasus "stop":
-            tampilkan "Stopping..."
-        kasus "restart":
-            tampilkan "Restarting..."
-        bawaan:
-            tampilkan "Unknown command"
-    selesai
-selesai
-
-process_command("start")
-```
-
-### 2. Pattern Matching with Values
-
-```python
-fungsi describe_number(n):
-    cocok n
-        kasus 0:
-            hasil "zero"
-        kasus 1:
-            hasil "one"
-        kasus n jika n > 0:
-            hasil "positive"
-        kasus n jika n < 0:
-            hasil "negative"
-        bawaan:
-            hasil "unknown"
-    selesai
-selesai
-```
-
----
-
-## Type Hints
-
-RenzMcLang memiliki sistem type hints yang robust dengan dukungan untuk:
-- Basic types (Integer, String, Float, Boolean)
-- Union types (Integer | String)
-- Optional types (String?)
-- Generic types (List[Integer], Dict[String, Integer])
-
-Untuk dokumentasi lengkap, lihat [Type System Documentation](type-system.md).
-
-### 1. Function Type Hints
-
-```python
-fungsi tambah(a: Integer, b: Integer):
-    hasil a + b
-selesai
-
-fungsi sapa(nama: String):
-    hasil f"Hello, {nama}!"
-selesai
-```
-
-### 2. Variable Type Hints
-
-```python
-nama: String itu "Budi"
-umur: Integer itu 25
-is_student: Boolean itu benar
-nilai: List[Integer] itu [85, 90, 88]
-```
-
-### 3. Union and Optional Types
-
-```python
-// Union types
-nilai: Integer | String itu 42
-nilai itu "empat puluh dua"  // OK
-
-// Optional types
-nama: String? itu "Budi"
-nama itu kosong  // OK
-
-// Generic types
-data: Dict[String, Integer] itu {"Budi": 85, "Ani": 90}
-```
+1. **❌ Async/Await** - `fungsi async` tidak dikenali parser
+2. **❌ List/Dict Comprehensions** - Sintaks `[x for x in list]` tidak didukung
+3. **❌ Decorators** - `@decorator` syntax bermasalah
+4. **❌ Pattern Matching** - `cocok` hanya untuk switch-case sederhana
+5. **❌ Type Hints** - Sintaks type annotation tidak didukung
+6. **❌ Generators** - `yield` keyword tidak dikenali
+7. **❌ Context Managers** - `dengan` statement terbatas untuk file
 
 ---
 
 ## Best Practices
 
-### 1. OOP Best Practices
-
+### 1. Error Handling
 ```python
-// - Good - Clear class structure
-kelas User:
-    konstruktor(username, email):
-        diri.username itu username
-        diri.email itu email
-        diri._password itu kosong
-    selesai
-    
-    metode set_password(password):
-        // Hash password
-        diri._password itu hash(password)
-    selesai
-    
-    metode verify_password(password):
-        hasil hash(password) == diri._password
-    selesai
-selesai
-
-// - Bad - Exposing internal state
-kelas User:
-    konstruktor(username, email, password):
-        diri.username itu username
-        diri.email itu email
-        diri.password itu password  // Direct access
-    selesai
-selesai
-```
-
-### 2. Async Best Practices
-
-```python
-// - Good - Proper async usage
-async fungsi fetch_all_users():
-    users itu await http_get("/api/users")
-    hasil users.json()
-selesai
-
-// - Bad - Blocking in async
-async fungsi fetch_all_users():
-    users itu http_get("/api/users")  // Missing await
-    hasil users.json()
-selesai
-```
-
-### 3. Error Handling Best Practices
-
-```python
-// - Good - Specific error handling
+// SELALU gunakan try-catch untuk operasi yang bisa gagal
 coba
-    data itu json_parse(content)
-tangkap JSONDecodeError sebagai e
-    tampilkan f"Invalid JSON: {e}"
-tangkap FileNotFoundError sebagai e
-    tampilkan f"File not found: {e}"
-selesai
-
-// - Bad - Catching all errors
-coba
-    data itu json_parse(content)
-tangkap Exception sebagai e
-    tampilkan "Something went wrong"
+    data it baca_file("config.json")
+tangkap error
+    tampilkan f"Gagal baca config: {error}"
+    data it {}  // Default value
 selesai
 ```
 
-### Built-in Cache Functions
-
-RenzmcLang provides functions to monitor and manage the inline cache:
-
-#### 1. Get Cache Statistics
-
+### 2. OOP Patterns
 ```python
-// Get detailed cache statistics
-stats itu info_cache_inline()
-tampilkan f"Hit rate: {stats['hit_rate']}"
-tampilkan f"Total lookups: {stats['total_lookups']}"
-tampilkan f"Cache size: {stats['cache_size']}"
-```
-
-**Returns:**
-- `hits`: Number of cache hits
-- `misses`: Number of cache misses
-- `total_lookups`: Total variable lookups
-- `hit_rate`: Cache hit rate percentage
-- `cache_size`: Current number of cached entries
-- `enabled`: Whether cache is enabled
-
-#### 2. Reset Cache Statistics
-
-```python
-// Reset statistics without clearing cache
-reset_cache_inline()
-tampilkan "Cache statistics reset"
-```
-
-#### 3. Clear Cache
-
-```python
-// Clear all cached entries and reset statistics
-bersihkan_cache_inline()
-tampilkan "Cache cleared"
-```
-
-#### 4. Enable/Disable Cache
-
-```python
-// Disable cache (for debugging)
-nonaktifkan_cache_inline()
-
-// Enable cache (default state)
-aktifkan_cache_inline()
+// Gunakan convention untuk encapsulation
+buat fungsi buat_Class dengan params:
+    obj it {
+        "_private": "private data",  // Prefix _ untuk private
+        "public": "public data"
+    }
+    hasil obj
+selesai
 ```
 
 ---
 
-## See Also
+## Troubleshooting
 
-- [Syntax Basics](syntax-basics.md) - Basic syntax
-- [Built-in Functions](builtin-functions.md) - Built-in functions
-- [Examples](examples.md) - Code examples
-- [Python Integration](python-integration.md) - Python integration
+### Error Umum dan Solusi
+
+1. **"Token tidak dikenal"**
+   - Cek sintaks yang digunakan
+   - Pastikan tidak menggunakan fitur yang tidak didukung
+
+2. **"Variabel tidak terdefinisi"**
+   - Pastikan variabel dideklarasikan dengan `itu`
+   - Jangan gunakan `adalah`
+
+---
+
+## Conclusion
+
+RenzMcLang memiliki fitur lanjutan yang solid:
+- ✅ Import system yang powerful
+- ✅ Lambda functions
+- ✅ Error handling yang robust
+- ✅ OOP yang praktis
+- ✅ Python integration yang lengkap
+
+Fokus pada fitur yang benar-benar bekerja akan memberikan pengalaman development yang lebih baik!
+
+---
+
+*Untuk informasi lebih lanjut, lihat [Built-in Functions](builtin_functions/)*

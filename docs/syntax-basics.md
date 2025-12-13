@@ -1,26 +1,28 @@
 ## Daftar Isi
 
-1. [Komentar](#komentar)
-2. [Variabel](#variabel)
-3. [Tipe Data](#tipe-data)
-4. [Operator](#operator)
-5. [Alur Kontrol](#alur-kontrol)
-6. [Perulangan](#perulangan)
-7. [Fungsi](#fungsi)
-8. [Input/Output](#inputoutput)
-9. [Dukungan Multi-baris](#dukungan-multi-baris)
+1.  [Komentar](#komentar)
+2.  [Variabel](#variabel)
+3.  [Tipe Data](#tipe-data)
+4.  [Operator](#operator)
+5.  [Alur Kontrol](#alur-kontrol)
+6.  [Perulangan](#perulangan)
+7.  [Fungsi](#fungsi)
+8.  [Input/Output](#inputoutput)
+9.  [Dukungan Multi-baris](#dukungan-multi-baris)
 
----
+* * *
 
 ## Komentar
 
 ### Komentar Satu Baris
+
 ```python
 // Ini adalah komentar satu baris
 tampilkan "Hello"  // Komentar di akhir baris
 ```
 
 ### Komentar Multi-baris
+
 ```python
 /*
 Ini adalah komentar
@@ -28,27 +30,29 @@ multi-baris
 */
 ```
 
----
+* * *
 
 ## Variabel
 
 ### Deklarasi Variabel
 
 ```python
-// Menggunakan keyword 'itu'
+// Menggunakan keyword 'itu' (SATU-SATUNYA sintaks yang didukung)
 nama itu "Budi"
 umur itu 25
 tinggi itu 175.5
 is_student itu benar
+x itu 10
+y itu 20
 
-// Menggunakan keyword 'adalah'
-x adalah 10
-y adalah 20
+// Catatan: Keyword 'adalah' TIDAK didukung dalam RenzMcLang
+// Gunakan selalu 'itu' untuk deklarasi variabel
 ```
 
 ### Aturan Penamaan Variabel
 
-- **Valid:**
+-   **Valid:**
+
 ```python
 nama itu "Budi"
 nama_lengkap itu "Budi Santoso"
@@ -56,7 +60,8 @@ umur_2024 itu 25
 _private itu "secret"
 ```
 
-- **Tidak Valid:**
+-   **Tidak Valid:**
+
 ```python
 2nama itu "Budi"      // Tidak boleh dimulai dengan angka
 nama-lengkap itu "X"  // Tidak boleh menggunakan dash
@@ -70,7 +75,12 @@ jika itu "test"       // Tidak boleh menggunakan keyword
 x itu 10
 
 // Penugasan ganda
-a itu b itu c itu 0
+a itu 0
+b itu 0  
+c itu 0
+
+// Catatan: Penugasan ganda dalam satu baris (a itu b itu c itu 0) tidak didukung
+// Gunakan baris terpisah untuk setiap variabel
 
 // Tukar nilai
 x itu 5
@@ -80,13 +90,14 @@ x itu y
 y itu temp
 ```
 
----
+* * *
 
 ## Tipe Data
 
-### 1. Angka
+### 1\. Angka
 
 #### Integer (Bilangan Bulat)
+
 ```python
 angka_positif itu 42
 angka_negatif itu -17
@@ -94,15 +105,17 @@ angka_besar itu 1000000
 ```
 
 #### Float (Bilangan Desimal)
+
 ```python
 pi itu 3.14159
 suhu itu -5.5
 tinggi itu 175.8
 ```
 
-### 2. String (Teks)
+### 2\. String (Teks)
 
 #### Deklarasi String
+
 ```python
 // Tanda kutip tunggal
 nama itu 'Budi'
@@ -119,6 +132,7 @@ Indonesia
 ```
 
 #### Operasi String
+
 ```python
 // Penggabungan
 nama_depan itu "Budi"
@@ -139,6 +153,7 @@ bagian itu kata[0:4]  // "Prog"
 ```
 
 #### F-String (Interpolasi String)
+
 ```python
 nama itu "Budi"
 umur itu 25
@@ -151,9 +166,12 @@ tampilkan pesan  // Output: Nama saya Budi, umur 25 tahun
 harga itu 100000
 pajak itu 0.1
 total itu f"Total: Rp {harga * (1 + pajak)}"
+tampilkan total
+
+// Catatan: F-string berfungsi dengan baik untuk interpolasi variabel dan ekspresi
 ```
 
-### 3. Boolean
+### 3\. Boolean
 
 ```python
 // Nilai boolean
@@ -166,7 +184,7 @@ is_student itu benar
 has_license itu salah
 ```
 
-### 4. List (Daftar)
+### 4\. List (Daftar)
 
 ```python
 // List kosong
@@ -178,11 +196,15 @@ nama itu ["Budi", "Ani", "Citra"]
 campuran itu [1, "dua", 3.0, benar]
 
 // Operasi list
-angka.tambah(6)           // Tambah elemen
-angka.hapus(3)            // Hapus elemen
+tambah(angka, 6)           // Tambah elemen
+hapus(angka, 3)            // Hapus elemen
 panjang itu panjang(angka)  // Dapatkan panjang
 pertama itu angka[0]      // Akses elemen
 terakhir itu angka[-1]    // Elemen terakhir
+
+// Sorting
+urutkan(angka, salah)      // Sorting ascending
+urutkan(angka, benar)      // Sorting descending
 
 // List Slicing (Pemotongan List)
 nums itu [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -219,7 +241,7 @@ nums[::-1]     // [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 nums[:]        // Salinan lengkap list
 ```
 
-### 5. Dictionary (Kamus)
+### 5\. Dictionary (Kamus)
 
 ```python
 // Kamus kosong
@@ -246,7 +268,7 @@ jika "nama" dalam mahasiswa
 selesai
 ```
 
-### 6. Set (Himpunan)
+### 6\. Set (Himpunan)
 
 ```python
 // Set kosong
@@ -262,7 +284,7 @@ angka.hapus(3)            // Hapus elemen
 panjang itu panjang(angka)  // Dapatkan panjang
 ```
 
-### 7. Tuple
+### 7\. Tuple
 
 ```python
 // Deklarasi tuple
@@ -278,11 +300,11 @@ pertama itu koordinat[0]
 kedua itu koordinat[1]
 ```
 
----
+* * *
 
 ## Operator
 
-### 1. Operator Aritmatika
+### 1\. Operator Aritmatika
 
 ```python
 // Penjumlahan
@@ -307,7 +329,7 @@ hasil itu 10 % 3  // 1
 hasil itu 2 ** 3  // 8
 ```
 
-### 2. Operator Perbandingan
+### 2\. Operator Perbandingan
 
 ```python
 // Sama dengan
@@ -329,7 +351,7 @@ hasil itu 5 >= 5  // benar
 hasil itu 5 <= 3  // salah
 ```
 
-### 3. Operator Logika
+### 3\. Operator Logika
 
 ```python
 // AND
@@ -345,7 +367,7 @@ hasil itu tidak benar  // salah
 hasil itu tidak salah  // benar
 ```
 
-### 4. Operator Penugasan
+### 4\. Operator Penugasan
 
 ```python
 // Penugasan sederhana
@@ -360,7 +382,7 @@ x %= 3   // x = x % 3
 x **= 2  // x = x ** 2
 ```
 
-### 5. Operator Keanggotaan
+### 5\. Operator Keanggotaan
 
 ```python
 // in
@@ -371,7 +393,7 @@ hasil itu 5 dalam [1, 2, 3]          // salah
 hasil itu "d" tidak dalam ["a", "b", "c"]  // benar
 ```
 
-### 6. Operator Bitwise
+### 6\. Operator Bitwise
 
 ```python
 // AND
@@ -393,11 +415,11 @@ hasil itu 5 << 1  // 10
 hasil itu 5 >> 1  // 2
 ```
 
----
+* * *
 
 ## Alur Kontrol
 
-### 1. Pernyataan If
+### 1\. Pernyataan If
 
 ```python
 // If sederhana
@@ -424,17 +446,20 @@ lainnya
 selesai
 ```
 
-### 2. Operator Ternary
+### 2\. Operator Ternary
 
 ```python
 // If-else inline
-status itu "Lulus" jika nilai >= 60 kalau tidak "Tidak Lulus"
+status itu "Lulus" jika nilai >= 60 lainnya "Tidak Lulus"
 
 // Dengan ekspresi
-max_value itu a jika a > b kalau tidak b
+max_value itu a jika a > b lainnya b
+
+// Catatan: Gunakan "lainnya", bukan "kalau tidak" untuk operator ternary
+// Sintaks: value_if_true if condition else value_if_false
 ```
 
-### 3. Pernyataan Switch/Case
+### 3\. Pernyataan Switch/Case
 
 ```python
 cocok nilai
@@ -449,13 +474,14 @@ cocok nilai
 selesai
 ```
 
----
+* * *
 
 ## Perulangan
 
-### 1. Perulangan For
+### 1\. Perulangan For
 
 #### Perulangan For Berbasis Rentang
+
 ```python
 // Perulangan dari 1 sampai 10
 untuk x dari 1 sampai 10
@@ -469,6 +495,7 @@ selesai
 ```
 
 #### Perulangan For Each
+
 ```python
 // Iterasi melalui list
 buah itu ["apel", "jeruk", "mangga"]
@@ -483,7 +510,7 @@ untuk setiap key dari mahasiswa
 selesai
 ```
 
-### 2. Perulangan While
+### 2\. Perulangan While
 
 ```python
 // Perulangan while sederhana
@@ -503,9 +530,10 @@ selama tidak input_valid
 selesai
 ```
 
-### 3. Kontrol Perulangan
+### 3\. Kontrol Perulangan
 
 #### Break
+
 ```python
 // Keluar dari perulangan lebih awal
 untuk x dari 1 sampai 10
@@ -517,6 +545,7 @@ selesai
 ```
 
 #### Continue
+
 ```python
 // Lewati iterasi
 untuk x dari 1 sampai 10
@@ -527,11 +556,11 @@ untuk x dari 1 sampai 10
 selesai
 ```
 
----
+* * *
 
 ## Fungsi
 
-### 1. Deklarasi Fungsi
+### 1\. Deklarasi Fungsi
 
 ```python
 // Fungsi sederhana
@@ -543,7 +572,7 @@ selesai
 sapa()
 ```
 
-### 2. Fungsi dengan Parameter
+### 2\. Fungsi dengan Parameter
 
 ```python
 // Fungsi dengan parameter
@@ -555,7 +584,7 @@ selesai
 sapa("Budi")
 ```
 
-### 3. Fungsi dengan Nilai Pengembalian
+### 3\. Fungsi dengan Nilai Pengembalian
 
 ```python
 // Fungsi dengan pengembalian
@@ -568,7 +597,7 @@ total itu tambah(5, 3)
 tampilkan total  // 8
 ```
 
-### 4. Fungsi dengan Parameter Default
+### 4\. Fungsi dengan Parameter Default
 
 ```python
 // Parameter default
@@ -583,7 +612,7 @@ sapa("Budi")  // Output: Halo, Budi!
 sapa("Budi", "Selamat pagi")  // Output: Selamat pagi, Budi!
 ```
 
-### 5. Fungsi Lambda
+### 5\. Fungsi Lambda
 
 ```python
 // Fungsi lambda
@@ -597,11 +626,11 @@ tambah itu lambda dengan a, b -> a + b
 total itu tambah(3, 4)  // 7
 ```
 
----
+* * *
 
 ## Input/Output
 
-### 1. Output (Tampilkan)
+### 1\. Output (Tampilkan)
 
 ```python
 // Tampilkan sederhana
@@ -621,7 +650,7 @@ tampilkan(
 )
 ```
 
-### 2. Input
+### 2\. Input
 
 ```python
 // Dapatkan input pengguna
@@ -634,7 +663,7 @@ umur itu ke_angka(input("Masukkan umur: "))
 nilai itu ke_bulat(input("Masukkan nilai: "))
 ```
 
-### 3. File I/O
+### 3\. File I/O
 
 ```python
 // Tulis ke file
@@ -654,16 +683,16 @@ dengan buka("data.txt", "a") sebagai f
 selesai
 ```
 
----
-
+* * *
 
 ## Import System (Versi Terbaru)
 
----
+* * *
 
-### 1. Sintaks Dasar Import
+### 1\. Sintaks Dasar Import
 
 #### Import Satu Item
+
 ```python
 // Import fungsi tunggal
 dari math_utils impor jumlah
@@ -674,6 +703,7 @@ tampilkan hasil  // Output: 15
 ```
 
 #### Import Banyak Item
+
 ```python
 // Import beberapa fungsi sekaligus
 dari math_utils impor jumlah, selisih, perkalian, pembagian
@@ -686,6 +716,7 @@ d itu panggil pembagian dengan 100, 4  // 25.0
 ```
 
 #### Import dengan Alias
+
 ```python
 // Beri nama lain untuk menghindari konflik
 dari math_utils impor jumlah sebagai add
@@ -697,6 +728,7 @@ hasil_string itu panggil join dengan "Hello", "World"
 ```
 
 #### Import Biasa (Seluruh Module)
+
 ```python
 // Import seluruh module
 impor math_utils sebagai math
@@ -705,9 +737,9 @@ impor math_utils sebagai math
 hasil itu panggil math.jumlah dengan 10, 5
 ```
 
----
+* * *
 
-### 2. Import dari Nested Modules
+### 2\. Import dari Nested Modules
 
 Anda dapat mengorganisir kode dalam folder dan mengimport dari struktur nested:
 
@@ -722,6 +754,7 @@ project/
 ```
 
 **Utils/helpers.rmc:**
+
 ```python
 buat fungsi format_currency dengan amount
     hasil f"Rp {amount:,.0f}"
@@ -733,6 +766,7 @@ selesai
 ```
 
 **main.rmc:**
+
 ```python
 // Import dari nested modules
 dari Utils.helpers impor format_currency, validate_email
@@ -745,13 +779,14 @@ tampilkan formatted    // Output: Rp 1,000,000
 tampilkan is_valid     // Output: true
 ```
 
----
+* * *
 
-### 3. Import Constants
+### 3\. Import Constants
 
 Anda juga bisa mengimport konstanta dan variabel:
 
 **constants.rmc:**
+
 ```python
 // Konstanta aplikasi
 APP_NAME itu "MyApp"
@@ -764,6 +799,7 @@ E itu 2.71828
 ```
 
 **main.rmc:**
+
 ```python
 // Import konstanta
 dari constants impor APP_NAME, VERSION, PI
@@ -772,11 +808,12 @@ tampilkan f"{APP_NAME} v{VERSION}"  // Output: MyApp v1.0.0
 tampilkan f"PI = {PI}"              // Output: PI = 3.14159
 ```
 
----
+* * *
 
-### 4. Import Function yang Mengembalikan Object
+### 4\. Import Function yang Mengembalikan Object
 
 **user.rmc:**
+
 ```python
 // Constructor function
 buat fungsi buat_User dengan nama, email
@@ -795,6 +832,7 @@ selesai
 ```
 
 **main.rmc:**
+
 ```python
 // Import constructor dan method
 dari user impor buat_User, User_get_info
@@ -807,6 +845,7 @@ tampilkan info  // Output: Alice (alice@example.com)
 ```
 
 #### Urutan Import yang Benar
+
 ```python
 // 1. Import dari standard library (jika ada)
 // 2. Import dari third-party (jika ada)
@@ -819,6 +858,7 @@ dari Config.settings impor DEBUG
 ```
 
 #### Hindari Konflik Nama
+
 ```python
 // - Hindari: nama yang sama dengan builtin
 buat fungsi tambah dengan a, b  // tambah adalah builtin
@@ -831,11 +871,12 @@ buat fungsi jumlah dengan a, b  // Nama yang unik
 selesai
 ```
 
----
+* * *
 
-### 5. Tips dan Trik
+### 5\. Tips dan Trik
 
 #### Import Conditional
+
 ```python
 jika DEBUG == benar
     dari Debug.tools impor log_debug
@@ -843,9 +884,10 @@ jika DEBUG == benar
 selesai
 ```
 
-### 6. Contoh Lengkap
+### 6\. Contoh Lengkap
 
-**math_utils.rmc:**
+**math\_utils.rmc:**
+
 ```python
 // Fungsi matematika dasar
 buat fungsi jumlah dengan a, b
@@ -865,7 +907,8 @@ PI itu 3.14159
 E itu 2.71828
 ```
 
-**string_utils.rmc:**
+**string\_utils.rmc:**
+
 ```python
 // Fungsi string helper
 buat fungsi format_currency dengan amount
@@ -878,6 +921,7 @@ selesai
 ```
 
 **main.rmc:**
+
 ```python
 // Import dari multiple modules
 dari math_utils impor jumlah, perkalian, PI
@@ -893,18 +937,20 @@ tampilkan f"PI = {PI}"
 ```
 
 **Output:**
+
 ```
 Math: 15, Currency: Rp 1,000,000, Valid: true
 PI = 3.14159
 ```
 
-### 1. Wildcard Import (Import Semua Item)
+### 1\. Wildcard Import (Import Semua Item)
 
 **Sintaks:** `dari module impor *`
 
 **Deskripsi:** Import semua item publik dari module.
 
 **Contoh:**
+
 ```python
 // Import semua fungsi dari math_utils
 dari math_utils impor *
@@ -919,13 +965,14 @@ tampilkan hasil2  // Output: 24
 
 **Catatan:** Hanya item publik (tidak dimulai dengan `_`) yang akan diimport.
 
-### 2. Relative Import (Import Relatif)
+### 2\. Relative Import (Import Relatif)
 
 **Sintaks:** `dari .module impor item` atau `dari ..module impor item`
 
 **Deskripsi:** Import berdasarkan lokasi file relatif terhadap file saat ini.
 
 **Contoh Struktur Folder:**
+
 ```
 project/
 ├── main.rmc
@@ -937,6 +984,7 @@ project/
 ```
 
 **Contoh Relative Import:**
+
 ```python
 // Di main.rmc
 dari Utils.helpers impor format_text    // Import dari folder Utils
@@ -948,13 +996,15 @@ dari ..config impor settings            // Import dari parent folder
 ```
 
 **Level Relative Import:**
-- `.` - Folder yang sama
-- `..` - Parent folder (satu level naik)
-- `...` - Grandparent folder (dua level naik)
 
-### 3. Import dari Nested Modules
+-   `.` - Folder yang sama
+-   `..` - Parent folder (satu level naik)
+-   `...` - Grandparent folder (dua level naik)
+
+### 3\. Import dari Nested Modules
 
 **Contoh:**
+
 ```python
 // Import dari modul dalam folder
 dari Utils.math.operations impor jumlah, kurang, kali
@@ -963,9 +1013,10 @@ dari Utils.math.operations impor jumlah, kurang, kali
 dari Utils.string.formatters impor format_currency sebagai format
 ```
 
-### 4. Import Constants dan Variabel
+### 4\. Import Constants dan Variabel
 
 **Contoh:**
+
 ```python
 // constants.rmc
 PI itu 3.14159
@@ -979,9 +1030,10 @@ tampilkan f"PI = {PI}"              // Output: PI = 3.14159
 tampilkan f"Max users: {MAX_USERS}"  // Output: Max users: 100
 ```
 
-### 5. Import Function yang Mengembalikan Object
+### 5\. Import Function yang Mengembalikan Object
 
 **Contoh:**
+
 ```python
 // user.rmc
 buat fungsi buat_User dengan nama, email
@@ -999,9 +1051,10 @@ user_baru itu panggil buat_User dengan "Alice", "alice@example.com"
 tampilkan user_baru
 ```
 
-### 6. Import dengan Python Integration
+### 6\. Import dengan Python Integration
 
 **Contoh:**
+
 ```python
 // Import library Python
 impor_python "requests"
@@ -1013,9 +1066,10 @@ data itu panggil_python json.loads(response.text)
 tampilkan data
 ```
 
-### 7. Best Practices untuk Import
+### 7\. Best Practices untuk Import
 
 **Urutan yang Benar:**
+
 ```python
 // 1. Import dari standard library
 // 2. Import dari third-party
@@ -1026,6 +1080,7 @@ dari Config.settings impor DEBUG
 ```
 
 **Hindari Konflik Nama:**
+
 ```python
 // - Hindari: nama yang sama dengan builtin
 dari math impor tambah  // 'tambah' adalah builtin
@@ -1034,14 +1089,13 @@ dari math impor tambah  // 'tambah' adalah builtin
 dari math impor jumlah  // Nama yang berbeda
 ```
 
----
-
+* * *
 
 ## Dukungan Multi-baris
 
 RenzMcLang mendukung sintaks multi-baris untuk keterbacaan kode yang lebih baik, terutama ketika berurusan dengan pemanggilan fungsi yang panjang atau struktur data yang kompleks.
 
-### 1. Pemanggilan Fungsi Multi-baris
+### 1\. Pemanggilan Fungsi Multi-baris
 
 ```python
 // Pemanggilan fungsi dapat mencakup beberapa baris
@@ -1058,7 +1112,7 @@ hasil2 itu panggil_python builtins.str(
 )
 ```
 
-### 2. Pernyataan Tampilkan Multi-baris
+### 2\. Pernyataan Tampilkan Multi-baris
 
 ```python
 // Tampilkan dengan tanda kurung untuk multi-baris
@@ -1069,7 +1123,7 @@ tampilkan(
 )
 ```
 
-### 3. Struktur Data Multi-baris
+### 3\. Struktur Data Multi-baris
 
 ```python
 // List multi-baris
@@ -1098,7 +1152,7 @@ numbers itu {
 }
 ```
 
-### 4. Variasi Klausa Else
+### 4\. Variasi Klausa Else
 
 ```python
 // Kedua sintaks didukung
@@ -1116,7 +1170,7 @@ kalau tidak  // Menggunakan spasi
 selesai
 ```
 
-### 5. Praktik Terbaik untuk Multi-baris
+### 5\. Praktik Terbaik untuk Multi-baris
 
 ```python
 // - Baik - Jelas dan mudah dibaca
@@ -1143,11 +1197,11 @@ hasil itu text.format(title="Document",
 content="Content",author="John")
 ```
 
----
+* * *
 
 ## Praktik Terbaik
 
-### 1. Konvensi Penamaan
+### 1\. Konvensi Penamaan
 
 ```python
 // - Baik
@@ -1161,7 +1215,7 @@ x itu 100000
 flag itu benar
 ```
 
-### 2. Organisasi Kode
+### 2\. Organisasi Kode
 
 ```python
 // - Baik - Jelas dan terorganisir
@@ -1178,7 +1232,7 @@ fungsi h(x, y):
 selesai
 ```
 
-### 3. Komentar
+### 3\. Komentar
 
 ```python
 // - Baik - Komentar yang membantu
@@ -1190,17 +1244,17 @@ total itu harga * 1.1
 x itu x + 1
 ```
 
----
+* * *
 
 ## Langkah Selanjutnya
 
 Setelah mempelajari dasar-dasar:
 
-1. **Fitur Lanjutan:** Pelajari [Fitur Lanjutan](advanced-features.md)
-2. **Fungsi Bawaan:** Jelajahi [Fungsi Bawaan](builtin-functions.md)
-3. **Contoh:** Coba [Contoh](examples.md)
-4. **Integrasi Python:** Lihat [Integrasi Python](python-integration.md)
+1.  **Fitur Lanjutan:** Pelajari [Fitur Lanjutan](advanced-features.md)
+2.  **Fungsi Bawaan:** Jelajahi [Fungsi Bawaan](builtin-functions.md)
+3.  **Contoh:** Coba [Contoh](examples.md)
+4.  **Integrasi Python:** Lihat [Integrasi Python](python-integration.md)
 
----
+* * *
 
 **Selamat Coding!**

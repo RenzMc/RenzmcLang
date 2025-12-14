@@ -87,12 +87,12 @@ class ASTSerializer:
     def _serialize_binop(self, ast_node, result: Dict[str, Any]):
         """Serialize BinOp node."""
         result["left"] = self.serialize(ast_node.left)
-        result["op"] = {"type": ast_node.op.type, "value": ast_node.op.value}
+        result["op"] = {"type": str(ast_node.op.type), "value": ast_node.op.value}
         result["right"] = self.serialize(ast_node.right)
 
     def _serialize_unaryop(self, ast_node, result: Dict[str, Any]):
         """Serialize UnaryOp node."""
-        result["op"] = {"type": ast_node.op.type, "value": ast_node.op.value}
+        result["op"] = {"type": str(ast_node.op.type), "value": ast_node.op.value}
         result["expr"] = self.serialize(ast_node.expr)
 
     def _serialize_num(self, ast_node, result: Dict[str, Any]):
@@ -370,7 +370,7 @@ class ASTSerializer:
     def _serialize_compoundassign(self, ast_node, result: Dict[str, Any]):
         """Serialize CompoundAssign node."""
         result["var"] = self.serialize(ast_node.var)
-        result["op"] = {"type": ast_node.op.type, "value": ast_node.op.value}
+        result["op"] = {"type": str(ast_node.op.type), "value": ast_node.op.value}
         result["value"] = self.serialize(ast_node.value)
 
     def _serialize_switch(self, ast_node, result: Dict[str, Any]):

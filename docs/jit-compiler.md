@@ -42,12 +42,12 @@ RenzMcLang dilengkapi dengan **JIT (Just-In-Time) Compiler** yang menggunakan Nu
 
 Setiap kali fungsi dipanggil, RenzMcLang melacak jumlah pemanggilan:
 
-```python
+```rmc
 fungsi hitung_faktorial(n):
     jika n <= 1
         hasil 1
     selesai
-    hasil n * hitung_faktorial(n) - 1
+    hasil n * hitung_faktorial(n - 1)
 selesai
 ```
 
@@ -77,13 +77,13 @@ Fungsi akan dikompilasi jika memenuhi kriteria:
 
 Force JIT compilation tanpa menunggu threshold:
 
-```python
+```rmc
 @jit_compile
 fungsi hitung_faktorial(n):
     jika n <= 1
         hasil 1
     selesai
-    hasil n * hitung_faktorial(n) - 1
+    hasil n * hitung_faktorial(n - 1)
 selesai
 
 hasil itu hitung_faktorial(10)
@@ -94,13 +94,13 @@ tampilkan hasil
 
 Alias untuk @jit_compile, memaksa kompilasi JIT:
 
-```python
+```rmc
 @jit_force
 fungsi fibonacci(n):
     jika n <= 1
         hasil n
     selesai
-    hasil fibonacci(n)-1 + fibonacci(n)-2
+    hasil fibonacci(n-1) + fibonacci(n-2)
 selesai
 
 hasil itu fibonacci(15)
@@ -122,7 +122,7 @@ tampilkan hasil
 
 Menganalisis performa fungsi untuk optimasi:
 
-```python
+```rmc
 @profile
 fungsi hitung_total(n):
     total itu 0
@@ -144,7 +144,7 @@ Profile [hitung_total]:
 
 ### Combined with JIT
 
-```python
+```rmc
 @profile
 @jit_compile
 fungsi optimized_function(n):
@@ -174,7 +174,7 @@ hasil itu optimized_function(1000)
 
 Menggunakan CUDA untuk akselerasi GPU:
 
-```python
+```rmc
 @gpu
 fungsi vector_add(a):, b
     hasil a + b
@@ -194,7 +194,7 @@ tampilkan hasil
 
 Jika GPU tidak tersedia, fungsi akan fallback ke CPU:
 
-```python
+```rmc
 @gpu
 fungsi gpu_compute(n):
     total itu 0
@@ -207,7 +207,7 @@ selesai
 
 ### Combined GPU + JIT
 
-```python
+```rmc
 @jit_compile
 @gpu
 fungsi hybrid_compute(x):, y
@@ -227,7 +227,7 @@ selesai
 
 Multi-threading untuk fungsi independent:
 
-```python
+```rmc
 @parallel
 fungsi proses_item(item):
     hasil itu 0
@@ -264,7 +264,7 @@ tampilkan hasil
 
 JIT compiler menggunakan type inference engine untuk mendeteksi tipe data:
 
-```python
+```rmc
 fungsi operasi_numerik(a):, b, c
     langkah1 itu a * b
     langkah2 itu b * c
@@ -313,7 +313,7 @@ selesai
 ### Compilation Modes
 
 #### 1. nopython Mode (Fastest)
-```python
+```rmc
 @jit_compile
 fungsi fibonacci(n):
     jika n <= 1
@@ -324,7 +324,7 @@ selesai
 ```
 
 #### 2. object Mode (Fallback)
-```python
+```rmc
 fungsi proses_data(data):
     hasil itu 0
     untuk item dari data
@@ -342,7 +342,7 @@ selesai
 
 #### Example 1: Manual JIT vs Auto JIT
 
-```python
+```rmc
 @jit_compile
 fungsi kuadrat(x):
     hasil x * x
@@ -355,7 +355,7 @@ selesai
 
 #### Example 2: Parallel Processing
 
-```python
+```rmc
 @parallel
 fungsi process(item):
     total itu 0
@@ -372,7 +372,7 @@ selesai
 
 #### Example 3: GPU Acceleration
 
-```python
+```rmc
 @gpu
 fungsi vector_op(n):
     total itu 0
@@ -393,7 +393,7 @@ selesai
 
 ### Example 1: Manual JIT Compilation
 
-```python
+```rmc
 tampilkan "=== Manual JIT Demo ==="
 
 @jit_compile
@@ -412,7 +412,7 @@ selesai
 
 ### Example 2: Profiling
 
-```python
+```rmc
 tampilkan "=== Profiling Demo ==="
 
 @profile
@@ -430,7 +430,7 @@ tampilkan "Sum: " + ke_teks(hasil)
 
 ### Example 3: Parallel Processing
 
-```python
+```rmc
 tampilkan "=== Parallel Demo ==="
 
 @parallel
@@ -449,7 +449,7 @@ tampilkan hasil
 
 ### Example 4: GPU Acceleration
 
-```python
+```rmc
 tampilkan "=== GPU Demo ==="
 
 @gpu
@@ -467,7 +467,7 @@ tampilkan "GPU Result: " + ke_teks(hasil)
 
 ### Example 5: Combined Optimizations
 
-```python
+```rmc
 tampilkan "=== Combined Optimizations ==="
 
 @profile
@@ -494,7 +494,7 @@ tampilkan hasil
 
 ### - DO: Functions Good for JIT
 
-```python
+```rmc
 @jit_compile
 fungsi hitung_rata_rata(data):
     total itu 0
@@ -524,7 +524,7 @@ selesai
 
 ### - DON'T: Functions Not Suitable for JIT
 
-```python
+```rmc
 fungsi proses_teks(teks):
     hasil itu teks.upper().replace("a", "b").split()
     hasil hasil
@@ -539,7 +539,7 @@ selesai
 ### Optimization Tips
 
 1. **Use Manual JIT for Critical Functions**
-   ```python
+   ```rmc
    @jit_compile
    fungsi critical_path(data):
        hasil proses_kompleks(data)
@@ -547,7 +547,7 @@ selesai
    ```
 
 2. **Profile Before Optimizing**
-   ```python
+   ```rmc
    @profile
    fungsi test_performance(n):
        hasil compute(n)
@@ -555,7 +555,7 @@ selesai
    ```
 
 3. **Parallelize Independent Operations**
-   ```python
+   ```rmc
    @parallel
    fungsi process_batch(items):
        hasil transform(items)
@@ -563,7 +563,7 @@ selesai
    ```
 
 4. **Use GPU for Heavy Computations**
-   ```python
+   ```rmc
    @gpu
    fungsi heavy_compute(data):
        hasil complex_math(data)
@@ -679,7 +679,7 @@ selesai
 ### Configuration
 
 Default settings:
-```python
+```rmc
 HOT_FUNCTION_THRESHOLD = 10
 MIN_OPERATION_COUNT = 5
 ```
@@ -700,7 +700,7 @@ MIN_OPERATION_COUNT = 5
 
 ### Decorator Combinations
 
-```python
+```rmc
 @profile
 @jit_compile
 fungsi optimized(n):

@@ -1,27 +1,27 @@
 // Builtin File Operations - Working Version
-dari renzmc.library.fileio impor write_text, read_text, exists, delete
+impor renzmc.library.fileio sebagai fileio
 
 tampilkan "=== BUILTIN FILE OPERATIONS ==="
 
 // Write text to file
 tampilkan "[1] Menulis ke file..."
-write_text("test_file.txt", "Hello from RenzMcLang!")
-tampilkan "✓ File created"
+fileio.write_text("test_file.txt", "Hello from RenzMcLang!")
+tampilkan "File created"
 
 // Read text from file  
 tampilkan "[2] Membaca dari file..."
-content itu read_text("test_file.txt")
-tampilkan f"✓ Content: {content}"
+content itu fileio.read_text("test_file.txt")
+tampilkan f"Content: {content}"
 
 // Check if file exists
 tampilkan "[3] Cek apakah file ada..."
-file_ada itu exists("test_file.txt")
-tampilkan f"✓ File exists: {file_ada}"
+file_ada itu fileio.exists("test_file.txt")
+tampilkan f"File exists: {file_ada}"
 
 // Delete file
 tampilkan "[4] Menghapus file..."
-delete("test_file.txt")
-tampilkan "✓ File deleted"
+fileio.delete("test_file.txt")
+tampilkan "File deleted"
 
 tampilkan ""
-tampilkan "✓ Semua operasi file berhasil!"
+tampilkan "Semua operasi file berhasil!"

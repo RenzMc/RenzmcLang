@@ -21,25 +21,25 @@ oop_imports/
 
 ### Import Dasar
 
-```python
+```rmc
 from Ren.renz import buat_Person, Person_perkenalan
 ```
 
 ### Import dengan Alias
 
-```python
+```rmc
 from Ren.renz import buat_Person as create_person
 ```
 
 ### Import Banyak Sekaligus
 
-```python
+```rmc
 from Ren.renz import buat_Person, buat_Calculator, buat_BankAccount
 ```
 
 ### Import dari Modul Nested
 
-```python
+```rmc
 from Utils.helpers import format_currency, buat_Logger
 ```
 

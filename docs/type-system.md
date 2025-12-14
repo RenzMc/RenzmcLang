@@ -441,24 +441,6 @@ fungsi calculate(x: Integer, y: Integer) -> Integer:
 selesai
 ```
 
-## Roadmap
-
-### Phase 1 (Selesai) ✅
-- - Basic type hints untuk variables
-- - Type hints untuk function parameters
-- - Runtime type validation
-- - Indonesian and English type names
-- - Backward compatibility
-
-### Phase 2 (Selesai) ✅
-- - Union types: `nilai: Integer | String`
-- - Optional types: `nama: String?`
-- - Generic types: `List[Integer]`, `Dict[String, Integer]`
-- - Type aliases: `tipe UserId = Integer`
-- - Return type hints: `fungsi tambah(...) -> Integer:`
-- - Literal types: `Literal["aktif", "nonaktif"]`
-- - TypedDict: `TypedDict["nama": String, "umur": Integer]`
-
 ## FAQ
 
 ### Q: Apakah type hints wajib?

@@ -123,24 +123,26 @@ class FunctionVisitorsMixin:
             name = node.name
             args = [self.visit(arg) for arg in node.args]
             kwargs = {k: self.visit(v) for k, v in node.kwargs.items()}
-            if name in self.builtin_functions:
-                try:
-                    return self.builtin_functions[name](*args, **kwargs)
-                except Exception as e:
-                    raise RuntimeError(f"Error dalam fungsi '{name}': {str(e)}")
-            if name in self.classes:
-                return self.create_class_instance(name, args)
-            if name not in self.functions:
-                try:
-                    lambda_func = self.get_variable(name)
-                    if callable(lambda_func):
-                        try:
-                            return lambda_func(*args, **kwargs)
-                        except Exception as e:
-                            raise RuntimeError(f"Error dalam lambda '{name}': {str(e)}")
-                except NameError as e:
-                    # Name not found - this is expected in some contexts
-                    log_exception("name lookup", e, level="debug")
+            
+            # Priority 1: Check user-defined functions first (for precedence)
+            if name in self.functions:
+                function_data = self.functions[name]
+                if len(function_data) == 5 and function_data[4] == "ASYNC":
+                    params, body, return_type, param_types, _ = function_data
+
+                    async def async_coroutine():
+                        return self._execute_user_function(
+                            name, params, body, return_type, param_types, args, kwargs
+                        )
+
+                    return async_coroutine()
+                else:
+                    params, body, return_type, param_types = function_data
+                    return self._execute_user_function(
+                        name, params, body, return_type, param_types, args, kwargs
+                    )
+            
+            # Priority 2: Check decorated functions
             if hasattr(self, "_decorated_functions") and name in self._decorated_functions:
                 decorator_data = self._decorated_functions[name]
 
@@ -173,9 +175,32 @@ class FunctionVisitorsMixin:
                             return raw_decorator_func(original_func, *args, **kwargs)
                     except Exception as e:
                         raise RuntimeError(f"Error dalam fungsi terdekorasi '{name}': {str(e)}")
-            if name not in self.functions:
-                raise NameError(f"Fungsi '{name}' tidak ditemukan")
-            function_data = self.functions[name]
+            
+            # Priority 3: Check classes
+            if name in self.classes:
+                return self.create_class_instance(name, args)
+            
+            # Priority 4: Check lambda functions and variables
+            try:
+                lambda_func = self.get_variable(name)
+                if callable(lambda_func):
+                    try:
+                        return lambda_func(*args, **kwargs)
+                    except Exception as e:
+                        raise RuntimeError(f"Error dalam lambda '{name}': {str(e)}")
+            except NameError as e:
+                # Name not found - this is expected in some contexts
+                log_exception("name lookup", e, level="debug")
+            
+            # Priority 5: Check builtin functions last
+            if name in self.builtin_functions:
+                try:
+                    return self.builtin_functions[name](*args, **kwargs)
+                except Exception as e:
+                    raise RuntimeError(f"Error dalam fungsi '{name}': {str(e)}")
+            
+            # If no function found, raise error
+            raise NameError(f"Fungsi '{name}' tidak ditemukan")
             if len(function_data) == 5 and function_data[4] == "ASYNC":
                 params, body, return_type, param_types, _ = function_data
 

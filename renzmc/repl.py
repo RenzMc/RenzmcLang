@@ -294,6 +294,27 @@ Tips:
 
     def is_multiline_end(self, line: str) -> bool:
         return line.strip() in ["selesai", "akhir"]
+    
+    def detect_multiline_paste(self, lines: List[str]) -> bool:
+        """Detect if pasted content contains multiple lines that should be executed together"""
+        if len(lines) <= 1:
+            return False
+        
+        # Check if any line starts a multiline block
+        for line in lines:
+            if self.is_multiline_start(line):
+                return True
+        
+        # Check if content has unmatched brackets or parentheses
+        combined_content = "\n".join(lines)
+        open_brackets = combined_content.count("{") - combined_content.count("}")
+        open_parens = combined_content.count("(") - combined_content.count(")")
+        open_braces = combined_content.count("[") - combined_content.count("]")
+        
+        if open_brackets > 0 or open_parens > 0 or open_braces > 0:
+            return True
+            
+        return False
 
     def get_indent_level(self, line: str) -> int:
         return len(line) - len(line.lstrip())
@@ -546,6 +567,24 @@ Tips:
                         self.execute_code(code)
                         self.line_number += 1
                     continue
+                
+                # Handle multi-line paste - check if line contains multiple statements
+                if "\n" in line.strip() and not self.in_multiline:
+                    # Split by newlines and process as potential multi-line code
+                    pasted_lines = line.strip().split('\n')
+                    if self.detect_multiline_paste(pasted_lines):
+                        # This looks like a multi-line paste, treat it as such
+                        self.in_multiline = True
+                        self.multiline_buffer.extend(pasted_lines)
+                        # Auto-execute if it looks complete
+                        if any(self.is_multiline_end(l) for l in pasted_lines):
+                            code = "\n".join(self.multiline_buffer)
+                            self.multiline_buffer = []
+                            self.in_multiline = False
+                            self.history.append(code)
+                            self.execute_code(code)
+                            self.line_number += 1
+                        continue
 
                 if line.strip() in ["keluar", "exit", "quit"]:
                     print("Keluar dari REPL...")
@@ -616,6 +655,13 @@ Tips:
                 print("\nKeyboardInterrupt")
                 self.multiline_buffer = []
                 self.in_multiline = False
+                # Clear any partial input to prevent errors
+                try:
+                    # Clear the current input line
+                    readline.set_completer(None)
+                    readline.set_completer(self._completer)
+                except Exception:
+                    pass
                 continue
             except Exception as e:
                 print(f"Unexpected error: {e}")

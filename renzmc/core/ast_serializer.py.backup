@@ -403,9 +403,8 @@ class ASTSerializer:
             return {key: self._serialize_value(val) for key, val in value.items()}
         elif hasattr(value, "__class__") and hasattr(value.__class__, "__name__"):
             # Check if it's an AST node
-            # First check if it is a Python built-in type to avoid treating it as AST node\            class_name = value.__class__.__name__\            python_builtin_types = ["list", "dict", "str", "int", "float", "bool", "tuple", "set"]\            if class_name.lower() in python_builtin_types:\                return str(value)\
             if hasattr(value, "token") or any(
-                attr in ["statements", "left", "right", "value", "name", "body", "elements", "pairs"]
+                attr in ["statements", "left", "right", "value", "name", "body"]
                 for attr in dir(value)
                 if not attr.startswith("_")
             ):

@@ -278,7 +278,7 @@ def main():
     parser.add_argument(
         "--fix",
         action="store_true",
-        help="Format dan simpan perubahan ke file (gunakan dengan --format)",
+        help="Simpan perubahan format ke file (harus digunakan dengan --format)",
     )
 
     args = parser.parse_args()
@@ -334,6 +334,13 @@ def main():
         else:
             print("Error: --format memerlukan file yang akan diformat")
             sys.exit(1)
+        return
+    
+    # Handle --fix without --format (this is the bug)
+    if args.fix:
+        print("Error: --fix harus digunakan bersama dengan --format")
+        print("Contoh: rmc --format --fix file.rmc")
+        sys.exit(1)
         return
 
     # Determine if caching should be used
